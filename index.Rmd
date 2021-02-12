@@ -10,17 +10,17 @@ biblio-style: apalike
 link-citations: yes
 fontsize: 12pt
 monofontoptions: "Scale=0.7"
-description: "Updated and extended tutorials from An ecologist guide to animal model [@Wilson2010]"
+description: "Updated and extended tutorials from An ecologist guide to animal model [@wilson2010]"
 github-repo: "JulienGAMartin/wam_tuto"
 cover-image: "images/missing.png"
 params:
   echo_sol: true
-  fit_all: true
+  fit_all: false
 ---
 
 # Preface {-}
 
-This book is a collection of tutorial from the excellent paper by [@Wilson2010].
+This book is a collection of tutorial from the excellent paper by [@wilson2010].
 Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.
 **However, this is still a work in progress.**
 
