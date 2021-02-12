@@ -50,7 +50,7 @@ ASReml-R is commercial software published by VSN international (http://www.vsni.
 `MCMCglmm` is an R package for Bayesian mixed model analysis written by Jarrod Hadfield. It is
 freeware distributed through CRAN (http://cran.r-project.org/). Information about the package, together
 with a user manual and vignettes are available at http://cran.r-project.org/web/packages/MCMCglmm/index.html .
-Reference: [@Hadfield2009].
+Reference: [@MCMCglmm2010, @R-MCMCglmm].
 
 This module provides some information that applies to MCMCglmm-based analyses in general, but that will not be included in other tutorials.
 Most importantly, this applies to some of the simplest waysof determining the performance of a run using MCMCglmm, i.e., verification of the validity of of the posterior distribution.
