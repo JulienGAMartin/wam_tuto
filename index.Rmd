@@ -1,0 +1,29 @@
+---
+title: "How to fit an animal model"
+subtitle: "An ecologist guide"
+author: "Julien Martin"
+date: "`r format(Sys.Date(), '%d-%m-%Y')`"
+site: bookdown::bookdown_site
+documentclass: book
+#lot: yes
+#lof: yes
+fontsize: 12pt
+#monofont: "Source Code Pro"
+monofontoptions: "Scale=0.7"
+description: "Updated and extended tutorials from `An ecologist guide to animal model` [@Wilson2010]"
+github-repo: "JulienGAMartin/wam_tuto"
+cover-image: "images/missing.png"
+params:
+  echo_sol: true
+---
+
+# Preface
+
+This book is a collection of tutorial from the excellent paper by [@Wilson2010]. Instead of just copy pasting the tutorial in a new format, the tutorial have been updated to work with the newest version of the softwares and extended to present other softwares.
+
+## Contributors
+
+List of people who contributed to update and extend tutorials:
+
+- Eric Postma
+- Julien Martin

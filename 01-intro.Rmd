@@ -1,0 +1,50 @@
+# Introduction {#intro}
+
+The tutorials and accompanying data files are provided separately for different software packages using `R`: `ASReml-R`, `gremlin`, `MCMCglmm`, `brms`, `stan` .
+You will need to carefully follow the instructions below to download the data files and install the R packages.
+Before beginning the tutorial, we assume the reader has successfully installed the chosen R package on their computer and has saved the required data files to an appropriate directory from which they will be read.
+Full instructions for how to do this are provided with software distributions.
+
+## Data
+
+### Data files
+
+ You will need to download 3 data files for the tutorial in `R`:
+
+- gryphon.txt: data on gryphon birth weight
+- gryphonRM.txt: data
+- gryphonped.txt
+
+The files are available [here]()
+
+### Notes on data and pedigree
+
+It is always important to take time to think carefully about the strengths and potential limitations of your pedigree information before embarking on quantitative genetic analyses. Pedigree Viewer, written by Brian Kinghorn, is an extremely useful application for visualising pedigrees, and can be downloaded from: http://www-personal.une.edu.au/~bkinghor/pedigree.htm. `Pedantics` an R package written by Michael Morrissey and distributed through CRAN (http://cran.r-project.org/) can also be used for this and offers some nice additional features for visualising pedigree structures and generating associated statistics. Before you begin running through the tutorials, we advise taking a moment to look at the pedigree files provided with them using Pedigree Viewer or Pedantics.
+
+## R
+
+describe R Briefly
+
+### R packages
+
+describe briefly the differnet r packages indicate how to load and install provide warning on cost and complexity indicating that we are just touching the surface of what they can do
+
+### asreml-r
+ASReml-R are commercial software applications published by VSN international (http://www.vsni.co.uk/software/asreml/).
+
+### gremlin
+
+### MCMCglmm
+
+MCMCglmm is an R package for Bayesian mixed model analysis written by Jarrod Hadfield. It is
+freeware distributed through CRAN (http://cran.r-project.org/). Information about the package, together
+with a user manual and vignettes are available at http://cran.r-project.org/web/packages/MCMCglmm/index.html .
+Reference: [@Hadfield2009].
+
+This module provides some information that applies to MCMCglmm-based analyses in general, but that will not be included in other tutorials.
+Most importantly, this applies to some of the simplest waysof determining the performance of a run using MCMCglmm, i.e., verification of the validity of of the posterior distribution.
+This tutorial is not a substitute for working through the MCMCglmm course notes, which is available from CRAN (the Comprehensive R ArchiveNetwork, http://cran.r-project.org/, or can be accessed in R using the command vignette("CourseNotes","MCMCglmm")).
+These tutorials do not introduce one of the main advantages of using MCMCglmm for analyses of data from natural populations -the ability to properly model non-normal responses.
+These capabilities are introduced inthe documentation that is distributed with MCMCglmm, and available from CRAN.
+
+### brms

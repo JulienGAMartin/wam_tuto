@@ -1,0 +1,40 @@
+bookdown::gitbook:
+  dev: svglite
+  css: css/style.css
+  split_by: section
+  scroll_highlight: yes
+  includes:
+    #before_body: preamble-mathjax.tex
+    #in_header: js/hide_code.html
+    after_body: js/js_solution.html
+  config:
+    toc:
+      collapse: section
+      before: |
+        <li><a href="./">How to fit an animal model</a></li>
+      after: |
+        <li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+    download: [pdf, epub, mobi]
+    edit: https://github.com/JulienGAMartin/wam_tuto/%s
+    sharing: true
+      github: yes
+      facebook: no
+bookdown::epub_book:
+  dev: svglite
+  stylesheet: css/epub.css
+  toc: true
+bookdown::pdf_book:
+  includes:
+    in_header: latex/preamble.tex
+    before_body: latex/before_body.tex
+    after_body: latex/after_body.tex
+  keep_tex: yes
+  dev: "cairo_pdf"
+  latex_engine: xelatex
+  citation_package: natbib
+  template: null
+  pandoc_args: --top-level-division=chapter
+  toc_unnumbered: yes
+  toc_appendix: yes
+  quote_footer: ["\\VA{", "}{}"]
+  highlight_bw: no
