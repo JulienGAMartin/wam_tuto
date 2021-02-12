@@ -1,0 +1,59 @@
+# Quick comparison of codes
+
+## Univariate model with repeated measures
+
+### Asreml-R
+
+### gremlin
+
+
+### MCMCglmm
+
+
+### brms
+
+```{r eval = FALSE}
+library(brms)
+Amat <- nadiv::makeA(gryphonped)
+
+model_simple1.1 <- brm(
+  bwt ~ 1 + (1|animal) + (1|animal_pe), data = gryphon,
+  family = gaussian(), cov_ranef = list(animal = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+
+summary(model_simple1.1)
+plot(model_simple1.1)
+```
+
+<!--
+################################################################################
+################################################################################
+################################################################################
+-->
+
+
+## bivariate model
+
+### Asreml-R
+
+### gremlin
+
+
+### MCMCglmm
+
+
+### brms
+
+```{r eval = FALSE}
+library(brms)
+Amat <- nadiv::makeA(gryphonped)
+model_simple2.1 <- brm(
+  cbind(bwt, tarsus) ~ 1 + (1|animal), data = gryphon,
+  family = gaussian(), cov_ranef = list(animal = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+summary(model_simple2.1)
+plot(model_simple2.1)
+VarCorr(model_simple2.1)
+```

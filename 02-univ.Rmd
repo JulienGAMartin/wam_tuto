@@ -9,36 +9,36 @@ In a population of gryphons there is strong positive selection on birth weight w
 
 ### Data files
 Open `gryphonped.txt` and `gryphon.txt` in your text editor. The structure and contents of these files is fairly self-explanatory. The pedigree file `gryphonped.txt` contains three columns containing unique IDs that correspond to each animal, its father, and its mother. Note that this is a multigenerational pedigree, with the earliest generation (for which parentage information is necessarily missing) at the beginning of the file. For later-born individuals maternal identities are all known but paternity information is incomplete (a common situation in real world applications).
-The phenotype data, as well as additional factors and covariates that we may wish to include in our model are contained in `gryphon.txt`. Columns correspond to individual identity (`ANIMAL`), maternal identity (`MOTHER`), year of birth (`BYEAR`), sex (`SEX`, where `1` is female and `2` is male), birth weight (`BWT`), and tarsus length (`TARSUS`). Each row of the data file contains a record for a different offspring individual. Note that all individuals included in the data file must be included as offspring in the pedigree file.
+The phenotype data, as well as additional factors and covariates that we may wish to include in our model are contained in `gryphon.txt`. Columns correspond to individual identity (`animal`), maternal identity (`mother`), year of birth (`byear`), sex (`sex`, where `1` is female and `2` is male), birth weight (`bwt`), and tarsus length (`tarsus`). Each row of the data file contains a record for a different offspring individual. Note that all individuals included in the data file must be included as offspring in the pedigree file.
 
+We can read teh data file, using `read.csv()` which consider by default that `NA` is the symbol for missing values and that the first line of the file contains the column headers.
 
-Now we can read in the data file, telling `R` that `NA` is the symbol for missing values and that the first line of the file contains the column headers:
 ```{r, echo=FALSE}
-gryphon <- read.table("data/gryphon.txt", header = TRUE, na.strings="NA")
+gryphon <- read.csv("data/gryphon.csv")
 ```
 
 
 It is a good idea to make sure that all variables are correctly assigned as numeric or factors:
 ```{r}
-gryphon$ANIMAL <- as.factor(gryphon$ANIMAL)
-gryphon$MOTHER <- as.factor(gryphon$MOTHER)
-gryphon$BYEAR<-as.factor(gryphon$BYEAR)
-gryphon$SEX<-as.factor(gryphon$SEX)
-gryphon$BWT<-as.numeric(gryphon$BWT)
-gryphon$TARSUS<-as.numeric(gryphon$TARSUS)
+gryphon$animal <- as.factor(gryphon$animal)
+gryphon$mother <- as.factor(gryphon$mother)
+gryphon$byear <- as.factor(gryphon$byear)
+gryphon$sex <- as.factor(gryphon$sex)
+gryphon$bwt <- as.numeric(gryphon$bwt)
+gryphon$tarsus <- as.numeric(gryphon$tarsus)
 ```
 
-Similarly we can read in the pedigree file, again telling R that `NA` is the symbol for missing values and that the first line of the file contains the column headers.
+Similarly we can read in the pedigree file, using `read.csv()` which consider by default that `NA` is the symbol for missing values and that the first line of the file contains the column headers.
 
 ```{r, echo=FALSE}
-gryphonped <- read.table("gryphonped.txt", header = TRUE, na.strings="NA")
+gryphonped <- read.csv("data/gryphonped.csv")
 str(gryphonped)
 ```
 
 ```{r}
-gryphonped$ID<-as.factor(gryphonped$ID)
-gryphonped$FATHER<-as.factor(gryphonped$FATHER)
-gryphonped$MOTHER<-as.factor(gryphonped$MOTHER)
+gryphonped$id<-as.factor(gryphonped$id)
+gryphonped$father<-as.factor(gryphonped$father)
+gryphonped$mother<-as.factor(gryphonped$mother)
 ```
 
 Now that we have imported the data and the pedigree file, we are ready to fit an animal model.
@@ -61,13 +61,13 @@ ainv <- ainverse(gryphonped)
 We are now ready to specify our first model:
 
 ```{r}
-model1 <- asreml(fixed = BWT ~ 1, random =~vm(ANIMAL, ainv),
+model1 <- asreml(fixed = bwt ~ 1, random =~vm(animal, ainv),
                  residual=~idv(units),
                  data=gryphon,
                  na.action = na.method(x="omit", y="omit"))
 ```
 
-In this model, `BWT` is the response variable and the only fixed effect is the mean (the intercept, denoted as `1`). The only random effect we have fitted is `ANIMAL`, which will provide an estimate of $V_A$. Our random `ANIMAL` effect is connected to the inverse related matrix `ainv`.  `data=` specifies the name of the dataframe that contains our variables. Finally, we tell `asreml()` what to when it encounters `NA`s in either the dependent or predictor variables (in this case we choose to remove the records).
+In this model, `bwt` is the response variable and the only fixed effect is the mean (the intercept, denoted as `1`). The only random effect we have fitted is `animal`, which will provide an estimate of $V_A$. Our random `animal` effect is connected to the inverse related matrix `ainv`.  `data=` specifies the name of the dataframe that contains our variables. Finally, we tell `asreml()` what to when it encounters `NA`s in either the dependent or predictor variables (in this case we choose to remove the records).
 
 A note of the specification of the structure of the residuals: This simple univariate model will run fine without `residual=~idv(units)`. However, if you are going to use `vpredict()` to calculate the heritability (see below), not specifying the residuals in this way will result in a standard error for the heritability that is incorrect.
 
@@ -77,7 +77,7 @@ To see the estimates for the variance components, we run:
 summary(model1)$varcomp
 ```
 
-We fitted a single random effect so have partitioned the phenotypic variance into two components. The `vm(ANIMAL, ainv)` variance component is $V_A$ and is estimated as `r round(summary(model1)$varcomp[1,1], 2)`. Given that the ratio of $V_A$ to its standard error (`z.ratio`) is considerably larger than 2 (_i.e._ the parameter estimate is more than 2 SEs from zero) this looks likely to be highly significant. The `units!units` component refers to the residual variance $V_R$, and `units$R` should be ignored. If you don't include `residual=~idv(units)`in your model specification, `units$R` will provide you with the residual variance.
+We fitted a single random effect so have partitioned the phenotypic variance into two components. The `vm(animal, ainv)` variance component is $V_A$ and is estimated as `r round(summary(model1)$varcomp[1,1], 2)`. Given that the ratio of $V_A$ to its standard error (`z.ratio`) is considerably larger than 2 (_i.e._ the parameter estimate is more than 2 SEs from zero) this looks likely to be highly significant. The `units!units` component refers to the residual variance $V_R$, and `units$R` should be ignored. If you don't include `residual=~idv(units)`in your model specification, `units$R` will provide you with the residual variance.
 
 ### Estimating heritability
 
@@ -85,15 +85,15 @@ We can calculate the $h^2$ of birth weight from the components above since $h^2 
 
 Alternatively we can use the `vpredict()` function to calculate $h^2$ and its standard error:
 ```{r}
-vpredict(model1, h2.BWT ~ V1 / (V1 + V2))
+vpredict(model1, h2.bwt ~ V1 / (V1 + V2))
 ```
 
 ### Adding fixed effects
 
 To add fixed effects to a univariate model simply modify the model statement. For example we might know (or suspect) that birth weight is a sexually dimorphic trait and therefore fit a model
 ```{r}
-model2 <- asreml(fixed = BWT ~ 1 + SEX,
-             random= ~vm(ANIMAL, ainv),
+model2 <- asreml(fixed = bwt ~ 1 + sex,
+             random= ~vm(animal, ainv),
              residual=~idv(units),
              data=gryphon,
              na.action = na.method(x="omit", y="omit"))
@@ -111,19 +111,19 @@ w <- wald.asreml(model2, ssType="conditional", denDF="numeric")
 w$Wald[1:6]
 ```
 
-The very small probability (`Pr`) in the Wald test above shows that `SEX` is a highly significant fixed effect, and from the parameter estimates we can see that the average male (sex 2) is 2.2 kg ($\pm$ 0.16 SE) heavier than the average female (sex 1). However, when we look at the variance components in the model including `SEX` as a fixed effect, we see that they have changed slightly from the previous model:
+The very small probability (`Pr`) in the Wald test above shows that `sex` is a highly significant fixed effect, and from the parameter estimates we can see that the average male (sex 2) is 2.2 kg ($\pm$ 0.16 SE) heavier than the average female (sex 1). However, when we look at the variance components in the model including `sex` as a fixed effect, we see that they have changed slightly from the previous model:
 ```{r}
 summary(model2)$varcomp
 ```
-In fact since `SEX` effects were previously contributing to the residual variance of the model, our estimate of $V_R$ (denoted `units!R` in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate $V_P$ as $V_A$+$V_R$ then as we include fixed effects we will soak up more residual variance driving $V_P$. Assuming that $V_A$ is more or less unaffected by the fixed effects fitted then as $V_P$ goes down we expect our estimate of $h^2$ will go up:
+In fact since `sex` effects were previously contributing to the residual variance of the model, our estimate of $V_R$ (denoted `units!R` in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate $V_P$ as $V_A$+$V_R$ then as we include fixed effects we will soak up more residual variance driving $V_P$. Assuming that $V_A$ is more or less unaffected by the fixed effects fitted then as $V_P$ goes down we expect our estimate of $h^2$ will go up:
 
 ```{r}
-vpredict(model2, h2.BWT ~ V1 / (V1 + V2))
+vpredict(model2, h2.bwt ~ V1 / (V1 + V2))
 ```
 
 ```{r, echo=FALSE}
-h2.1 <- vpredict(model1, h2.BWT ~ V1 / (V1 + V2))
-h2.2 <- vpredict(model2, h2.BWT ~ V1 / (V1 + V2))
+h2.1 <- vpredict(model1, h2.bwt ~ V1 / (V1 + V2))
+h2.2 <- vpredict(model2, h2.bwt ~ V1 / (V1 + V2))
 ```
 
 Here $h^2$ has increased slightly from `r round(h2.1[1],2)` to `r round(h2.2[1],2)`. Which is the better estimate? It depends on what your question is. The first is an estimate of the proportion of variance in birth weight explained by additive effects, the latter is an estimate of the proportion of variance in birth weight _after conditioning on sex_ that is explained by additive effects.
@@ -132,8 +132,8 @@ Here $h^2$ has increased slightly from `r round(h2.1[1],2)` to `r round(h2.2[1],
 This is done by simply modifying the model statement in the same way. For instance fitting
 
 ```{r}
-model3 <- asreml(fixed = BWT ~ 1 + SEX,
-             random= ~vm(ANIMAL, ainv) + BYEAR,
+model3 <- asreml(fixed = bwt ~ 1 + sex,
+             random= ~vm(animal, ainv) + byear,
              residual=~idv(units),
              data=gryphon,
              na.action = na.method(x="omit", y="omit"))
@@ -145,13 +145,13 @@ results in an additional variance component of birth year:
 summary(model3)$varcomp
 ```
 
-Here the variance in `BWT` explained by `BYEAR` is 0.886 and, based on the `z.ratio`, appears to be significant. Thus we would conclude that year-to-year variation (_e.g._, in weather, resource abundance) contributes to $V_P$. Note that although $V_A$ has changed somewhat, as most of what is now partitioned as a birth year effect was previously partitioned as $V_R$. Thus what we have really done here is to partition environmental effects into those arising from year-to-year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A/ (V_A+V_{BY}+V_R)$).
+Here the variance in `bwt` explained by `byear` is 0.886 and, based on the `z.ratio`, appears to be significant. Thus we would conclude that year-to-year variation (_e.g._, in weather, resource abundance) contributes to $V_P$. Note that although $V_A$ has changed somewhat, as most of what is now partitioned as a birth year effect was previously partitioned as $V_R$. Thus what we have really done here is to partition environmental effects into those arising from year-to-year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A/ (V_A+V_{BY}+V_R)$).
 
-However, we get a somewhat different result if we also add a random effect of `MOTHER` to test for maternal effects:
+However, we get a somewhat different result if we also add a random effect of `mother` to test for maternal effects:
 
 ```{r}
-model4 <- asreml(fixed = BWT ~ 1 + SEX,
-             random= ~vm(ANIMAL, ainv) + BYEAR + MOTHER,
+model4 <- asreml(fixed = bwt ~ 1 + sex,
+             random= ~vm(animal, ainv) + byear + mother,
              residual=~idv(units),
              data=gryphon,
              na.action = na.method(x="omit", y="omit"))
@@ -228,6 +228,7 @@ problems. We will specify priors for the animal effect and the residual variance
 following code:
 
 ```{r}
+Ainv <- inverseA(gryphonped)$Ainv
 prior1.1 <- list(
   G = list(G1 = list(V = 1, nu = 0.002)),
   R = list(V = 1, nu = 0.002)
@@ -250,8 +251,8 @@ practice, and we will therefore use priors throughout these tutorials.
 We can now fit an animal model. The model to decompose variation in birth weight
 into genetic and residual effects is as follows:
 
-```{r}
-model1.1 <- MCMCglmm(BWT ~ 1, random = ~ animal, pedigree = Ped, data = Data, prior = prior1.1)
+```{r, cache=TRUE}
+model1.1 <- MCMCglmm(bwt ~ 1, random = ~ animal, pedigree = gryphonped, data = gryphon, prior = prior1.1)
 ```
 
 After typing this code, MCMCglmm will run, taking about 20 seconds on a modern desk-
@@ -304,8 +305,8 @@ autocorrelation by lengthening the rest of the run and sampling the chain less f
 The following code runs the same model 1.1, but is likely to produce better samples of
 the posterior distributions. This model should take about two minutes to analyze.
 
-```{r}
-model1.1 <- MCMCglmm(BWT ~ 1, random = ~animal, pedigree = Ped, data = Data, nitt = 65000, thin = 50, burnin = 15000, prior = prior1.1, verbose = FALSE)
+```{r, cache=TRUE}
+model1.1 <- MCMCglmm(bwt ~ 1, random = ~animal, pedigree = gryphonped, data = gryphon, nitt = 65000, thin = 50, burnin = 15000, prior = prior1.1, verbose = FALSE)
 ```
 
 Notice that we have now included the command verbose=FALSE in the MCMCglmm call.
@@ -330,13 +331,17 @@ of these tutorials. We can now proceed with confidence to recover some more info
 from these samples. We can obtain estimates of the additive genetic and residual variance
 by calculating the modes of the posterior distributions:
 
-> posterior.mode(model1.1$VCV)
+```{r}
+posterior.mode(model1.1$VCV)
+```
 
 We can obtain the Bayesian equivalent of confidence intervals by calculating the the
 values of the estimates that bound 95% (or any other proportion) of the posterior distri-
 butions:
 
-> HPDinterval(model1.1$VCV)
+```{r}
+HPDinterval(model1.1$VCV)
+```
 
 We specified weak priors in this analyses. Now we will check whether or not proper
 priors would have influenced the results that we obtained. The simplest way to do this
@@ -344,12 +349,12 @@ is to rerun the model with different priors. Here we construct priors with a lar
 of belief parameter, and we will specify that a large proportion of the variation is under
 genetic control:
 
-```{r}
-p.var <- var(Data$BWT, na.rm = TRUE)
+```{r, cache=TRUE}
+p.var <- var(gryphon$bwt, na.rm = TRUE)
 prior1.1.2 <- list(G = list(G1 = list(V = matrix(p.var * 0.05),
 nu = 1)), R = list(V = matrix(p.var * 0.95), nu = 1))
-model1.1.2 <- MCMCglmm(BWT ~ 1, random = ~animal, pedigree = Ped,
-data = Data, prior = prior1.1.2, nitt = 65000, thin = 50,
+model1.1.2 <- MCMCglmm(bwt ~ 1, random = ~animal, pedigree = gryphonped,
+data = gryphon, prior = prior1.1.2, nitt = 65000, thin = 50,
 burnin = 15000, verbose = FALSE)
 posterior.mode(model1.1$VCV)
 posterior.mode(model1.1.2$VCV)
@@ -360,15 +365,17 @@ outcome of the analysis. This is typical for an analysis where lots of data are 
 relative to the complexity of the model, but is often not the case. In all cases, it is
 important to check the effect of priors on conclusions drawn from a model.
 
-## Estimating heritability
+### Estimating heritability
 A useful property of Bayesian posterior distributions is that we can apply almost any
 transformation to these distributions and they will remain valid. This applies to the
 calculation of heritabilities. We can obtain an estimate of the heritability by applying the
 basic formula h 2 =V A /V P to each sample of the posterior disribution:
 
-> posterior.heritability1.1 <- model1.1$VCV[, "animal"]/(model1.1$VCV[,"animal"] + model1.1$VCV[, "units"])
-> HPDinterval(posterior.heritability1.1, 0.95)
-> posterior.mode(posterior.heritability1.1)
+```{r}
+posterior.heritability1.1 <- model1.1$VCV[, "animal"]/(model1.1$VCV[,"animal"] + model1.1$VCV[, "units"])
+HPDinterval(posterior.heritability1.1, 0.95)
+posterior.mode(posterior.heritability1.1)
+```
 
 Generate a plot of the posterior distribution of this heritability estimate:
 ```{r, fig.cap = "The posterior distributions the heritability from model 1.1"}
@@ -376,37 +383,45 @@ plot(posterior.heritability1.1)
 ```
 
 
-## Adding fixed effects
+### Adding fixed effects
 
 To add effects to a univariate model we simply modify the fixed effect portion of the the
 model specification:
 
-> model1.2 <- MCMCglmm(BWT ~ SEX, random = ~animal, pedigree = Ped, data = Data, prior = prior1.1, nitt = 65000, thin = 50, burnin = 15000, verbose = FALSE)
+```{r, cache=TRUE}
+model1.2 <- MCMCglmm(bwt ~ sex, random = ~animal, pedigree = gryphonped, data = gryphon, prior = prior1.1, nitt = 65000, thin = 50, burnin = 15000, verbose = FALSE)
+```
 
 We can assess the significance of sex as a fixed effect by examining its posterior distribution.
 
-> posterior.mode(model1.2$Sol[, "SEX2"])
+```{r}
+posterior.mode(model1.2$Sol[, "sex2"])
 
-> HPDinterval(model1.2$Sol[, "SEX2"], 0.95)
+HPDinterval(model1.2$Sol[, "sex2"], 0.95)
+```
 
-The posterior distribution of the SEX2 term does not overlap zero. Thus the we can
+The posterior distribution of the sex2 term does not overlap zero. Thus the we can
 infer that sex has a statistical effect on birthweight in this model and is a useful addition
-to the model, for most purposes. MCMCglmm has designated SEX2 as the contrast between
+to the model, for most purposes. MCMCglmm has designated sex2 as the contrast between
 the two factor levels (male and female).
 It is also worth noting that the variance components have changed slightly:
 
-> posterior.mode(model1.2$VCV)
+```{r}
+posterior.mode(model1.2$VCV)
+```
 
-In fact since SEX effects were previously contributing to the residual variance of the
+In fact since sex effects were previously contributing to the residual variance of the
 model our estimate of V R (denoted ’units’ in the output) is now slightly lower than before.
 This has an important consequence for estimating heritability since if we calculate V P as
 V A +V R then as we include fixed effects we will soak up more residual variance driving
 V P . Assuming that V A is more or less unaffected by the fixed effects fitted then as V P
 goes down we expect our estimate of h 2 will go up.
 
-> posterior.heritability1.2 <- model1.2$VCV[, "animal"]/(model1.2$VCV[,"animal"] + model1.2$VCV[, "units"])
-> posterior.mode(posterior.heritability1.2)
-> HPDinterval(posterior.heritability1.2, 0.95)
+```{r}
+posterior.heritability1.2 <- model1.2$VCV[, "animal"]/(model1.2$VCV[,"animal"] + model1.2$VCV[, "units"])
+posterior.mode(posterior.heritability1.2)
+HPDinterval(posterior.heritability1.2, 0.95)
+```
 
 Here h 2 has increased slightly from 0.4829 to 0.5079 (again, your values may differ
 slightly due to Monte Carlo error). Which is the better estimate? It depends on what
@@ -418,24 +433,27 @@ This is done by simply modifying the model statement in the same way, but requir
 addition of a prior for the new random effect. For instance, we can fit an effect of birth
 year:
 
-> prior1.3 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(V = 1,nu = 0.002)), R = list(V = 1, nu = 0.002))
-> model1.3 <- MCMCglmm(BWT ~ SEX, random = ~animal + BYEAR, pedigree = Ped, data = Data, nitt = 65000, thin = 50, burnin = 15000, prior = prior1.3, verbose = FALSE)
-> posterior.mode(model1.3$VCV)
+```{r, cache=TRUE}
+prior1.3 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(V = 1,nu = 0.002)), R = list(V = 1, nu = 0.002))
+model1.3 <- MCMCglmm(bwt ~ sex, random = ~animal + byear, pedigree = gryphonped, data = gryphon, nitt = 65000, thin = 50, burnin = 15000, prior = prior1.3, verbose = FALSE)
+posterior.mode(model1.3$VCV)
+```
 
 Here the variance in birth weight explained by birth year is 0.7887. Note that although
 V A has changed somewhat, most of what is now partitioned as a birth year effect was
 previously partitioned as V R . Thus what we have really done here is to partition environ-
 mental effects into those arising from year to year differences versus everything else, and
 we do not really expect much change in h 2 (since now h 2 = V A /(V A + V BY + V R )).
-However, we get a somewhat different result if we also add a random effect of MOTHER
+However, we get a somewhat different result if we also add a random effect of mother
 to test for maternal effects:
-```{r}
-p.var <- var(Data$BWT, na.rm = TRUE)
+
+```{r cache=TRUE}
+p.var <- var(gryphon$bwt, na.rm = TRUE)
 prior1.4 <- list(G = list(G1 = list(V = 1, n = 0.002), G2 = list(V = 1,
 n = 0.002), G3 = list(V = 1, n = 0.002)), R = list(V = 1,
 n = 0.002))
-model1.4 <- MCMCglmm(BWT ~ SEX, random = ~animal + BYEAR + MOTHER,
-pedigree = Ped, data = Data, nitt = 65000, thin = 50, burnin = 15000,
+model1.4 <- MCMCglmm(bwt ~ sex, random = ~animal + byear + mother,
+pedigree = gryphonped, data = gryphon, nitt = 65000, thin = 50, burnin = 15000,
 prior = prior1.4, verbose = FALSE)
 posterior.mode(model1.4$VCV)
 ```
@@ -448,14 +466,16 @@ genetic effects and if present, but unmodelled, represent a type of ‘common en
 effect’ that can - and will- cause upward bias in V A and so h 2 . Let’s compare the estimates
 of heritability from each of models 1.2, 1.3 and 1.4:
 
-> posterior.heritability1.3 <- model1.3$VCV[, "animal"]/(model1.3$VCV[,"animal"] + model1.3$VCV[, "BYEAR"] + model1.3$VCV[, "units"])
-> posterior.heritability1.4 <- model1.4$VCV[, "animal"]/(model1.4$VCV[,"animal"] + model1.4$VCV[, "BYEAR"] + model1.4$VCV[, "MOTHER"] + model1.4$VCV[, "units"])
-> posterior.mode(posterior.heritability1.2)
-> posterior.mode(posterior.heritability1.3)
-> posterior.mode(posterior.heritability1.4)
+```{r}
+posterior.heritability1.3 <- model1.3$VCV[, "animal"]/(model1.3$VCV[,"animal"] + model1.3$VCV[, "byear"] + model1.3$VCV[, "units"])
+posterior.heritability1.4 <- model1.4$VCV[, "animal"]/(model1.4$VCV[,"animal"] + model1.4$VCV[, "byear"] + model1.4$VCV[, "mother"] + model1.4$VCV[, "units"])
+posterior.mode(posterior.heritability1.2)
+posterior.mode(posterior.heritability1.3)
+posterior.mode(posterior.heritability1.4)
+```
 
 
-## Testing significance of variance components
+### Testing significance of variance components
 
 While testing the significance of fixed effects by evaluating whether or not their posterior
 distributions overlap zero was simple and valid, this approach does not work for vari-
@@ -470,8 +490,10 @@ MCMCglmm by default. Briefly, DIC like other information criteria balance model 
 model complexity simultaneously, and small values of DIC are prefered. We can compare
 models 1.4 and 1.3, i.e., models with and without the mother term:
 
-> model1.3$DIC
-> model1.4$DIC
+```{r}
+model1.3$DIC
+model1.4$DIC
+```
 
 model 1.4 has a much lower DIC value. Since the maternal effect term is the only
 difference between the models, we can consider the inclusion of this term statistically
@@ -486,17 +508,17 @@ probably only be calculated based on much longer MCMC runs.
 -->
 
 ## brms
-```{r cache=TRUE}
+
+```{r cache=TRUE, eval = TRUE}
 library(brms)
-Amat <- nadiv::makeA(Ped)
+Amat <- nadiv::makeA(gryphonped)
 
 model_simple1.1 <- brm(
-  BWT ~ 1 + (1|ANIMAL), data = Data,
-  family = gaussian(), cov_ranef = list(ANIMAL = Amat),
+  bwt ~ 1 + (1|animal), data = gryphon,
+  family = gaussian(), cov_ranef = list(animal = Amat),
   chains = 2, cores = 2, iter = 1000
 )
 
 summary(model_simple1.1)
 plot(model_simple1.1)
-
 ```
