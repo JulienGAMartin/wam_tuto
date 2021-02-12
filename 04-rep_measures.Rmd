@@ -1,4 +1,4 @@
-gryphonRM# A repeated measures animal model {#rep_measures}
+# A repeated measures animal model {#rep_measures}
 
 This tutorial will demonstrate how to run a univariate animal model for a trait with repeated observations using different R packages and example data files provided.
 
@@ -22,7 +22,7 @@ gryphonRM$laydate<-as.numeric(gryphonRM$laydate)
 ```
 
 ```{r}
-str(gryphomRM)
+str(gryphonRM)
 head(gryphonRM)
 ```
 
@@ -37,7 +37,7 @@ gryphonped$father<-as.factor(gryphonped$father)
 gryphonped$mother<-as.factor(gryphonped$mother)
 ```
 
-## Asreml-R {#asreml-biv}
+## Asreml-R
 
 ### Estimating repeatability
 
@@ -176,24 +176,24 @@ Here age is modelled as a 5 level factor (see the convertion of age to a factor 
 
 Generally we expect that the repeatability will set the upper limit for heritability since, while additive genetic effects will cause among-individual variation, so will other types of effect. Non-additive contributions to fixed among-individual differences are normally referred to as ‘permanent environment effects’, although ‘non-heritable effects’ that are consistent within individuals may be a better way to think of modelling this effect. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in V A . To illustrate this fit the animal model
 
-In order to fit both permanent environemnt and additive genetic effects, we need to fit the individual identity twice in the model: once linked to the pedigree (genetic effect) and once not linked to the pedigree (permanenet environemnt effect).
-To do so, we need to duplicate the variable containing the individual identity and give it a new name.
-
 ```{r, cache = TRUE}
-gryphonRM$animal_pe <- gryphonRM$animal
 Ainv <- inverseA(gryphonped)$Ainv
-model3.3 <- MCMCglmm(laydate ~ 1 + age, random = ~ animal + animal_pe, ginv = list(animal = Ainv),
+model3.3 <- MCMCglmm(laydate ~ 1 + age, random = ~ animal, ginv = list(animal = Ainv),
   data = gryphonRM, prior = prior3.1, verbose = FALSE)
 posterior.mode(model3.3$VCV)
 ```
 
-This suggests that all of the among-individual variance is - rightly or wrongly - being partitioned as V A here. In fact here the partition is wrong since the simulation included both additive genetic effects and additional fixed heterogeneity that was not associated with the pedigree structure (i.e. permanent environment effects). An more appropriate estimate of V A is given by the model:
+This suggests that all of the among-individual variance is - rightly or wrongly - being partitioned as V A here. In fact here the partition is wrong since the simulation included both additive genetic effects and additional fixed heterogeneity that was not associated with the pedigree structure (i.e. permanent environment effects).
+In order to fit both permanent environemnt and additive genetic effects, we need to fit the individual identity twice in the model: once linked to the pedigree (genetic effect) and once not linked to the pedigree (permanenet environemnt effect).
+To do so, we need to duplicate the variable containing the individual identity and give it a new name.
+An more appropriate estimate of V A is given by the model:
 
  ```{r, cache = TRUE}
+ gryphonRM$animal_pe <- gryphonRM$animal
  p.var <- var(gryphonRM$laydate, na.rm = TRUE)
  prior3.4 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(V = 1,
  nu = 0.002)), R = list(V = 1, nu = 0.002))
- model3.4 <- MCMCglmm(laydate ~ 1 + age, random = ~animal + ID,
+ model3.4 <- MCMCglmm(laydate ~ 1 + age, random = ~animal + animal_pe,
  ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.4, verbose = FALSE)
  posterior.mode(model3.4$VCV)
 ```
@@ -201,9 +201,9 @@ This suggests that all of the among-individual variance is - rightly or wrongly 
 The estimate of V A is now much lower (reduced from 13.6735 to 5.1238) since the ad- ditive and permanent environment effects are being properly separated. We could obtain estimates of h 2 and of the repeatability from this model using the following commands:
 
 ```{r, cache = TRUE}
-model3.4.VP <- model3.4$VCV[, "animal"] + model3.4$VCV[, "ID"] + model3.4$VCV[, "units"]
-model3.4.IDplusVA <- model3.4$VCV[, "animal"] + model3.4$VCV[,"ID"]
-posterior.mode(model3.4.IDplusVA/model3.4.VP)
+model3.4.VP <- model3.4$VCV[, "animal"] + model3.4$VCV[, "animal_pe"] + model3.4$VCV[, "units"]
+model3.4.PE_VA <- model3.4$VCV[, "animal"] + model3.4$VCV[,"animal_pe"]
+posterior.mode(model3.4.PE_VA/model3.4.VP)
 posterior.mode(model3.4$VCV[, "animal"]/model3.4.VP)
 ```
 
@@ -218,7 +218,7 @@ p.var <- var(gryphonRM$laydate, na.rm = TRUE)
 prior3.5 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(V = 1,
 nu = 0.002), G3 = list(V = 1, nu = 0.002), G4 = list(V = 1,
 nu = 0.002)), R = list(V = 1, nu = 0.002))
-model3.5 <- MCMCglmm(laydate ~ 1 + age, random = ~animal + ID +
+model3.5 <- MCMCglmm(laydate ~ 1 + age, random = ~animal + animal_pe +
 year + byear, ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.5,
 verbose = FALSE)
 posterior.mode(model3.5$VCV)
