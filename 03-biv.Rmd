@@ -30,9 +30,9 @@ Reading the pedigree
 
 ```{r, eval = FALSE}
 gryphonped <- read.csv("data/gryphonped.csv")
-gryphonped$id<-as.factor(gryphonped$id)
-gryphonped$father<-as.factor(gryphonped$father)
-gryphonped$mother<-as.factor(gryphonped$mother)
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
 ```
 
 ## Asreml-R {#asreml-biv}
@@ -43,11 +43,13 @@ For running multivariate analyses in ASReml-R, the code is slightly more complex
 
 ```{r}
 ainv <- ainverse(gryphonped)
-modela<-asreml(fixed = cbind(bwt, tarsus) ~ trait,
-               random=~ us(trait):vm(animal, ainv), init=c(1, 0.1, 1),
-               residual= ~ id(units):us(trait, init=c(1, 0.1, 1)),
-               data=gryphon,
-               maxit=20)
+modela <- asreml(
+  fixed = cbind(bwt, tarsus) ~ trait,
+  random = ~ us(trait):vm(animal, ainv), init = c(1, 0.1, 1),
+  residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
+  data = gryphon,
+  maxit = 20
+)
 ```
 This has fitted a bivariate model of `bwt` and `tarsus`, with the mean for each of the traits as a fixed effect (`trait`). The additive genetic variance-covariance matrix ($\textbf{G}$) is unstructured (`us`; _i.e._ all elements are free to vary) and the starting values for $V_A$ for `bwt`, $COV_A$ between `bwt` and `tarsus`, and $V_A$ for `tarsus` are set to 1, 0.1 and 1, respectively. Similarly, the residual matrix is unstructured and uses the same starting values.
 
@@ -61,13 +63,13 @@ The first three terms relate to the genetic matrix and, in order are $V_{A,bwt}$
 
 We can calculate the genetic correlation as $COV_A / \sqrt{V_{A,bwt} \cdot V_{A,tarsus}}$. Thus this model gives an estimate of $r_A$ = `r round(summary(modela)$varcomp[2,1]/sqrt(summary(modela)$varcomp[1,1]*summary(modela)$varcomp[3,1]), 2)`. Although we can calculate this by hand, we can also use `vpredict()`, which also provides an (approximate) standard error:
 ```{r}
-vpredict(modela, rA ~ V2/sqrt(V1*V3))
+vpredict(modela, rA ~ V2 / sqrt(V1 * V3))
 ```
 
 Of course we can also calculate the heritability of `bwt` and `tarsus` from this model:
 ```{r}
-vpredict(modela, h2.bwt ~ V1/(V1+V5))
-vpredict(modela, h2.tarsus ~ V3/(V3+V7))
+vpredict(modela, h2.bwt ~ V1 / (V1 + V5))
+vpredict(modela, h2.tarsus ~ V3 / (V3 + V7))
 ```
 
 
@@ -76,13 +78,15 @@ vpredict(modela, h2.tarsus ~ V3/(V3+V7))
 Fixed and random effects can be added just as for the univariate case. Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of birth year and mother we could specify a bivariate formulation of this using:
 
 ```{r}
-modelb <- asreml(fixed = cbind(bwt, tarsus) ~ trait + trait:sex,
-               random=~ us(trait, init=c(1,0.1,1)):vm(animal, ainv) +
-                 us(trait, init=c(1,0.1,1)):byear +
-                 us(trait, init=c(1,0.1,1)):mother,
-               residual= ~ id(units):us(trait, init=c(1,0.1,1)),
-               data=gryphon,
-               maxit=20)
+modelb <- asreml(
+  fixed = cbind(bwt, tarsus) ~ trait + trait:sex,
+  random = ~ us(trait, init = c(1, 0.1, 1)):vm(animal, ainv) +
+    us(trait, init = c(1, 0.1, 1)):byear +
+    us(trait, init = c(1, 0.1, 1)):mother,
+  residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
+  data = gryphon,
+  maxit = 20
+)
 ```
 
 Note that we have specified a covariance structure for each random effect and an estimate of the effect of sex on both birth weight and tarsus length by interacting sex with trait in the fixed effect structure.
@@ -103,13 +107,15 @@ modelb$loglik
 to a model in which we specify that $COV_M$=0. Since this constraint reduces the number of parameters to be estimated by one, we can use a likelihood ratio test with one degree of freedom. To run the constrained model, we modify the G structure definition for the `mother` random effect to diagonal (`diag`), which means we only estimate the variances (the diagonal of the matrix) but not the covariance:
 
 ```{r}
-modelc <- asreml(fixed = cbind(bwt, tarsus) ~ trait + trait:sex,
-               random=~ us(trait, init=c(1,0.1,1)):vm(animal, ainv) +
-                 us(trait, init=c(1,0.1,1)):byear +
-                 diag(trait, init=c(1,1)):mother,
-               residual= ~ id(units):us(trait, init=c(1,0.1,1)),
-               data=gryphon,
-               maxit=20)
+modelc <- asreml(
+  fixed = cbind(bwt, tarsus) ~ trait + trait:sex,
+  random = ~ us(trait, init = c(1, 0.1, 1)):vm(animal, ainv) +
+    us(trait, init = c(1, 0.1, 1)):byear +
+    diag(trait, init = c(1, 1)):mother,
+  residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
+  data = gryphon,
+  maxit = 20
+)
 ```
 
 You can run `summary(modelc)$varcomp` to confirm this worked. We can now obtain the log-likelihood of this model and compare this to that of `modelb` using a likelihood ratio test:
@@ -120,12 +126,12 @@ modelc$loglik
 We can see that the model log-likelihood is now `r round(modelc$loglik, 2)`.
 And comparing the models using a likelihood ratio test:
 ```{r}
-2*(modelb$loglik-modelc$loglik)
+2 * (modelb$loglik - modelc$loglik)
 ```
 So our chi-square test statistic is $\chi^2_1$= `r round(2*(modelb$loglik-modelc$loglik),2)`.
 The p-value that goes with this is obtained by:
 ```{r}
-1-pchisq(2*(modelb$loglik-modelc$loglik),1)
+1 - pchisq(2 * (modelb$loglik - modelc$loglik), 1)
 ```
 We would therefore conclude that the maternal covariance is significantly different from zero.
 
@@ -170,29 +176,32 @@ prior2.1 <- list(
   G = list(G1 = list(V = diag(2), nu = 1.002)),
   R = list(V = diag(2), nu = 1.002)
 )
-model2.1 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1, random = ~us(trait):animal,rcov = ~us(trait):units, family = c("gaussian", "gaussian"),
-ginv = list(animal = Ainv), data = gryphon, prior = prior2.1, verbose = FALSE)
+model2.1 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1,
+  random = ~ us(trait):animal, rcov = ~ us(trait):units, family = c("gaussian", "gaussian"),
+  ginv = list(animal = Ainv), data = gryphon, prior = prior2.1, verbose = FALSE
+)
 plot(model2.1$VCV[, "traittarsus:traittarsus.animal"])
 ```
 
 We have constructed the prior similarly to the those in the univariate models in tutorial 1, only we are specifying a 2x2 covariance matrix rather than a single variance. In order to provide proper priors, we have set the degree of belief parameter to greater than 1 (1.002). Those priors are not necessarily weak or uninformative in all circumstances. We will consider them adequate nonetheless for this tutorial. Please the vignette of the MCMCglmm packages [@R-MCMCglmm] for more infomration on priors. In tutorial 1, we used full autocorrelation tables to evaluate the validity of the posterior distribution. Note that we have not done this here. For a bivariate model this table can become very complex. Nonetheless, it is worth evaluating, rather it is simply to large to include here. It can be viewed in the console as before. Here we have displayed only the autocorrelation for estimates of additive genetic effects for tarsus length with a lag of one samples (10 iterations given this MCMCglmm run with default values). This lag of `r autocorr.diag(model2.1$VCV)[,"traittarsus:traittarsus.animal"][2]` is clearly unacceptable. The posterior distribution of the additive genetic effect on tarsus length is shown in Figure 4 (p. 15), note the autocorrelation evident in the left-hand plot. We will opt to run the analysis for longer. This longer run could be run using the following code (including a line to save the output):
 
 ```{r, eval = params$fit_all}
-model2.1<-MCMCglmm(cbind(bwt,tarsus)~trait-1,
-  random=~us(trait):animal,
-  rcov=~us(trait):units,
-  family=c("gaussian","gaussian"),
-  ginv = list(animal = Ainv), data=gryphon,
-  nitt=130000,thin=100,burnin=30000,
-  prior = prior2.1,verbose=FALSE)
-save(model2.1, file="data/MCMCglmm_model2_1_LongRun.rda")
+model2.1 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1,
+  random = ~ us(trait):animal,
+  rcov = ~ us(trait):units,
+  family = c("gaussian", "gaussian"),
+  ginv = list(animal = Ainv), data = gryphon,
+  nitt = 130000, thin = 100, burnin = 30000,
+  prior = prior2.1, verbose = FALSE
+)
+save(model2.1, file = "data/MCMCglmm_model2_1_LongRun.rda")
 ```
 
 However, this run might take as long as an hour. For the purpose of this tutorial we have provided an output for such a run. It can be obtained and manipulated as follows, assuming that the file `MCMCglmm_model2_1_LongRun.rda` is available at the specified location:
 
 ```{r}
 load(file = "data/MCMCglmm_model2_1_LongRun.rda")
-autocorr.diag(model2.1$VCV)[,"traittarsus:traittarsus.animal"][2]
+autocorr.diag(model2.1$VCV)[, "traittarsus:traittarsus.animal"][2]
 ```
 
 This level of autocorrelation is more acceptable, at least for the purpose of demonstration in this tutorial.
@@ -200,12 +209,12 @@ We can recover variance components, heritabilities, and genetic correlations fro
 
 ```{r}
 posterior.mode(model2.1$VCV)
-heritability.bwt2.1 <- model2.1$VCV[, "traitbwt:traitbwt.animal"]/(model2.1$VCV[,"traitbwt:traitbwt.animal"] + model2.1$VCV[, "traitbwt:traitbwt.animal"])
+heritability.bwt2.1 <- model2.1$VCV[, "traitbwt:traitbwt.animal"] / (model2.1$VCV[, "traitbwt:traitbwt.animal"] + model2.1$VCV[, "traitbwt:traitbwt.animal"])
 posterior.mode(heritability.bwt2.1)
-heritability.tarsus2.1 <- model2.1$VCV[, "traittarsus:traittarsus.animal"]/(model2.1$VCV[,"traittarsus:traittarsus.animal"] + model2.1$VCV[, "traittarsus:traittarsus.units"])
+heritability.tarsus2.1 <- model2.1$VCV[, "traittarsus:traittarsus.animal"] / (model2.1$VCV[, "traittarsus:traittarsus.animal"] + model2.1$VCV[, "traittarsus:traittarsus.units"])
 posterior.mode(heritability.tarsus2.1)
 
-genetic.correlation2.1 <- model2.1$VCV[, "traitbwt:traittarsus.animal"]/sqrt(model2.1$VCV[,"traitbwt:traitbwt.animal"] * model2.1$VCV[, "traittarsus:traittarsus.animal"])
+genetic.correlation2.1 <- model2.1$VCV[, "traitbwt:traittarsus.animal"] / sqrt(model2.1$VCV[, "traitbwt:traitbwt.animal"] * model2.1$VCV[, "traittarsus:traittarsus.animal"])
 posterior.mode(genetic.correlation2.1)
 ```
 
@@ -214,22 +223,23 @@ Fixed and random effects can be added just as for the univariate case.
 Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of byear and mother we could specify a bivariate formulation of this using the following code (including a line to save the output):
 
 ```{r, eval = params$fit_all}
-prior2.2<-list(
+prior2.2 <- list(
   G = list(
-    G1=list(V=diag(2), nu = 1.002),
-    G2=list(V=diag(2), nu = 1.002),
-    G3=list(V=diag(2), nu = 1.002)
+    G1 = list(V = diag(2), nu = 1.002),
+    G2 = list(V = diag(2), nu = 1.002),
+    G3 = list(V = diag(2), nu = 1.002)
   ),
-  R=list(V=diag(2), nu = 1.002)
+  R = list(V = diag(2), nu = 1.002)
 )
-model2.2<-MCMCglmm(cbind(bwt,tarsus)~trait-1+trait:sex,
-  random=~us(trait):animal+us(trait):byear + us(trait):mother,
-  rcov=~us(trait):units,
-  family=c("gaussian","gaussian"),
-  ginv = list(animal = Ainv),data=gryphon,
-  nitt=130000,thin=100,burnin=30000,
-  prior=prior2.2,verbose=FALSE)
-save(model2.2, file="data/MCMCglmm_model2_2_LongRun.rda")
+model2.2 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1 + trait:sex,
+  random = ~ us(trait):animal + us(trait):byear + us(trait):mother,
+  rcov = ~ us(trait):units,
+  family = c("gaussian", "gaussian"),
+  ginv = list(animal = Ainv), data = gryphon,
+  nitt = 130000, thin = 100, burnin = 30000,
+  prior = prior2.2, verbose = FALSE
+)
+save(model2.2, file = "data/MCMCglmm_model2_2_LongRun.rda")
 ```
 
 Again we have provided the data from one such run. It can be accessed using the code:
@@ -243,8 +253,8 @@ As before we can obtain the raw variance component estimates and genetic correla
 
 ```{r}
 posterior.mode(model2.2$VCV)
-genetic.correlation2.2 <- model2.2$VCV[, "traitbwt:traittarsus.animal"]/sqrt(model2.2$VCV[,"traitbwt:traitbwt.animal"] * model2.2$VCV[, "traittarsus:traittarsus.animal"])
-maternal.correlation2.2 <- model2.2$VCV[, "traitbwt:traittarsus.mother"]/sqrt(model2.2$VCV[,"traitbwt:traitbwt.mother"] * model2.2$VCV[, "traittarsus:traittarsus.mother"])
+genetic.correlation2.2 <- model2.2$VCV[, "traitbwt:traittarsus.animal"] / sqrt(model2.2$VCV[, "traitbwt:traitbwt.animal"] * model2.2$VCV[, "traittarsus:traittarsus.animal"])
+maternal.correlation2.2 <- model2.2$VCV[, "traitbwt:traittarsus.mother"] / sqrt(model2.2$VCV[, "traitbwt:traitbwt.mother"] * model2.2$VCV[, "traittarsus:traittarsus.mother"])
 posterior.mode(genetic.correlation2.2)
 posterior.mode(maternal.correlation2.2)
 ```
@@ -271,8 +281,8 @@ Neither or these posterior distributions overlapps zero, so we can consider them
 ```{r eval = params$fit_all}
 library(brms)
 Amat <- as.matrix(nadiv::makeA(gryphonped))
-bf_bwt <- bf(bwt ~ 1 + (1|p|gr(animal, cov = Amat)))
-bf_tarsus <- bf(tarsus ~ 1 + (1|p|gr(animal, cov = Amat)))
+bf_bwt <- bf(bwt ~ 1 + (1 | p | gr(animal, cov = Amat)))
+bf_tarsus <- bf(tarsus ~ 1 + (1 | p | gr(animal, cov = Amat)))
 brms_m2.1 <- brm(
   bf_bwt + bf_tarsus + set_rescor(TRUE),
   data = gryphon,
