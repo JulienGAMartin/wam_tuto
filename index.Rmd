@@ -5,10 +5,10 @@ author: "Julien Martin"
 date: "`r format(Sys.Date(), '%d-%m-%Y')`"
 site: bookdown::bookdown_site
 documentclass: book
-#lot: yes
-#lof: yes
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
 fontsize: 12pt
-#monofont: "Source Code Pro"
 monofontoptions: "Scale=0.7"
 description: "Updated and extended tutorials from `An ecologist guide to animal model` [@Wilson2010]"
 github-repo: "JulienGAMartin/wam_tuto"
@@ -27,3 +27,10 @@ List of people who contributed to update and extend tutorials:
 
 - Eric Postma
 - Julien Martin
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown', "MCMCglmm", "asreml", "gremlin", "brms"
+), 'packages.bib')
+```
