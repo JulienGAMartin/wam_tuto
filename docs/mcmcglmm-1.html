@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.4 MCMCglmm | How to fit an animal model</title>
+  <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (???)" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.4 MCMCglmm | How to fit an animal model" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/missing.png" />
+  <meta property="og:description" content="Updated and extended tutorials from An ecologist guide to animal model (???)" />
+  <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.4 MCMCglmm | How to fit an animal model" />
+  
+  <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (???)" />
+  <meta name="twitter:image" content="images/missing.png" />
+
+<meta name="author" content="Julien Martin" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="gremlin-1.html"/>
+<link rel="next" href="brms-1.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">How to fit an animal model</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
+<li class="chapter" data-level="" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i>Contributors</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1.1</b> Data</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="data.html"><a href="data.html#data-files"><i class="fa fa-check"></i><b>1.1.1</b> Data files</a></li>
+<li class="chapter" data-level="1.1.2" data-path="data.html"><a href="data.html#notes-on-data-and-pedigree"><i class="fa fa-check"></i><b>1.1.2</b> Notes on data and pedigree</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="r.html"><a href="r.html"><i class="fa fa-check"></i><b>1.2</b> R</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="r.html"><a href="r.html#r-packages"><i class="fa fa-check"></i><b>1.2.1</b> R packages</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="univariate-animal-model.html"><a href="univariate-animal-model.html"><i class="fa fa-check"></i><b>2</b> Univariate animal model</a><ul>
+<li class="chapter" data-level="2.1" data-path="scenario-and-data.html"><a href="scenario-and-data.html"><i class="fa fa-check"></i><b>2.1</b> Scenario and data</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="scenario-and-data.html"><a href="scenario-and-data.html#scenario"><i class="fa fa-check"></i><b>2.1.1</b> Scenario</a></li>
+<li class="chapter" data-level="2.1.2" data-path="scenario-and-data.html"><a href="scenario-and-data.html#data-files-1"><i class="fa fa-check"></i><b>2.1.2</b> Data files</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="asreml-r-1.html"><a href="asreml-r-1.html"><i class="fa fa-check"></i><b>2.2</b> Asreml-R</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="asreml-r-1.html"><a href="asreml-r-1.html#running-the-model"><i class="fa fa-check"></i><b>2.2.1</b> Running the model</a></li>
+<li class="chapter" data-level="2.2.2" data-path="asreml-r-1.html"><a href="asreml-r-1.html#estimating-heritability"><i class="fa fa-check"></i><b>2.2.2</b> Estimating heritability</a></li>
+<li class="chapter" data-level="2.2.3" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-fixed-effects"><i class="fa fa-check"></i><b>2.2.3</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
+<li class="chapter" data-level="2.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html"><i class="fa fa-check"></i><b>2.4</b> MCMCglmm</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#running-the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> Running the model</a></li>
+<li class="chapter" data-level="2.4.2" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#estimating-heritability-1"><i class="fa fa-check"></i><b>2.4.2</b> Estimating heritability</a></li>
+<li class="chapter" data-level="2.4.3" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-fixed-effects-1"><i class="fa fa-check"></i><b>2.4.3</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.4.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.4</b> Testing significance of variance components</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="quick-comparison-of-codes.html"><a href="quick-comparison-of-codes.html"><i class="fa fa-check"></i><b>3</b> Quick comparison of codes</a><ul>
+<li class="chapter" data-level="3.1" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html"><i class="fa fa-check"></i><b>3.1</b> Univariate model with repeated measures</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#asreml-r-2"><i class="fa fa-check"></i><b>3.1.1</b> Asreml-R</a></li>
+<li class="chapter" data-level="3.1.2" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#gremlin-2"><i class="fa fa-check"></i><b>3.1.2</b> gremlin</a></li>
+<li class="chapter" data-level="3.1.3" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#mcmcglmm-2"><i class="fa fa-check"></i><b>3.1.3</b> MCMCglmm</a></li>
+<li class="chapter" data-level="3.1.4" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#brms-2"><i class="fa fa-check"></i><b>3.1.4</b> brms</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="bivariate-model.html"><a href="bivariate-model.html"><i class="fa fa-check"></i><b>3.2</b> bivariate model</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="bivariate-model.html"><a href="bivariate-model.html#asreml-r-3"><i class="fa fa-check"></i><b>3.2.1</b> Asreml-R</a></li>
+<li class="chapter" data-level="3.2.2" data-path="bivariate-model.html"><a href="bivariate-model.html#gremlin-3"><i class="fa fa-check"></i><b>3.2.2</b> gremlin</a></li>
+<li class="chapter" data-level="3.2.3" data-path="bivariate-model.html"><a href="bivariate-model.html#mcmcglmm-3"><i class="fa fa-check"></i><b>3.2.3</b> MCMCglmm</a></li>
+<li class="chapter" data-level="3.2.4" data-path="bivariate-model.html"><a href="bivariate-model.html#brms-3"><i class="fa fa-check"></i><b>3.2.4</b> brms</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">How to fit an animal model</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="mcmcglmm-1" class="section level2">
+<h2><span class="header-section-number">2.4</span> MCMCglmm</h2>
+<div id="running-the-model-1" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Running the model</h3>
+<p>First load MCMCglmm:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">library</span>(MCMCglmm)</a></code></pre></div>
+<p>The first model we will fit is a simple animal model with no fixed effects, and only an
+‘animal’ random effect relating individuals to their additive genetic values through the
+pedigree. First we are going to define priors. In a way we might want to avoid using
+priors, because we would like all of the infromation in our analysis to come from our data.
+By default MCMCglmm uses improper priors, but this can cause inferential and numerical
+problems. We will specify priors for the animal effect and the residual variance using the
+following code:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">Ainv &lt;-<span class="st"> </span><span class="kw">inverseA</span>(gryphonped)<span class="op">$</span>Ainv</a>
+<a class="sourceLine" id="cb37-2" title="2">prior1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb37-3" title="3">  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</a>
+<a class="sourceLine" id="cb37-4" title="4">  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)</a>
+<a class="sourceLine" id="cb37-5" title="5">)</a></code></pre></div>
+<p>This prior specification used to be used a lot because it was believed to be relatively
+uninformative, and is equivalent to an inverse-gamma prior with shape and scale equal to
+0.001. In many cases it is relatively uninformative but when the posterior distribution for
+the variances has suport close to zero it can behave poorly. Parameter expanded priors
+(See Chapter 8 of the CourseNotes) are gaining in popularity due to their better behaviour
+but for the purposes of this tutorial we will stick with the inverse-gamma prior. We have
+told MCMCglmm to pay little heed to our prior expectaion (V) by specifying a small degree
+of belief parameter (nu) of 0.002. Since this is a univariate analysis, the priors are matricies
+of order 1 and thus nu&gt;0 is the smallest degree of belief that provides what is known as
+a ‘proper’ prior, avoiding numerical problems. In fact, there is a lot of information in the
+data regarding the marginal distributions of the parameters, and MCMCglmm will run most
+of the models that we suggest in these tutorials without priors. However, this is poor
+practice, and we will therefore use priors throughout these tutorials.
+We can now fit an animal model. The model to decompose variation in birth weight
+into genetic and residual effects is as follows:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">model1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal, <span class="dt">pedigree =</span> gryphonped, <span class="dt">data =</span> gryphon, <span class="dt">prior =</span> prior1<span class="fl">.1</span>)</a></code></pre></div>
+<pre><code>## 
+##                        MCMC iteration = 0
+## 
+##                        MCMC iteration = 1000
+## 
+##                        MCMC iteration = 2000
+## 
+##                        MCMC iteration = 3000
+## 
+##                        MCMC iteration = 4000
+## 
+##                        MCMC iteration = 5000
+## 
+##                        MCMC iteration = 6000
+## 
+##                        MCMC iteration = 7000
+## 
+##                        MCMC iteration = 8000
+## 
+##                        MCMC iteration = 9000
+## 
+##                        MCMC iteration = 10000
+## 
+##                        MCMC iteration = 11000
+## 
+##                        MCMC iteration = 12000
+## 
+##                        MCMC iteration = 13000</code></pre>
+<p>After typing this code, MCMCglmm will run, taking about 20 seconds on a modern desk-
+top computer. The progress of the run will be printed to the screen. Also, note the
+warning message will be printed at the end of the run. This is natural too. In order
+for the MCMC algorithm to work, MCMCglmm must keep track of effects associated with
+unmeasured individuals appearing in the pedigree. This will not affect the answers, but
+when many unmeasured individuals exist, it can hinder the ability of the algorithm to
+explore the parameter space (more on this, and a solution, later).
+Lets have a look at the MCMCglmm outputs. First we will evaluate how confident we
+can be that MCMCglmm found good answers. By entering</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">plot</span>(model1<span class="fl">.1</span><span class="op">$</span>Sol)</a></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-27"></span>
+<img src="wam_tuto_files/figure-html/unnamed-chunk-27-1.svg" alt="The posterior distribution of the fixed effect (the intercept, or mean) in model 1.1" width="672" />
+<p class="caption">
+Figure 2.1: The posterior distribution of the fixed effect (the intercept, or mean) in model 1.1
+</p>
+</div>
+<p>in the console, we get Figure 1 (p. 5). The plot on the left shows a time series of
+the values of 1000 samples of the posterior distribution of the the model intercept (mean
+birthweight). The plot on the right shows the same data as a distribution. Complicated
+statistical methods for estimating population means are of course of little interest; rather,
+we are examining these outputs to check that MCMCglmm’s algorithms worked well for
+our data and for this model. The important point here is that a consistent amount of variation around a largely unchanging mean value of the intercept was obtained, and
+the posterior distribution of the intercept appears to be valid. More rigorous means
+of evaluation the independence of the samples in the posterior distribution (evaluating
+autocorrelation) are discussed in the MCMCglmm CourseNotes, available from CRAN.
+Note that your output for model 1.1 may not be identical to this due to Monte Carlo
+(random number) error.</p>
+<p>The posterior distributions of the the variance components are generally of more inter-
+est to animal model users. We can view plots of the posterior distribution for the variance
+components for model 1.1 by</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">plot</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</a></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-28"></span>
+<img src="wam_tuto_files/figure-html/unnamed-chunk-28-1.svg" alt="The posterior distributions of the variance components of model 1.1, based on an analysis with the default values for nitt, burnin, and thin in MCMCglmm" width="672" />
+<p class="caption">
+Figure 2.2: The posterior distributions of the variance components of model 1.1, based on an analysis with the default values for nitt, burnin, and thin in MCMCglmm
+</p>
+</div>
+<p>which generates Figure 2 (p. 6). Here we see distributions of the estimates of the
+additive genetic (animal) and residual (units) effects. These samples contain some au-
+tocorrelation, i.e., trends are apparent in the left-hand plot. We can deal with this easily.</p>
+<p>We will simply re-run the model for a longer number of iterations, and sample the chain
+less frequently. So far we have been running MCMCglmm with its default values. These
+defaults are a total run length of 13000 iterations, the first 3000 of which are discarded
+as a ‘burn-in’ period to make sure that the converges to the part of the parameter space
+where the maximum likelihood exists. The remaining 10000 iterations are sampled (es-
+timates retained) every 10 iterations (the thinning interval). Because the values in the
+left-hand plots in figure 2 to appear to have different values at the beginning of the run,
+we might suspect that a longer burn-in period might be required. We can reduce the
+autocorrelation by lengthening the rest of the run and sampling the chain less frequently.
+The following code runs the same model 1.1, but is likely to produce better samples of
+the posterior distributions. This model should take about two minutes to analyze.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">model1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">pedigree =</span> gryphonped, <span class="dt">data =</span> gryphon, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>, <span class="dt">prior =</span> prior1<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>Notice that we have now included the command verbose=FALSE in the MCMCglmm call.
+We will continue this throughout the tutorial so that more complete screen outputs can
+be included in this document without using too much space.
+Now produce the plots of the samples of the fixed and random effects (they have not
+been included in this document). Note that the autocorrelation is much reduced. A
+more compact way to evaluate the validity of the posterior distributions is to calculate
+autocorrelation among samples, as follows:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">autocorr.diag</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##                animal       units
+## Lag 0     1.000000000  1.00000000
+## Lag 50    0.131784499  0.15366694
+## Lag 250   0.049670629  0.03678270
+## Lag 500  -0.058919704 -0.11827232
+## Lag 2500  0.005273108 -0.05706839</code></pre>
+<p>We will consider these levels of autocorrelation acceptable, at least for the purposes
+of this tutorial. Ideally, all samples of the posterior distribution should be independent,
+and the autocorrelation for all lag values greater than zero should be near zero. However, in practice this will not strictly be achievable for all analytical scenarios. Certainly the
+levels of autocorrelation observed here should not be tollerated in any formal analysis.
+Note that the validity of posterior distributions of any analysis should always be checked;
+however, for brevity we will not continue to be so consistently diligent throughout the rest
+of these tutorials. We can now proceed with confidence to recover some more information
+from these samples. We can obtain estimates of the additive genetic and residual variance
+by calculating the modes of the posterior distributions:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">posterior.mode</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##   animal    units 
+## 3.167929 3.929677</code></pre>
+<p>We can obtain the Bayesian equivalent of confidence intervals by calculating the the
+values of the estimates that bound 95% (or any other proportion) of the posterior distri-
+butions:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">HPDinterval</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##           lower    upper
+## animal 2.215772 4.602692
+## units  2.865569 4.865660
+## attr(,&quot;Probability&quot;)
+## [1] 0.95</code></pre>
+<p>We specified weak priors in this analyses. Now we will check whether or not proper
+priors would have influenced the results that we obtained. The simplest way to do this
+is to rerun the model with different priors. Here we construct priors with a larger degree
+of belief parameter, and we will specify that a large proportion of the variation is under
+genetic control:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">p.var &lt;-<span class="st"> </span><span class="kw">var</span>(gryphon<span class="op">$</span>bwt, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb49-2" title="2">prior1.<span class="fl">1.2</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="kw">matrix</span>(p.var <span class="op">*</span><span class="st"> </span><span class="fl">0.05</span>),</a>
+<a class="sourceLine" id="cb49-3" title="3"><span class="dt">nu =</span> <span class="dv">1</span>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="kw">matrix</span>(p.var <span class="op">*</span><span class="st"> </span><span class="fl">0.95</span>), <span class="dt">nu =</span> <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb49-4" title="4">model1.<span class="fl">1.2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">pedigree =</span> gryphonped,</a>
+<a class="sourceLine" id="cb49-5" title="5"><span class="dt">data =</span> gryphon, <span class="dt">prior =</span> prior1.<span class="fl">1.2</span>, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>,</a>
+<a class="sourceLine" id="cb49-6" title="6"><span class="dt">burnin =</span> <span class="dv">15000</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb49-7" title="7"><span class="kw">posterior.mode</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##   animal    units 
+## 3.167929 3.929677</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">posterior.mode</span>(model1.<span class="fl">1.2</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##   animal    units 
+## 3.421641 3.900120</code></pre>
+<p>and we can therefore conclude that the difference in the priors has little effect on the
+outcome of the analysis. This is typical for an analysis where lots of data are available
+relative to the complexity of the model, but is often not the case. In all cases, it is
+important to check the effect of priors on conclusions drawn from a model.</p>
+</div>
+<div id="estimating-heritability-1" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Estimating heritability</h3>
+<p>A useful property of Bayesian posterior distributions is that we can apply almost any
+transformation to these distributions and they will remain valid. This applies to the
+calculation of heritabilities. We can obtain an estimate of the heritability by applying the
+basic formula h 2 =V A /V P to each sample of the posterior disribution:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">posterior.heritability1<span class="fl">.1</span> &lt;-<span class="st"> </span>model1<span class="fl">.1</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>]<span class="op">/</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV[,<span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.1</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</a>
+<a class="sourceLine" id="cb53-2" title="2"><span class="kw">HPDinterval</span>(posterior.heritability1<span class="fl">.1</span>, <span class="fl">0.95</span>)</a></code></pre></div>
+<pre><code>##          lower     upper
+## var1 0.3245309 0.6067394
+## attr(,&quot;Probability&quot;)
+## [1] 0.95</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.1</span>)</a></code></pre></div>
+<pre><code>##     var1 
+## 0.467624</code></pre>
+<p>Generate a plot of the posterior distribution of this heritability estimate:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw">plot</span>(posterior.heritability1<span class="fl">.1</span>)</a></code></pre></div>
+<div class="figure"><span id="fig:unnamed-chunk-35"></span>
+<img src="wam_tuto_files/figure-html/unnamed-chunk-35-1.svg" alt="The posterior distributions the heritability from model 1.1" width="672" />
+<p class="caption">
+Figure 2.3: The posterior distributions the heritability from model 1.1
+</p>
+</div>
+</div>
+<div id="adding-fixed-effects-1" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> Adding fixed effects</h3>
+<p>To add effects to a univariate model we simply modify the fixed effect portion of the the
+model specification:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">model1<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex, <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">pedigree =</span> gryphonped, <span class="dt">data =</span> gryphon, <span class="dt">prior =</span> prior1<span class="fl">.1</span>, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p>We can assess the significance of sex as a fixed effect by examining its posterior distribution.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">posterior.mode</span>(model1<span class="fl">.2</span><span class="op">$</span>Sol[, <span class="st">&quot;sex2&quot;</span>])</a></code></pre></div>
+<pre><code>##     var1 
+## 2.203489</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw">HPDinterval</span>(model1<span class="fl">.2</span><span class="op">$</span>Sol[, <span class="st">&quot;sex2&quot;</span>], <span class="fl">0.95</span>)</a></code></pre></div>
+<pre><code>##         lower    upper
+## var1 1.886448 2.537313
+## attr(,&quot;Probability&quot;)
+## [1] 0.95</code></pre>
+<p>The posterior distribution of the sex2 term does not overlap zero. Thus the we can
+infer that sex has a statistical effect on birthweight in this model and is a useful addition
+to the model, for most purposes. MCMCglmm has designated sex2 as the contrast between
+the two factor levels (male and female).
+It is also worth noting that the variance components have changed slightly:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="kw">posterior.mode</span>(model1<span class="fl">.2</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##   animal    units 
+## 2.999294 2.788520</code></pre>
+<p>In fact since sex effects were previously contributing to the residual variance of the
+model our estimate of V R (denoted ’units’ in the output) is now slightly lower than before.
+This has an important consequence for estimating heritability since if we calculate V P as
+V A +V R then as we include fixed effects we will soak up more residual variance driving
+V P . Assuming that V A is more or less unaffected by the fixed effects fitted then as V P
+goes down we expect our estimate of h 2 will go up.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">posterior.heritability1<span class="fl">.2</span> &lt;-<span class="st"> </span>model1<span class="fl">.2</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>]<span class="op">/</span>(model1<span class="fl">.2</span><span class="op">$</span>VCV[,<span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.2</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</a>
+<a class="sourceLine" id="cb65-2" title="2"><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.2</span>)</a></code></pre></div>
+<pre><code>##      var1 
+## 0.5125448</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw">HPDinterval</span>(posterior.heritability1<span class="fl">.2</span>, <span class="fl">0.95</span>)</a></code></pre></div>
+<pre><code>##         lower     upper
+## var1 0.369133 0.6425836
+## attr(,&quot;Probability&quot;)
+## [1] 0.95</code></pre>
+<p>Here h 2 has increased slightly from 0.4829 to 0.5079 (again, your values may differ
+slightly due to Monte Carlo error). Which is the better estimate? It depends on what
+your question is. The first is an estimate of the proportion of variance in birth weight
+explained by additive effects, the latter is an estimate of the proportion of variance in
+birth weight after conditioning on sex that is explained by additive effects.
+Adding random effects
+This is done by simply modifying the model statement in the same way, but requires
+addition of a prior for the new random effect. For instance, we can fit an effect of birth
+year:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">prior1<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>,<span class="dt">nu =</span> <span class="fl">0.002</span>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</a>
+<a class="sourceLine" id="cb69-2" title="2">model1<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex, <span class="dt">random =</span> <span class="op">~</span>animal <span class="op">+</span><span class="st"> </span>byear, <span class="dt">pedigree =</span> gryphonped, <span class="dt">data =</span> gryphon, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>, <span class="dt">prior =</span> prior1<span class="fl">.3</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb69-3" title="3"><span class="kw">posterior.mode</span>(model1<span class="fl">.3</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##    animal     byear     units 
+## 2.6385679 0.8993202 2.2046897</code></pre>
+<p>Here the variance in birth weight explained by birth year is 0.7887. Note that although
+V A has changed somewhat, most of what is now partitioned as a birth year effect was
+previously partitioned as V R . Thus what we have really done here is to partition environ-
+mental effects into those arising from year to year differences versus everything else, and
+we do not really expect much change in h 2 (since now h 2 = V A /(V A + V BY + V R )).
+However, we get a somewhat different result if we also add a random effect of mother
+to test for maternal effects:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1">p.var &lt;-<span class="st"> </span><span class="kw">var</span>(gryphon<span class="op">$</span>bwt, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb71-2" title="2">prior1<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb71-3" title="3"><span class="dt">n =</span> <span class="fl">0.002</span>), <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">n =</span> <span class="fl">0.002</span>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb71-4" title="4"><span class="dt">n =</span> <span class="fl">0.002</span>))</a>
+<a class="sourceLine" id="cb71-5" title="5">model1<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex, <span class="dt">random =</span> <span class="op">~</span>animal <span class="op">+</span><span class="st"> </span>byear <span class="op">+</span><span class="st"> </span>mother,</a>
+<a class="sourceLine" id="cb71-6" title="6"><span class="dt">pedigree =</span> gryphonped, <span class="dt">data =</span> gryphon, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>,</a>
+<a class="sourceLine" id="cb71-7" title="7"><span class="dt">prior =</span> prior1<span class="fl">.4</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb71-8" title="8"><span class="kw">posterior.mode</span>(model1<span class="fl">.4</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##    animal     byear    mother     units 
+## 2.3128362 0.8655868 0.9579671 1.7089569</code></pre>
+<p>Here partitioning of significant maternal variance has resulted in a further decrease
+in V R but also a decrease in V A . The latter is because maternal effects of the sort we
+simulated (fixed differences between mothers) will have the consequence of increasing
+similarity among maternal siblings. Consequently they can look very much like additive
+genetic effects and if present, but unmodelled, represent a type of ‘common environment
+effect’ that can - and will- cause upward bias in V A and so h 2 . Let’s compare the estimates
+of heritability from each of models 1.2, 1.3 and 1.4:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1">posterior.heritability1<span class="fl">.3</span> &lt;-<span class="st"> </span>model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>]<span class="op">/</span>(model1<span class="fl">.3</span><span class="op">$</span>VCV[,<span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;byear&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</a>
+<a class="sourceLine" id="cb73-2" title="2">posterior.heritability1<span class="fl">.4</span> &lt;-<span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>]<span class="op">/</span>(model1<span class="fl">.4</span><span class="op">$</span>VCV[,<span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;byear&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;mother&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</a>
+<a class="sourceLine" id="cb73-3" title="3"><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.2</span>)</a></code></pre></div>
+<pre><code>##      var1 
+## 0.5125448</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1"><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.3</span>)</a></code></pre></div>
+<pre><code>##      var1 
+## 0.4750193</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.4</span>)</a></code></pre></div>
+<pre><code>##      var1 
+## 0.4352122</code></pre>
+</div>
+<div id="testing-significance-of-variance-components" class="section level3">
+<h3><span class="header-section-number">2.4.4</span> Testing significance of variance components</h3>
+<p>While testing the significance of fixed effects by evaluating whether or not their posterior
+distributions overlap zero was simple and valid, this approach does not work for vari-
+ance components. Variance components are bound to be positive (given a proper prior),
+and thus even when a random effect is not meaningful, its posterior distribution will
+never overlap zero. Model comparisons can be performed using the deviance information
+criterion (DIC), although it should be noted that the properties of DIC are not well un-
+derstood and that the DIC may be focused at the wrong level for most people’s intended
+level of infernce - particularly with non-Gaussian responses. The implementation of DIC
+in MCMCglmm is further described in the reference manual. DIC values are calculated by
+MCMCglmm by default. Briefly, DIC like other information criteria balance model fit and
+model complexity simultaneously, and small values of DIC are prefered. We can compare
+models 1.4 and 1.3, i.e., models with and without the mother term:</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">model1<span class="fl">.3</span><span class="op">$</span>DIC</a></code></pre></div>
+<pre><code>## [1] 3546.14</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1">model1<span class="fl">.4</span><span class="op">$</span>DIC</a></code></pre></div>
+<pre><code>## [1] 3298.733</code></pre>
+<p>model 1.4 has a much lower DIC value. Since the maternal effect term is the only
+difference between the models, we can consider the inclusion of this term statistically
+justifiable. We should note however that DIC has a large sampling variance and should
+probably only be calculated based on much longer MCMC runs.</p>
+<!--
+################################################################################
+################################################################################
+################################################################################
+-->
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="gremlin-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="brms-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/JulienGAMartin/wam_tuto/02-univ.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["wam_tuto.pdf", "wam_tuto.epub", "wam_tuto.mobi"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
