@@ -125,6 +125,22 @@ This model will return additional variance components corresponding to variation
 `YEAR` effects could alternatively be included as fixed effects (try this!). This will reduce $V_R$ and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.
 
 
+<!--
+################################################################################
+################################################################################
+################################################################################
+-->
+
+## gremlin
+
+
+<!--
+################################################################################
+################################################################################
+################################################################################
+-->
+
+
 ## MCMCglmm
 
 ### Estimating repeatability
@@ -273,3 +289,26 @@ able to handle the new prior specification at this point). Since we simulated la
 of measurement effects this treatment will reduce V R and increase the the estimates of
 heritability and repeatability which must now be interpreted as proportions of phenotypic
 variance after conditioning on both age and year of measurement effects.
+
+
+<!--
+################################################################################
+################################################################################
+################################################################################
+-->
+
+## brms
+
+## brms
+```{r cache=TRUE}
+library(brms)
+Amat <- nadiv::makeA(Ped)
+
+model_simple1.1 <- brm(
+  BWT ~ 1 + (1|ANIMAL) + (1|ID), data = Data,
+  family = gaussian(), cov_ranef = list(ANIMAL = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+
+summary(model_simple1.1)
+plot(model_simple1.1)

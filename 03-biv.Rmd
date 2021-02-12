@@ -406,3 +406,24 @@ able to handle the new prior specification at this point). Since we simulated la
 of measurement effects this treatment will reduce V R and increase the the estimates of
 heritability and repeatability which must now be interpreted as proportions of phenotypic
 variance after conditioning on both age and year of measurement effects.
+
+<!--
+################################################################################
+################################################################################
+################################################################################
+-->
+
+## brms
+
+```{r cache = TRUE}
+library(brms)
+Amat <- nadiv::makeA(Ped)
+model_simple2.1 <- brm(
+  cbind(BWT, TARSUS) ~ 1 + (1|animal), data = Data,
+  family = gaussian(), cov_ranef = list(ANIMAL = A),
+  chains = 2, cores = 2, iter = 1000
+)
+summary(model_simple2.1)
+plot(model_simple2.1)
+VarCorr(model_simple2.1)
+```
