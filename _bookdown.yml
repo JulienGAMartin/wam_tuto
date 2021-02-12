@@ -5,3 +5,11 @@ delete_merged_file: true
 language:
   ui:
     chapter_name: "Chapter "
+rmd_files: ["index.Rmd",
+  "01-intro.Rmd",
+  "02-univ.Rmd",
+#  "03-reg_lin.Rmd",
+#  "04-t_test.Rmd",
+#  "05-anova.Rmd",
+  "06-references.Rmd",
+  ]

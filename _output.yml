@@ -16,8 +16,9 @@ bookdown::gitbook:
         <li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
     download: [pdf, epub, mobi]
     edit: https://github.com/JulienGAMartin/wam_tuto/%s
-    sharing: true
+    sharing:
       github: yes
+      twitter: yes
       facebook: no
 bookdown::epub_book:
   dev: svglite
