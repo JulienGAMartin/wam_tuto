@@ -10,3 +10,4 @@ docs/preview
 *.log
 wamwiki-old
 brms-wam-master
+*.Rproj
