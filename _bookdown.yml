@@ -1,5 +1,5 @@
 book_filename: "wam_tuto"
-repo: hhttps://juliengamartin.github.io/wam_tuto
+repo: https://juliengamartin.github.io/wam_tuto
 output_dir: docs
 delete_merged_file: true
 language:

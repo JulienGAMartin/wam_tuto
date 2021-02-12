@@ -245,7 +245,7 @@ save(model2.2, file = "data/MCMCglmm_model2_2_LongRun.rda")
 Again we have provided the data from one such run. It can be accessed using the code:
 
 ```{r}
-load(file = "data/MCMCglmm_model2_2_LongRun.Rdat")
+load(file = "data/MCMCglmm_model2_2_LongRun.rda")
 autocorr(model2.2$VCV)[, , "traittarsus:traittarsus.animal"][3, 4]
 ```
 

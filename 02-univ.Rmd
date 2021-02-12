@@ -425,6 +425,6 @@ save(brms_m1.1, file = "data/brms_m1_1.rda")
 
 ```{r}
 load("data/brms_m1_1.rda")
-summary(brms_m1_1)
-plot(brms_m1_1)
+summary(brms_m1.1)
+plot(brms_m1.1)
 ```
