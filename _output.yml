@@ -3,10 +3,10 @@ bookdown::gitbook:
   css: css/style.css
   split_by: section
   scroll_highlight: yes
-  includes:
+  #includes:
     #before_body: preamble-mathjax.tex
     #in_header: js/hide_code.html
-    after_body: js/js_solution.html
+    #after_body: js/js_solution.html
   config:
     toc:
       collapse: section

@@ -10,6 +10,6 @@ rmd_files: ["index.Rmd",
   "02-univ.Rmd",
 #  "03-reg_lin.Rmd",
 #  "04-t_test.Rmd",
-#  "05-anova.Rmd",
+  "05-code_cheatsheet.Rmd",
   "06-references.Rmd",
   ]
