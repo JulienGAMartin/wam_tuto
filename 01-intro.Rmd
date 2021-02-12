@@ -1,6 +1,6 @@
 # Introduction {#intro}
 
-The tutorials and accompanying data files are provided separately for different software packages using `R`: `ASReml-R`, `gremlin`, `MCMCglmm` and `brms` .
+The book is provides a series of tutorials (and accompanying data files) to fit animal model in `R` using different packages (`ASReml-R`, `gremlin`, `MCMCglmm` and `brms`) .
 You will need to carefully follow the instructions below to download the data files and install the R packages.
 Before beginning the tutorial, we assume the reader has successfully installed the chosen R package on their computer and has saved the required data files to an appropriate directory from which they will be read.
 Full instructions for how to do this are provided with software distributions.
@@ -13,13 +13,15 @@ To work though the different tutorial I would recommend to create a folder where
 
  You will need to download 3 data files for the tutorial in `R`:
 
-- gryphon.txt: data on gryphon birth weight
-- gryphonRM.txt: data
-- gryphonped.txt
+- gryphon.csv: data on gryphon birth weight
+- gryphonRM.csv: data
+- gryphonped.csv
 
-The files are available [here]()
+In addition, some models presented in the tutorials can take a while to run (sometimes > 1 hour), thus we are also providing model the model outputs to allow you continue the tutorial without waiting for the model to run.
 
-I recommend to save the data files in a subfolder `data` in the folder you will use as your working directory for R and where you will save your R scripts. It should be noted that the tutorial are using this structure to read or save data.
+The files are available [here](https://github.com/JulienGAMartin/wam_tuto/tree/master/data)
+
+I recommend to save the data and Rdata files in a subfolder `data` in the folder you will use as your working directory for R and where you will save your R scripts. It should be noted that the tutorial are using this structure to read or save data.
 
 
 ### Notes on data and pedigree
@@ -29,20 +31,23 @@ It is always important to take time to think carefully about the strengths and p
 ## R
 
 describe R Briefly
-You should check that you have the most current version of R and R packages. You can check the number of the current version on CRAN. If you need to update (or install) R packages, use install.packages() and follow the prompted instructions.
+You should check that you have the most current version of R and R packages. You can check the number of the current version on CRAN. If you need to update (or install) R packages, use `install.packages()` and follow the prompted instructions.
 
 ### R packages
 
 describe briefly the differnet r packages indicate how to load and install provide warning on cost and complexity indicating that we are just touching the surface of what they can do
 
 #### asreml-r
-ASReml-R are commercial software applications published by VSN international (http://www.vsni.co.uk/software/asreml/).
+
+ASReml-R is commercial software published by VSN international (http://www.vsni.co.uk/software/asreml/).
 
 #### gremlin
 
+`gremlin` is a little monster appearing if you wet a mugwai and feed it after midnight. It is also a great and promising software to fit mixed models using a freuqentist approach.
+
 #### MCMCglmm
 
-MCMCglmm is an R package for Bayesian mixed model analysis written by Jarrod Hadfield. It is
+`MCMCglmm` is an R package for Bayesian mixed model analysis written by Jarrod Hadfield. It is
 freeware distributed through CRAN (http://cran.r-project.org/). Information about the package, together
 with a user manual and vignettes are available at http://cran.r-project.org/web/packages/MCMCglmm/index.html .
 Reference: [@Hadfield2009].
@@ -54,3 +59,8 @@ These tutorials do not introduce one of the main advantages of using MCMCglmm fo
 These capabilities are introduced inthe documentation that is distributed with MCMCglmm, and available from CRAN.
 
 #### brms
+
+`brms` provides an interface to fit Bayesian generalized multivariate (non-)linear multilevel models using `Stan`, which is a C++ package for obtaining full Bayesian inference (see https://mc-stan.org/).
+The formula syntax is an extended version of the syntax applied in the ‘lme4’ package to provide a familiar and simple interface for performing regression analyses.
+
+It should be noted that if `brms` is able to fit animal model the parametrization used based on Kroeneker products is not the most efficient and can take quite longer than using a DAG parametrisation directly in `stan`.
