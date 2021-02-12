@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.2 bivariate model | How to fit an animal model</title>
+  <title>4.5 brms | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.2 bivariate model | How to fit an animal model" />
+  <meta property="og:title" content="4.5 brms | How to fit an animal model" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/missing.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.2 bivariate model | How to fit an animal model" />
+  <meta name="twitter:title" content="4.5 brms | How to fit an animal model" />
   
   <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="twitter:image" content="images/missing.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="univariate-model-with-repeated-measures.html"/>
-<link rel="next" href="references.html"/>
+<link rel="prev" href="mcmcglmm-3.html"/>
+<link rel="next" href="quick-comparison-of-codes.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -234,21 +234,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bivariate-model" class="section level2">
-<h2><span class="header-section-number">5.2</span> bivariate model</h2>
-<div id="asreml-r-4" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Asreml-R</h3>
-</div>
-<div id="gremlin-5" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> gremlin</h3>
-</div>
-<div id="mcmcglmm-5" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> MCMCglmm</h3>
-</div>
-<div id="brms-5" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> brms</h3>
+<div id="brms-3" class="section level2">
+<h2><span class="header-section-number">4.5</span> brms</h2>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" title="1"><span class="kw">library</span>(brms)</a>
+<a class="sourceLine" id="cb192-2" title="2">Amat &lt;-<span class="st"> </span>nadiv<span class="op">::</span><span class="kw">makeA</span>(Ped)</a>
+<a class="sourceLine" id="cb192-3" title="3"></a>
+<a class="sourceLine" id="cb192-4" title="4">model_simple1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</a>
+<a class="sourceLine" id="cb192-5" title="5">  bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>animal) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">|</span>animal_pe), <span class="dt">data =</span> gryphonRM,</a>
+<a class="sourceLine" id="cb192-6" title="6">  <span class="dt">family =</span> <span class="kw">gaussian</span>(), <span class="dt">cov_ranef =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Amat),</a>
+<a class="sourceLine" id="cb192-7" title="7">  <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>, <span class="dt">iter =</span> <span class="dv">1000</span></a>
+<a class="sourceLine" id="cb192-8" title="8">)</a>
+<a class="sourceLine" id="cb192-9" title="9"></a>
+<a class="sourceLine" id="cb192-10" title="10"><span class="kw">summary</span>(model_simple1<span class="fl">.1</span>)</a>
+<a class="sourceLine" id="cb192-11" title="11"><span class="kw">plot</span>(model_simple1<span class="fl">.1</span>)</a></code></pre></div>
 
-</div>
 </div>
 <!-- </div> -->
             </section>
@@ -256,8 +255,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="univariate-model-with-repeated-measures.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="mcmcglmm-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="quick-comparison-of-codes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -288,7 +287,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/JulienGAMartin/wam_tuto/05-code_cheatsheet.Rmd",
+"link": "https://github.com/JulienGAMartin/wam_tuto/04-rep_measures.Rmd",
 "text": "Edit"
 },
 "history": {

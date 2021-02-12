@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.2 bivariate model | How to fit an animal model</title>
+  <title>3.1 Scenario and data | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.2 bivariate model | How to fit an animal model" />
+  <meta property="og:title" content="3.1 Scenario and data | How to fit an animal model" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/missing.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.2 bivariate model | How to fit an animal model" />
+  <meta name="twitter:title" content="3.1 Scenario and data | How to fit an animal model" />
   
   <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="twitter:image" content="images/missing.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="univariate-model-with-repeated-measures.html"/>
-<link rel="next" href="references.html"/>
+<link rel="prev" href="multivariate-animal-model.html"/>
+<link rel="next" href="asreml-biv.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -234,30 +234,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bivariate-model" class="section level2">
-<h2><span class="header-section-number">5.2</span> bivariate model</h2>
-<div id="asreml-r-4" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Asreml-R</h3>
+<div id="scenario-and-data-1" class="section level2">
+<h2><span class="header-section-number">3.1</span> Scenario and data</h2>
+<div id="scenario-1" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Scenario</h3>
+<p>Since natural selection rarely acts on single traits, to understand how birth weight might evolve in our population of gryphons, we may also want to think about possible covariance with other traits. If tarsus length at fledging is also under positive selection, what implications does this have for birth weight and vice versa? If the two traits are positively genetically correlated then this will facilitate evolution of larger size (since response of one trait will induce a positively correlated response in the other). If there is negative genetic covariance then this could act as an evolutionary constraint.</p>
+<p>Using multivariate models allows the estimation of parameters relating to each trait alone (<em>i.e.</em> <span class="math inline">\(V_A\)</span>, <span class="math inline">\(h^2\)</span>, etc), but also yields estimates of covariance components between traits. These include the (additive) genetic covariance <span class="math inline">\(COV_A\)</span> which is often rescaled to give the additive genetic correlation <span class="math inline">\(r_A\)</span>. However, covariance can also arise through other random effects (<em>e.g.</em> maternal covariance) and these sources can also be explicitly modelled in a bivariate analysis.</p>
 </div>
-<div id="gremlin-5" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> gremlin</h3>
+<div id="gryphon-files" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> gryphon files</h3>
+<p>gryphonpedigree and phenotypic data files are the same as those used in tutorial 1 (<em>i.e</em>, <code>gryphonped.csv</code> and <code>gryphon.csv</code> respectively).</p>
+<p>Reading the data</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1">gryphon &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gryphon.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb87-2" title="2">gryphon<span class="op">$</span>animal &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>animal)</a>
+<a class="sourceLine" id="cb87-3" title="3">gryphon<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>mother)</a>
+<a class="sourceLine" id="cb87-4" title="4">gryphon<span class="op">$</span>byear &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>byear)</a>
+<a class="sourceLine" id="cb87-5" title="5">gryphon<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>sex)</a>
+<a class="sourceLine" id="cb87-6" title="6">gryphon<span class="op">$</span>bwt &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>bwt)</a>
+<a class="sourceLine" id="cb87-7" title="7">gryphon<span class="op">$</span>tarsus &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>tarsus)</a></code></pre></div>
+<p>Reading the pedigree</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1">gryphonped &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gryphonped.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb88-2" title="2">gryphonped<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>id)</a>
+<a class="sourceLine" id="cb88-3" title="3">gryphonped<span class="op">$</span>father &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>father)</a>
+<a class="sourceLine" id="cb88-4" title="4">gryphonped<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>mother)</a></code></pre></div>
 </div>
-<div id="mcmcglmm-5" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> MCMCglmm</h3>
 </div>
-<div id="brms-5" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> brms</h3>
-
-</div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="univariate-model-with-repeated-measures.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="multivariate-animal-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="asreml-biv.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -288,7 +296,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/JulienGAMartin/wam_tuto/05-code_cheatsheet.Rmd",
+"link": "https://github.com/JulienGAMartin/wam_tuto/03-biv.Rmd",
 "text": "Edit"
 },
 "history": {

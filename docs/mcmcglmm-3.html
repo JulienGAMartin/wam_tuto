@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.2 bivariate model | How to fit an animal model</title>
+  <title>4.4 MCMCglmm | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.2 bivariate model | How to fit an animal model" />
+  <meta property="og:title" content="4.4 MCMCglmm | How to fit an animal model" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/missing.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.2 bivariate model | How to fit an animal model" />
+  <meta name="twitter:title" content="4.4 MCMCglmm | How to fit an animal model" />
   
   <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="twitter:image" content="images/missing.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="univariate-model-with-repeated-measures.html"/>
-<link rel="next" href="references.html"/>
+<link rel="prev" href="gremlin-3.html"/>
+<link rel="next" href="brms-3.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -234,30 +234,93 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bivariate-model" class="section level2">
-<h2><span class="header-section-number">5.2</span> bivariate model</h2>
-<div id="asreml-r-4" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Asreml-R</h3>
+<div id="mcmcglmm-3" class="section level2">
+<h2><span class="header-section-number">4.4</span> MCMCglmm</h2>
+<div id="estimating-repeatability-1" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Estimating repeatability</h3>
+<p>With repeated measures on individuals it is often of interest, prior to fitting a genetic model, to see how repeatable a trait is. We can estimate the repeatability of a trait as the proportion of phenotypic variance explained by individual identity using the commands below</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" title="1">p.var &lt;-<span class="st"> </span><span class="kw">var</span>(gryphonRM<span class="op">$</span>laydate, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb176-2" title="2">prior3<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb176-3" title="3"><span class="dt">nu =</span> <span class="fl">0.002</span>))</a>
+<a class="sourceLine" id="cb176-4" title="4">model3<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal, <span class="dt">data =</span> gryphonRM,</a>
+<a class="sourceLine" id="cb176-5" title="5"><span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb176-6" title="6"><span class="kw">posterior.mode</span>(model3<span class="fl">.1</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##   animal    units 
+## 10.86989 21.45126</code></pre>
+<p>Note the use of the term <code>animal</code>, since neither the <code>pedigree</code> nor the <code>ginv</code> argument are provided, it represents the between-individual variance, while the residual compo- nent (Variance) therefore represents within-individual variance. Here then the repeata- bility of the trait can be determined by as 0.353 (i.e., 11.4532/(11.4532+21.1432). Given that we set up the simulation such that mean lay date changes with age (initially increas- ing to age 5 before a late life decline) we might ask what the repeatability of lay date is after conditioning on age effect. This would be done by adding age into the model as a fixed effect.</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" title="1">model3<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span>age, <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal, <span class="dt">data =</span> gryphonRM,</a>
+<a class="sourceLine" id="cb178-2" title="2"><span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb178-3" title="3"><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol)</a></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-83-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-83-2.svg" width="672" /></p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" title="1"><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</a></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-83-3.svg" width="672" /></p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" title="1"><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##   animal    units 
+## 11.89363 16.18535</code></pre>
+<p>Note that the random effect structure has remained unchaged, and so we have not modified the prior between models 3.1 and 3.2. So that the repeatability of laydate, after accounting for age effects, is now estimated as 0.445 (i.e., 12.6379/(12.6379+16.465). So, just as we saw when estimating h 2 in tutorial 1, the inclusion of fixed effects will alter the estimated effect size if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.</p>
+<p>Here age is modelled as a 5 level factor (see the convertion of age to a factor in section 3.2). We could equally have fitted it as a continuous variable instead in which case, given the late life decline, we would probably also include a quadratic term.</p>
 </div>
-<div id="gremlin-5" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> gremlin</h3>
+<div id="partitioning-additive-and-permanent-environment-effects-1" class="section level3">
+<h3><span class="header-section-number">4.4.2</span> Partitioning additive and permanent environment effects</h3>
+<p>Generally we expect that the repeatability will set the upper limit for heritability since, while additive genetic effects will cause among-individual variation, so will other types of effect. Non-additive contributions to fixed among-individual differences are normally referred to as ‘permanent environment effects’, although ‘non-heritable effects’ that are consistent within individuals may be a better way to think of modelling this effect. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in V A . To illustrate this fit the animal model</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" title="1">Ainv &lt;-<span class="st"> </span><span class="kw">inverseA</span>(gryphonped)<span class="op">$</span>Ainv</a>
+<a class="sourceLine" id="cb182-2" title="2">model3<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age, <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</a>
+<a class="sourceLine" id="cb182-3" title="3">  <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb182-4" title="4"><span class="kw">posterior.mode</span>(model3<span class="fl">.3</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##   animal    units 
+## 14.18705 17.19334</code></pre>
+<p>This suggests that all of the among-individual variance is - rightly or wrongly - being partitioned as V A here. In fact here the partition is wrong since the simulation included both additive genetic effects and additional fixed heterogeneity that was not associated with the pedigree structure (i.e. permanent environment effects).
+In order to fit both permanent environemnt and additive genetic effects, we need to fit the individual identity twice in the model: once linked to the pedigree (genetic effect) and once not linked to the pedigree (permanenet environemnt effect).
+To do so, we need to duplicate the variable containing the individual identity and give it a new name.
+An more appropriate estimate of V A is given by the model:</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" title="1">gryphonRM<span class="op">$</span>animal_pe &lt;-<span class="st"> </span>gryphonRM<span class="op">$</span>animal</a>
+<a class="sourceLine" id="cb184-2" title="2">p.var &lt;-<span class="st"> </span><span class="kw">var</span>(gryphonRM<span class="op">$</span>laydate, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb184-3" title="3">prior3<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb184-4" title="4"><span class="dt">nu =</span> <span class="fl">0.002</span>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</a>
+<a class="sourceLine" id="cb184-5" title="5">model3<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age, <span class="dt">random =</span> <span class="op">~</span>animal <span class="op">+</span><span class="st"> </span>animal_pe,</a>
+<a class="sourceLine" id="cb184-6" title="6"><span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.4</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb184-7" title="7"><span class="kw">posterior.mode</span>(model3<span class="fl">.4</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##    animal animal_pe     units 
+##  3.761206  7.626880 16.405327</code></pre>
+<p>The estimate of V A is now much lower (reduced from 13.6735 to 5.1238) since the ad- ditive and permanent environment effects are being properly separated. We could obtain estimates of h 2 and of the repeatability from this model using the following commands:</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" title="1">model3.<span class="fl">4.</span>VP &lt;-<span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal_pe&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>]</a>
+<a class="sourceLine" id="cb186-2" title="2">model3.<span class="fl">4.</span>PE_VA &lt;-<span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[,<span class="st">&quot;animal_pe&quot;</span>]</a>
+<a class="sourceLine" id="cb186-3" title="3"><span class="kw">posterior.mode</span>(model3.<span class="fl">4.</span>PE_VA<span class="op">/</span>model3.<span class="fl">4.</span>VP)</a></code></pre></div>
+<pre><code>##      var1 
+## 0.4364696</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" title="1"><span class="kw">posterior.mode</span>(model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>]<span class="op">/</span>model3.<span class="fl">4.</span>VP)</a></code></pre></div>
+<pre><code>##      var1 
+## 0.1183328</code></pre>
 </div>
-<div id="mcmcglmm-5" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> MCMCglmm</h3>
+<div id="adding-additional-effects-and-testing-significance-1" class="section level3">
+<h3><span class="header-section-number">4.4.3</span> Adding additional effects and testing significance</h3>
+<p>Models of repeated measures can be extended to include other fixed or random effects.
+For example try including year of measurement (year).</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" title="1">p.var &lt;-<span class="st"> </span><span class="kw">var</span>(gryphonRM<span class="op">$</span>laydate, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb190-2" title="2">prior3<span class="fl">.5</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb190-3" title="3"><span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G4 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb190-4" title="4"><span class="dt">nu =</span> <span class="fl">0.002</span>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</a>
+<a class="sourceLine" id="cb190-5" title="5">model3<span class="fl">.5</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age, <span class="dt">random =</span> <span class="op">~</span>animal <span class="op">+</span><span class="st"> </span>animal_pe <span class="op">+</span></a>
+<a class="sourceLine" id="cb190-6" title="6">year <span class="op">+</span><span class="st"> </span>byear, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.5</span>,</a>
+<a class="sourceLine" id="cb190-7" title="7"><span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb190-8" title="8"><span class="kw">posterior.mode</span>(model3<span class="fl">.5</span><span class="op">$</span>VCV)</a></code></pre></div>
+<pre><code>##      animal   animal_pe        year       byear       units 
+## 4.500408697 8.562123516 8.578156641 0.002880191 7.880496633</code></pre>
+<p>This model will return additional variance components corresponding to year of mea- surement effects and birth year (of the female effects). The latter were not simulated as should be apparent from the parameter estimate (and by the support interval derivable from the posterior distribution and from DIC-based comparison of model3.5 and a model from which the birth year term had been eliminated, see tutorial 1). However, year ef- fects were simulated as should be apparent from the from the modal estimate and from the support interval (try this yourself using HPDinterval()) and this could be formally confirmed by comparison of DIC. year effects could alternatively be included as fixed effects (try this, you should be able to handle the new prior specification at this point). Since we simulated large year of measurement effects this treatment will reduce V R and increase the the estimates of heritability and repeatability which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.</p>
+<!--
+################################################################################
+################################################################################
+################################################################################
+-->
 </div>
-<div id="brms-5" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> brms</h3>
-
 </div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="univariate-model-with-repeated-measures.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="gremlin-3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="brms-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -288,7 +351,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/JulienGAMartin/wam_tuto/05-code_cheatsheet.Rmd",
+"link": "https://github.com/JulienGAMartin/wam_tuto/04-rep_measures.Rmd",
 "text": "Edit"
 },
 "history": {

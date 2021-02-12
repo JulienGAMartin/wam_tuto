@@ -5,20 +5,20 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>How to fit an animal model</title>
-  <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (???)" />
+  <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
   <meta property="og:title" content="How to fit an animal model" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/missing.png" />
-  <meta property="og:description" content="Updated and extended tutorials from An ecologist guide to animal model (???)" />
+  <meta property="og:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="How to fit an animal model" />
   
-  <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (???)" />
+  <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="twitter:image" content="images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
@@ -31,7 +31,7 @@
   
   
 
-<link rel="next" href="contributors.html"/>
+<link rel="next" href="intro.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -131,7 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a><ul>
-<li class="chapter" data-level="" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i>Contributors</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributors"><i class="fa fa-check"></i>Contributors</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1.1</b> Data</a><ul>
@@ -159,22 +159,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.1" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#running-the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> Running the model</a></li>
 <li class="chapter" data-level="2.4.2" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#estimating-heritability-1"><i class="fa fa-check"></i><b>2.4.2</b> Estimating heritability</a></li>
 <li class="chapter" data-level="2.4.3" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-fixed-effects-1"><i class="fa fa-check"></i><b>2.4.3</b> Adding fixed effects</a></li>
-<li class="chapter" data-level="2.4.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.4</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.4.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.4</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.4.5" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.5</b> Testing significance of variance components</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="quick-comparison-of-codes.html"><a href="quick-comparison-of-codes.html"><i class="fa fa-check"></i><b>3</b> Quick comparison of codes</a><ul>
-<li class="chapter" data-level="3.1" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html"><i class="fa fa-check"></i><b>3.1</b> Univariate model with repeated measures</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#asreml-r-2"><i class="fa fa-check"></i><b>3.1.1</b> Asreml-R</a></li>
-<li class="chapter" data-level="3.1.2" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#gremlin-2"><i class="fa fa-check"></i><b>3.1.2</b> gremlin</a></li>
-<li class="chapter" data-level="3.1.3" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#mcmcglmm-2"><i class="fa fa-check"></i><b>3.1.3</b> MCMCglmm</a></li>
-<li class="chapter" data-level="3.1.4" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#brms-2"><i class="fa fa-check"></i><b>3.1.4</b> brms</a></li>
+<li class="chapter" data-level="3" data-path="multivariate-animal-model.html"><a href="multivariate-animal-model.html"><i class="fa fa-check"></i><b>3</b> Multivariate animal model</a><ul>
+<li class="chapter" data-level="3.1" data-path="scenario-and-data-1.html"><a href="scenario-and-data-1.html"><i class="fa fa-check"></i><b>3.1</b> Scenario and data</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="scenario-and-data-1.html"><a href="scenario-and-data-1.html#scenario-1"><i class="fa fa-check"></i><b>3.1.1</b> Scenario</a></li>
+<li class="chapter" data-level="3.1.2" data-path="scenario-and-data-1.html"><a href="scenario-and-data-1.html#gryphon-files"><i class="fa fa-check"></i><b>3.1.2</b> gryphon files</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="bivariate-model.html"><a href="bivariate-model.html"><i class="fa fa-check"></i><b>3.2</b> bivariate model</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="bivariate-model.html"><a href="bivariate-model.html#asreml-r-3"><i class="fa fa-check"></i><b>3.2.1</b> Asreml-R</a></li>
-<li class="chapter" data-level="3.2.2" data-path="bivariate-model.html"><a href="bivariate-model.html#gremlin-3"><i class="fa fa-check"></i><b>3.2.2</b> gremlin</a></li>
-<li class="chapter" data-level="3.2.3" data-path="bivariate-model.html"><a href="bivariate-model.html#mcmcglmm-3"><i class="fa fa-check"></i><b>3.2.3</b> MCMCglmm</a></li>
-<li class="chapter" data-level="3.2.4" data-path="bivariate-model.html"><a href="bivariate-model.html#brms-3"><i class="fa fa-check"></i><b>3.2.4</b> brms</a></li>
+<li class="chapter" data-level="3.2" data-path="asreml-biv.html"><a href="asreml-biv.html"><i class="fa fa-check"></i><b>3.2</b> Asreml-R</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="asreml-biv.html"><a href="asreml-biv.html#running-the-model-2"><i class="fa fa-check"></i><b>3.2.1</b> Running the model</a></li>
+<li class="chapter" data-level="3.2.2" data-path="asreml-biv.html"><a href="asreml-biv.html#adding-fixed-and-random-effects"><i class="fa fa-check"></i><b>3.2.2</b> Adding fixed and random effects</a></li>
+<li class="chapter" data-level="3.2.3" data-path="asreml-biv.html"><a href="asreml-biv.html#significance-testing"><i class="fa fa-check"></i><b>3.2.3</b> Significance testing</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="gremlin-2.html"><a href="gremlin-2.html"><i class="fa fa-check"></i><b>3.3</b> gremlin</a></li>
+<li class="chapter" data-level="3.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html"><i class="fa fa-check"></i><b>3.4</b> MCMCglmm</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#fitting-the-model"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.4.2" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#adding-fixed-and-random-effects-1"><i class="fa fa-check"></i><b>3.4.2</b> Adding fixed and random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="rep-measures.html"><a href="rep-measures.html"><i class="fa fa-check"></i><b>4</b> A repeated measures animal model</a><ul>
+<li class="chapter" data-level="4.1" data-path="scenario-and-data-2.html"><a href="scenario-and-data-2.html"><i class="fa fa-check"></i><b>4.1</b> Scenario and data</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="scenario-and-data-2.html"><a href="scenario-and-data-2.html#scenario-2"><i class="fa fa-check"></i><b>4.1.1</b> scenario</a></li>
+<li class="chapter" data-level="4.1.2" data-path="scenario-and-data-2.html"><a href="scenario-and-data-2.html#data-files-2"><i class="fa fa-check"></i><b>4.1.2</b> Data files</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="asreml-r-2.html"><a href="asreml-r-2.html"><i class="fa fa-check"></i><b>4.2</b> Asreml-R</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="asreml-r-2.html"><a href="asreml-r-2.html#estimating-repeatability"><i class="fa fa-check"></i><b>4.2.1</b> Estimating repeatability</a></li>
+<li class="chapter" data-level="4.2.2" data-path="asreml-r-2.html"><a href="asreml-r-2.html#partitioning-additive-and-permanent-environment-effects"><i class="fa fa-check"></i><b>4.2.2</b> Partitioning additive and permanent environment effects</a></li>
+<li class="chapter" data-level="4.2.3" data-path="asreml-r-2.html"><a href="asreml-r-2.html#adding-additional-effects-and-testing-significance"><i class="fa fa-check"></i><b>4.2.3</b> Adding additional effects and testing significance</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gremlin-3.html"><a href="gremlin-3.html"><i class="fa fa-check"></i><b>4.3</b> gremlin</a></li>
+<li class="chapter" data-level="4.4" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html"><i class="fa fa-check"></i><b>4.4</b> MCMCglmm</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#estimating-repeatability-1"><i class="fa fa-check"></i><b>4.4.1</b> Estimating repeatability</a></li>
+<li class="chapter" data-level="4.4.2" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#partitioning-additive-and-permanent-environment-effects-1"><i class="fa fa-check"></i><b>4.4.2</b> Partitioning additive and permanent environment effects</a></li>
+<li class="chapter" data-level="4.4.3" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#adding-additional-effects-and-testing-significance-1"><i class="fa fa-check"></i><b>4.4.3</b> Adding additional effects and testing significance</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="brms-3.html"><a href="brms-3.html"><i class="fa fa-check"></i><b>4.5</b> brms</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="quick-comparison-of-codes.html"><a href="quick-comparison-of-codes.html"><i class="fa fa-check"></i><b>5</b> Quick comparison of codes</a><ul>
+<li class="chapter" data-level="5.1" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html"><i class="fa fa-check"></i><b>5.1</b> Univariate model with repeated measures</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#asreml-r-3"><i class="fa fa-check"></i><b>5.1.1</b> Asreml-R</a></li>
+<li class="chapter" data-level="5.1.2" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#gremlin-4"><i class="fa fa-check"></i><b>5.1.2</b> gremlin</a></li>
+<li class="chapter" data-level="5.1.3" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#mcmcglmm-4"><i class="fa fa-check"></i><b>5.1.3</b> MCMCglmm</a></li>
+<li class="chapter" data-level="5.1.4" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#brms-4"><i class="fa fa-check"></i><b>5.1.4</b> brms</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="bivariate-model.html"><a href="bivariate-model.html"><i class="fa fa-check"></i><b>5.2</b> bivariate model</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="bivariate-model.html"><a href="bivariate-model.html#asreml-r-4"><i class="fa fa-check"></i><b>5.2.1</b> Asreml-R</a></li>
+<li class="chapter" data-level="5.2.2" data-path="bivariate-model.html"><a href="bivariate-model.html#gremlin-5"><i class="fa fa-check"></i><b>5.2.2</b> gremlin</a></li>
+<li class="chapter" data-level="5.2.3" data-path="bivariate-model.html"><a href="bivariate-model.html#mcmcglmm-5"><i class="fa fa-check"></i><b>5.2.3</b> MCMCglmm</a></li>
+<li class="chapter" data-level="5.2.4" data-path="bivariate-model.html"><a href="bivariate-model.html#brms-5"><i class="fa fa-check"></i><b>5.2.4</b> brms</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -206,7 +242,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="preface" class="section level1 unnumbered">
 <h1>Preface</h1>
-<p>This book is a collection of tutorial from the excellent paper by <span class="citation">(<span class="citeproc-not-found" data-reference-id="Wilson2010"><strong>???</strong></span>)</span>. Instead of just copy pasting the tutorial in a new format, the tutorial have been updated to work with the newest version of the softwares and extended to present other softwares.</p>
+<p>This book is a collection of tutorial from the excellent paper by <span class="citation">(Wilson et al. <a href="#ref-wilson2010">2010</a>)</span>.
+Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.
+<strong>However, this is still a work in progress.</strong></p>
+<div id="contributors" class="section level3 unnumbered">
+<h3>Contributors</h3>
+<p>List of people who contributed to update and extend tutorials:</p>
+<ul>
+<li>Eric Postma</li>
+<li>Julien Martin</li>
+</ul>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-wilson2010">
+<p>Wilson, Alastair J., Denis Réale, Michelle N. Clements, Michael M. Morrissey, Erik Postma, Craig A. Walling, Loeske E. B. Kruuk, and Daniel H. Nussey. 2010. “An Ecologist’s Guide to the Animal Model.” <em>Journal of Animal Ecology</em> 79 (1): 13–26. <a href="https://doi.org/10.1111/j.1365-2656.2009.01639.x">https://doi.org/10.1111/j.1365-2656.2009.01639.x</a>.</p>
+</div>
 </div>
             </section>
 
@@ -214,7 +267,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 
-<a href="contributors.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

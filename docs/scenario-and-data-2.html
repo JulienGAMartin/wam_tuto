@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.2 bivariate model | How to fit an animal model</title>
+  <title>4.1 Scenario and data | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.2 bivariate model | How to fit an animal model" />
+  <meta property="og:title" content="4.1 Scenario and data | How to fit an animal model" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/missing.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.2 bivariate model | How to fit an animal model" />
+  <meta name="twitter:title" content="4.1 Scenario and data | How to fit an animal model" />
   
   <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="twitter:image" content="images/missing.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="univariate-model-with-repeated-measures.html"/>
-<link rel="next" href="references.html"/>
+<link rel="prev" href="rep-measures.html"/>
+<link rel="next" href="asreml-r-2.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -234,30 +234,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bivariate-model" class="section level2">
-<h2><span class="header-section-number">5.2</span> bivariate model</h2>
-<div id="asreml-r-4" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Asreml-R</h3>
+<div id="scenario-and-data-2" class="section level2">
+<h2><span class="header-section-number">4.1</span> Scenario and data</h2>
+<div id="scenario-2" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> scenario</h3>
+<p>Since gryphons are iteroparous, multiple observations of reproductive traits are available for some individuals. Here we have repeated measures of lay date (measured in days after January 1) for individual females varying in age from 2 (age of maturation) up until age 6. Not all females lay every year so the number of observations per female is variable. We want to know how repeatable the trait is, and (assuming it is repeatable) how heritable it is.</p>
 </div>
-<div id="gremlin-5" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> gremlin</h3>
+<div id="data-files-2" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Data files</h3>
+<p>The pedigree file <code>gryphonped.csv</code> is that used in the preceding tutorials but we now use a new data file <code>gryphonRM.csv</code>. Columns correspond to individual identity (<code>animal</code>), birth year (<code>byear</code>), age in years (<code>age</code>), year of measurement (<code>year</code>) and lay date (<code>laydate</code>). Each row of the data file corresponds to a single phenotypic observation. Here data are sorted by identity and then age so that the repeated observations on individuals are readily apparent. However this is not a requirement for analysis - data could equally be sorted by some other variable (<em>e.g.</em>, measurement year) or be in a random order.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" title="1"><span class="kw">str</span>(gryphonRM)</a></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1607 obs. of  5 variables:
+##  $ animal : Factor w/ 469 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;8&quot;,..: 1 1 1 1 1 2 2 2 3 3 ...
+##  $ byear  : Factor w/ 34 levels &quot;968&quot;,&quot;970&quot;,&quot;971&quot;,..: 22 22 22 22 22 22 22 22 22 22 ...
+##  $ age    : Factor w/ 5 levels &quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,..: 1 2 3 4 5 1 2 3 1 2 ...
+##  $ year   : Factor w/ 39 levels &quot;970&quot;,&quot;971&quot;,&quot;972&quot;,..: 23 24 25 26 27 23 24 25 23 24 ...
+##  $ laydate: num  19 23 24 23 29 21 17 21 20 20 ...</code></pre>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" title="1"><span class="kw">head</span>(gryphonRM)</a></code></pre></div>
+<pre><code>##   animal byear age year laydate
+## 1      1   990   2  992      19
+## 2      1   990   3  993      23
+## 3      1   990   4  994      24
+## 4      1   990   5  995      23
+## 5      1   990   6  996      29
+## 6      2   990   2  992      21</code></pre>
+<pre><code>## &#39;data.frame&#39;:    1309 obs. of  3 variables:
+##  $ id    : int  1306 1304 1298 1293 1290 1288 1284 1283 1282 1278 ...
+##  $ father: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ mother: int  NA NA NA NA NA NA NA NA NA NA ...</code></pre>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" title="1">gryphonped<span class="op">$</span>id&lt;-<span class="kw">as.factor</span>(gryphonped<span class="op">$</span>id)</a>
+<a class="sourceLine" id="cb151-2" title="2">gryphonped<span class="op">$</span>father&lt;-<span class="kw">as.factor</span>(gryphonped<span class="op">$</span>father)</a>
+<a class="sourceLine" id="cb151-3" title="3">gryphonped<span class="op">$</span>mother&lt;-<span class="kw">as.factor</span>(gryphonped<span class="op">$</span>mother)</a></code></pre></div>
 </div>
-<div id="mcmcglmm-5" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> MCMCglmm</h3>
 </div>
-<div id="brms-5" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> brms</h3>
-
-</div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="univariate-model-with-repeated-measures.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="rep-measures.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="asreml-r-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -288,7 +304,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/JulienGAMartin/wam_tuto/05-code_cheatsheet.Rmd",
+"link": "https://github.com/JulienGAMartin/wam_tuto/04-rep_measures.Rmd",
 "text": "Edit"
 },
 "history": {

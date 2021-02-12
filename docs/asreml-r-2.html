@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.2 bivariate model | How to fit an animal model</title>
+  <title>4.2 Asreml-R | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.2 bivariate model | How to fit an animal model" />
+  <meta property="og:title" content="4.2 Asreml-R | How to fit an animal model" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="images/missing.png" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.2 bivariate model | How to fit an animal model" />
+  <meta name="twitter:title" content="4.2 Asreml-R | How to fit an animal model" />
   
   <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="twitter:image" content="images/missing.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="univariate-model-with-repeated-measures.html"/>
-<link rel="next" href="references.html"/>
+<link rel="prev" href="scenario-and-data-2.html"/>
+<link rel="next" href="gremlin-3.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -234,30 +234,167 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bivariate-model" class="section level2">
-<h2><span class="header-section-number">5.2</span> bivariate model</h2>
-<div id="asreml-r-4" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Asreml-R</h3>
+<div id="asreml-r-2" class="section level2">
+<h2><span class="header-section-number">4.2</span> Asreml-R</h2>
+<div id="estimating-repeatability" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Estimating repeatability</h3>
+<p>With repeated measures on individuals it is often of interest, prior to fitting a genetic model, to see how repeatable a trait is. We can estimate the repeatability of a trait as the proportion of phenotypic variance explained by individual identity.</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" title="1">modelv &lt;-<span class="st"> </span><span class="kw">asreml</span>(<span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb152-2" title="2">                 <span class="dt">random =</span><span class="op">~</span><span class="st"> </span>animal,</a>
+<a class="sourceLine" id="cb152-3" title="3">                 <span class="dt">residual=</span><span class="op">~</span><span class="kw">idv</span>(units),</a>
+<a class="sourceLine" id="cb152-4" title="4">                 <span class="dt">data=</span>gryphonRM,</a>
+<a class="sourceLine" id="cb152-5" title="5">                 <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x=</span><span class="st">&quot;omit&quot;</span>, <span class="dt">y=</span><span class="st">&quot;omit&quot;</span>))</a></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri Feb 12 17:18:26 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -10182.83           1.0   1606 17:18:26    0.0
+##  2      -8266.10           1.0   1606 17:18:26    0.0
+##  3      -6145.01           1.0   1606 17:18:26    0.0
+##  4      -4651.57           1.0   1606 17:18:26    0.0
+##  5      -3819.31           1.0   1606 17:18:26    0.0
+##  6      -3554.22           1.0   1606 17:18:26    0.0
+##  7      -3501.56           1.0   1606 17:18:26    0.0
+##  8      -3497.58           1.0   1606 17:18:26    0.0
+##  9      -3497.54           1.0   1606 17:18:26    0.0
+## 10      -3497.54           1.0   1606 17:18:26    0.0</code></pre>
+<p>Note that since we want to estimate the amount of variance explained by individual identity (rather than by additive effects), we fit <code>animal</code> as a normal random effect and we don’t associate it with the pedigree.</p>
+<p>This model partitions the phenotypic variance in <code>laydate</code> as follows:</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" title="1"><span class="kw">summary</span>(modelv)<span class="op">$</span>varcomp</a></code></pre></div>
+<pre><code>##             component std.error   z.ratio bound %ch
+## animal       11.08634 1.1794319  9.399728     P   0
+## units!units  21.29643 0.8896196 23.938798     P   0
+## units!R       1.00000        NA        NA     F   0</code></pre>
+<p>Between-individual variance is given by the <code>animal</code> component, while the residual component (<code>units!units</code>) represents within-individual variance. Here then the repeatability of the trait can be determined by hand as 0.34 (<em>i.e.</em>, as 11.086/(11.086 + 21.296)).</p>
+<p>Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding <code>age</code> into the model as a fixed effect.</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" title="1">modelw &lt;-<span class="st"> </span><span class="kw">asreml</span>(<span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</a>
+<a class="sourceLine" id="cb156-2" title="2">                 <span class="dt">random =</span><span class="op">~</span><span class="st"> </span>animal,</a>
+<a class="sourceLine" id="cb156-3" title="3">                 <span class="dt">residual=</span><span class="op">~</span><span class="kw">idv</span>(units),</a>
+<a class="sourceLine" id="cb156-4" title="4">                 <span class="dt">data=</span>gryphonRM,</a>
+<a class="sourceLine" id="cb156-5" title="5">                 <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x=</span><span class="st">&quot;omit&quot;</span>, <span class="dt">y=</span><span class="st">&quot;omit&quot;</span>))</a></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri Feb 12 17:18:26 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -8402.968           1.0   1602 17:18:26    0.0
+##  2     -6912.361           1.0   1602 17:18:26    0.0
+##  3     -5274.379           1.0   1602 17:18:26    0.0
+##  4     -4143.634           1.0   1602 17:18:26    0.0
+##  5     -3541.895           1.0   1602 17:18:26    0.0
+##  6     -3372.909           1.0   1602 17:18:26    0.0
+##  7     -3347.670           1.0   1602 17:18:26    0.0
+##  8     -3346.655           1.0   1602 17:18:26    0.0
+##  9     -3346.652           1.0   1602 17:18:26    0.0</code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" title="1"><span class="kw">summary</span>(modelw)<span class="op">$</span>varcomp</a></code></pre></div>
+<pre><code>##             component std.error  z.ratio bound %ch
+## animal       12.28982  1.156115 10.63027     P   0
+## units!units  16.37989  0.686619 23.85586     P   0
+## units!R       1.00000        NA       NA     F   0</code></pre>
+<p>The repeatability of lay date, after accounting for age effects, is now estimated as 0.43 (<em>i.e.</em>, as 12.29/(12.29 + 16.38)). So, just as we saw when estimating <span class="math inline">\(h^2\)</span> in Tutorial 1, the inclusion of fixed effects will alter the estimated effect size if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.</p>
+<p>Here age is modelled as a 5-level factor (specified using the function <code>as.factor()</code> at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.</p>
 </div>
-<div id="gremlin-5" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> gremlin</h3>
+<div id="partitioning-additive-and-permanent-environment-effects" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Partitioning additive and permanent environment effects</h3>
+<p>Generally we expect that the repeatability will set the upper limit for heritability since, while additive genetic effects will cause among-individual variation, so will other types of effects. Non-additive contributions to fixed among-individual differences are normally referred to as <em>permanent environment effects</em>. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in <span class="math inline">\(V_A\)</span>.</p>
+<p>To illustrate this fit the animal model:</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" title="1">modelx &lt;-<span class="st"> </span><span class="kw">asreml</span>(<span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</a>
+<a class="sourceLine" id="cb160-2" title="2">                 <span class="dt">random =</span><span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv),</a>
+<a class="sourceLine" id="cb160-3" title="3">                 <span class="dt">residual=</span><span class="op">~</span><span class="kw">idv</span>(units),</a>
+<a class="sourceLine" id="cb160-4" title="4">                 <span class="dt">data=</span>gryphonRM,</a>
+<a class="sourceLine" id="cb160-5" title="5">                 <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x=</span><span class="st">&quot;omit&quot;</span>, <span class="dt">y=</span><span class="st">&quot;omit&quot;</span>))</a></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri Feb 12 17:18:27 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -8751.390           1.0   1602 17:18:27    0.0
+##  2     -7169.205           1.0   1602 17:18:27    0.0
+##  3     -5427.604           1.0   1602 17:18:27    0.0
+##  4     -4219.598           1.0   1602 17:18:27    0.0
+##  5     -3569.815           1.0   1602 17:18:27    0.0
+##  6     -3382.341           1.0   1602 17:18:27    0.0
+##  7     -3352.867           1.0   1602 17:18:27    0.0
+##  8     -3351.565           1.0   1602 17:18:27    0.0
+##  9     -3351.560           1.0   1602 17:18:27    0.0</code></pre>
+<p>Variance components are almost unchanged:</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" title="1"><span class="kw">summary.asreml</span>(modelx)<span class="op">$</span>varcomp</a></code></pre></div>
+<pre><code>##                  component std.error   z.ratio bound %ch
+## vm(animal, ainv)  13.91784  1.443968  9.638607     P   0
+## units!units       16.84008  0.707365 23.806768     P   0
+## units!R            1.00000        NA        NA     F   0</code></pre>
+<p>This suggests that all of the among-individual variance is – rightly or wrongly – being partitioned as <span class="math inline">\(V_A\)</span> here. To instead obtain an unbiased estimate of <span class="math inline">\(V_A\)</span> we need to allow for both additive genetic <em>and</em> non-genetic sources of individual variation. We do this by fitting <code>animal</code> twice, once with a pedigree, and once without a pedigree (using <code>ide()</code>).</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" title="1">modely &lt;-<span class="st"> </span><span class="kw">asreml</span>(<span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</a>
+<a class="sourceLine" id="cb164-2" title="2">                 <span class="dt">random =</span><span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv) <span class="op">+</span><span class="st"> </span><span class="kw">ide</span>(animal),</a>
+<a class="sourceLine" id="cb164-3" title="3">                 <span class="dt">residual=</span><span class="op">~</span><span class="kw">idv</span>(units),</a>
+<a class="sourceLine" id="cb164-4" title="4">                 <span class="dt">data=</span>gryphonRM,</a>
+<a class="sourceLine" id="cb164-5" title="5">                 <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x=</span><span class="st">&quot;omit&quot;</span>, <span class="dt">y=</span><span class="st">&quot;omit&quot;</span>))</a></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri Feb 12 17:18:27 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -7731.394           1.0   1602 17:18:27    0.0
+##  2     -6426.548           1.0   1602 17:18:27    0.0
+##  3     -4997.252           1.0   1602 17:18:27    0.0
+##  4     -4018.486           1.0   1602 17:18:27    0.0
+##  5     -3504.988           1.0   1602 17:18:27    0.0
+##  6     -3363.160           1.0   1602 17:18:27    0.0
+##  7     -3341.611           1.0   1602 17:18:27    0.0
+##  8     -3340.682           1.0   1602 17:18:27    0.0
+##  9     -3340.679           1.0   1602 17:18:27    0.0</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" title="1"><span class="kw">summary</span>(modely)<span class="op">$</span>varcomp</a></code></pre></div>
+<pre><code>##                  component std.error   z.ratio bound %ch
+## vm(animal, ainv)  4.876101 1.8087709  2.695809     P   0
+## ide(animal)       7.400983 1.7280113  4.282948     P   0
+## units!units      16.380188 0.6866189 23.856300     P   0
+## units!R           1.000000        NA        NA     F   0</code></pre>
+<p>The estimate of <span class="math inline">\(V_A\)</span> is now much lower since the additive and permanent environment effects are being properly separated. We can estimate <span class="math inline">\(h^2\)</span> and the repeatability from this model:</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" title="1"><span class="kw">vpredict</span>(modely, h2 <span class="op">~</span><span class="st"> </span>V1<span class="op">/</span>(V1<span class="op">+</span>V2<span class="op">+</span>V3))</a></code></pre></div>
+<pre><code>##     Estimate         SE
+## h2 0.1701523 0.06073974</code></pre>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" title="1"><span class="kw">vpredict</span>(modely, repeatability <span class="op">~</span><span class="st"> </span>(V1<span class="op">+</span>V2)<span class="op">/</span>(V1<span class="op">+</span>V2<span class="op">+</span>V3))</a></code></pre></div>
+<pre><code>##                Estimate         SE
+## repeatability 0.4284108 0.02741602</code></pre>
 </div>
-<div id="mcmcglmm-5" class="section level3">
-<h3><span class="header-section-number">5.2.3</span> MCMCglmm</h3>
+<div id="adding-additional-effects-and-testing-significance" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> Adding additional effects and testing significance</h3>
+<p>Models of repeated measures can be extended to include other fixed or random effects. For example try including year of measurement (<code>year</code>) and birth year (<code>byear</code>) as random effects.</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" title="1">modelz &lt;-<span class="st"> </span><span class="kw">asreml</span>(<span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</a>
+<a class="sourceLine" id="cb172-2" title="2">                 <span class="dt">random =</span><span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv) <span class="op">+</span><span class="st"> </span><span class="kw">ide</span>(animal) <span class="op">+</span></a>
+<a class="sourceLine" id="cb172-3" title="3"><span class="st">                 </span>year <span class="op">+</span><span class="st"> </span>byear,</a>
+<a class="sourceLine" id="cb172-4" title="4">                 <span class="dt">residual=</span><span class="op">~</span><span class="kw">idv</span>(units),</a>
+<a class="sourceLine" id="cb172-5" title="5">                 <span class="dt">data=</span>gryphonRM,</a>
+<a class="sourceLine" id="cb172-6" title="6">                 <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x=</span><span class="st">&quot;omit&quot;</span>, <span class="dt">y=</span><span class="st">&quot;omit&quot;</span>))</a></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri Feb 12 17:18:27 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -4650.748           1.0   1602 17:18:27    0.0
+##  2     -4088.264           1.0   1602 17:18:27    0.0
+##  3     -3494.147           1.0   1602 17:18:27    0.0
+##  4     -3127.161           1.0   1602 17:18:27    0.0 (1 restrained)
+##  5     -2976.449           1.0   1602 17:18:27    0.0 (1 restrained)
+##  6     -2955.785           1.0   1602 17:18:27    0.0 (1 restrained)
+##  7     -2955.097           1.0   1602 17:18:27    0.0 (1 restrained)
+##  8     -2955.095           1.0   1602 17:18:27    0.0 (1 restrained)
+##  9     -2955.095           1.0   1602 17:18:27    0.0</code></pre>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" title="1"><span class="kw">summary</span>(modelz)<span class="op">$</span>varcomp</a></code></pre></div>
+<pre><code>##                     component std.error   z.ratio bound %ch
+## byear            1.650876e-07        NA        NA     B   0
+## year             7.938576e+00 1.9344619  4.103765     P   0
+## vm(animal, ainv) 4.815136e+00 1.6682351  2.886365     P   0
+## ide(animal)      8.433325e+00 1.5495778  5.442337     P   0
+## units!units      7.795560e+00 0.3324411 23.449443     P   0
+## units!R          1.000000e+00        NA        NA     F   0</code></pre>
+<p>This model will return additional variance components corresponding to variation in lay dates between years of measurement and between birth cohorts of females. <span class="math inline">\(V_{byear}\)</span> is very low and if you compare this model to a reduced model with byear excluded the log-likelihood remains unchanged.</p>
+<p><code>year</code> effects could alternatively be included as fixed effects (try this!). This will reduce <span class="math inline">\(V_R\)</span> and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.</p>
+<!--
+################################################################################
+################################################################################
+################################################################################
+-->
 </div>
-<div id="brms-5" class="section level3">
-<h3><span class="header-section-number">5.2.4</span> brms</h3>
-
 </div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="univariate-model-with-repeated-measures.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="scenario-and-data-2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="gremlin-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -288,7 +425,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/JulienGAMartin/wam_tuto/05-code_cheatsheet.Rmd",
+"link": "https://github.com/JulienGAMartin/wam_tuto/04-rep_measures.Rmd",
 "text": "Edit"
 },
 "history": {
