@@ -69,7 +69,8 @@ model1 <- asreml(
 )
 ```
 
-In this model, `bwt` is the response variable and the only fixed effect is the mean (the intercept, denoted as `1`). The only random effect we have fitted is `animal`, which will provide an estimate of $V_A$. Our random `animal` effect is connected to the inverse related matrix `ainv`.  `data=` specifies the name of the dataframe that contains our variables. Finally, we tell `asreml()` what to when it encounters `NA`s in either the dependent or predictor variables (in this case we choose to remove the records).
+In this model, `bwt` is the response variable and the only fixed effect is the mean (the intercept, denoted as `1`). The only random effect we have fitted is `animal`, which will provide an estimate of $V_A$. Our random `animal` effect is connected to the inverse related matrix `ainv`.  `data=` specifies the name of the dataframe that contains our variables. Finally, we tell `asreml()` what to when it encounters `NA`s in either the dependent or predictor variables (in this case we choose to remove the records). if you use the argument "include" instead of "omit", model will keep the NA. With x="include", the model will exchange `NA` with 0 (becarefull you need to standardize your trait so the meand will be equal to 0, so the covariance is not biais by the missing values, helpfull with in multivariate model), y="include" will exchange `NA` with a factor labelled mv (mv will be included in the sparse equation). !!!!I forget what the mv stand for!!!
+
 
 A note of the specification of the structure of the residuals: This simple univariate model will run fine without `residual=~idv(units)`. However, if you are going to use `vpredict()` to calculate the heritability (see below), not specifying the residuals in this way will result in a standard error for the heritability that is incorrect.
 
@@ -77,6 +78,12 @@ To see the estimates for the variance components, we run:
 
 ```{r}
 summary(model1)$varcomp
+```
+
+Any model has assumptions which need to be checked. We can start by plotting the model itself to visualize the distribution of its parameters.
+```{r}
+plot(model1)
+
 ```
 
 We fitted a single random effect so have partitioned the phenotypic variance into two components. The `vm(animal, ainv)` variance component is $V_A$ and is estimated as `r round(summary(model1)$varcomp[1,1], 2)`. Given that the ratio of $V_A$ to its standard error (`z.ratio`) is considerably larger than 2 (_i.e._ the parameter estimate is more than 2 SEs from zero) this looks likely to be highly significant. The `units!units` component refers to the residual variance $V_R$, and `units$R` should be ignored. If you don't include `residual=~idv(units)`in your model specification, `units$R` will provide you with the residual variance.
