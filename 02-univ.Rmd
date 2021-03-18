@@ -272,13 +272,42 @@ The object G.temp and R.temp can be implemented in the follwing model as new par
 ```{r}
 model_5 <- asreml(
   fixed = bwt ~ 1 + sex,
-  random = ~ at(sex):vm(animal, ainv) + byear+ mother,
-  residual = ~dsum(~units | sex),
+  random = ~ vm(animal, ainv) + byear + mother,
+  residual = ~ idv(units),
   data = gryphon,
   na.action = na.method(x = "omit", y = "omit"),
   R.param=R.temp,G.param=G.temp)
 summary(model_5)$varcomp
 ```
+
+A more complex model can estimate the covariance between two random effect using the fonction `str`. For example, we can estimate the covariance between the additive genetic variance `Va` and the common environement `Vmother`.
+
+```{r}
+temp2 <- asreml(
+  fixed = bwt ~ 1,
+  random=~str(~vm(animal,ainv)+mother,~us(2):id(xx)) + byear,
+  residual = ~ idv(units),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit"),
+  start.values=T)
+G.temp2<-temp$vparameters[(1:4),]		
+G$Constraint<-"U"
+R.temp2<-temp$vparameters[-(1:4),]	
+#
+model_6 <- asreml(
+  fixed = bwt ~ 1 + sex,
+  random=~str(~vm(animal,ainv)+mother,~us(2):id(xx)) + byear,
+  residual = ~ idv(units),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit"),
+  R.param=R.temp,G.param=G.temp)
+summary(model_6)$varcomp
+```
+the str fonction has two component, first the equation term `~vm(animal,Ainv)+mother` and second the structural term `~us(2):id(4500)`. Here within the structural term, we fit a 2x2 unstructured matrix `us(2)` which estimated the variance and the covariance between the random effect in the equation term. To sucessfully work, the structural term also requires the number of level identifyed witin `id()`.
+!!!!!!!!!!! i am still blocked but this number 
+length(unique(c(gryphon$animal, gryphon$mother)))#1084
+length(unique(c(gryphon$mother)))#429
+length(unique(c(gryphon$animal)))#1084
 
 
 <!--
