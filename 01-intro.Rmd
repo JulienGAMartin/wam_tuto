@@ -30,20 +30,18 @@ It is always important to take time to think carefully about the strengths and p
 
 ## R
 
-describe R Briefly
 You should check that you have the most current version of R and R packages. You can check the number of the current version on CRAN. If you need to update (or install) R packages, use `install.packages()` and follow the prompted instructions.
 
 ### R packages
 
-describe briefly the differnet r packages indicate how to load and install provide warning on cost and complexity indicating that we are just touching the surface of what they can do
 
 #### asreml-r
 
-ASReml-R is commercial software published by VSN international (http://www.vsni.co.uk/software/asreml/).
+ASReml-R is commercial software published by VSN international (http://www.vsni.co.uk/software/asreml/). This package is not free and requires a key access (add the price of it!)  
 
 #### gremlin
 
-`gremlin` is a little monster appearing if you wet a mugwai and feed it after midnight. It is also a great and promising software to fit mixed models using a freuqentist approach.
+`gremlin` is a little monster appearing if you wet a mugwai and feed it after midnight. It is also a great and promising software to fit mixed models using a frequentist approach.
 
 #### MCMCglmm
 
