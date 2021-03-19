@@ -1,0 +1,277 @@
+## Asreml-R
+
+### Running the model
+
+First we need to load the `asreml` library:
+```{r}
+library(asreml)
+```
+
+To be able to fit an animal model Asreml-r needs (the inverse of) the relationship matrix:
+
+```{r}
+ainv <- ainverse(gryphonped)
+```
+
+We are now ready to specify our first model:
+
+```{r}
+model1 <- asreml(
+  fixed = bwt ~ 1, random = ~ vm(animal, ainv),
+  residual = ~ idv(units),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit")
+)
+```
+
+In this model, `bwt` is the response variable and the only fixed effect is the mean (the intercept, denoted as `1`). The only random effect we have fitted is `animal`, which will provide an estimate of $V_A$. Our random `animal` effect is connected to the inverse related matrix `ainv`.  `data=` specifies the name of the dataframe that contains our variables. Finally, we tell `asreml()` what to when it encounters `NA`s in either the dependent or predictor variables (in this case we choose to remove the records). If you use the argument "include" instead of "omit", model will keep the NA. With x="include", the model will exchange `NA` with 0. Be careful you need to standardize your trait so the mean will be equal to 0, if not estimates (including covariance in multivaraite models) could be strongly biased due to the the missing values. y="include" will exchange `NA` with a factor labelled mv which will be included in the sparse equation. For more details see asreml-R manual.
+
+
+A note of the specification of the structure of the residuals: This simple univariate model will run fine without `residual=~idv(units)`. However, if you are going to use `vpredict()` to calculate the heritability (see below), not specifying the residuals in this way will result in a standard error for the heritability that is incorrect.
+
+Any model has assumption which need to be checked. The model can be plot which help visualizing the distribution of the model residual and check the different assumptions.
+```{r}
+plot(model1)
+```
+
+To see the estimates for the variance components, we run:
+
+```{r}
+summary(model1)$varcomp
+```
+
+We fitted a single random effect so have partitioned the phenotypic variance into two components. The `vm(animal, ainv)` variance component is $V_A$ and is estimated as `r round(summary(model1)$varcomp[1,1], 2)`. Given that the ratio of $V_A$ to its standard error (`z.ratio`) is considerably larger than 2 (_i.e._ the parameter estimate is more than 2 SEs from zero) this looks likely to be significant. The `units!units` component refers to the residual variance $V_R$, and `units$R` should be ignored. If you don't include `residual=~idv(units)`in your model specification, `units$R` will provide you with the residual variance.
+
+### Estimating heritability
+
+We can calculate the $h^2$ of birth weight from the components above since $h^2 = V_A/V_P = V_A/(V_A+V_R)$. Thus according to this model, $h^2$ = `r round(summary(model1)$varcomp[1,1],2)` / (`r round(summary(model1)$varcomp[1,1], 2)` + `r round(summary(model1)$varcomp[2,1], 2)`) = `r round(summary(model1)$varcomp[1,1] / (summary(model1)$varcomp[1,1] +  summary(model1)$varcomp[2,1]),2)`.
+
+Alternatively we can use the `vpredict()` function to calculate $h^2$ and its standard error:
+```{r}
+vpredict(model1, h2.bwt ~ V1 / (V1 + V2))
+```
+
+### Adding fixed effects
+
+To add fixed effects to a univariate model simply modify the model statement. For example we might know (or suspect) that birth weight is a sexually dimorphic trait and therefore fit a model
+```{r}
+model2 <- asreml(
+  fixed = bwt ~ 1 + sex,
+  random = ~ vm(animal, ainv),
+  residual = ~ idv(units),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit")
+)
+```
+
+Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:
+```{r, eval=TRUE}
+summary(model2, coef = TRUE)$coef.fixed
+wald.asreml(model2, ssType = "conditional", denDF = "numeric")
+```
+
+The very small probability (`Pr`) in the Wald test above shows that `sex` is a highly significant fixed effect, and from the parameter estimates (`summary(model2,coef=T)$coef.fixed`) we can see that the average male (sex 2) is 2.2 kg ($\pm$ 0.16 SE) heavier than the average female (sex 1). However, when we look at the variance components in the model including `sex` as a fixed effect, we see that they have changed slightly from the previous model:
+
+```{r}
+summary(model2)$varcomp
+```
+
+In fact since `sex` effects were previously contributing to the residual variance of the model, our estimate of $V_R$ (denoted `units!R` in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate $V_P$ as $V_A$+$V_R$ then as we include fixed effects we will soak up more residual variance driving $V_P$. Assuming that $V_A$ is more or less unaffected by the fixed effects fitted then as $V_P$ goes down we expect our estimate of $h^2$ will go up:
+
+```{r}
+vpredict(model2, h2.bwt ~ V1 / (V1 + V2))
+```
+
+```{r, echo=FALSE}
+(h2.1 <- vpredict(model1, h2.bwt ~ V1 / (V1 + V2)))
+(h2.2 <- vpredict(model2, h2.bwt ~ V1 / (V1 + V2)))
+```
+
+Here $h^2$ has increased slightly from `r round(h2.1[1],2)` to `r round(h2.2[1],2)`. Which is the better estimate? It depends on what your question is. The first is an estimate of the proportion of variance in birth weight explained by additive effects, the latter is an estimate of the proportion of variance in birth weight _after conditioning on sex_ that is explained by additive effects.
+
+An important piece of advice, each researcher should be consistent in how they name their estimates and always correcly describe which estimates they are using conditional or not (to avoid any confusion).
+
+### Adding random effects
+This is done by simply modifying the model statement in the same way. For instance fitting
+
+```{r}
+model3 <- asreml(
+  fixed = bwt ~ 1 + sex,
+  random = ~ vm(animal, ainv) + byear,
+  residual = ~ idv(units),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit")
+)
+
+summary(model3)$varcomp
+
+(h2.3 <- vpredict(model3, h2.bwt ~ V1 / (V1 + V2 + V3)))
+
+```
+
+Here the variance in `bwt` explained by `byear` is 0.886 and, based on the `z.ratio`, appears to be significant (>2). Thus we would conclude that year-to-year variation (_e.g._, in weather, resource abundance) contributes to $V_P$. Note that although $V_A$ has changed somewhat, as most of what is now partitioned as a birth year effect was previously partitioned as $V_R$. Thus what we have really done here is to partition environmental effects into those arising from year-to-year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A/ (V_A+V_{BY}+V_R)$).
+
+However, we get a somewhat different result if we also add a random effect of `mother` to test for maternal effects:
+
+```{r}
+model4 <- asreml(
+  fixed = bwt ~ 1 + sex,
+  random = ~ vm(animal, ainv) + byear + mother,
+  residual = ~ idv(units),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit")
+)
+
+summary(model4)$varcomp
+
+(h2.4 <- vpredict(model4, h2.bwt ~ V1 / (V1 + V2+ V3 +V4)))
+```
+
+Here partitioning of significant maternal variance has resulted in a further decrease in $V_R$ but also a decrease in $V_A$. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like additive genetic effects and if present, but unmodelled, represent a type of "common environment effect"" that can - and will - cause upward bias in $V_A$ and so $h^2$. 
+The "common environment" can be conceived as the indissociable sum of the maternal additive genetic effect (such as milk production) and the maternal environment or permanent environement (such as litter or nest environment).   !!!!!!! need change !!!!
+
+### Testing significance of random effects
+
+A final point to note in this tutorial is that while the `z.ratio` (`component`/`std.error`) reported is a good indicator of likely statistical significance (>1.96?), the standard errors are approximate and are not recommended for formal hypothesis testing. A better approach is to use likelihood-ratio tests.
+
+For example, to test the significance of maternal effects we could compare models with and without the inclusion of maternal identity as a random effect and compare the final log-likelihoods of these models.
+
+<!--
+??? do you think we should explain what is a likelihood here??
+-->
+
+```{r}
+model4$loglik
+```
+
+shows that the model including maternal identity has a log-likelihood of `r round(model4$loglik, 3)`, and
+
+```{r}
+model3$loglik
+```
+
+shows that the model excluding maternal identity has a log-likelihood of `r round(model3$loglik, 3)`.
+
+A test statistic equal to twice the absolute difference in these log-likelihoods is assumed to be distributed as Chi square with one degree of freedom. In this case we would conclude that the maternal effects are highly significant since:
+2 $\times$ (`r model4$loglik` - `r model3$loglik`) equals `r 2*( model4$loglik - model3$loglik)`, and the p-value that comes with this is:
+
+```{r}
+1 - pchisq(2 * (model4$loglik - model3$loglik), 1)
+```
+
+As P < 0.0001 we would therefore conclude that the additional of maternal identity as a random effect significantly improves the model, given an increase in log-likelihood of approximately `r round(model4$loglik - model3$loglik, 0)`.
+
+
+### Futher partitionning the variance
+
+A population can be futher fragmented into different groups (such as females and males or treated and untreated). Some scientific questions require futher and deeper analysis of the dataset. To avoid multiple model (one for each group), we can directly partition the variance between groups in a unique model. In addition, by doing so, we can also test if the variance are different between groups.
+
+As an example, we decide to take the model4 and partionnning the variance and residual only for the additive genetic variance. But further analysis will require to also partition the other components of variance.
+
+```{r}
+gryphon <- gryphon[order(gryphon$sex),]
+
+model_SEX <- asreml(
+  fixed = bwt ~ 1 + sex,
+  random = ~ at(sex):vm(animal, ainv) + byear + mother,
+  residual = ~dsum(~units | sex),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit")
+)
+```
+
+First, the dataset need to be order by group (sex here). The variance need to be partitionned between group at both the random and residual levels. At the random effect, the fonction `at()` is perfect for this example. For the residual level, it is required to used the fonction `dsum()` 
+
+```{r}
+summary(model_SEX)$varcomp
+
+(h2.F <- vpredict(model_SEX, h2.bwt ~ V3 / (V1 + V2 + V3 + V5)))
+(h2.M <- vpredict(model_SEX, h2.bwt ~ V4 / (V1 + V2 + V4 + V6)))
+
+```
+By partitionning the variance and the residual, the model estimates the $V_A$ and $V_R$ for each group (sex). Doing so, we can calculate the $h^2$ for each group (sex).
+To test if the variance are different between groups, we can compare the model partitionned by sex `model_SEX` and the previous model without the partitionning `model4` with a likelihood ratio test (LRT) with 2 degrees of freedom since models have two components of variance of difference.
+
+```{r}
+model_SEX$loglik
+
+model4$loglik
+
+1 - pchisq(2 * (model_SEX$loglik - model4$loglik), 2)
+```
+
+Here, we can see the $h^2$ seems to differ between sexes (`r round(h2.F[1],2)` and `r round(h2.M[1],2)`), the LRT partitionning the variance and the residual between group (sex) did not improved the fit of the model and so their variance are not significantly different. 
+
+
+### Covariance between different random effect and possible negative variance
+
+Variance represents the deviation of the distribution and it expected to be a positive values. However, it is happen in an animal the variance can be estiamted to be negative.
+A negative variance could mean the mean within the random effect is less similar than expected by chance. Usually asreml-R will not allow the estimation of a negative variance and the model will create a boundary `B` close to 0 for this estimate.
+But it is possible that a variance can be negative with a biological reason such as a sibling competition within the nest creating a negative among-individual covariance within the nest. We can exploit alternative model parameter to first allow the model to avoid the boundary and estimate a negative variance and second estimate a covaraince between two random effect (additive genetic varaince and nest (here mother) variance). 
+Just as a remember Mother as random effect is an only associated to the maternal effect, it is also include the nest effect which can be visual as maternal environement (permanent environement Vpe), the genetic maternal effet (Vma)
+
+```{r}
+temp <- asreml(
+  fixed = bwt ~ 1,
+  random = ~ vm(animal, ainv) + byear + mother,
+  residual = ~ idv(units),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit"),
+  start.values= T )
+G.temp <- temp$vparameters[(1:3),]
+G.temp$Constraint <- "U"
+R.temp <- temp$vparameters[-(1:3),]
+```
+
+The argument `start.values=T` allowed the `temp` model to change its random parameters. We can create the two different matrices of the model and specify which parameters will be modified. For this example we modified the G matrix to fit all variance to be `U` unstructed (allowing negative variance in case its appeared).
+The object G.temp and R.temp can be implemented in the follwing model as new parameters.
+
+```{r}
+model_5 <- asreml(
+  fixed = bwt ~ 1 + sex,
+  random = ~ vm(animal, ainv) + byear + mother,
+  residual = ~ idv(units),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit"),
+  R.param=R.temp,G.param=G.temp)
+summary(model_5)$varcomp
+```
+
+
+<!--
+A more complex model can estimate the covariance between two random effect using the fonction `str`. For example, we can estimate the covariance between the additive genetic variance `Va` and the common environement `Vmother`.
+
+need to add something about the fact that asreml does not work well with pedigree with integer as factor
+
+
+```{r, eval = FALSE}
+
+temp2 <- asreml(
+  fixed = bwt ~ 1,
+  random = ~ str( ~ vm(animal, ainv) + mother, ~ us(2):id(1149)) + byear,
+  residual = ~ idv(units),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit"),
+ # equate.levels = c("animal", "mother"),
+  start.values=T)
+G.temp2<-temp$vparameters[(1:4),]
+G.temp2$Constraint <- "U"
+R.temp2<-temp$vparameters[-(1:4),]
+
+model_6 <- asreml(
+  fixed = bwt ~ 1 + sex,
+  random=~str(~vm(animal,ainv)+mother,~us(2):id(852)) + byear,
+  residual = ~ idv(units),
+  data = gryphon,
+  na.action = na.method(x = "omit", y = "omit"),
+  #equate.levels = c("animal", "mother"),
+  R.param=R.temp2,G.param=G.temp2)
+summary(model_6)$varcomp
+```
+the str fonction has two component, first the equation term `~vm(animal,Ainv)+mother` and second the structural term `~us(2):id(4500)`. Here within the structural term, we fit a 2x2 unstructured matrix `us(2)` which estimated the variance and the covariance between the random effect in the equation term. To sucessfully work, the structural term also requires the number of level identifyed witin `id()`.
+
+!!!!!!!!!!! i am still blocked but this number 
+length(unique(c(as.character(gryphon$animal), as.character(gryphon$mother))))#1084
+length(unique(c(gryphon$mother)))#429
+length(unique(c(gryphon$animal)))#1084
+-->

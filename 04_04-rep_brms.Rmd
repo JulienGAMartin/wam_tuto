@@ -1,0 +1,15 @@
+## brms
+
+```{r cache=TRUE, eval = FALSE}
+library(brms)
+Amat <- nadiv::makeA(Ped)
+
+model_simple1.1 <- brm(
+  bwt ~ 1 + (1|animal) + (1|animal_pe), data = gryphonRM,
+  family = gaussian(), cov_ranef = list(animal = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+
+summary(model_simple1.1)
+plot(model_simple1.1)
+```

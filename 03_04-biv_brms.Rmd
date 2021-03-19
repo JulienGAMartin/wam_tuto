@@ -1,0 +1,22 @@
+## brms
+
+```{r eval = params$fit_all}
+library(brms)
+Amat <- as.matrix(nadiv::makeA(gryphonped))
+bf_bwt <- bf(bwt ~ 1 + (1 | p | gr(animal, cov = Amat)))
+bf_tarsus <- bf(tarsus ~ 1 + (1 | p | gr(animal, cov = Amat)))
+brms_m2.1 <- brm(
+  bf_bwt + bf_tarsus + set_rescor(TRUE),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+save(brms_m2.1, file = "data/brms_m2_1.rda")
+```
+
+```{r}
+load("data/brms_m2_1.rda")
+summary(brms_m2.1)
+plot(brms_m2.1, ask = FALSE)
+VarCorr(brms_m2.1)
+```
