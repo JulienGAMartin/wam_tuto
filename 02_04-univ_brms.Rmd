@@ -1,0 +1,20 @@
+## brms
+
+```{r eval = params$fit_all}
+library(brms)
+Amat <- as.matrix(nadiv::makeA(gryphonped))
+brms_m1.1 <- brm(
+  bwt ~ 1 + (1 | gr(animal, cov = Amat)),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+save(brms_m1.1, file = "data/brms_m1_1.rda")
+```
+
+```{r}
+load("data/brms_m1_1.rda")
+summary(brms_m1.1)
+plot(brms_m1.1)
+```

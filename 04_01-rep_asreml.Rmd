@@ -1,0 +1,87 @@
+## Asreml-R
+
+### Estimating repeatability
+
+With repeated measures on individuals it is often of interest, prior to fitting a genetic model, to see how repeatable a trait is. We can estimate the repeatability of a trait as the proportion of phenotypic variance explained by individual identity.
+
+```{r}
+modelv <- asreml(fixed = laydate ~ 1,
+                 random =~ animal,
+                 residual=~idv(units),
+                 data=gryphonRM,
+                 na.action = na.method(x="omit", y="omit"))
+```
+Note that since we want to estimate the amount of variance explained by individual identity (rather than by additive effects), we fit `animal` as a normal random effect and we don't associate it with the pedigree.
+
+This model partitions the phenotypic variance in `laydate` as follows:
+```{r}
+summary(modelv)$varcomp
+```
+
+Between-individual variance is given by the `animal` component, while the residual component (`units!units`) represents within-individual variance. Here then the repeatability of the trait can be determined by hand as `r round(summary(modelv)$varcomp[1,1]/(summary(modelv)$varcomp[1,1]+summary(modelv)$varcomp[2,1]),2)` (_i.e._, as `r round(summary(modelv)$varcomp[1,1],3)`/(`r round(summary(modelv)$varcomp[1,1],3)` + `r round(summary(modelv)$varcomp[2,1], 3)`)).
+
+Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding `age` into the model as a fixed effect.
+```{r}
+modelw <- asreml(fixed = laydate ~ age,
+                 random =~ animal,
+                 residual=~idv(units),
+                 data=gryphonRM,
+                 na.action = na.method(x="omit", y="omit"))
+
+summary(modelw)$varcomp
+```
+
+The repeatability of lay date, after accounting for age effects, is now estimated as `r round(summary(modelw)$varcomp[1,1]/(summary(modelw)$varcomp[1,1]+summary(modelw)$varcomp[2,1]), 2)` (_i.e._, as `r round(summary(modelw)$varcomp[1,1], 3)`/(`r round(summary(modelw)$varcomp[1,1], 3)` + `r round(summary(modelw)$varcomp[2,1], 3)`)). So, just as we saw when estimating $h^2$ in Tutorial 1, the inclusion of fixed effects will alter the estimated effect size if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
+
+Here age is modelled as a 5-level factor (specified using the function `as.factor()` at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.
+
+### Partitioning additive and permanent environment effects
+
+Generally we expect that the repeatability will set the upper limit for heritability since, while additive genetic effects will cause among-individual variation, so will other types of effects. Non-additive contributions to fixed among-individual differences are normally referred to as _permanent environment effects_. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in $V_A$.
+
+To illustrate this fit the animal model:
+```{r}
+modelx <- asreml(fixed = laydate ~ age,
+                 random =~ vm(animal, ainv),
+                 residual=~idv(units),
+                 data=gryphonRM,
+                 na.action = na.method(x="omit", y="omit"))
+```
+
+Variance components are almost unchanged:
+```{r}
+summary.asreml(modelx)$varcomp
+```
+
+This suggests that all of the among-individual variance is – rightly or wrongly – being partitioned as $V_A$ here. To instead obtain an unbiased estimate of $V_A$ we need to allow for both additive genetic _and_ non-genetic sources of individual variation. We do this by fitting `animal` twice, once with a pedigree, and once without a pedigree (using `ide()`).
+```{r}
+modely <- asreml(fixed = laydate ~ age,
+                 random =~ vm(animal, ainv) + ide(animal),
+                 residual=~idv(units),
+                 data=gryphonRM,
+                 na.action = na.method(x="omit", y="omit"))
+summary(modely)$varcomp
+```
+
+The estimate of $V_A$ is now much lower since the additive and permanent environment effects are being properly separated. We can estimate $h^2$ and the repeatability from this model:
+```{r}
+vpredict(modely, h2 ~ V1/(V1+V2+V3))
+vpredict(modely, repeatability ~ (V1+V2)/(V1+V2+V3))
+```
+
+### Adding additional effects and testing significance
+
+Models of repeated measures can be extended to include other fixed or random effects. For example try including year of measurement (`year`) and birth year (`byear`) as random effects.
+```{r}
+modelz <- asreml(fixed = laydate ~ age,
+                 random =~ vm(animal, ainv) + ide(animal) +
+                 year + byear,
+                 residual=~idv(units),
+                 data=gryphonRM,
+                 na.action = na.method(x="omit", y="omit"))
+summary(modelz)$varcomp
+```
+
+This model will return additional variance components corresponding to variation in lay dates between years of measurement and between birth cohorts of females. $V_{byear}$ is very low and if you compare this model to a reduced model with byear excluded the log-likelihood remains unchanged.
+
+`year` effects could alternatively be included as fixed effects (try this!). This will reduce $V_R$ and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.

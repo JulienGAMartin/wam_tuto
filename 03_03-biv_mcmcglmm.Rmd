@@ -1,0 +1,111 @@
+## MCMCglmm
+
+All others software will remove automatically lines with missing data from the dataset use to fit the model.
+`MCMCglmm`, however, will not do it and will try to fit the model use latent variables for missing data.
+For comparison, we will remove the missing values from the data before fitting the model.
+
+```{r}
+gryphon <- subset(gryphon, !is.na(bwt) & !is.na(tarsus))
+```
+### Fitting the model
+
+Fitting a multivariate model in MCMCglmm involves several new consideration above those for fitting univariate models. First, we have to fit multivariate priors; second, we have to specify the ways in which effects on different traits may covary, including the nature of residual (co)variation; and third, we will have to be a little more specific when specifying to MCMCglmm what type of distributions from which we assume our data are drawn. Our most basic model can be specified as:
+
+```{r, fig.cap="The posterior distribution of the additive genetic effect for tarsus length in a MCMCglmm run with default values"}
+library(MCMCglmm)
+Ainv <- inverseA(gryphonped)$Ainv
+prior2.1 <- list(
+  G = list(G1 = list(V = diag(2), nu = 1.002)),
+  R = list(V = diag(2), nu = 1.002)
+)
+model2.1 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1,
+  random = ~ us(trait):animal, rcov = ~ us(trait):units, family = c("gaussian", "gaussian"),
+  ginv = list(animal = Ainv), data = gryphon, prior = prior2.1, verbose = FALSE
+)
+plot(model2.1$VCV[, "traittarsus:traittarsus.animal"])
+```
+
+We have constructed the prior similarly to the those in the univariate models in tutorial 1, only we are specifying a 2x2 covariance matrix rather than a single variance. In order to provide proper priors, we have set the degree of belief parameter to greater than 1 (1.002). Those priors are not necessarily weak or uninformative in all circumstances. We will consider them adequate nonetheless for this tutorial. Please the vignette of the MCMCglmm packages [@R-MCMCglmm] for more infomration on priors. In tutorial 1, we used full autocorrelation tables to evaluate the validity of the posterior distribution. Note that we have not done this here. For a bivariate model this table can become very complex. Nonetheless, it is worth evaluating, rather it is simply to large to include here. It can be viewed in the console as before. Here we have displayed only the autocorrelation for estimates of additive genetic effects for tarsus length with a lag of one samples (10 iterations given this MCMCglmm run with default values). This lag of `r autocorr.diag(model2.1$VCV)[,"traittarsus:traittarsus.animal"][2]` is clearly unacceptable. The posterior distribution of the additive genetic effect on tarsus length is shown in Figure 4 (p. 15), note the autocorrelation evident in the left-hand plot. We will opt to run the analysis for longer. This longer run could be run using the following code (including a line to save the output):
+
+```{r, eval = params$fit_all}
+model2.1 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1,
+  random = ~ us(trait):animal,
+  rcov = ~ us(trait):units,
+  family = c("gaussian", "gaussian"),
+  ginv = list(animal = Ainv), data = gryphon,
+  nitt = 130000, thin = 100, burnin = 30000,
+  prior = prior2.1, verbose = FALSE
+)
+save(model2.1, file = "data/MCMCglmm_model2_1_LongRun.rda")
+```
+
+However, this run might take as long as an hour. For the purpose of this tutorial we have provided an output for such a run. It can be obtained and manipulated as follows, assuming that the file `MCMCglmm_model2_1_LongRun.rda` is available at the specified location:
+
+```{r}
+load(file = "data/MCMCglmm_model2_1_LongRun.rda")
+autocorr.diag(model2.1$VCV)[, "traittarsus:traittarsus.animal"][2]
+```
+
+This level of autocorrelation is more acceptable, at least for the purpose of demonstration in this tutorial.
+We can recover variance components, heritabilities, and genetic correlations from the posterior distribution of this model:
+
+```{r}
+posterior.mode(model2.1$VCV)
+heritability.bwt2.1 <- model2.1$VCV[, "traitbwt:traitbwt.animal"] / (model2.1$VCV[, "traitbwt:traitbwt.animal"] + model2.1$VCV[, "traitbwt:traitbwt.animal"])
+posterior.mode(heritability.bwt2.1)
+heritability.tarsus2.1 <- model2.1$VCV[, "traittarsus:traittarsus.animal"] / (model2.1$VCV[, "traittarsus:traittarsus.animal"] + model2.1$VCV[, "traittarsus:traittarsus.units"])
+posterior.mode(heritability.tarsus2.1)
+
+genetic.correlation2.1 <- model2.1$VCV[, "traitbwt:traittarsus.animal"] / sqrt(model2.1$VCV[, "traitbwt:traitbwt.animal"] * model2.1$VCV[, "traittarsus:traittarsus.animal"])
+posterior.mode(genetic.correlation2.1)
+```
+
+### Adding fixed and random effects
+Fixed and random effects can be added just as for the univariate case.
+Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of byear and mother we could specify a bivariate formulation of this using the following code (including a line to save the output):
+
+```{r, eval = params$fit_all}
+prior2.2 <- list(
+  G = list(
+    G1 = list(V = diag(2), nu = 1.002),
+    G2 = list(V = diag(2), nu = 1.002),
+    G3 = list(V = diag(2), nu = 1.002)
+  ),
+  R = list(V = diag(2), nu = 1.002)
+)
+model2.2 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1 + trait:sex,
+  random = ~ us(trait):animal + us(trait):byear + us(trait):mother,
+  rcov = ~ us(trait):units,
+  family = c("gaussian", "gaussian"),
+  ginv = list(animal = Ainv), data = gryphon,
+  nitt = 130000, thin = 100, burnin = 30000,
+  prior = prior2.2, verbose = FALSE
+)
+save(model2.2, file = "data/MCMCglmm_model2_2_LongRun.rda")
+```
+
+Again we have provided the data from one such run. It can be accessed using the code:
+
+```{r}
+load(file = "data/MCMCglmm_model2_2_LongRun.rda")
+autocorr(model2.2$VCV)[, , "traittarsus:traittarsus.animal"][3, 4]
+```
+
+As before we can obtain the raw variance component estimates and genetic correlations for the random effects:
+
+```{r}
+posterior.mode(model2.2$VCV)
+genetic.correlation2.2 <- model2.2$VCV[, "traitbwt:traittarsus.animal"] / sqrt(model2.2$VCV[, "traitbwt:traitbwt.animal"] * model2.2$VCV[, "traittarsus:traittarsus.animal"])
+maternal.correlation2.2 <- model2.2$VCV[, "traitbwt:traittarsus.mother"] / sqrt(model2.2$VCV[, "traitbwt:traitbwt.mother"] * model2.2$VCV[, "traittarsus:traittarsus.mother"])
+posterior.mode(genetic.correlation2.2)
+posterior.mode(maternal.correlation2.2)
+```
+
+Evaluation of the statistical support for these genetic and maternal correlations is straightforward. Because we imposed no constraint on their estimation, we can evaluate the extent to which the posterior distributions overlap zero:
+
+```{r}
+HPDinterval(genetic.correlation2.2, 0.95)
+HPDinterval(maternal.correlation2.2, 0.95)
+```
+
+Neither or these posterior distributions overlapps zero, so we can consider them both statistically supported.

@@ -1,0 +1,101 @@
+## Asreml-R {#asreml-biv}
+
+### Running the model
+
+For running multivariate analyses in ASReml-R, the code is slightly more complex than for the univariate case. This is because ASReml-R allows us to make different assumptions about the way in which traits might be related and so we need to explicitly code a model of the (co)variance structure we want to fit. We have also specified some starting values. These are can be very approximate _guestimates_, but having reasonable starting values can aid convergence. Finally, we have increased the default maximum number of iterations (`maxiter`) which can help to achieve convergence for more complicated models.
+
+```{r}
+ainv <- ainverse(gryphonped)
+modela <- asreml(
+  fixed = cbind(bwt, tarsus) ~ trait,
+  random = ~ us(trait):vm(animal, ainv), init = c(1, 0.1, 1),
+  residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
+  data = gryphon,
+  maxit = 20
+)
+```
+This has fitted a bivariate model of `bwt` and `tarsus`, with the mean for each of the traits as a fixed effect (`trait`). The additive genetic variance-covariance matrix ($\textbf{G}$) is unstructured (`us`; _i.e._ all elements are free to vary) and the starting values for $V_A$ for `bwt`, $COV_A$ between `bwt` and `tarsus`, and $V_A$ for `tarsus` are set to 1, 0.1 and 1, respectively. Similarly, the residual matrix is unstructured and uses the same starting values.
+
+Let's have a look at the variance components, and notice that there are now six (co)variance components reported in the table:
+
+```{r}
+summary(modela)$varcomp
+```
+
+The first three terms relate to the genetic matrix and, in order are $V_{A,bwt}$, $COV_A$, $V_{A, tarsus}$. Below is again a line where the `units:traitr!R` component equals 1, which again can be ignored. The final three terms relate to the residual matrix and correspond to $V_{R,bwt}$, $COV_R$, $V_{R,tarsus}$. Based on our quick and dirty check (is `z.ratio` > 1.96?) all components look to be statistically significant.
+
+We can calculate the genetic correlation as $COV_A / \sqrt{V_{A,bwt} \cdot V_{A,tarsus}}$. Thus this model gives an estimate of $r_A$ = `r round(summary(modela)$varcomp[2,1]/sqrt(summary(modela)$varcomp[1,1]*summary(modela)$varcomp[3,1]), 2)`. Although we can calculate this by hand, we can also use `vpredict()`, which also provides an (approximate) standard error:
+```{r}
+vpredict(modela, rA ~ V2 / sqrt(V1 * V3))
+```
+
+Of course we can also calculate the heritability of `bwt` and `tarsus` from this model:
+```{r}
+vpredict(modela, h2.bwt ~ V1 / (V1 + V5))
+vpredict(modela, h2.tarsus ~ V3 / (V3 + V7))
+```
+
+
+### Adding fixed and random effects
+
+Fixed and random effects can be added just as for the univariate case. Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of birth year and mother we could specify a bivariate formulation of this using:
+
+```{r}
+modelb <- asreml(
+  fixed = cbind(bwt, tarsus) ~ trait + trait:sex,
+  random = ~ us(trait, init = c(1, 0.1, 1)):vm(animal, ainv) +
+    us(trait, init = c(1, 0.1, 1)):byear +
+    us(trait, init = c(1, 0.1, 1)):mother,
+  residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
+  data = gryphon,
+  maxit = 20
+)
+```
+
+Note that we have specified a covariance structure for each random effect and an estimate of the effect of sex on both birth weight and tarsus length by interacting sex with trait in the fixed effect structure.
+
+There will now be twelve (co)variance components reported after running the code:
+```{r}
+summary(modelb)$varcomp
+```
+
+### Significance testing
+
+Under the model above $r_M$ is estimated as `r round(summary(modelb)$varcomp[5,1]/sqrt(summary(modelb)$varcomp[4,1]*summary(modelb)$varcomp[6,1]), 2)` and the `z.ratio` associated with the corresponding covariance ($COV_M$) is >2 (in absolute terms). We might therefore infer that there is evidence for a strong negative correlation between the traits with respect to the mother and that while maternal identity explains variance in both traits those mothers that tend to produce heavier offspring actually tend to produce offspring with shorter tarsus lengths.
+
+To formally test if $COV_M$ is significantly different from zero, we can compare the log-likelihood for this model:
+```{r}
+modelb$loglik
+```
+to a model in which we specify that $COV_M$=0. Since this constraint reduces the number of parameters to be estimated by one, we can use a likelihood ratio test with one degree of freedom. To run the constrained model, we modify the G structure definition for the `mother` random effect to diagonal (`diag`), which means we only estimate the variances (the diagonal of the matrix) but not the covariance:
+
+```{r}
+modelc <- asreml(
+  fixed = cbind(bwt, tarsus) ~ trait + trait:sex,
+  random = ~ us(trait, init = c(1, 0.1, 1)):vm(animal, ainv) +
+    us(trait, init = c(1, 0.1, 1)):byear +
+    diag(trait, init = c(1, 1)):mother,
+  residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
+  data = gryphon,
+  maxit = 20
+)
+```
+
+You can run `summary(modelc)$varcomp` to confirm this worked. We can now obtain the log-likelihood of this model and compare this to that of `modelb` using a likelihood ratio test:
+```{r}
+modelc$loglik
+```
+
+We can see that the model log-likelihood is now `r round(modelc$loglik, 2)`.
+And comparing the models using a likelihood ratio test:
+```{r}
+2 * (modelb$loglik - modelc$loglik)
+```
+So our chi-square test statistic is $\chi^2_1$= `r round(2*(modelb$loglik-modelc$loglik),2)`.
+The p-value that goes with this is obtained by:
+```{r}
+1 - pchisq(2 * (modelb$loglik - modelc$loglik), 1)
+```
+We would therefore conclude that the maternal covariance is significantly different from zero.
+
+We could apply the same procedure to show that the residual (environmental) covariance and the genetic covariance estimates are significantly greater than zero (_i.e._, heavier individuals tend to have longer tarsus lengths). In contrast, we should find that the byear covariance between the two traits is non-significant.

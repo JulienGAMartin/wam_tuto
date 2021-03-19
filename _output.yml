@@ -8,8 +8,10 @@ bookdown::gitbook:
     #in_header: js/hide_code.html
     #after_body: js/js_solution.html
   config:
+    toc_depth: 4
     toc:
-      collapse: section
+      collapse: subsection
+      scroll_highlight: yes
       before: |
         <li><a href="./">How to fit an animal model</a></li>
       after: |
