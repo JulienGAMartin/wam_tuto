@@ -26,7 +26,7 @@ The lower case “animal” is a can be a **special** word for MCMCglmm. If a `p
 
 ```{r, cache=TRUE}
 Ainv <- inverseA(gryphonped)$Ainv
-model1.1 <- MCMCglmm(BWT ~ 1, random = ~ANIMAL, ginv = list(ANIMAL = Ainv), data = gryphon, prior = prior1.1)
+model1.1 <- MCMCglmm(bwt ~ 1, random = ~animal, ginv = list(animal = Ainv), data = gryphon, prior = prior1.1)
 ```
 
 After typing this code, MCMCglmm will run, taking about 20 seconds on a modern desk- top computer. The progress of the run will be printed to the screen. Also, note the warning message will be printed at the end of the run. This is natural too. In order for the MCMC algorithm to work, MCMCglmm must keep track of effects associated with unmeasured individuals appearing in the pedigree. This will not affect the answers, but when many unmeasured individuals exist, it can hinder the ability of the algorithm to explore the parameter space (more on this, and a solution, later). Lets have a look at the MCMCglmm outputs. First we will evaluate how confident we can be that MCMCglmm found good answers. By entering
@@ -48,7 +48,7 @@ which generates Figure 2 (p. 6). Here we see distributions of the estimates of t
 We will simply re-run the model for a longer number of iterations, and sample the chain less frequently. So far we have been running MCMCglmm with its default values. These defaults are a total run length of 13000 iterations, the first 3000 of which are discarded as a ‘burn-in’ period to make sure that the converges to the part of the parameter space where the maximum likelihood exists. The remaining 10000 iterations are sampled (estimates retained) every 10 iterations (the thinning interval). Because the values in the left-hand plots in figure 2 to appear to have different values at the beginning of the run, we might suspect that a longer burn-in period might be required. We can reduce the autocorrelation by lengthening the rest of the run and sampling the chain less frequently. The following code runs the same model 1.1, but is likely to produce better samples of the posterior distributions. This model should take about two minutes to analyze.
 
 ```{r, cache=TRUE}
-model1.1 <- MCMCglmm(BWT ~ 1, random = ~ANIMAL, ginv = list(ANIMAL = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000, prior = prior1.1, verbose = FALSE)
+model1.1 <- MCMCglmm(bwt ~ 1, random = ~animal, ginv = list(animal = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000, prior = prior1.1, verbose = FALSE)
 ```
 
 Notice that we have now included the command verbose=FALSE in the MCMCglmm call. We will continue this throughout the tutorial so that more complete screen outputs can be included in this document without using too much space. Now produce the plots of the samples of the fixed and random effects (they have not been included in this document). Note that the autocorrelation is much reduced. A more compact way to evaluate the validity of the posterior distributions is to calculate autocorrelation among samples, as follows:
@@ -72,12 +72,12 @@ HPDinterval(model1.1$VCV)
 We specified weak priors in this analyses. Now we will check whether or not proper priors would have influenced the results that we obtained. The simplest way to do this is to rerun the model with different priors. Here we construct priors with a larger degree of belief parameter (`nu`), and we will specify that a large proportion of the variation is under genetic control (`V`):
 
 ```{r, cache=TRUE}
-p.var <- var(gryphon$BWT, na.rm = TRUE)
+p.var <- var(gryphon$bwt, na.rm = TRUE)
 prior1.1.2 <- list(G = list(G1 = list( V = matrix(p.var * 0.05), nu = 1)), 
                     R = list(V = matrix(p.var * 0.95), nu = 1))
 
-model1.1.2 <- MCMCglmm(BWT ~ 1,
-  random = ~ANIMAL, ginv = list(ANIMAL = Ainv),
+model1.1.2 <- MCMCglmm(bwt ~ 1,
+  random = ~animal, ginv = list(animal = Ainv),
   data = gryphon, prior = prior1.1.2, nitt = 65000, thin = 50,
   burnin = 15000, verbose = FALSE
 )
@@ -92,7 +92,7 @@ In addition, you can also specify the prior with previous knowledges or expectat
 A useful property of Bayesian posterior distributions is that we can apply almost any transformation to these distributions and they will remain valid. This applies to the calculation of heritabilities. We can obtain an estimate of the heritability by applying the basic formula h 2 =V A /V P to each sample of the posterior disribution:
 
 ```{r}
-posterior.heritability1.1 <- model1.1$VCV[, "ANIMAL"] / (model1.1$VCV[, "ANIMAL"] + model1.1$VCV[, "units"])
+posterior.heritability1.1 <- model1.1$VCV[, "animal"] / (model1.1$VCV[, "animal"] + model1.1$VCV[, "units"])
 HPDinterval(posterior.heritability1.1, 0.95)
 posterior.mode(posterior.heritability1.1)
 ```
@@ -108,18 +108,18 @@ plot(posterior.heritability1.1)
 To add effects to a univariate model we simply modify the fixed effect portion of the model specification:
 
 ```{r, cache=TRUE}
-model1.2 <- MCMCglmm(BWT ~ SEX, random = ~ANIMAL, ginv = list(ANIMAL = Ainv), data = gryphon, prior = prior1.1, nitt = 65000, thin = 50, burnin = 15000, verbose = FALSE)
+model1.2 <- MCMCglmm(bwt ~ sex, random = ~animal, ginv = list(animal = Ainv), data = gryphon, prior = prior1.1, nitt = 65000, thin = 50, burnin = 15000, verbose = FALSE)
 ```
 
-We can assess the significance of `SEX` as a fixed effect by examining its posterior distribution.
+We can assess the significance of `sex` as a fixed effect by examining its posterior distribution.
 
 ```{r}
-posterior.mode(model1.2$Sol[, "SEX2"])
+posterior.mode(model1.2$Sol[, "sex2"])
 
-HPDinterval(model1.2$Sol[, "SEX2"], 0.95)
+HPDinterval(model1.2$Sol[, "sex2"], 0.95)
 ```
 
-The posterior distribution of the `SEX2` term does not overlap zero. Thus we can infer that sex has a statistical effect on birthweight in this model and is a useful addition to the model, for most purposes. MCMCglmm has designated `SEX2` as the contrast between the two factor levels (male and female). It is also worth noting that the variance components have changed slightly:
+The posterior distribution of the `sex2` term does not overlap zero. Thus we can infer that sex has a statistical effect on birthweight in this model and is a useful addition to the model, for most purposes. MCMCglmm has designated `sex2` as the contrast between the two factor levels (male and female). It is also worth noting that the variance components have changed slightly:
 
 ```{r}
 posterior.mode(model1.2$VCV)
@@ -128,7 +128,7 @@ posterior.mode(model1.2$VCV)
 In fact since sex effects were previously contributing to the residual variance of the model our estimate of V R (denoted ’units’ in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate V P as V A +V R then as we include fixed effects we will soak up more residual variance driving V P . Assuming that V A is more or less unaffected by the fixed effects fitted then as V P goes down we expect our estimate of h 2 will go up.
 
 ```{r}
-posterior.heritability1.2 <- model1.2$VCV[, "ANIMAL"] / (model1.2$VCV[, "ANIMAL"] + model1.2$VCV[, "units"])
+posterior.heritability1.2 <- model1.2$VCV[, "animal"] / (model1.2$VCV[, "animal"] + model1.2$VCV[, "units"])
 posterior.mode(posterior.heritability1.2)
 HPDinterval(posterior.heritability1.2, 0.95)
 ```
@@ -142,7 +142,7 @@ This is done by simply modifying the model statement in the same way, but requir
 
 ```{r, cache=TRUE}
 prior1.3 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(V = 1, nu = 0.002)), R = list(V = 1, nu = 0.002))
-model1.3 <- MCMCglmm(BWT ~ SEX, random = ~ ANIMAL + BYEAR, ginv = list(ANIMAL = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000, prior = prior1.3, verbose = FALSE)
+model1.3 <- MCMCglmm(bwt ~ sex, random = ~ animal + byear, ginv = list(animal = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000, prior = prior1.3, verbose = FALSE)
 posterior.mode(model1.3$VCV)
 ```
 
@@ -152,9 +152,9 @@ Here the variance in birth weight explained by birth year is 0.7887. Note that a
 p.var <- var(gryphon$bwt, na.rm = TRUE)
 prior1.4 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list( V = 1, nu = 0.002), G3 = list(V = 1, nu = 0.002)), 
 R = list( V = 1, nu = 0.002))
-model1.4 <- MCMCglmm(BWT ~ SEX,
-  random = ~ ANIMAL + BYEAR + MOTHER,
-  ginv = list(ANIMAL = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000,
+model1.4 <- MCMCglmm(bwt ~ sex,
+  random = ~ animal + byear + mother,
+  ginv = list(animal = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000,
   prior = prior1.4, verbose = FALSE
 )
 posterior.mode(model1.4$VCV)
@@ -163,8 +163,8 @@ posterior.mode(model1.4$VCV)
 Here partitioning of significant maternal variance has resulted in a further decrease in V R but also a decrease in V A . The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in V A and so h 2 . Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:
 
 ```{r}
-posterior.heritability1.3 <- model1.3$VCV[, "ANIMAL"] / (model1.3$VCV[, "ANIMAL"] + model1.3$VCV[, "BYEAR"] + model1.3$VCV[, "units"])
-posterior.heritability1.4 <- model1.4$VCV[, "ANIMAL"] / (model1.4$VCV[, "ANIMAL"] + model1.4$VCV[, "BYEAR"] + model1.4$VCV[, "MOTHER"] + model1.4$VCV[, "units"])
+posterior.heritability1.3 <- model1.3$VCV[, "animal"] / (model1.3$VCV[, "animal"] + model1.3$VCV[, "byear"] + model1.3$VCV[, "units"])
+posterior.heritability1.4 <- model1.4$VCV[, "animal"] / (model1.4$VCV[, "animal"] + model1.4$VCV[, "byear"] + model1.4$VCV[, "mother"] + model1.4$VCV[, "units"])
 posterior.mode(posterior.heritability1.2)
 posterior.mode(posterior.heritability1.3)
 posterior.mode(posterior.heritability1.4)
@@ -192,16 +192,16 @@ Depending of the research question and the presence of different group within th
 prior1.4.SEX <- list(G = list(G1 = list(V = diag(2), nu = 1.002), G2 = list(V = 1, nu = 0.002),G3 = list(V = 1, nu = 0.002)), 
                     R = list(V = diag(2), nu = 1.002))
  
-model1.4.SEX <- MCMCglmm(BWT ~ SEX,
-  random = ~ idh(SEX):ANIMAL + BYEAR + MOTHER,
-  rcov=~idh(SEX):units,
-  ginv = list(ANIMAL = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000,
+model1.4.SEX <- MCMCglmm(bwt ~ sex,
+  random = ~ idh(sex):animal + byear + mother,
+  rcov=~idh(sex):units,
+  ginv = list(animal = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000,
   prior = prior1.4.SEX, verbose = FALSE
 )
 posterior.mode(model1.4.SEX$VCV)
 
-posterior.heritability1.4.FEM <- model1.4.SEX$VCV[, "SEX1.ANIMAL"] / (model1.4.SEX$VCV[, "SEX1.ANIMAL"] + model1.4.SEX$VCV[, "BYEAR"] + model1.4.SEX$VCV[, "MOTHER"] + model1.4.SEX$VCV[, "SEX1.units"])
-posterior.heritability1.4.MAL <- model1.4.SEX$VCV[, "SEX2.ANIMAL"] / (model1.4.SEX$VCV[, "SEX2.ANIMAL"] + model1.4.SEX$VCV[, "BYEAR"] + model1.4.SEX$VCV[, "MOTHER"] + model1.4.SEX$VCV[, "SEX2.units"])
+posterior.heritability1.4.FEM <- model1.4.SEX$VCV[, "sex1.animal"] / (model1.4.SEX$VCV[, "sex1.animal"] + model1.4.SEX$VCV[, "byear"] + model1.4.SEX$VCV[, "mother"] + model1.4.SEX$VCV[, "sex1.units"])
+posterior.heritability1.4.MAL <- model1.4.SEX$VCV[, "sex2.animal"] / (model1.4.SEX$VCV[, "sex2.animal"] + model1.4.SEX$VCV[, "byear"] + model1.4.SEX$VCV[, "mother"] + model1.4.SEX$VCV[, "sex2.units"])
 
 posterior.mode(posterior.heritability1.4.FEM)
 HPDinterval(posterior.heritability1.4.FEM, 0.95)
