@@ -14,6 +14,7 @@ The phenotype data, as well as additional factors and covariates that we may wis
 We can read teh data file, using `read.csv()` which consider by default that `NA` is the symbol for missing values and that the first line of the file contains the column headers.
 
 ```{r, echo=FALSE}
+setwd("C:/Users/User/Documents/GitHub/wam_tuto")
 gryphon <- read.csv("data/gryphon.csv")
 ```
 
