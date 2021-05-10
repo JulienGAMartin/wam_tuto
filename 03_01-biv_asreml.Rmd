@@ -2,7 +2,14 @@
 
 ### Running the model
 
-For running multivariate analyses in ASReml-R, the code is slightly more complex than for the univariate case. This is because ASReml-R allows us to make different assumptions about the way in which traits might be related. So we need to explicitly code a model of the (co)variance structure we want to fit by specified some starting values. These are can be very approximate _guestimates_, but having reasonable starting values can aid convergence. Finally, we have increased the default maximum number of iterations (`maxiter`) which can help to achieve convergence for more complicated models. Another way to increase the number of iteration will be to use the `update` fonction. If the `LogLik` is not stabilized after several iteration, it is good indication of the model require more iteration and so increase `maxiter`.  
+
+First we need to load the `asreml` library:
+```{r}
+library(asreml)
+```
+
+For running multivariate analyses in ASReml-R, the code is slightly more complex than for the univariate case. This is because ASReml-R allows us to make different assumptions about the way in which traits might be related. So we need to explicitly code a model of the (co)variance structure we want to fit by specified some starting values. These are can be very approximate _guestimates_, but having reasonable starting values can aid convergence. Finally, we have increased the default maximum number of iterations (`maxiter`) which can help to achieve convergence for more complicated models. Another way to increase the number of iteration will be to use the `update` function. Notes that if the `LogLik` is not stabilized after several iterations, it is good indication of the model require more iteration.
+
 
 It is also possible to let the model running without any specify starting values but usually univariate model will allow to get some _guestimates_ in the additive genetic variances. 
 
@@ -13,26 +20,33 @@ modela <- asreml(
   random = ~ us(trait):vm(animal, ainv), init = c(1, 0.1, 1),
   residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
   data = gryphon,
+  na.action = na.method(x = "include", y = "include"),
   maxit = 20
 )
 modela<-update(modela)
 ```
-This has fitted a bivariate model of `bwt` and `tarsus`, with the mean for each of the traits as a fixed effect (`trait`). The additive genetic variance-covariance matrix ($\textbf{G}$) is unstructured (`us`; _i.e._ all elements are free to vary) and the starting values for $V_A$ for `bwt`, $COV_A$ between `bwt` and `tarsus`, and $V_A$ for `tarsus` are set to 1, 0.1 and 1, respectively. Similarly, the residual matrix is unstructured and uses the same starting values.
 
-Let's have a look at the variance components, and notice that there are now six (co)variance components reported in the table:
+`modela` has fitted a bivariate model of `bwt` and `tarsus`, with the mean for each of the traits as a fixed effect (`trait`). The additive genetic variance-covariance matrix ($\textbf{G}$) is unstructured (`us`; _i.e._ all elements are free to vary) and the starting values for $V_A$ for `bwt`, $COV_A$ between `bwt` and `tarsus`, and $V_A$ for `tarsus` are set to 1, 0.1 and 1, respectively. Similarly, the residual matrix is unstructured and uses the same starting values.
+
+Note that the argument `na.action = na.method(x = "include", y = "include")` can be add to the model.In a bivariate model, it will help calculate the covariance between two traits with different missing information `NA` and so help imbalance phenotypage and save sample size. However, it is important to scale ( mean =0, var =1) the two traits to correctly adjust the model(see Asreml-R manual for more information). 
+For the example, no missing information are present in the dataset. 
+
+
+Let's have a look at the variance components, and notice that there are now seven (co)variance components reported in the table:
 
 ```{r}
 summary(modela)$varcomp
 ```
 
-The first three terms relate to the genetic matrix and, in order are $V_{A,bwt}$, $COV_A$, $V_{A, tarsus}$. Below is again a line where the `units:traitr!R` component equals 1, which again can be ignored. The final three terms relate to the residual matrix and correspond to $V_{R,bwt}$, $COV_R$, $V_{R,tarsus}$. Based on our quick and dirty check (is `z.ratio` > 1.96?) all components look to be statistically significant.
+The first three terms are related to the genetic matrix and, in order are $V_{A,bwt}$, $COV_A$, $V_{A, tarsus}$. Below is again a line where the `units:traitr!R` component equals to 1, which again can be ignored. The final three terms relate to the residual matrix and correspond to $V_{R,bwt}$, $COV_R$, $V_{R,tarsus}$. Based on our quick and dirty check (is `z.ratio` > 1.96?) all components look to be statistically significant.
 
 We can calculate the genetic correlation as $COV_A / \sqrt{V_{A,bwt} \cdot V_{A,tarsus}}$. Thus this model gives an estimate of $r_A$ = `r round(summary(modela)$varcomp[2,1]/sqrt(summary(modela)$varcomp[1,1]*summary(modela)$varcomp[3,1]), 2)`. It is also possible to estimate the residual correlation  $r_res$ = `r round(summary(modela)$varcomp[6,1]/sqrt(summary(modela)$varcomp[5,1]*summary(modela)$varcomp[7,1]), 2)`. 
-<!-- Should we add an explication of the nature of the residual correlation -->
+
+<!-- Should we add an explication of the nature of the residual correlation or genetic correlation no? -->
 
 Although we can calculate this by hand, we can also use `vpredict()`, which also provides an (approximate) standard error:
 ```{r}
-vpredict(modela, rA ~ V2 / sqrt(V1 * V3))
+vpredict(modela, r_A ~ V2 / sqrt(V1 * V3))
 vpredict(modela, r_res ~ V6 / sqrt(V5 * V7))
 ```
 
@@ -45,7 +59,7 @@ vpredict(modela, h2.tarsus ~ V3 / (V3 + V7))
 
 ### Adding fixed and random effects
 
-Fixed and random effects can be added just as for the univariate case. Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of birth year and mother we could specify a bivariate formulation of this using:
+Fixed and random effects can be added just as for the univariate case. Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as birth year and mother as random effects, we could specify a bivariate formulation wiht the same complexity:
 
 ```{r}
 modelb <- asreml(
@@ -55,26 +69,39 @@ modelb <- asreml(
     us(trait, init = c(1, 0.1, 1)):mother,
   residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
   data = gryphon,
+  na.action = na.method(x = "include", y = "include"),
   maxit = 20
 )
 modelb<-update(modelb)
 ```
 
 Note that we have specified a covariance structure for each random effect and an estimate of the effect of sex on both birth weight and tarsus length.
-<!-- not sure about this part, the interaction trait:sex actually combined the effect of sex on both trait in the wald test, instead I used at(trait):-->
-There will now be twelve (co)variance components reported after running the code:
+<!-- trait:sex actually combined the effect of sex on both trait in the wald test, so I change it for at(trait): -->
+
+There will now be thirteen (co)variance components reported after running the code:
 ```{r}
 summary(modelb)$varcomp
 ```
 
-Fxed effects oefficient and effect size can be observed using:
+we can estimate the different correlations using `vpredict`: 
 ```{r}
-(summary(modelb, coef = TRUE)$coef.fi)
-(wald.asreml(modelb,denDF = "default",ssType = "conditional")$Wald)
+vpredict(modelb, r_byear ~ V2 / sqrt(V1 * V3))
+vpredict(modelb, r_M ~ V5 / sqrt(V4 * V6))
+vpredict(modelb, r_A ~ V8 / sqrt(V7 * V9))
+vpredict(modelb, r_res ~ V12 / sqrt(V11 * V13))
 
 ```
 
-Note that it is possible to specify a fixed effect only on one of the two traits by adding the number of order within `cbind` inside the argument `at(trait,x)`. For example, here we apply the fixed effect `sex` only to the response variable `tarsus`. 
+
+Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:
+```{r}
+summary(modelb, coef = TRUE)$coef.fi
+wald.asreml(modelb,denDF = "default",ssType = "conditional")$Wald
+
+```
+
+
+Note that it is possible to specify a fixed effect to a specific trait by adding the number of order within `cbind` inside the argument `at(trait,x)`. For example, here we apply the fixed effect `sex` only to the response variable `tarsus`. 
 
 ```{r}
 modelb_2 <- asreml(
@@ -84,11 +111,14 @@ modelb_2 <- asreml(
     us(trait, init = c(1, 0.1, 1)):mother,
   residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
   data = gryphon,
+  na.action = na.method(x = "include", y = "include"),
   maxit = 20
 )
 (summary(modelb_2, coef = TRUE)$coef.fi)
 (wald.asreml(modelb_2,denDF = "default",ssType = "conditional")$Wald)
 ```
+
+
 
 ### Significance testing
 
@@ -98,7 +128,7 @@ To formally test if $COV_M$ is significantly different from zero, we can compare
 ```{r}
 modelb$loglik
 ```
-to a model in which we specify that $COV_M$=0. Since this constraint reduces the number of parameters to be estimated by one, we can use a likelihood ratio test with one degree of freedom. To run the constrained model, we modify the G structure definedb for the `mother` random effect to diagonal (`diag`), which means we only estimate the variances (the diagonal of the matrix) but not the covariance (the covariance are fixed to 0):
+to a model in which we specify that $COV_M$=0. Since this constraint reduces the number of parameters to be estimated by one, we can use a likelihood ratio test (LRT) with one degree of freedom. To run the constrained model, we modify the G structure defined for the `mother` random effect to diagonal (`diag`), which means we only estimate the variances (the diagonal of the matrix) but not the covariance (the covariance are fixed to 0):
 
 ```{r}
 modelc <- asreml(
@@ -108,6 +138,7 @@ modelc <- asreml(
     diag(trait, init = c(1, 1)):mother,
   residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
   data = gryphon,
+  na.action = na.method(x = "include", y = "include"),
   maxit = 20
 )
 ```
@@ -131,62 +162,139 @@ We would therefore conclude that the maternal covariance is significantly differ
 
 We could apply the same procedure to show that the residual (environmental) covariance and the genetic covariance estimates are significantly greater than zero (_i.e._, heavier individuals tend to have longer tarsus lengths). In contrast, we should find that the byear covariance between the two traits is non-significant.
 
-
-### Estimate directly the genetic correlation within the model
-
-Within asreml, different matrix structure can be specify such as `us`,`corg`, `diag`, etc (cf see the AsremlR-4 guide). Instead of the fitting an unstructured matrix with the argument `us` or a reduced model with no covariance with the argument `diag`, we can also directly estimate the genetic correlaion between the `bwt` and `tarsus` with `corgh`. Here we decide to estimate directly the additive genetic correlation.
-
-<!-- model is not converging ??? 
 ```{r}
 modeld <- asreml(
   fixed = cbind(bwt, tarsus) ~ trait + at(trait):sex,
-  random = ~ corgh(trait, init = c(1, 0.1, 1)):vm(animal, ainv) +
-    us(trait, init = c(1, 0.1, 1)):byear +
+  random = ~ us(trait, init = c(1, 0.1, 1)):vm(animal, ainv) +
+    diag(trait, init = c(1, 1)):byear +
     us(trait, init = c(1, 0.1, 1)):mother,
   residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
   data = gryphon,
+  na.action = na.method(x = "include", y = "include"),
   maxit = 20
 )
-modeld	<-update(modeld)
-summary(modeld)$varcomp
+
+2 * (modelb$loglik - modeld$loglik)
+1 - pchisq(2 * (modelb$loglik - modeld$loglik), 1)
+
 ```
-Something important to take in account, the order of estimate (co)variance can be changed. So the heritabilty calculation will changed too. In addition, estimating covariance or direct correlation should not affect the fit of the model.
+
+
+
+### Estimate directly the genetic correlation within the model
+
+Within Asreml-r, different matrix structure can be specify such as `us`,`corg`, `diag`, etc (cf see the Asreml-r guide). Instead of the fitting an unstructured matrix with the argument `us` or a reduced model with no covariance with the argument `diag`, we can also directly estimate the genetic correlation between the `bwt` and `tarsus` with `corgh`. 
+Here we decide to estimate directly the additive genetic correlation.
+
+<!-- I dont know if we can specify initial values with corgh !, i remove it -->
+
 ```{r}
-summary(modelb)$loglik
-summary(modeld)$loglik
-```
-The direct estimation of correlation within the G matrix can avoid complex calculation when several random effects.
-But the main advantage to directly estimating the correlation is that it is possible to test if the correlation is different than 0 (similar result as LRT with the covariance) but also -1 and 1 which correspond of the correlation bondaries.
-```{r}
-MODEL_MODIF<-update.asreml(modeld,start.values=T)
-G_MOD<-MODEL_MODIF$vparameters.table[(1:9),]
-G_MOD[?1,2]<-0.99999
-G_MOD[?1,3]<-"F"
-modeld.red<-asreml(
+modele <- asreml(
   fixed = cbind(bwt, tarsus) ~ trait + at(trait):sex,
-  random = ~ corgh(trait, init = c(1, 0.1, 1)):vm(animal, ainv) +
+  random = ~ corgh(trait):vm(animal,ainv) +
     us(trait, init = c(1, 0.1, 1)):byear +
     us(trait, init = c(1, 0.1, 1)):mother,
   residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
   data = gryphon,
+  na.action = na.method(x = "include", y = "include"),
+  maxit = 20
+)
+modele	<-update(modele)
+summary(modele)$varcomp
+```
+
+It is important to note that using `corgh` change the order of the estimate (co)variance. All different calculation need to be adjust in consequence. 
+It is also important to check the difference between the model with `us` and `corgh` to make sure any mistake are made.
+
+```{r}
+summary(modelb)$loglik
+summary(modele)$loglik
+```
+
+There two main advantages to use `corgh`: first, a direct estimation of correlation within the G matrix can avoid mistake in the `vpredict` calculation; second, it is possible to test if the correlation is significantly different than 0 (similar result as LRT with the covariance) but also to -1 and 1 which correspond of the correlation boundaries.
+The following code showed how to create a reduced model with the correlation close to 1 and compared to the initial model.
+Since we compared the correlation to its boundary, the degree of freedom is only half as a one tail LTR.
+
+```{r}
+MODEL_MODIF<-update.asreml(modele,start.values=T)
+G_MOD<-MODEL_MODIF$vparameters.table[(1:9),]
+G_MOD[1,2]<-0.99999
+G_MOD[1,3]<-"F"
+modele.red<-asreml(
+  fixed = cbind(bwt, tarsus) ~ trait + at(trait):sex,
+  random = ~ corgh(trait):vm(animal, ainv) +
+    us(trait, init = c(1, 0.1, 1)):byear +
+    us(trait, init = c(1, 0.1, 1)):mother,
+  residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
+  data = gryphon,
+  na.action = na.method(x = "include", y = "include"),
   maxit = 20,
   G.param=G_MOD)
+
+2*(modele$loglik-modele.red$loglik)
+1-pchisq(2*(modele$loglik-modele.red$loglik),df=0.5)
 ```
-```{r}
-2*(modeld$loglik-modeld.red$loglik)
-1-pchisq(2*(modeld$loglik-modeld.red$loglik),df=0.5)
-```
--->
+
 
 
 
 ### Partitionning (co)variance between groups 
 
-Similar to the Univariate model, it is possible to partition the variance-covariance matrix between different groups within the dataset. Here, we can estimate sex-specific genetic correlation. 
+Similar to the univariate model, it is possible to partition the variance and also the covariance between different groups within the dataset. Here, we can estimate sex-specific genetic correlation. 
 Note, to partition a correlation, it is require to have important sample size within each group. For this example, we simplify the model !
 
-<!-- again model does not converge corretly,  I try to used th dsum fct for the residual and at(SEX):  for the random effect!  
-But i need more brain to allow the model to do it correctly--> 
+<!-- SAme her I don't know how to specify initial values so I remove it -->
+
 ```{r}
-gryphon <- gryphon[order(gryphon$SEX),]
+gryphon <- gryphon[order(gryphon$sex),]
+model_sex <- asreml(
+  fixed = cbind(bwt, tarsus) ~ trait + at(trait):sex,
+  random = ~ at(sex):us(trait):vm(animal,ainv) +
+    us(trait, init = c(1, 0.1, 1)):byear +
+    us(trait, init = c(1, 0.1, 1)):mother,
+  residual = ~dsum(~id(units):us(trait) | sex),
+  data = gryphon,
+  na.action = na.method(x = "include", y = "include"),
+  maxit = 20
+)
+model_sex	<-update(model_sex)
+summary(model_sex)$varcomp
+
 ```
+
+
+we can estimate the different correlations using `vpredict`:  
+```{r}
+vpredict(model_sex, r_byear ~ V2 / sqrt(V1 * V3))
+vpredict(model_sex, r_M ~ V5 / sqrt(V4 * V6))
+
+vpredict(model_sex, r_A.1 ~ V8 / sqrt(V7 * V9))
+vpredict(model_sex, r_A.2 ~ V11 / sqrt(V10 * V12))
+
+vpredict(model_sex, r_res.1 ~ V15 / sqrt(V14 * V16))
+vpredict(model_sex, r_res.2 ~ V19 / sqrt(V18 * V20))
+```
+
+and the heritability too:
+```{r}
+vpredict(model_sex, h2.bwt.1 ~ V7 / (V1 + V4 + V7 + V14))
+vpredict(model_sex, h2.bwt.2 ~ V10 / (V1 + V4 + V10 + V18))
+
+vpredict(model_sex, h2.tarsus.1 ~ V9 / (V3 + V6 + V9 + V16))
+vpredict(model_sex, h2.tarsus.2 ~ V12 / (V3 + V6 + V12 + V20))
+
+```
+
+
+
+Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:
+```{r}
+summary(model_sex, coef = TRUE)$coef.fi
+wald.asreml(model_sex,denDF = "default",ssType = "conditional")$Wald
+```
+
+
+<!--  what do I need to add ?  comparison model partitionn and not !
+  how to change parameter, already done with reduced model part ! 
+  cov betweem random effect?? but meed to fix the univ part first -->
+-->
