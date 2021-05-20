@@ -1,8 +1,22 @@
 ## brms
 
-```{r eval = params$fit_all}
+### Running the model
+
+First we need to load the `brms` library:
+```{r}
 library(brms)
+```
+(<!--  May be add a sentence about brms and its link to stan ? -->)
+
+To be able to fit an animal model, brms needs (the inverse of) the relationship matrix using the `nadiv` package (<!--  May be add a sentence about nadiv? -->)
+
+```{r}
 Amat <- as.matrix(nadiv::makeA(gryphonped))
+```
+We are now ready to specify our first model:
+The structure of a bmrs model is similar to `lme4`, the random effect is added to the model with the term `(1 | gr(animal, cov = Amat)`. (<!-- more explanation-->)
+
+````{r eval = params$fit_all}
 brms_m1.1 <- brm(
   bwt ~ 1 + (1 | gr(animal, cov = Amat)),
   data = gryphon,
@@ -13,8 +27,97 @@ brms_m1.1 <- brm(
 save(brms_m1.1, file = "data/brms_m1_1.rda")
 ```
 
+The result of the long model calculation is save in a spare file `brms_m1_1.rda"`.
+reloading it, we can examine (or directly using the model) the variance estimate and their distributions
+It is also possible to calcule the heritability usingxxx
+
 ```{r}
 load("data/brms_m1_1.rda")
 summary(brms_m1.1)
 plot(brms_m1.1)
+
+h.bwt
 ```
+
+<1-- autocorrelation diagnostic  -->
+
+
+
+## Adding fixed effects
+
+To add effects to a univariate model we simply modify the fixed effect portion of the model specification:
+
+```{r, cache=TRUE}
+model1.2 <- MCMCglmm(bwt ~ sex, random = ~animal, ginv = list(animal = Ainv), data = gryphon, prior = prior1.1, nitt = 65000, thin = 50, burnin = 15000, verbose = FALSE)
+```
+
+
+````{r eval = params$fit_all}
+brms_m1.2 <- brm(
+  bwt ~ 1 + sex+(1 | gr(animal, cov = Amat)),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+
+
+save(brms_m1.2, file = "data/brms_m1_2.rda")
+summary(brms_m1.2)
+plot(brms_m1.2)
+
+
+summary(brms_m1.2)$fixed
+summary(brms_m1.2))$random
+```
+
+### Adding random effects
+
+This is done by simply modifying the model statement in the same way, but requires addition of a prior for the new random effect. For instance, we can fit an effect of birth year:
+
+
+````{r eval = params$fit_all}
+brms_m1.3 <- brm(
+  bwt ~ 1 + sex+(1 | gr(animal, cov = Amat))+ (1|byear) + (1|mother),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+
+
+save(brms_m1.3, file = "data/brms_m1_3.rda")
+summary(brms_m1.3)
+plot(brms_m1.3)
+```
+
+
+### Testing significance of variance components
+
+<!-- how to compare models?  DIC or Ci of estimate or other test  -->
+
+
+### Futher partitionning variance
+
+Depending of the research question and the presence of different group within the dataset, MCMCglmm allowed to partition the variance at different level. For the example, we can partition the additive genetic and residual variance between SEXE (male and female) to estimate the sex-specific heritability 
+
+<!-- need to check the code  I never partition a random effect with lme4 + need to apply it to the residual level too, more too do here-->
+
+````{r eval = params$fit_all}
+brms_m1.SEX<- brm(
+  bwt ~ 1 + sex +(1 | gr(animal, cov = Amat))+ (1|byear) + (1|mother),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+
+save(brms_m1.SEX, file = "data/brms_m1_3.rda")
+summary(brms_m1.SEX)
+plot(brms_m1.SEX)
+
+```
+
+
+### Modification of model parameter
+### Covariance between two random effects
