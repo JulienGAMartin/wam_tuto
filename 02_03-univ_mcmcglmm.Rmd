@@ -9,7 +9,7 @@ library(MCMCglmm)
 
 The first model we will fit is a simple animal model with no fixed effects, and only an ‘animal’ random effect relating individuals to their additive genetic values through the pedigree. 
 First we are going to define priors. In a way we might want to avoid using priors, because we would like all of the information in our analysis to come from our data.<!-- I dont understand this sentence -->
-BUT by default MCMCglmm uses improper priors, but this can cause inferential and numerical problems. We will specify priors for the animal effect and the residual variance using the following code:
+By default MCMCglmm uses improper priors, but this can cause inferential and numerical problems. We will specify priors for the animal effect and the residual variance using the following code:
 
 ```{r}
 prior1.1 <- list(
@@ -38,9 +38,9 @@ After typing this code, MCMCglmm will run, taking about 20 seconds on a modern d
 plot(model1.1$Sol)
 ```
 
-in the console, we get Figure 1 (p. 5). The plot on the left shows a time series of the values of 1000 samples of the posterior distribution of the the model intercept (mean birthweight). The plot on the right shows the same data as a distribution. Complicated statistical methods for estimating population means are of course of little interest; rather, we are examining these outputs to check that MCMCglmm’s algorithms worked well for our data and for this model. The important point here is that a consistent amount of variation around a largely unchanging mean value of the intercept was obtained (which give this fluctuating trace concentrated around the mean), and the posterior distribution of the intercept appears to be valid. More rigorous means of evaluation the independence of the samples in the posterior distribution (evaluating autocorrelation) are discussed in the MCMCglmm CourseNotes, available from CRAN. Note that your output for `model 1.1` may not be identical to this due to Monte Carlo (random number) error. So everytimes, you run the model, you will get similar but slightly different results. 
+in the console, we get Figure 1 (p. 5). The plot on the left shows a time series of the values of 1000 samples of the posterior distribution of the the model intercept (mean birthweight). The plot on the right shows the same data as a distribution. Complicated statistical methods for estimating population means are of course of little interest; rather, we are examining these outputs to check that MCMCglmm’s algorithms worked well for our data and for this model. The important point here is that a consistent amount of variation around a largely unchanging mean value of the intercept was obtained (which give this fluctuating trace concentrated around the mean), and the posterior distribution of the intercept appears to be valid. More rigorous means of evaluation the independence of the samples in the posterior distribution (evaluating autocorrelation) are discussed in the MCMCglmm CourseNotes, available from CRAN. Note that your output for `model 1.1` may not be identical to this due to Monte Carlo (random number) error. So every times, you run the model, you will get similar but slightly different results. 
 
-The posterior distributions of the the variance components are generally of more inter- est <!-- ?? --> to animal model users. We can view plots of the posterior distribution for the variance components for model 1.1 by
+The posterior distributions of the the variance components are generally of more interest to animal model users. We can view plots of the posterior distribution for the variance components for model 1.1 by
 
 ```{r, fig.cap = "The posterior distributions of the variance components of model 1.1, based on an analysis with the default values for nitt, burnin, and thin in MCMCglmm"}
 plot(model1.1$VCV)
@@ -57,7 +57,7 @@ We will simply re-run the model for a longer number of iterations, and sample th
 model1.1 <- MCMCglmm(bwt ~ 1, random = ~animal, ginv = list(animal = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000, prior = prior1.1, verbose = FALSE)
 ```
 
-Notes that we have now included the command/argument verbose=FALSE in the MCMCglmm call. We will continue this throughout the tutorial so that more complete screen outputs can be included in this document without using too much space. Now produce the plots of the samples of the fixed and random effects (they have not been included in this document). Note that the autocorrelation is much reduced. A more compact way to evaluate the validity of the posterior distributions is to calculate autocorrelation among samples, as follows:
+Notes that we have now included the argument verbose=FALSE in the MCMCglmm call. We will continue this throughout the tutorial so that more complete screen outputs can be included in this document without using too much space. Now produce the plots of the samples of the fixed and random effects (they have not been included in this document). Note that the autocorrelation is much reduced. A more compact way to evaluate the validity of the posterior distributions is to calculate autocorrelation among samples, as follows:
 
 ```{r}
 autocorr.diag(model1.1$VCV)
@@ -131,7 +131,7 @@ posterior.mode(model1.2$Sol[, "sex2"])
 HPDinterval(model1.2$Sol[, "sex2"], 0.95)
 ```
 
-The posterior distribution of the `sex2` term does not overlap zero. Thus, we can infer that sex has a statistical effect on birthweight (presence of a sexual dimorphism) in this model and is a useful addition to the model, for most purposes. It is also worth noting that the variance components have changed slightly:
+The posterior distribution of the `sex2` term does not overlap zero. Thus, we can infer that sex has an effect on birthweight (presence of a sexual dimorphism) in this model and is a useful addition to the model, for most purposes. It is also worth noting that the variance components have changed slightly:
 
 ```{r}
 posterior.mode(model1.2$VCV)
@@ -164,7 +164,7 @@ Here the variance in birth weight explained by birth year is 0.7887. Note that a
 ```{r cache=TRUE}
 p.var <- var(gryphon$bwt, na.rm = TRUE)
 prior1.4 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list( V = 1, nu = 0.002), G3 = list(V = 1, nu = 0.002)), 
-R = list( V = 1, nu = 0.002))
+R = list(V = 1, nu = 0.002))
 model1.4 <- MCMCglmm(bwt ~ sex,
   random = ~ animal + byear + mother,
   ginv = list(animal = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000,

@@ -42,7 +42,7 @@ Additional information and guide can be find in the Asreml-R manual: (https://as
 
 #### gremlin
 
-`gremlin` is a little monster appearing <!-- water just multiply them (if you wet a mugwai and--> feed it after midnight. It is also a great and promising software to fit mixed models using a frequentist approach.
+`gremlin` is a little monster appearing <!-- water just multiply them (if you wet a mugwai and--> if you feed a mugwai after midnight. It is also a great and promising software to fit mixed models using a frequentist approach.
 
 #### MCMCglmm
 
@@ -61,4 +61,4 @@ These capabilities are introduced in the documentation that is distributed with 
 `brms` provides an interface to fit Bayesian generalized multivariate (non-)linear multilevel models using `Stan`, which is a C++ package for obtaining full Bayesian inference (see https://mc-stan.org/).
 The formula syntax is an extended version of the syntax applied in the ‘lme4’ package to provide a familiar and simple interface for performing regression analyses.
 
-It should be noted that if `brms` is able to fit animal model the parametization/setting used based on Kroeneker products is not the most efficient and can take quite longer than using a DAG parametrisation directly in `stan`. <!-- what is a DAG?-->
+It should be noted that if `brms` is able to fit animal model the parametrization used is not the most efficient and can take quite longer than using a different parametrization directly in `stan`.

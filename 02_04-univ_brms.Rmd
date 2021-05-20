@@ -8,7 +8,7 @@ library(brms)
 ```
 (<!--  May be add a sentence about brms and its link to stan ? -->)
 
-To be able to fit an animal model, brms needs (the inverse of) the relationship matrix using the `nadiv `function (<!--  May be add a sentence about nadiv? -->)
+To be able to fit an animal model, brms needs (the inverse of) the relationship matrix using the `nadiv` package (<!--  May be add a sentence about nadiv? -->)
 
 ```{r}
 Amat <- as.matrix(nadiv::makeA(gryphonped))

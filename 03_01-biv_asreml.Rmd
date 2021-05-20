@@ -59,7 +59,7 @@ vpredict(modela, h2.tarsus ~ V3 / (V3 + V7))
 
 ### Adding fixed and random effects
 
-Fixed and random effects can be added just as for the univariate case. Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as birth year and mother as random effects, we could specify a bivariate formulation wiht the same complexity:
+Fixed and random effects can be added just as for the univariate case. Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as birth year and mother as random effects, we could specify a bivariate formulation with the same complexity:
 
 ```{r}
 modelb <- asreml(
