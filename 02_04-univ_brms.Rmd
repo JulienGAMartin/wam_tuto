@@ -45,54 +45,54 @@ summary(h.bwt)
 <!-- autocorrelation diagnostic -->
 
 
-<!--
+
 ## Adding fixed effects
 
 To add effects to a univariate model we simply modify the fixed effect portion of the model specification:
 
-# ```{r eval = params$fit_all}
-# brms_m1.1 <- brm(
-#   bwt ~ 1 + sex (1 | gr(animal, cov = Amat)),
-#   data = gryphon,
-#   data2 = list(Amat = Amat),
-#   family = gaussian(),
-#   chains = 2, cores = 2, iter = 1000
-# )
+```{r eval = params$fit_all}
+brms_m1.2 <- brm(
+  bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
 
-# save(brms_m1.2, file = "data/brms_m1_2.rda")
-# ```
+save(brms_m1.2, file = "data/brms_m1_2.rda")
+```
 
-# ```{r}
-# load("data/brms_m1_2.rda")
-# summary(brms_m1.2)
-# plot(brms_m1.2)
+```{r}
+load("data/brms_m1_2.rda")
+summary(brms_m1.2)
+plot(brms_m1.2)
 
 
-# summary(brms_m1.2)$fixed
-# summary(brms_m1.2)$random
-# ```
+summary(brms_m1.2)$fixed
+summary(brms_m1.2)$random
+```
 
 ### Adding random effects
 
 This is done by simply modifying the model statement in the same way, but requires addition of a prior for the new random effect. For instance, we can fit an effect of birth year:
 
 
-# ```{r eval = params$fit_all}
-# brms_m1.3 <- brm(
-#   bwt ~ 1 + sex+(1 | gr(animal, cov = Amat))+ (1|byear) + (1|mother),
-#   data = gryphon,
-#   data2 = list(Amat = Amat),
-#   family = gaussian(),
-#   chains = 2, cores = 2, iter = 1000
-# )
-# save(brms_m1.3, file = "data/brms_m1_3.rda")
-# ```
+```{r, eval = params$fit_all}
+brms_m1.3 <- brm(
+  bwt ~ 1 + sex + (1 | gr(animal, cov = Amat))+ (1|byear) + (1|mother),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+save(brms_m1.3, file = "data/brms_m1_3.rda")
+```
 
-# ```{r}
-# load("data/brms_m1_3.rda")
-# summary(brms_m1.3)
-# plot(brms_m1.3)
-# ```
+```{r}
+load("data/brms_m1_3.rda")
+summary(brms_m1.3)
+plot(brms_m1.3)
+```
 
 
 ### Testing significance of variance components
@@ -100,30 +100,30 @@ This is done by simply modifying the model statement in the same way, but requir
  how to compare models?  DIC or Ci of estimate or other test  
 
 
-### Futher partitionning variance
+### Further partitioning of the variance
 
 Depending of the research question and the presence of different group within the dataset, MCMCglmm allowed to partition the variance at different level. For the example, we can partition the additive genetic and residual variance between SEXE (male and female) to estimate the sex-specific heritability 
 
  need to check the code  I never partition a random effect with lme4 + need to apply it to the residual level too, more too do here
 
-# ```{r eval = params$fit_all}
-# brms_m1.SEX<- brm(
-#   bwt ~ 1 + sex +(1 | gr(animal, cov = Amat))+ (1|byear) + (1|mother),
-#   data = gryphon,
-#   data2 = list(Amat = Amat),
-#   family = gaussian(),
-#   chains = 2, cores = 2, iter = 1000
-# )
-# save(brms_m1.SEX, file = "data/brms_m1_3.rda")
-# ```
+```{r eval = params$fit_all}
+brms_m1.4<- brm(
+  bwt ~ 1 + sex +(1 | gr(animal, cov = Amat))+ (1|byear) + (1|mother),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+save(brms_m1.4, file = "data/brms_m1_4.rda")
+```
 
-# ```{r}
-# load("data/brms_m1_SEX.rda")
-# summary(brms_m1.SEX)
-# plot(brms_m1.SEX)
-# ```
+```{r}
+load("data/brms_m1_4.rda")
+summary(brms_m1.4)
+plot(brms_m1.4)
+```
 
 
 ### Modification of model parameter
+
 ### Covariance between two random effects
--->

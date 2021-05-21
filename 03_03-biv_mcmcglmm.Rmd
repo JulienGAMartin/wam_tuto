@@ -165,9 +165,6 @@ model2.3 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1 + trait:sex,
   nitt = 130000, thin = 100, burnin = 30000,
   prior = prior2.3, verbose = FALSE
 )
-summary(model2.3)
-
-
 save(model2.3, file = "data/MCMCglmm_model2_3_LongRun.rda")
 ```
 
@@ -176,13 +173,14 @@ Again we have provided the data from one such run. It can be accessed using the 
 <!--  I dont know how to select the column since it have"" inside-->
 ```{r}
 load(file = "data/MCMCglmm_model2_3_LongRun.rda")
+summary(model2.3)
 autocorr(model2.3$VCV)
 
 ```
 
 <!--  I dont know how to select the column since it have"" inside-->
 
-```{r}
+```{r, eval = FALSE, echo = FALSE}
 posterior.mode(model2.3$VCV)
 #
 #################################
@@ -199,7 +197,7 @@ posterior.mode(residual.correlation3.2, 0.95)
 
 Evaluation of the statistical support for these sex-specific correlations is straightforward. Because we imposed no constraint on their estimation, we can evaluate the extent to which the posterior distributions overlap zero or overlap each other:
 
-```{r}
+```{r, eval = FALSE, echo = FALSE}
 HPDinterval(genetic.correlation3.1, 0.95)
 HPDinterval(genetic.correlation3.2, 0.95)
 
