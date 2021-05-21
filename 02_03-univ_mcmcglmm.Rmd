@@ -29,7 +29,10 @@ The lower case “animal” is a can be a **special** word for MCMCglmm. If a `p
 
 ```{r, cache=TRUE}
 Ainv <- inverseA(gryphonped)$Ainv
-model1.1 <- MCMCglmm(bwt ~ 1, random = ~animal, ginv = list(animal = Ainv), data = gryphon, prior = prior1.1)
+model1.1 <- MCMCglmm(bwt ~ 1,
+  random = ~animal, ginv = list(animal = Ainv),
+  data = gryphon, prior = prior1.1
+)
 ```
 
 After typing this code, MCMCglmm will run, taking about 20 seconds on a modern desk- top computer. The progress of the run will be printed to the screen. Also, note the warning message will be printed at the end of the run. This is natural too. In order for the MCMC algorithm to work, MCMCglmm must keep track of effects associated with unmeasured individuals appearing in the pedigree. This will not affect the answers, but when many unmeasured individuals exist, it can hinder the ability of the algorithm to explore the parameter space (more on this, and a solution, later). Lets have a look at the MCMCglmm outputs. First we will evaluate how confident we can be that MCMCglmm found good answers. By entering

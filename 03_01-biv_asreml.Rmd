@@ -94,10 +94,15 @@ vpredict(modelb, r_res ~ V12 / sqrt(V11 * V13))
 
 
 Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:
-```{r}
+```{r, eval = htmlT_pdfF}
 summary(modelb, coef = TRUE)$coef.fi
 wald.asreml(modelb,denDF = "default",ssType = "conditional")$Wald
-
+```
+```{r, echo = FALSE, eval = htmlF_pdfT}
+summary(modelb, coef = TRUE)$coef.fi
+wa <- wald.asreml(modelb,denDF = "default",ssType = "conditional")$Wald
+attr(wa, "heading") <- NULL
+wa
 ```
 
 
@@ -114,10 +119,18 @@ modelb_2 <- asreml(
   na.action = na.method(x = "include", y = "include"),
   maxit = 20
 )
-(summary(modelb_2, coef = TRUE)$coef.fi)
-(wald.asreml(modelb_2,denDF = "default",ssType = "conditional")$Wald)
+```
+```{r, eval = htmlT_pdfF}
+summary(modelb_2, coef = TRUE)$coef.fi
+wald.asreml(modelb_2,denDF = "default",ssType = "conditional")$Wald
 ```
 
+```{r, echo = FALSE, eval = htmlF_pdfT}
+summary(modelb_2, coef = TRUE)$coef.fi
+wa <- wald.asreml(modelb_2, denDF = "default", ssType = "conditional")$Wald
+attr(wa, "heading") <- NULL
+wa
+```
 
 
 ### Significance testing
@@ -288,13 +301,19 @@ vpredict(model_sex, h2.tarsus.2 ~ V12 / (V3 + V6 + V12 + V20))
 
 
 Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:
-```{r}
+```{r, eval = htmlT_pdfF}
 summary(model_sex, coef = TRUE)$coef.fi
 wald.asreml(model_sex,denDF = "default",ssType = "conditional")$Wald
 ```
 
+```{r, echo = FALSE, eval = htmlF_pdfT}
+summary(model_sex, coef = TRUE)$coef.fi
+wa <- wald.asreml(model_sex, denDF = "default", ssType = "conditional")$Wald
+attr(wa, "heading") <- NULL
+wa
+```
 
 <!--  what do I need to add ?  comparison model partitionn and not !
   how to change parameter, already done with reduced model part ! 
   cov betweem random effect?? but meed to fix the univ part first -->
--->
+

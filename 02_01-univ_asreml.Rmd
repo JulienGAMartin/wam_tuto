@@ -66,13 +66,13 @@ model2 <- asreml(
 ```
 
 Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:
-```{r, eval = FALSE}
+```{r, eval = htmlT_pdfF}
 summary(model2, coef = TRUE)$coef.fixed
 wald.asreml(model2, ssType = "conditional", denDF = "numeric")
 ```
 
-```{r, eval = TRUE, echo = FALSE}
-#removing error when knitting in pdf due to weird unknown character
+```{r, eval = htmlF_pdfT, echo = FALSE}
+# removing error when knitting in pdf due to weird unknown character
 summary(model2, coef = TRUE)$coef.fixed
 a <- wald.asreml(model2, ssType = "conditional", denDF = "numeric")
 attr(a$Wald, "heading") <- NULL
@@ -114,7 +114,6 @@ model3 <- asreml(
 summary(model3)$varcomp
 
 (h2.3 <- vpredict(model3, h2.bwt ~ V1 / (V1 + V2 + V3)))
-
 ```
 
 Here the variance in `bwt` explained by `byear` is 0.886 and, based on the `z.ratio`, appears to be significant (>2). Thus we would conclude that year-to-year variation (_e.g._, in weather, resource abundance) contributes to $V_P$. Note that although $V_A$ has changed somewhat, as most of what is now partitioned as a birth year effect was previously partitioned as $V_R$. Thus what we have really done here is to partition environmental effects into those arising from year-to-year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A/ (V_A+V_{BY}+V_R)$).
@@ -132,7 +131,7 @@ model4 <- asreml(
 
 summary(model4)$varcomp
 
-(h2.4 <- vpredict(model4, h2.bwt ~ V1 / (V1 + V2+ V3 +V4)))
+(h2.4 <- vpredict(model4, h2.bwt ~ V1 / (V1 + V2 + V3 + V4)))
 ```
 
 Here partitioning of significant maternal variance has resulted in a further decrease in $V_R$ but also a decrease in $V_A$. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like additive genetic effects and if present, but unmodelled, represent a type of "common environment effect" that can - and will - cause upward bias in $V_A$ and so $h^2$. 
@@ -176,12 +175,12 @@ As example, we decide to take the model4 and partition its additive genetic vari
 First, the dataset needs to be order by group (here sex).
 
 ```{r}
-gryphon <- gryphon[order(gryphon$sex),]
+gryphon <- gryphon[order(gryphon$sex), ]
 
 model_SEX <- asreml(
   fixed = bwt ~ 1 + sex,
   random = ~ at(sex):vm(animal, ainv) + byear + mother,
-  residual = ~dsum(~units | sex),
+  residual = ~ dsum(~ units | sex),
   data = gryphon,
   na.action = na.method(x = "omit", y = "omit")
 )
@@ -194,7 +193,6 @@ summary(model_SEX)$varcomp
 
 (h2.F <- vpredict(model_SEX, h2.bwt ~ V3 / (V1 + V2 + V3 + V5)))
 (h2.M <- vpredict(model_SEX, h2.bwt ~ V4 / (V1 + V2 + V4 + V6)))
-
 ```
 
 By partitioning the additive genetic variance and the residual variance, the model estimates the $V_A$ and $V_R$ for each group (sex). Doing so, we can calculate the $h^2$ for each group (sex).
@@ -231,10 +229,11 @@ model.temp <- asreml(
   residual = ~ idv(units),
   data = gryphon,
   na.action = na.method(x = "omit", y = "omit"),
-  start.values= T )
-G.temp <- model.temp$vparameters[(1:3),]
+  start.values = T
+)
+G.temp <- model.temp$vparameters[(1:3), ]
 G.temp$Constraint <- "U"
-R.temp <- model.temp$vparameters[-(1:3),]
+R.temp <- model.temp$vparameters[-(1:3), ]
 R.temp$Constraint[2] <- "U"
 ```
 
@@ -249,7 +248,8 @@ model5 <- asreml(
   residual = ~ idv(units),
   data = gryphon,
   na.action = na.method(x = "omit", y = "omit"),
-  R.param=R.temp,G.param=G.temp)
+  R.param = R.temp, G.param = G.temp
+)
 summary(model5)$varcomp
 ```
 
@@ -268,30 +268,32 @@ Fo example, we can estimate the covariance between the additive genetic variance
   <!--
 ```{r, eval = FALSE}
 
-length(unique(gryphon$mother)) #429
-length(unique(gryphon$animal)) #1084
+length(unique(gryphon$mother)) # 429
+length(unique(gryphon$animal)) # 1084
 
 model.temp2 <- asreml(
   fixed = bwt ~ 1,
-  random = ~ str( ~ vm(animal,ainv) + vm(mother,ainv) , ~ us(2):id(2618)) + byear,
+  random = ~ str(~ vm(animal, ainv) + vm(mother, ainv), ~ us(2):id(2618)) + byear,
   residual = ~ idv(units),
   data = gryphon,
   na.action = na.method(x = "omit", y = "omit"),
-  start.values=T)
+  start.values = T
+)
 # Size of direct product (3026) does not conform with total size of included terms (2618)
 
-G.temp2<-model.temp2 $vparameters[(1:4),]
+G.temp2 <- model.temp2$vparameters[(1:4), ]
 G.temp2$Constraint <- "U"
-# no change in the r matrix 
+# no change in the r matrix
 
 model6 <- asreml(
   fixed = bwt ~ 1 + sex,
-  random = ~ str( ~ vm(animal,ainv) + vm(mother,ainv) , ~ us(2):id(2618)) + byear,
+  random = ~ str(~ vm(animal, ainv) + vm(mother, ainv), ~ us(2):id(2618)) + byear,
   residual = ~ idv(units),
   data = gryphon,
   na.action = na.method(x = "omit", y = "omit"),
-  #equate.levels = c("animal", "mother"),
- ,G.param=G.temp2)
+  # equate.levels = c("animal", "mother"),
+  , G.param = G.temp2
+)
 summary(momodel6del_6)$varcomp
 ```
 .

@@ -16,6 +16,7 @@ cover-image: "images/missing.png"
 params:
   echo_sol: true
   fit_all: false
+  html_pdf: FALSE
 ---
 
 # Preface {-}
@@ -36,6 +37,14 @@ List of people who contributed to update and extend tutorials:
 ```{r include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), "bookdown", "knitr", "rmarkdown", "MCMCglmm", "asreml", "gremlin", "brms", "rstan"
+  .packages(), "bookdown", "knitr", "rmarkdown", "MCMCglmm", "asreml",
+  "gremlin", "brms", "rstan"
 ), 'packages.bib')
+
+#check 
+files_rda <- list.files("data/", pattern = ".rda")
+
+
+htmlT_pdfF <- ifelse(params$html_pdf == TRUE, TRUE, FALSE)
+htmlF_pdfT <- ifelse(params$html_pdf == TRUE, FALSE, TRUE)
 ```
