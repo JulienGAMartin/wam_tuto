@@ -6,9 +6,10 @@ First we need to load the `brms` library:
 ```{r}
 library(brms)
 ```
-(<!--  May be add a sentence about brms and its link to stan ? -->)
-
-To be able to fit an animal model, brms needs (the inverse of) the relationship matrix using the `nadiv` package (<!--  May be add a sentence about nadiv? -->)
+<!--  May be add a sentence about brms and its link to stan ? -->
+To be able to fit an animal model, brms needs the relationship matrix (and not its inverse as in other softwares).
+This can be estimated using the `nadiv` package
+<!--  May be add a sentence about nadiv? -->
 
 ```{r}
 Amat <- as.matrix(nadiv::makeA(gryphonped))
@@ -91,7 +92,7 @@ save(brms_m1.3, file = "data/brms_m1_3.rda")
 ```{r}
 load("data/brms_m1_3.rda")
 summary(brms_m1.3)
-plot(brms_m1.3, ask = FALSE,N = 3)
+plot(brms_m1.3, ask = FALSE, N = 3)
 ```
 
 
