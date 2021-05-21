@@ -46,7 +46,7 @@ summary(h.bwt)
 
 
 
-## Adding fixed effects
+### Adding fixed effects
 
 To add effects to a univariate model we simply modify the fixed effect portion of the model specification:
 
@@ -91,20 +91,20 @@ save(brms_m1.3, file = "data/brms_m1_3.rda")
 ```{r}
 load("data/brms_m1_3.rda")
 summary(brms_m1.3)
-plot(brms_m1.3)
+plot(brms_m1.3, ask = FALSE,N = 3)
 ```
 
 
 ### Testing significance of variance components
 
- how to compare models?  DIC or Ci of estimate or other test  
+<!-- how to compare models?  DIC or Ci of estimate or other test  -->
 
 
 ### Further partitioning of the variance
 
 Depending of the research question and the presence of different group within the dataset, MCMCglmm allowed to partition the variance at different level. For the example, we can partition the additive genetic and residual variance between SEXE (male and female) to estimate the sex-specific heritability 
 
- need to check the code  I never partition a random effect with lme4 + need to apply it to the residual level too, more too do here
+ <!-- need to check the code  I never partition a random effect with lme4 + need to apply it to the residual level too, more too do here -->
 
 ```{r eval = params$fit_all}
 brms_m1.4 <- brm(
@@ -120,7 +120,7 @@ save(brms_m1.4, file = "data/brms_m1_4.rda")
 ```{r}
 load("data/brms_m1_4.rda")
 summary(brms_m1.4)
-plot(brms_m1.4)
+plot(brms_m1.4, ask = FALSE, N = 3)
 ```
 
 

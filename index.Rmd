@@ -25,7 +25,9 @@ This book is a collection of tutorial from the excellent paper by [@wilson2010].
 Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.
 **However, this is still a work in progress.**
 
-
+```{block2, type = "rmdwarning"}
+Do not take anything in this manual as gospel.
+```
 
 ### Contributors {-}
 
@@ -33,6 +35,7 @@ List of people who contributed to update and extend tutorials:
 
 - Eric Postma
 - Julien Martin
+- Mathieu Videlier
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
