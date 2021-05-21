@@ -79,7 +79,7 @@ This is done by simply modifying the model statement in the same way, but requir
 
 ```{r, eval = params$fit_all}
 brms_m1.3 <- brm(
-  bwt ~ 1 + sex + (1 | gr(animal, cov = Amat))+ (1|byear) + (1|mother),
+  bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)) + (1 | byear) + (1 | mother),
   data = gryphon,
   data2 = list(Amat = Amat),
   family = gaussian(),
@@ -107,8 +107,8 @@ Depending of the research question and the presence of different group within th
  need to check the code  I never partition a random effect with lme4 + need to apply it to the residual level too, more too do here
 
 ```{r eval = params$fit_all}
-brms_m1.4<- brm(
-  bwt ~ 1 + sex +(1 | gr(animal, cov = Amat))+ (1|byear) + (1|mother),
+brms_m1.4 <- brm(
+  bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)) + (1 | byear) + (1 | mother),
   data = gryphon,
   data2 = list(Amat = Amat),
   family = gaussian(),

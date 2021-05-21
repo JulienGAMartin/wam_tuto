@@ -27,16 +27,15 @@ prior2.1 <- list(
 )
 
 model2.1 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1,
-  random = ~ us(trait):animal, 
-  rcov = ~ us(trait):units, 
+  random = ~ us(trait):animal,
+  rcov = ~ us(trait):units,
   family = c("gaussian", "gaussian"),
-  ginv = list(animal = Ainv), 
+  ginv = list(animal = Ainv),
   data = gryphon, prior = prior2.1, verbose = FALSE
 )
 summary(model2.1)
 plot(model2.1$VCV[, "traittarsus:traittarsus.animal"])
 autocorr.diag(model2.1$VCV)[, "traittarsus:traittarsus.animal"][2]
-
 ```
 
 We have constructed the prior similarly to the those in the univariate models in tutorial 1, only we are specifying a 2x2 covariance matrix rather than a single variance. In order to provide proper priors, we have set the degree of belief parameter to greater than 1 (1.002). Those priors are not necessarily weak or uninformative in all circumstances. We will consider them adequate nonetheless for this tutorial. Please the vignette of the MCMCglmm packages [@R-MCMCglmm] for more information on priors. In tutorial 1, we used full autocorrelation tables to evaluate the validity of the posterior distribution. Note that we have not done this here. 
@@ -51,7 +50,7 @@ model2.1 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1,
   random = ~ us(trait):animal,
   rcov = ~ us(trait):units,
   family = c("gaussian", "gaussian"),
-  ginv = list(animal = Ainv), 
+  ginv = list(animal = Ainv),
   data = gryphon,
   nitt = 130000, thin = 100, burnin = 30000,
   prior = prior2.1, verbose = FALSE
@@ -151,15 +150,17 @@ prior2.3 <- list(
     G1 = list(V = diag(2), nu = 1.002),
     G2 = list(V = diag(2), nu = 1.002),
     G3 = list(V = diag(2), nu = 1.002),
-    G4 = list(V = diag(2), nu = 1.002)),
+    G4 = list(V = diag(2), nu = 1.002)
+  ),
   R = list(
     V1 = list(V = diag(2), nu = 1.002),
-    V2 = list(V = diag(2), nu = 1.002))
+    V2 = list(V = diag(2), nu = 1.002)
+  )
 )
 
 model2.3 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1 + trait:sex,
-  random = ~ us(at.level(sex, "1"):trait):animal+us(at.level(sex, "2"):trait):animal+ us(trait):byear + us(trait):mother,
-  rcov = ~ us(at.level(sex, "1"):trait):units+us(at.level(sex, "2"):trait):units,
+  random = ~ us(at.level(sex, "1"):trait):animal + us(at.level(sex, "2"):trait):animal + us(trait):byear + us(trait):mother,
+  rcov = ~ us(at.level(sex, "1"):trait):units + us(at.level(sex, "2"):trait):units,
   family = c("gaussian", "gaussian"),
   ginv = list(animal = Ainv), data = gryphon,
   nitt = 130000, thin = 100, burnin = 30000,
@@ -175,7 +176,6 @@ Again we have provided the data from one such run. It can be accessed using the 
 load(file = "data/MCMCglmm_model2_3_LongRun.rda")
 summary(model2.3)
 autocorr(model2.3$VCV)
-
 ```
 
 <!--  I dont know how to select the column since it have"" inside-->
@@ -192,7 +192,6 @@ posterior.mode(maternal.correlation3, 0.95)
 
 posterior.mode(residual.correlation3.1, 0.95)
 posterior.mode(residual.correlation3.2, 0.95)
-
 ```
 
 Evaluation of the statistical support for these sex-specific correlations is straightforward. Because we imposed no constraint on their estimation, we can evaluate the extent to which the posterior distributions overlap zero or overlap each other:

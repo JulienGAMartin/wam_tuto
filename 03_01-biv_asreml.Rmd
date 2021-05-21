@@ -23,7 +23,7 @@ modela <- asreml(
   na.action = na.method(x = "include", y = "include"),
   maxit = 20
 )
-modela<-update(modela)
+modela <- update(modela)
 ```
 
 `modela` has fitted a bivariate model of `bwt` and `tarsus`, with the mean for each of the traits as a fixed effect (`trait`). The additive genetic variance-covariance matrix ($\textbf{G}$) is unstructured (`us`; _i.e._ all elements are free to vary) and the starting values for $V_A$ for `bwt`, $COV_A$ between `bwt` and `tarsus`, and $V_A$ for `tarsus` are set to 1, 0.1 and 1, respectively. Similarly, the residual matrix is unstructured and uses the same starting values.
@@ -72,7 +72,7 @@ modelb <- asreml(
   na.action = na.method(x = "include", y = "include"),
   maxit = 20
 )
-modelb<-update(modelb)
+modelb <- update(modelb)
 ```
 
 Note that we have specified a covariance structure for each random effect and an estimate of the effect of sex on both birth weight and tarsus length.
@@ -89,18 +89,17 @@ vpredict(modelb, r_byear ~ V2 / sqrt(V1 * V3))
 vpredict(modelb, r_M ~ V5 / sqrt(V4 * V6))
 vpredict(modelb, r_A ~ V8 / sqrt(V7 * V9))
 vpredict(modelb, r_res ~ V12 / sqrt(V11 * V13))
-
 ```
 
 
 Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:
 ```{r, eval = htmlT_pdfF}
 summary(modelb, coef = TRUE)$coef.fi
-wald.asreml(modelb,denDF = "default",ssType = "conditional")$Wald
+wald.asreml(modelb, denDF = "default", ssType = "conditional")$Wald
 ```
 ```{r, echo = FALSE, eval = htmlF_pdfT}
 summary(modelb, coef = TRUE)$coef.fi
-wa <- wald.asreml(modelb,denDF = "default",ssType = "conditional")$Wald
+wa <- wald.asreml(modelb, denDF = "default", ssType = "conditional")$Wald
 attr(wa, "heading") <- NULL
 wa
 ```
@@ -110,7 +109,7 @@ Note that it is possible to specify a fixed effect to a specific trait by adding
 
 ```{r}
 modelb_2 <- asreml(
-  fixed = cbind(bwt, tarsus) ~ trait + at(trait,2):sex,
+  fixed = cbind(bwt, tarsus) ~ trait + at(trait, 2):sex,
   random = ~ us(trait, init = c(1, 0.1, 1)):vm(animal, ainv) +
     us(trait, init = c(1, 0.1, 1)):byear +
     us(trait, init = c(1, 0.1, 1)):mother,
@@ -122,7 +121,7 @@ modelb_2 <- asreml(
 ```
 ```{r, eval = htmlT_pdfF}
 summary(modelb_2, coef = TRUE)$coef.fi
-wald.asreml(modelb_2,denDF = "default",ssType = "conditional")$Wald
+wald.asreml(modelb_2, denDF = "default", ssType = "conditional")$Wald
 ```
 
 ```{r, echo = FALSE, eval = htmlF_pdfT}
@@ -189,7 +188,6 @@ modeld <- asreml(
 
 2 * (modelb$loglik - modeld$loglik)
 1 - pchisq(2 * (modelb$loglik - modeld$loglik), 1)
-
 ```
 
 
@@ -204,7 +202,7 @@ Here we decide to estimate directly the additive genetic correlation.
 ```{r}
 modele <- asreml(
   fixed = cbind(bwt, tarsus) ~ trait + at(trait):sex,
-  random = ~ corgh(trait):vm(animal,ainv) +
+  random = ~ corgh(trait):vm(animal, ainv) +
     us(trait, init = c(1, 0.1, 1)):byear +
     us(trait, init = c(1, 0.1, 1)):mother,
   residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
@@ -212,7 +210,7 @@ modele <- asreml(
   na.action = na.method(x = "include", y = "include"),
   maxit = 20
 )
-modele	<-update(modele)
+modele <- update(modele)
 summary(modele)$varcomp
 ```
 
@@ -229,11 +227,11 @@ The following code showed how to create a reduced model with the correlation clo
 Since we compared the correlation to its boundary, the degree of freedom is only half as a one tail LTR.
 
 ```{r}
-MODEL_MODIF<-update.asreml(modele,start.values=T)
-G_MOD<-MODEL_MODIF$vparameters.table[(1:9),]
-G_MOD[1,2]<-0.99999
-G_MOD[1,3]<-"F"
-modele.red<-asreml(
+MODEL_MODIF <- update.asreml(modele, start.values = T)
+G_MOD <- MODEL_MODIF$vparameters.table[(1:9), ]
+G_MOD[1, 2] <- 0.99999
+G_MOD[1, 3] <- "F"
+modele.red <- asreml(
   fixed = cbind(bwt, tarsus) ~ trait + at(trait):sex,
   random = ~ corgh(trait):vm(animal, ainv) +
     us(trait, init = c(1, 0.1, 1)):byear +
@@ -242,10 +240,11 @@ modele.red<-asreml(
   data = gryphon,
   na.action = na.method(x = "include", y = "include"),
   maxit = 20,
-  G.param=G_MOD)
+  G.param = G_MOD
+)
 
-2*(modele$loglik-modele.red$loglik)
-1-pchisq(2*(modele$loglik-modele.red$loglik),df=0.5)
+2 * (modele$loglik - modele.red$loglik)
+1 - pchisq(2 * (modele$loglik - modele.red$loglik), df = 0.5)
 ```
 
 
@@ -259,20 +258,19 @@ Note, to partition a correlation, it is require to have important sample size wi
 <!-- SAme her I don't know how to specify initial values so I remove it -->
 
 ```{r}
-gryphon <- gryphon[order(gryphon$sex),]
+gryphon <- gryphon[order(gryphon$sex), ]
 model_sex <- asreml(
   fixed = cbind(bwt, tarsus) ~ trait + at(trait):sex,
-  random = ~ at(sex):us(trait):vm(animal,ainv) +
+  random = ~ at(sex):us(trait):vm(animal, ainv) +
     us(trait, init = c(1, 0.1, 1)):byear +
     us(trait, init = c(1, 0.1, 1)):mother,
-  residual = ~dsum(~id(units):us(trait) | sex),
+  residual = ~ dsum(~ id(units):us(trait) | sex),
   data = gryphon,
   na.action = na.method(x = "include", y = "include"),
   maxit = 20
 )
-model_sex	<-update(model_sex)
+model_sex <- update(model_sex)
 summary(model_sex)$varcomp
-
 ```
 
 
@@ -295,7 +293,6 @@ vpredict(model_sex, h2.bwt.2 ~ V10 / (V1 + V4 + V10 + V18))
 
 vpredict(model_sex, h2.tarsus.1 ~ V9 / (V3 + V6 + V9 + V16))
 vpredict(model_sex, h2.tarsus.2 ~ V12 / (V3 + V6 + V12 + V20))
-
 ```
 
 
@@ -303,7 +300,7 @@ vpredict(model_sex, h2.tarsus.2 ~ V12 / (V3 + V6 + V12 + V20))
 Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:
 ```{r, eval = htmlT_pdfF}
 summary(model_sex, coef = TRUE)$coef.fi
-wald.asreml(model_sex,denDF = "default",ssType = "conditional")$Wald
+wald.asreml(model_sex, denDF = "default", ssType = "conditional")$Wald
 ```
 
 ```{r, echo = FALSE, eval = htmlF_pdfT}

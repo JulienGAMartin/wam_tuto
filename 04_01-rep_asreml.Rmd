@@ -5,11 +5,13 @@
 With repeated measures on individuals it is often of interest, prior to fitting a genetic model, to see how repeatable a trait is. We can estimate the repeatability of a trait as the proportion of phenotypic variance explained by individual identity.
 
 ```{r}
-modelv <- asreml(fixed = laydate ~ 1,
-                 random =~ animal,
-                 residual=~idv(units),
-                 data=gryphonRM,
-                 na.action = na.method(x="omit", y="omit"))
+modelv <- asreml(
+  fixed = laydate ~ 1,
+  random = ~animal,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
 ```
 Note that since we want to estimate the amount of variance explained by individual identity (rather than by additive effects), we fit `animal` as a normal random effect and we don't associate it with the pedigree.
 
@@ -22,11 +24,13 @@ Between-individual variance is given by the `animal` component, while the residu
 
 Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding `age` into the model as a fixed effect.
 ```{r}
-modelw <- asreml(fixed = laydate ~ age,
-                 random =~ animal,
-                 residual=~idv(units),
-                 data=gryphonRM,
-                 na.action = na.method(x="omit", y="omit"))
+modelw <- asreml(
+  fixed = laydate ~ age,
+  random = ~animal,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
 
 summary(modelw)$varcomp
 ```
@@ -41,11 +45,13 @@ Generally we expect that the repeatability will set the upper limit for heritabi
 
 To illustrate this fit the animal model:
 ```{r}
-modelx <- asreml(fixed = laydate ~ age,
-                 random =~ vm(animal, ainv),
-                 residual=~idv(units),
-                 data=gryphonRM,
-                 na.action = na.method(x="omit", y="omit"))
+modelx <- asreml(
+  fixed = laydate ~ age,
+  random = ~ vm(animal, ainv),
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
 ```
 
 Variance components are almost unchanged:
@@ -55,30 +61,34 @@ summary.asreml(modelx)$varcomp
 
 This suggests that all of the among-individual variance is – rightly or wrongly – being partitioned as $V_A$ here. To instead obtain an unbiased estimate of $V_A$ we need to allow for both additive genetic _and_ non-genetic sources of individual variation. We do this by fitting `animal` twice, once with a pedigree, and once without a pedigree (using `ide()`).
 ```{r}
-modely <- asreml(fixed = laydate ~ age,
-                 random =~ vm(animal, ainv) + ide(animal),
-                 residual=~idv(units),
-                 data=gryphonRM,
-                 na.action = na.method(x="omit", y="omit"))
+modely <- asreml(
+  fixed = laydate ~ age,
+  random = ~ vm(animal, ainv) + ide(animal),
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
 summary(modely)$varcomp
 ```
 
 The estimate of $V_A$ is now much lower since the additive and permanent environment effects are being properly separated. We can estimate $h^2$ and the repeatability from this model:
 ```{r}
-vpredict(modely, h2 ~ V1/(V1+V2+V3))
-vpredict(modely, repeatability ~ (V1+V2)/(V1+V2+V3))
+vpredict(modely, h2 ~ V1 / (V1 + V2 + V3))
+vpredict(modely, repeatability ~ (V1 + V2) / (V1 + V2 + V3))
 ```
 
 ### Adding additional effects and testing significance
 
 Models of repeated measures can be extended to include other fixed or random effects. For example try including year of measurement (`year`) and birth year (`byear`) as random effects.
 ```{r}
-modelz <- asreml(fixed = laydate ~ age,
-                 random =~ vm(animal, ainv) + ide(animal) +
-                 year + byear,
-                 residual=~idv(units),
-                 data=gryphonRM,
-                 na.action = na.method(x="omit", y="omit"))
+modelz <- asreml(
+  fixed = laydate ~ age,
+  random = ~ vm(animal, ainv) + ide(animal) +
+    year + byear,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
 summary(modelz)$varcomp
 ```
 

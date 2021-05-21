@@ -6,10 +6,14 @@ With repeated measures on individuals it is often of interest, prior to fitting 
 
 ```{r, cache = TRUE}
 p.var <- var(gryphonRM$laydate, na.rm = TRUE)
-prior3.1 <- list(G = list(G1 = list(V = 1, nu = 0.002)), R = list(V = 1,
-nu = 0.002))
-model3.1 <- MCMCglmm(laydate ~ 1, random = ~ animal, data = gryphonRM,
-prior = prior3.1, verbose = FALSE)
+prior3.1 <- list(G = list(G1 = list(V = 1, nu = 0.002)), R = list(
+  V = 1,
+  nu = 0.002
+))
+model3.1 <- MCMCglmm(laydate ~ 1,
+  random = ~animal, data = gryphonRM,
+  prior = prior3.1, verbose = FALSE
+)
 posterior.mode(model3.1$VCV)
 ```
 
@@ -17,8 +21,10 @@ posterior.mode(model3.1$VCV)
 Note the use of the term `animal`, since neither the `pedigree` nor the `ginv` argument are provided, it represents the between-individual variance, while the residual compo- nent (Variance) therefore represents within-individual variance. Here then the repeata- bility of the trait can be determined by as 0.353 (i.e., 11.4532/(11.4532+21.1432). Given that we set up the simulation such that mean lay date changes with age (initially increas- ing to age 5 before a late life decline) we might ask what the repeatability of lay date is after conditioning on age effect. This would be done by adding age into the model as a fixed effect.
 
 ```{r, cache = TRUE}
-model3.2 <- MCMCglmm(laydate ~ age, random = ~ animal, data = gryphonRM,
-prior = prior3.1, verbose = FALSE)
+model3.2 <- MCMCglmm(laydate ~ age,
+  random = ~animal, data = gryphonRM,
+  prior = prior3.1, verbose = FALSE
+)
 plot(model3.2$Sol)
 plot(model3.2$VCV)
 posterior.mode(model3.2$VCV)
@@ -34,8 +40,10 @@ Generally we expect that the repeatability will set the upper limit for heritabi
 
 ```{r, cache = TRUE}
 Ainv <- inverseA(gryphonped)$Ainv
-model3.3 <- MCMCglmm(laydate ~ 1 + age, random = ~ animal, ginv = list(animal = Ainv),
-  data = gryphonRM, prior = prior3.1, verbose = FALSE)
+model3.3 <- MCMCglmm(laydate ~ 1 + age,
+  random = ~animal, ginv = list(animal = Ainv),
+  data = gryphonRM, prior = prior3.1, verbose = FALSE
+)
 posterior.mode(model3.3$VCV)
 ```
 
@@ -45,22 +53,26 @@ To do so, we need to duplicate the variable containing the individual identity a
 An more appropriate estimate of V A is given by the model:
 
  ```{r, cache = TRUE}
- gryphonRM$animal_pe <- gryphonRM$animal
- p.var <- var(gryphonRM$laydate, na.rm = TRUE)
- prior3.4 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(V = 1,
- nu = 0.002)), R = list(V = 1, nu = 0.002))
- model3.4 <- MCMCglmm(laydate ~ 1 + age, random = ~animal + animal_pe,
- ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.4, verbose = FALSE)
- posterior.mode(model3.4$VCV)
+gryphonRM$animal_pe <- gryphonRM$animal
+p.var <- var(gryphonRM$laydate, na.rm = TRUE)
+prior3.4 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(
+  V = 1,
+  nu = 0.002
+)), R = list(V = 1, nu = 0.002))
+model3.4 <- MCMCglmm(laydate ~ 1 + age,
+  random = ~ animal + animal_pe,
+  ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.4, verbose = FALSE
+)
+posterior.mode(model3.4$VCV)
 ```
 
 The estimate of V A is now much lower (reduced from 13.6735 to 5.1238) since the ad- ditive and permanent environment effects are being properly separated. We could obtain estimates of h 2 and of the repeatability from this model using the following commands:
 
 ```{r, cache = TRUE}
 model3.4.VP <- model3.4$VCV[, "animal"] + model3.4$VCV[, "animal_pe"] + model3.4$VCV[, "units"]
-model3.4.PE_VA <- model3.4$VCV[, "animal"] + model3.4$VCV[,"animal_pe"]
-posterior.mode(model3.4.PE_VA/model3.4.VP)
-posterior.mode(model3.4$VCV[, "animal"]/model3.4.VP)
+model3.4.PE_VA <- model3.4$VCV[, "animal"] + model3.4$VCV[, "animal_pe"]
+posterior.mode(model3.4.PE_VA / model3.4.VP)
+posterior.mode(model3.4$VCV[, "animal"] / model3.4.VP)
 ```
 
 
@@ -71,12 +83,18 @@ For example try including year of measurement (year).
 
 ```{r, cache = TRUE}
 p.var <- var(gryphonRM$laydate, na.rm = TRUE)
-prior3.5 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(V = 1,
-nu = 0.002), G3 = list(V = 1, nu = 0.002), G4 = list(V = 1,
-nu = 0.002)), R = list(V = 1, nu = 0.002))
-model3.5 <- MCMCglmm(laydate ~ 1 + age, random = ~animal + animal_pe +
-year + byear, ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.5,
-verbose = FALSE)
+prior3.5 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(
+  V = 1,
+  nu = 0.002
+), G3 = list(V = 1, nu = 0.002), G4 = list(
+  V = 1,
+  nu = 0.002
+)), R = list(V = 1, nu = 0.002))
+model3.5 <- MCMCglmm(laydate ~ 1 + age,
+  random = ~ animal + animal_pe +
+    year + byear, ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.5,
+  verbose = FALSE
+)
 posterior.mode(model3.5$VCV)
 ```
 

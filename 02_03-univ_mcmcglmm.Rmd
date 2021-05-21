@@ -30,7 +30,7 @@ The lower case “animal” is a can be a **special** word for MCMCglmm. If a `p
 ```{r, cache=TRUE}
 Ainv <- inverseA(gryphonped)$Ainv
 model1.1 <- MCMCglmm(bwt ~ 1,
-  random = ~animal, ginv = list(animal = Ainv),
+  random = ~ animal, ginv = list(animal = Ainv),
   data = gryphon, prior = prior1.1
 )
 ```
@@ -87,8 +87,10 @@ We specified weak priors in this analyses. Now we will check whether or not prop
 
 ```{r, cache=TRUE}
 p.var <- var(gryphon$bwt, na.rm = TRUE)
-prior1.1.2 <- list(G = list(G1 = list( V = matrix(p.var * 0.05), nu = 1)), 
-                    R = list(V = matrix(p.var * 0.95), nu = 1))
+prior1.1.2 <- list(
+  G = list(G1 = list(V = matrix(p.var * 0.05), nu = 1)),
+  R = list(V = matrix(p.var * 0.95), nu = 1)
+)
 
 model1.1.2 <- MCMCglmm(bwt ~ 1,
   random = ~animal, ginv = list(animal = Ainv),
@@ -166,8 +168,10 @@ Here the variance in birth weight explained by birth year is 0.7887. Note that a
 
 ```{r cache=TRUE}
 p.var <- var(gryphon$bwt, na.rm = TRUE)
-prior1.4 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list( V = 1, nu = 0.002), G3 = list(V = 1, nu = 0.002)), 
-R = list(V = 1, nu = 0.002))
+prior1.4 <- list(
+  G = list(G1 = list(V = 1, nu = 0.002), G2 = list(V = 1, nu = 0.002), G3 = list(V = 1, nu = 0.002)),
+  R = list(V = 1, nu = 0.002)
+)
 model1.4 <- MCMCglmm(bwt ~ sex,
   random = ~ animal + byear + mother,
   ginv = list(animal = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000,
@@ -210,12 +214,14 @@ As example, we can partition the additive genetic variance and residual variance
 
 
 ```{r cache=TRUE}
-prior1.4.SEX <- list(G = list(G1 = list(V = diag(2), nu = 1.002), G2 = list(V = 1, nu = 0.002),G3 = list(V = 1, nu = 0.002)), 
-                    R = list(V = diag(2), nu = 1.002))
- 
+prior1.4.SEX <- list(
+  G = list(G1 = list(V = diag(2), nu = 1.002), G2 = list(V = 1, nu = 0.002), G3 = list(V = 1, nu = 0.002)),
+  R = list(V = diag(2), nu = 1.002)
+)
+
 model1.4.SEX <- MCMCglmm(bwt ~ sex,
   random = ~ idh(sex):animal + byear + mother,
-  rcov=~idh(sex):units,
+  rcov = ~ idh(sex):units,
   ginv = list(animal = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000,
   prior = prior1.4.SEX, verbose = FALSE
 )

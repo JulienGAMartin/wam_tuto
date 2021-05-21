@@ -15,10 +15,10 @@ The pedigree file `gryphonped.csv` is that used in the preceding tutorials but w
 ```{r, echo=FALSE}
 gryphonRM <- read.csv("data/gryphonRM.csv")
 gryphonRM$animal <- as.factor(gryphonRM$animal)
-gryphonRM$byear<-as.factor(gryphonRM$byear)
-gryphonRM$age<-as.factor(gryphonRM$age)
-gryphonRM$year<-as.factor(gryphonRM$year)
-gryphonRM$laydate<-as.numeric(gryphonRM$laydate)
+gryphonRM$byear <- as.factor(gryphonRM$byear)
+gryphonRM$age <- as.factor(gryphonRM$age)
+gryphonRM$year <- as.factor(gryphonRM$year)
+gryphonRM$laydate <- as.numeric(gryphonRM$laydate)
 ```
 
 ```{r}
@@ -32,7 +32,7 @@ str(gryphonped)
 ```
 
 ```{r}
-gryphonped$id<-as.factor(gryphonped$id)
-gryphonped$father<-as.factor(gryphonped$father)
-gryphonped$mother<-as.factor(gryphonped$mother)
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
 ```
