@@ -309,25 +309,39 @@ div.csl-indent {
 <div id="running-the-model-2" class="section level3" number="2.5.1">
 <h3><span class="header-section-number">2.5.1</span> Running the model</h3>
 <p>First we need to load the <code>brms</code> library:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="brms-1.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span></code></pre></div>
-<p>(<!--  May be add a sentence about brms and its link to stan ? -->)</p>
-<p>To be able to fit an animal model, brms needs (the inverse of) the relationship matrix using the <code>nadiv</code> package (<!--  May be add a sentence about nadiv? -->)</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="brms-1.html#cb121-1" aria-hidden="true" tabindex="-1"></a>Amat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(nadiv<span class="sc">::</span><span class="fu">makeA</span>(gryphonped))</span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="brms-1.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span></code></pre></div>
+<pre><code>## Loading required package: Rcpp</code></pre>
+<pre><code>## Loading &#39;brms&#39; package (version 2.15.0). Useful instructions
+## can be found by typing help(&#39;brms&#39;). A more detailed introduction
+## to the package is available through vignette(&#39;brms_overview&#39;).</code></pre>
+<pre><code>## 
+## Attaching package: &#39;brms&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:MCMCglmm&#39;:
+## 
+##     me</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     ar</code></pre>
+<!--  May be add a sentence about brms and its link to stan ? -->
+<p>To be able to fit an animal model, brms needs the relationship matrix (and not its inverse as in other softwares).
+This can be estimated using the <code>nadiv</code> package
+<!--  May be add a sentence about nadiv? --></p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="brms-1.html#cb128-1" aria-hidden="true" tabindex="-1"></a>Amat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(nadiv<span class="sc">::</span><span class="fu">makeA</span>(gryphonped))</span></code></pre></div>
 <p>We are now ready to specify our first model:
 The structure of a bmrs model is similar to <code>lme4</code>, the random effect is added to the model with the term <code>(1 | gr(animal, cov = Amat)</code>. (<!-- more explanation-->)</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="brms-1.html#cb122-1" aria-hidden="true" tabindex="-1"></a>brms_m1<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb122-2"><a href="brms-1.html#cb122-2" aria-hidden="true" tabindex="-1"></a>  bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)),</span>
-<span id="cb122-3"><a href="brms-1.html#cb122-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
-<span id="cb122-4"><a href="brms-1.html#cb122-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">Amat =</span> Amat),</span>
-<span id="cb122-5"><a href="brms-1.html#cb122-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">gaussian</span>(),</span>
-<span id="cb122-6"><a href="brms-1.html#cb122-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
-<span id="cb122-7"><a href="brms-1.html#cb122-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb122-8"><a href="brms-1.html#cb122-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(brms_m1<span class="fl">.1</span>, <span class="at">file =</span> <span class="st">&quot;data/brms_m1_1.rda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="brms-1.html#cb129-1" aria-hidden="true" tabindex="-1"></a>brms_m1<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb129-2"><a href="brms-1.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)),</span>
+<span id="cb129-3"><a href="brms-1.html#cb129-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb129-4"><a href="brms-1.html#cb129-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">Amat =</span> Amat),</span>
+<span id="cb129-5"><a href="brms-1.html#cb129-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">gaussian</span>(),</span>
+<span id="cb129-6"><a href="brms-1.html#cb129-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
+<span id="cb129-7"><a href="brms-1.html#cb129-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb129-8"><a href="brms-1.html#cb129-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(brms_m1<span class="fl">.1</span>, <span class="at">file =</span> <span class="st">&quot;data/brms_m1_1.rda&quot;</span>)</span></code></pre></div>
 <p>The result of the long model calculation is save in a spare file <code>brms_m1_1.rda"</code>.
 reloading it, we can examine (or directly using the model) the variance estimate and their distributions
 It is also possible to calcule the heritability using xxx</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="brms-1.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/brms_m1_1.rda&quot;</span>)</span>
-<span id="cb123-2"><a href="brms-1.html#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="brms-1.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/brms_m1_1.rda&quot;</span>)</span>
+<span id="cb130-2"><a href="brms-1.html#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.1</span>)</span></code></pre></div>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: bwt ~ 1 + (1 | gr(animal, cov = Amat)) 
@@ -351,12 +365,12 @@ It is also possible to calcule the heritability using xxx</p>
 ## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="brms-1.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brms_m1<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="brms-1.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brms_m1<span class="fl">.1</span>)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-55-1.svg" width="672" /></p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="brms-1.html#cb126-1" aria-hidden="true" tabindex="-1"></a>v_animal <span class="ot">&lt;-</span> (<span class="fu">VarCorr</span>(brms_m1<span class="fl">.1</span>, <span class="at">summary =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>animal<span class="sc">$</span>sd)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb126-2"><a href="brms-1.html#cb126-2" aria-hidden="true" tabindex="-1"></a>v_r <span class="ot">&lt;-</span> (<span class="fu">VarCorr</span>(brms_m1<span class="fl">.1</span>, <span class="at">summary =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>residual<span class="sc">$</span>sd)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb126-3"><a href="brms-1.html#cb126-3" aria-hidden="true" tabindex="-1"></a>h.bwt <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(v_animal <span class="sc">/</span> (v_animal <span class="sc">+</span> v_r))</span>
-<span id="cb126-4"><a href="brms-1.html#cb126-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(h.bwt)</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="brms-1.html#cb133-1" aria-hidden="true" tabindex="-1"></a>v_animal <span class="ot">&lt;-</span> (<span class="fu">VarCorr</span>(brms_m1<span class="fl">.1</span>, <span class="at">summary =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>animal<span class="sc">$</span>sd)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb133-2"><a href="brms-1.html#cb133-2" aria-hidden="true" tabindex="-1"></a>v_r <span class="ot">&lt;-</span> (<span class="fu">VarCorr</span>(brms_m1<span class="fl">.1</span>, <span class="at">summary =</span> <span class="cn">FALSE</span>)<span class="sc">$</span>residual<span class="sc">$</span>sd)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb133-3"><a href="brms-1.html#cb133-3" aria-hidden="true" tabindex="-1"></a>h.bwt <span class="ot">&lt;-</span> <span class="fu">as.mcmc</span>(v_animal <span class="sc">/</span> (v_animal <span class="sc">+</span> v_r))</span>
+<span id="cb133-4"><a href="brms-1.html#cb133-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(h.bwt)</span></code></pre></div>
 <pre><code>## 
 ## Iterations = 1:1000
 ## Thinning interval = 1 
@@ -378,18 +392,20 @@ It is also possible to calcule the heritability using xxx</p>
 <div id="adding-fixed-effects-2" class="section level3" number="2.5.2">
 <h3><span class="header-section-number">2.5.2</span> Adding fixed effects</h3>
 <p>To add effects to a univariate model we simply modify the fixed effect portion of the model specification:</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="brms-1.html#cb128-1" aria-hidden="true" tabindex="-1"></a>brms_m1<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb128-2"><a href="brms-1.html#cb128-2" aria-hidden="true" tabindex="-1"></a>  bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sex <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)),</span>
-<span id="cb128-3"><a href="brms-1.html#cb128-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
-<span id="cb128-4"><a href="brms-1.html#cb128-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">Amat =</span> Amat),</span>
-<span id="cb128-5"><a href="brms-1.html#cb128-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">gaussian</span>(),</span>
-<span id="cb128-6"><a href="brms-1.html#cb128-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
-<span id="cb128-7"><a href="brms-1.html#cb128-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb128-8"><a href="brms-1.html#cb128-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb128-9"><a href="brms-1.html#cb128-9" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(brms_m1<span class="fl">.2</span>, <span class="at">file =</span> <span class="st">&quot;data/brms_m1_2.rda&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="brms-1.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/brms_m1_2.rda&quot;</span>)</span>
-<span id="cb129-2"><a href="brms-1.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.2</span>)</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="brms-1.html#cb135-1" aria-hidden="true" tabindex="-1"></a>brms_m1<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb135-2"><a href="brms-1.html#cb135-2" aria-hidden="true" tabindex="-1"></a>  bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sex <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)),</span>
+<span id="cb135-3"><a href="brms-1.html#cb135-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb135-4"><a href="brms-1.html#cb135-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">Amat =</span> Amat),</span>
+<span id="cb135-5"><a href="brms-1.html#cb135-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">gaussian</span>(),</span>
+<span id="cb135-6"><a href="brms-1.html#cb135-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
+<span id="cb135-7"><a href="brms-1.html#cb135-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb135-8"><a href="brms-1.html#cb135-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb135-9"><a href="brms-1.html#cb135-9" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(brms_m1<span class="fl">.2</span>, <span class="at">file =</span> <span class="st">&quot;data/brms_m1_2.rda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="brms-1.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/brms_m1_2.rda&quot;</span>)</span>
+<span id="cb136-2"><a href="brms-1.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.2</span>)</span></code></pre></div>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)) 
@@ -414,15 +430,19 @@ It is also possible to calcule the heritability using xxx</p>
 ## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="brms-1.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brms_m1<span class="fl">.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="brms-1.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brms_m1<span class="fl">.2</span>)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-57-1.svg" width="672" /></p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="brms-1.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.2</span>)<span class="sc">$</span>fixed</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="brms-1.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.2</span>)<span class="sc">$</span>fixed</span></code></pre></div>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>##           Estimate Est.Error l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
 ## Intercept 6.064853 0.1726459 5.735170 6.410117 1.003015      357      574
 ## sex2      2.210675 0.1574542 1.898645 2.520026 1.002318      722      657</code></pre>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="brms-1.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.2</span>)<span class="sc">$</span>random</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="brms-1.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.2</span>)<span class="sc">$</span>random</span></code></pre></div>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>## $animal
 ##               Estimate Est.Error l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
 ## sd(Intercept) 1.747083 0.1632548 1.419377 2.050884 1.126556       13      113</code></pre>
@@ -430,17 +450,19 @@ It is also possible to calcule the heritability using xxx</p>
 <div id="adding-random-effects-2" class="section level3" number="2.5.3">
 <h3><span class="header-section-number">2.5.3</span> Adding random effects</h3>
 <p>This is done by simply modifying the model statement in the same way, but requires addition of a prior for the new random effect. For instance, we can fit an effect of birth year:</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="brms-1.html#cb139-1" aria-hidden="true" tabindex="-1"></a>brms_m1<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb139-2"><a href="brms-1.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sex <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> byear) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> mother),</span>
-<span id="cb139-3"><a href="brms-1.html#cb139-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
-<span id="cb139-4"><a href="brms-1.html#cb139-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">Amat =</span> Amat),</span>
-<span id="cb139-5"><a href="brms-1.html#cb139-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">gaussian</span>(),</span>
-<span id="cb139-6"><a href="brms-1.html#cb139-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
-<span id="cb139-7"><a href="brms-1.html#cb139-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb139-8"><a href="brms-1.html#cb139-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(brms_m1<span class="fl">.3</span>, <span class="at">file =</span> <span class="st">&quot;data/brms_m1_3.rda&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="brms-1.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/brms_m1_3.rda&quot;</span>)</span>
-<span id="cb140-2"><a href="brms-1.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.3</span>)</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="brms-1.html#cb146-1" aria-hidden="true" tabindex="-1"></a>brms_m1<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb146-2"><a href="brms-1.html#cb146-2" aria-hidden="true" tabindex="-1"></a>  bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sex <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> byear) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> mother),</span>
+<span id="cb146-3"><a href="brms-1.html#cb146-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb146-4"><a href="brms-1.html#cb146-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">Amat =</span> Amat),</span>
+<span id="cb146-5"><a href="brms-1.html#cb146-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">gaussian</span>(),</span>
+<span id="cb146-6"><a href="brms-1.html#cb146-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
+<span id="cb146-7"><a href="brms-1.html#cb146-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb146-8"><a href="brms-1.html#cb146-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(brms_m1<span class="fl">.3</span>, <span class="at">file =</span> <span class="st">&quot;data/brms_m1_3.rda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="brms-1.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/brms_m1_3.rda&quot;</span>)</span>
+<span id="cb147-2"><a href="brms-1.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.3</span>)</span></code></pre></div>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)) + (1 | byear) + (1 | mother) 
@@ -473,7 +495,7 @@ It is also possible to calcule the heritability using xxx</p>
 ## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="brms-1.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brms_m1<span class="fl">.3</span>, <span class="at">ask =</span> <span class="cn">FALSE</span>,<span class="at">N =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="brms-1.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brms_m1<span class="fl">.3</span>, <span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">N =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-59-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-59-2.svg" width="672" /></p>
 </div>
 <div id="testing-significance-of-variance-components-1" class="section level3" number="2.5.4">
@@ -484,17 +506,19 @@ It is also possible to calcule the heritability using xxx</p>
 <h3><span class="header-section-number">2.5.5</span> Further partitioning of the variance</h3>
 <p>Depending of the research question and the presence of different group within the dataset, MCMCglmm allowed to partition the variance at different level. For the example, we can partition the additive genetic and residual variance between SEXE (male and female) to estimate the sex-specific heritability</p>
 <p><!-- need to check the code  I never partition a random effect with lme4 + need to apply it to the residual level too, more too do here --></p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="brms-1.html#cb144-1" aria-hidden="true" tabindex="-1"></a>brms_m1<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb144-2"><a href="brms-1.html#cb144-2" aria-hidden="true" tabindex="-1"></a>  bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sex <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> byear) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> mother),</span>
-<span id="cb144-3"><a href="brms-1.html#cb144-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
-<span id="cb144-4"><a href="brms-1.html#cb144-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">Amat =</span> Amat),</span>
-<span id="cb144-5"><a href="brms-1.html#cb144-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">gaussian</span>(),</span>
-<span id="cb144-6"><a href="brms-1.html#cb144-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
-<span id="cb144-7"><a href="brms-1.html#cb144-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb144-8"><a href="brms-1.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(brms_m1<span class="fl">.4</span>, <span class="at">file =</span> <span class="st">&quot;data/brms_m1_4.rda&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="brms-1.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/brms_m1_4.rda&quot;</span>)</span>
-<span id="cb145-2"><a href="brms-1.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.4</span>)</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="brms-1.html#cb151-1" aria-hidden="true" tabindex="-1"></a>brms_m1<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb151-2"><a href="brms-1.html#cb151-2" aria-hidden="true" tabindex="-1"></a>  bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> sex <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> byear) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> mother),</span>
+<span id="cb151-3"><a href="brms-1.html#cb151-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb151-4"><a href="brms-1.html#cb151-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">Amat =</span> Amat),</span>
+<span id="cb151-5"><a href="brms-1.html#cb151-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">gaussian</span>(),</span>
+<span id="cb151-6"><a href="brms-1.html#cb151-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
+<span id="cb151-7"><a href="brms-1.html#cb151-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb151-8"><a href="brms-1.html#cb151-8" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(brms_m1<span class="fl">.4</span>, <span class="at">file =</span> <span class="st">&quot;data/brms_m1_4.rda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="brms-1.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/brms_m1_4.rda&quot;</span>)</span>
+<span id="cb152-2"><a href="brms-1.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m1<span class="fl">.4</span>)</span></code></pre></div>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)) + (1 | byear) + (1 | mother) 
@@ -527,7 +551,7 @@ It is also possible to calcule the heritability using xxx</p>
 ## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="brms-1.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brms_m1<span class="fl">.4</span>, <span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">N =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="brms-1.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brms_m1<span class="fl">.4</span>, <span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">N =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-61-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-61-2.svg" width="672" /></p>
 </div>
 <div id="modification-of-model-parameter-2" class="section level3" number="2.5.6">

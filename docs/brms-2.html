@@ -306,20 +306,22 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="brms-2" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> brms</h2>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="brms-2.html#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
-<span id="cb298-2"><a href="brms-2.html#cb298-2" aria-hidden="true" tabindex="-1"></a>Amat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(nadiv<span class="sc">::</span><span class="fu">makeA</span>(gryphonped))</span>
-<span id="cb298-3"><a href="brms-2.html#cb298-3" aria-hidden="true" tabindex="-1"></a>bf_bwt <span class="ot">&lt;-</span> <span class="fu">bf</span>(bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> p <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)))</span>
-<span id="cb298-4"><a href="brms-2.html#cb298-4" aria-hidden="true" tabindex="-1"></a>bf_tarsus <span class="ot">&lt;-</span> <span class="fu">bf</span>(tarsus <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> p <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)))</span>
-<span id="cb298-5"><a href="brms-2.html#cb298-5" aria-hidden="true" tabindex="-1"></a>brms_m2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb298-6"><a href="brms-2.html#cb298-6" aria-hidden="true" tabindex="-1"></a>  bf_bwt <span class="sc">+</span> bf_tarsus <span class="sc">+</span> <span class="fu">set_rescor</span>(<span class="cn">TRUE</span>),</span>
-<span id="cb298-7"><a href="brms-2.html#cb298-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
-<span id="cb298-8"><a href="brms-2.html#cb298-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">Amat =</span> Amat),</span>
-<span id="cb298-9"><a href="brms-2.html#cb298-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
-<span id="cb298-10"><a href="brms-2.html#cb298-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb298-11"><a href="brms-2.html#cb298-11" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(brms_m2<span class="fl">.1</span>, <span class="at">file =</span> <span class="st">&quot;data/brms_m2_1.rda&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="brms-2.html#cb299-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/brms_m2_1.rda&quot;</span>)</span>
-<span id="cb299-2"><a href="brms-2.html#cb299-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m2<span class="fl">.1</span>)</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="brms-2.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb302-2"><a href="brms-2.html#cb302-2" aria-hidden="true" tabindex="-1"></a>Amat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(nadiv<span class="sc">::</span><span class="fu">makeA</span>(gryphonped))</span>
+<span id="cb302-3"><a href="brms-2.html#cb302-3" aria-hidden="true" tabindex="-1"></a>bf_bwt <span class="ot">&lt;-</span> <span class="fu">bf</span>(bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> p <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)))</span>
+<span id="cb302-4"><a href="brms-2.html#cb302-4" aria-hidden="true" tabindex="-1"></a>bf_tarsus <span class="ot">&lt;-</span> <span class="fu">bf</span>(tarsus <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> p <span class="sc">|</span> <span class="fu">gr</span>(animal, <span class="at">cov =</span> Amat)))</span>
+<span id="cb302-5"><a href="brms-2.html#cb302-5" aria-hidden="true" tabindex="-1"></a>brms_m2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb302-6"><a href="brms-2.html#cb302-6" aria-hidden="true" tabindex="-1"></a>  bf_bwt <span class="sc">+</span> bf_tarsus <span class="sc">+</span> <span class="fu">set_rescor</span>(<span class="cn">TRUE</span>),</span>
+<span id="cb302-7"><a href="brms-2.html#cb302-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb302-8"><a href="brms-2.html#cb302-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data2 =</span> <span class="fu">list</span>(<span class="at">Amat =</span> Amat),</span>
+<span id="cb302-9"><a href="brms-2.html#cb302-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
+<span id="cb302-10"><a href="brms-2.html#cb302-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb302-11"><a href="brms-2.html#cb302-11" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(brms_m2<span class="fl">.1</span>, <span class="at">file =</span> <span class="st">&quot;data/brms_m2_1.rda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="brms-2.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;data/brms_m2_1.rda&quot;</span>)</span>
+<span id="cb303-2"><a href="brms-2.html#cb303-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(brms_m2<span class="fl">.1</span>)</span></code></pre></div>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>##  Family: MV(gaussian, gaussian) 
 ##   Links: mu = identity; sigma = identity
 ##          mu = identity; sigma = identity 
@@ -331,10 +333,14 @@ div.csl-indent {
 ## 
 ## Group-Level Effects: 
 ## ~animal (Number of levels: 683) 
-##                                     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(bwt_Intercept)                       1.81      0.21     1.41     2.20 1.06       32      192
-## sd(tarsus_Intercept)                    3.44      0.43     2.49     4.25 1.05       61      173
-## cor(bwt_Intercept,tarsus_Intercept)     0.38      0.14     0.08     0.62 1.02      101      232
+##                                     Estimate Est.Error l-95% CI u-95% CI Rhat
+## sd(bwt_Intercept)                       1.81      0.21     1.41     2.20 1.06
+## sd(tarsus_Intercept)                    3.44      0.43     2.49     4.25 1.05
+## cor(bwt_Intercept,tarsus_Intercept)     0.38      0.14     0.08     0.62 1.02
+##                                     Bulk_ESS Tail_ESS
+## sd(bwt_Intercept)                         32      192
+## sd(tarsus_Intercept)                      61      173
+## cor(bwt_Intercept,tarsus_Intercept)      101      232
 ## 
 ## Population-Level Effects: 
 ##                  Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
@@ -353,9 +359,9 @@ div.csl-indent {
 ## Samples were drawn using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="brms-2.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brms_m2<span class="fl">.1</span>, <span class="at">ask =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="brms-2.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(brms_m2<span class="fl">.1</span>, <span class="at">ask =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-108-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-108-2.svg" width="672" /></p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="brms-2.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(brms_m2<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="brms-2.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(brms_m2<span class="fl">.1</span>)</span></code></pre></div>
 <pre><code>## $animal
 ## $animal$sd
 ##                  Estimate Est.Error     Q2.5    Q97.5

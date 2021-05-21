@@ -306,18 +306,18 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="brms-3" class="section level2" number="4.5">
 <h2><span class="header-section-number">4.5</span> brms</h2>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="brms-3.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
-<span id="cb351-2"><a href="brms-3.html#cb351-2" aria-hidden="true" tabindex="-1"></a>Amat <span class="ot">&lt;-</span> nadiv<span class="sc">::</span><span class="fu">makeA</span>(Ped)</span>
-<span id="cb351-3"><a href="brms-3.html#cb351-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb351-4"><a href="brms-3.html#cb351-4" aria-hidden="true" tabindex="-1"></a>model_simple1<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
-<span id="cb351-5"><a href="brms-3.html#cb351-5" aria-hidden="true" tabindex="-1"></a>  bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> animal) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> animal_pe),</span>
-<span id="cb351-6"><a href="brms-3.html#cb351-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphonRM,</span>
-<span id="cb351-7"><a href="brms-3.html#cb351-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">gaussian</span>(), <span class="at">cov_ranef =</span> <span class="fu">list</span>(<span class="at">animal =</span> Amat),</span>
-<span id="cb351-8"><a href="brms-3.html#cb351-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
-<span id="cb351-9"><a href="brms-3.html#cb351-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb351-10"><a href="brms-3.html#cb351-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb351-11"><a href="brms-3.html#cb351-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_simple1<span class="fl">.1</span>)</span>
-<span id="cb351-12"><a href="brms-3.html#cb351-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_simple1<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="brms-3.html#cb355-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb355-2"><a href="brms-3.html#cb355-2" aria-hidden="true" tabindex="-1"></a>Amat <span class="ot">&lt;-</span> nadiv<span class="sc">::</span><span class="fu">makeA</span>(Ped)</span>
+<span id="cb355-3"><a href="brms-3.html#cb355-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-4"><a href="brms-3.html#cb355-4" aria-hidden="true" tabindex="-1"></a>model_simple1<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">brm</span>(</span>
+<span id="cb355-5"><a href="brms-3.html#cb355-5" aria-hidden="true" tabindex="-1"></a>  bwt <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> animal) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> animal_pe),</span>
+<span id="cb355-6"><a href="brms-3.html#cb355-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphonRM,</span>
+<span id="cb355-7"><a href="brms-3.html#cb355-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">gaussian</span>(), <span class="at">cov_ranef =</span> <span class="fu">list</span>(<span class="at">animal =</span> Amat),</span>
+<span id="cb355-8"><a href="brms-3.html#cb355-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">chains =</span> <span class="dv">2</span>, <span class="at">cores =</span> <span class="dv">2</span>, <span class="at">iter =</span> <span class="dv">1000</span></span>
+<span id="cb355-9"><a href="brms-3.html#cb355-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb355-10"><a href="brms-3.html#cb355-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-11"><a href="brms-3.html#cb355-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_simple1<span class="fl">.1</span>)</span>
+<span id="cb355-12"><a href="brms-3.html#cb355-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model_simple1<span class="fl">.1</span>)</span></code></pre></div>
 
 </div>
             </section>

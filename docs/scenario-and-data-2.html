@@ -313,14 +313,14 @@ div.csl-indent {
 <div id="data-files-2" class="section level3" number="4.1.2">
 <h3><span class="header-section-number">4.1.2</span> Data files</h3>
 <p>The pedigree file <code>gryphonped.csv</code> is that used in the preceding tutorials but we now use a new data file <code>gryphonRM.csv</code>. Columns correspond to individual identity (<code>animal</code>), birth year (<code>byear</code>), age in years (<code>age</code>), year of measurement (<code>year</code>) and lay date (<code>laydate</code>). Each row of the data file corresponds to a single phenotypic observation. Here data are sorted by identity and then age so that the repeated observations on individuals are readily apparent. However this is not a requirement for analysis - data could equally be sorted by some other variable (<em>e.g.</em>, measurement year) or be in a random order.</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="scenario-and-data-2.html#cb305-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gryphonRM)</span></code></pre></div>
+<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="scenario-and-data-2.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gryphonRM)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1607 obs. of  5 variables:
 ##  $ animal : Factor w/ 469 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;8&quot;,..: 1 1 1 1 1 2 2 2 3 3 ...
 ##  $ byear  : Factor w/ 34 levels &quot;968&quot;,&quot;970&quot;,&quot;971&quot;,..: 22 22 22 22 22 22 22 22 22 22 ...
 ##  $ age    : Factor w/ 5 levels &quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,..: 1 2 3 4 5 1 2 3 1 2 ...
 ##  $ year   : Factor w/ 39 levels &quot;970&quot;,&quot;971&quot;,&quot;972&quot;,..: 23 24 25 26 27 23 24 25 23 24 ...
 ##  $ laydate: num  19 23 24 23 29 21 17 21 20 20 ...</code></pre>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="scenario-and-data-2.html#cb307-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gryphonRM)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="scenario-and-data-2.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gryphonRM)</span></code></pre></div>
 <pre><code>##   animal byear age year laydate
 ## 1      1   990   2  992      19
 ## 2      1   990   3  993      23
@@ -332,9 +332,9 @@ div.csl-indent {
 ##  $ id    : int  1306 1304 1298 1293 1290 1288 1284 1283 1282 1278 ...
 ##  $ father: int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ mother: int  NA NA NA NA NA NA NA NA NA NA ...</code></pre>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="scenario-and-data-2.html#cb310-1" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>id)</span>
-<span id="cb310-2"><a href="scenario-and-data-2.html#cb310-2" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>father <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>father)</span>
-<span id="cb310-3"><a href="scenario-and-data-2.html#cb310-3" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>mother <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>mother)</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="scenario-and-data-2.html#cb314-1" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>id)</span>
+<span id="cb314-2"><a href="scenario-and-data-2.html#cb314-2" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>father <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>father)</span>
+<span id="cb314-3"><a href="scenario-and-data-2.html#cb314-3" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>mother <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>mother)</span></code></pre></div>
 
 </div>
 </div>
