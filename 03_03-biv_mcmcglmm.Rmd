@@ -20,7 +20,7 @@ Ainv <- inverseA(gryphonped)$Ainv
 
 Fitting a multivariate model in MCMCglmm involves several new consideration above those for fitting univariate models. First, we have to fit multivariate priors; second, we have to specify the ways in which effects on different traits may covary, including the nature of residual (co)variation; and third, we will have to be a little more specific when specifying to MCMCglmm what type of distributions from which we assume our data are drawn. Our most basic model can be specified as:
 
-```{r, fig.cap="The posterior distribution of the additive genetic effect for tarsus length in a MCMCglmm run with default values"}
+```{r, cache = TRUE, fig.cap="The posterior distribution of the additive genetic effect for tarsus length in a MCMCglmm run with default values"}
 prior2.1 <- list(
   G = list(G1 = list(V = diag(2), nu = 1.002)),
   R = list(V = diag(2), nu = 1.002)
@@ -113,7 +113,7 @@ autocorr(model2.2$VCV)[, , "traittarsus:traittarsus.animal"][3, 4]
 ```
 
 We can evaluate the fixed effect, their Ci evaluate their significance. 
-```{r}
+```{r, fig.cap = "Posterior trace and distribution for the fixed effects in model 2.2", fig.width = 4, fig.height = 6}
 posterior.mode(model2.2$Sol)
 HPDinterval(model2.2$Sol, 0.95)
 plot(model2.2$Sol)
