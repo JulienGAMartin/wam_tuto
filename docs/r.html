@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1.2 R | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1.2 R | How to fit an animal model" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="images/missing.png" />
+  <meta property="og:image" content="/images/missing.png" />
   <meta property="og:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
 
@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="1.2 R | How to fit an animal model" />
   
   <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="twitter:image" content="images/missing.png" />
+  <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
 
@@ -32,7 +32,7 @@
   
 <link rel="prev" href="data.html"/>
 <link rel="next" href="univariate-animal-model.html"/>
-<script src="libs/header-attrs-2.7.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -117,6 +119,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
@@ -163,19 +188,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.3" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-fixed-effects"><i class="fa fa-check"></i><b>2.2.3</b> Adding fixed effects</a></li>
 <li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
-<li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#futher-partitionning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Futher partitionning the variance</a></li>
-<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-different-random-effect-and-possible-negative-variance"><i class="fa fa-check"></i><b>2.2.7</b> Covariance between different random effect and possible negative variance</a></li>
+<li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#further-partitioning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Further partitioning the variance</a></li>
+<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.2.7</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.2.8" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-two-random-effects"><i class="fa fa-check"></i><b>2.2.8</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
 <li class="chapter" data-level="2.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html"><i class="fa fa-check"></i><b>2.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#running-the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> Running the model</a></li>
-<li class="chapter" data-level="2.4.2" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#estimating-heritability-1"><i class="fa fa-check"></i><b>2.4.2</b> Estimating heritability</a></li>
-<li class="chapter" data-level="2.4.3" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-fixed-effects-1"><i class="fa fa-check"></i><b>2.4.3</b> Adding fixed effects</a></li>
-<li class="chapter" data-level="2.4.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.4</b> Adding random effects</a></li>
-<li class="chapter" data-level="2.4.5" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.5</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.4.2" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#change-in-iteration-and-sampling"><i class="fa fa-check"></i><b>2.4.2</b> Change in iteration and sampling</a></li>
+<li class="chapter" data-level="2.4.3" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#change-priors-parameters"><i class="fa fa-check"></i><b>2.4.3</b> Change priors parameters</a></li>
+<li class="chapter" data-level="2.4.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#estimating-heritability-1"><i class="fa fa-check"></i><b>2.4.4</b> Estimating heritability</a></li>
+<li class="chapter" data-level="2.4.5" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-fixed-effects-1"><i class="fa fa-check"></i><b>2.4.5</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a></li>
+<li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="brms-1.html"><a href="brms-1.html#running-the-model-2"><i class="fa fa-check"></i><b>2.5.1</b> Running the model</a></li>
+<li class="chapter" data-level="2.5.2" data-path="brms-1.html"><a href="brms-1.html#adding-fixed-effects-2"><i class="fa fa-check"></i><b>2.5.2</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.5.3" data-path="brms-1.html"><a href="brms-1.html#adding-random-effects-2"><i class="fa fa-check"></i><b>2.5.3</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.5.4" data-path="brms-1.html"><a href="brms-1.html#testing-significance-of-variance-components-1"><i class="fa fa-check"></i><b>2.5.4</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.5.5" data-path="brms-1.html"><a href="brms-1.html#further-partitioning-of-the-variance"><i class="fa fa-check"></i><b>2.5.5</b> Further partitioning of the variance</a></li>
+<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-2"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.5.7" data-path="brms-1.html"><a href="brms-1.html#covariance-between-two-random-effects-2"><i class="fa fa-check"></i><b>2.5.7</b> Covariance between two random effects</a></li>
+</ul></li>
 <li class="chapter" data-level="2.6" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>2.6</b> stan</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multivariate-animal-model.html"><a href="multivariate-animal-model.html"><i class="fa fa-check"></i><b>3</b> Multivariate animal model</a>
@@ -187,15 +227,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="asreml-biv.html"><a href="asreml-biv.html"><i class="fa fa-check"></i><b>3.2</b> Asreml-R</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="asreml-biv.html"><a href="asreml-biv.html#running-the-model-2"><i class="fa fa-check"></i><b>3.2.1</b> Running the model</a></li>
+<li class="chapter" data-level="3.2.1" data-path="asreml-biv.html"><a href="asreml-biv.html#running-the-model-3"><i class="fa fa-check"></i><b>3.2.1</b> Running the model</a></li>
 <li class="chapter" data-level="3.2.2" data-path="asreml-biv.html"><a href="asreml-biv.html#adding-fixed-and-random-effects"><i class="fa fa-check"></i><b>3.2.2</b> Adding fixed and random effects</a></li>
 <li class="chapter" data-level="3.2.3" data-path="asreml-biv.html"><a href="asreml-biv.html#significance-testing"><i class="fa fa-check"></i><b>3.2.3</b> Significance testing</a></li>
+<li class="chapter" data-level="3.2.4" data-path="asreml-biv.html"><a href="asreml-biv.html#estimate-directly-the-genetic-correlation-within-the-model"><i class="fa fa-check"></i><b>3.2.4</b> Estimate directly the genetic correlation within the model</a></li>
+<li class="chapter" data-level="3.2.5" data-path="asreml-biv.html"><a href="asreml-biv.html#partitionning-covariance-between-groups"><i class="fa fa-check"></i><b>3.2.5</b> Partitionning (co)variance between groups</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="gremlin-2.html"><a href="gremlin-2.html"><i class="fa fa-check"></i><b>3.3</b> gremlin</a></li>
 <li class="chapter" data-level="3.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html"><i class="fa fa-check"></i><b>3.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#fitting-the-model"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
 <li class="chapter" data-level="3.4.2" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#adding-fixed-and-random-effects-1"><i class="fa fa-check"></i><b>3.4.2</b> Adding fixed and random effects</a></li>
+<li class="chapter" data-level="3.4.3" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#partitioning-covariances"><i class="fa fa-check"></i><b>3.4.3</b> Partitioning (co)variances</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a></li>
 <li class="chapter" data-level="3.6" data-path="stan-1.html"><a href="stan-1.html"><i class="fa fa-check"></i><b>3.6</b> stan</a></li>
@@ -268,34 +311,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">1.2.1</span> R packages</h3>
 <div id="asreml-r" class="section level4" number="1.2.1.1">
 <h4><span class="header-section-number">1.2.1.1</span> asreml-r</h4>
-<p>ASReml-R is commercial software published by VSN international (<a href="http://www.vsni.co.uk/software/asreml/" class="uri">http://www.vsni.co.uk/software/asreml/</a>). This package is not free and requires a key access (add the price of it!)</p>
+<p>ASReml-R is commercial software published by VSN international (<a href="http://www.vsni.co.uk/software/asreml/" class="uri">http://www.vsni.co.uk/software/asreml/</a>). This package is not free and requires a key access (<!--add the price of it!-->)
+Additional information and guide can be find in the Asreml-R manual: (<a href="https://asreml.kb.vsni.co.uk/wp-content/uploads/sites/3/2018/02/ASReml-R-Reference-Manual-4.pdf" class="uri">https://asreml.kb.vsni.co.uk/wp-content/uploads/sites/3/2018/02/ASReml-R-Reference-Manual-4.pdf</a>)</p>
 </div>
 <div id="gremlin" class="section level4" number="1.2.1.2">
 <h4><span class="header-section-number">1.2.1.2</span> gremlin</h4>
-<p><code>gremlin</code> is a little monster appearing if you wet a mugwai and feed it after midnight. It is also a great and promising software to fit mixed models using a frequentist approach.</p>
+<p><code>gremlin</code> is a little monster appearing <!-- water just multiply them (if you wet a mugwai and--> if you feed a mugwai after midnight. It is also a great and promising software to fit mixed models using a frequentist approach.</p>
 </div>
 <div id="mcmcglmm" class="section level4" number="1.2.1.3">
 <h4><span class="header-section-number">1.2.1.3</span> MCMCglmm</h4>
-<p><code>MCMCglmm</code> is an R package for Bayesian mixed model analysis written by Jarrod Hadfield. It is
-freeware distributed through CRAN (<a href="http://cran.r-project.org/" class="uri">http://cran.r-project.org/</a>). Information about the package, together
-with a user manual and vignettes are available at <a href="http://cran.r-project.org/web/packages/MCMCglmm/index.html" class="uri">http://cran.r-project.org/web/packages/MCMCglmm/index.html</a> .
-Reference: <span class="citation"><a href="references.html#ref-R-MCMCglmm" role="doc-biblioref">J. Hadfield</a> (<a href="references.html#ref-R-MCMCglmm" role="doc-biblioref">2021</a>)</span>.</p>
+<p><code>MCMCglmm</code> is an R package for Bayesian mixed model analysis written by Jarrod Hadfield. It is a freeware distributed through CRAN (<a href="http://cran.r-project.org/" class="uri">http://cran.r-project.org/</a>). Information and guide about the package can be find in the user manual and vignettes (<a href="http://cran.r-project.org/web/packages/MCMCglmm/index.html" class="uri">http://cran.r-project.org/web/packages/MCMCglmm/index.html</a>).
+Reference: <span class="citation"><a href="#ref-R-MCMCglmm" role="doc-biblioref">J. Hadfield</a> (<a href="#ref-R-MCMCglmm" role="doc-biblioref">2021</a>)</span>.</p>
 <p>This module provides some information that applies to MCMCglmm-based analyses in general, but that will not be included in other tutorials.
-Most importantly, this applies to some of the simplest waysof determining the performance of a run using MCMCglmm, i.e., verification of the validity of of the posterior distribution.
+Most importantly, this applies to some of the simplest ways of determining the performance of a run using MCMCglmm, i.e., verification of the validity of of the posterior distribution.
 This tutorial is not a substitute for working through the MCMCglmm course notes, which is available from CRAN (the Comprehensive R ArchiveNetwork, <a href="http://cran.r-project.org/" class="uri">http://cran.r-project.org/</a>, or can be accessed in R using the command vignette(“CourseNotes,”“MCMCglmm”)).
 These tutorials do not introduce one of the main advantages of using MCMCglmm for analyses of data from natural populations -the ability to properly model non-normal responses.
-These capabilities are introduced inthe documentation that is distributed with MCMCglmm, and available from CRAN.</p>
+These capabilities are introduced in the documentation that is distributed with MCMCglmm, and available from CRAN.
+<!-- i think we have to also cite Pierre de Villemereuil, he wrote a guide for estimating heritability with MCMCglmmm http://devillemereuil.legtux.org/wp-content/uploads/2012/12/tuto_en.pdf --></p>
 </div>
 <div id="brms" class="section level4" number="1.2.1.4">
 <h4><span class="header-section-number">1.2.1.4</span> brms</h4>
 <p><code>brms</code> provides an interface to fit Bayesian generalized multivariate (non-)linear multilevel models using <code>Stan</code>, which is a C++ package for obtaining full Bayesian inference (see <a href="https://mc-stan.org/" class="uri">https://mc-stan.org/</a>).
 The formula syntax is an extended version of the syntax applied in the ‘lme4’ package to provide a familiar and simple interface for performing regression analyses.</p>
-<p>It should be noted that if <code>brms</code> is able to fit animal model the parametrization used based on Kroeneker products is not the most efficient and can take quite longer than using a DAG parametrisation directly in <code>stan</code>.</p>
+<p>It should be noted that if <code>brms</code> is able to fit animal model the parametrization used is not the most efficient and can take quite longer than using a different parametrization directly in <code>stan</code>.</p>
 
 </div>
 </div>
 </div>
 <!-- </div> -->
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-MCMCglmm" class="csl-entry">
+Hadfield, Jarrod. 2021. <em>MCMCglmm: MCMC Generalised Linear Mixed Models</em>. <a href="https://CRAN.R-project.org/package=MCMCglmm">https://CRAN.R-project.org/package=MCMCglmm</a>.
+</div>
+</div>
             </section>
 
           </div>
@@ -325,6 +374,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

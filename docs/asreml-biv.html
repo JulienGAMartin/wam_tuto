@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.2 Asreml-R | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.2 Asreml-R | How to fit an animal model" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="images/missing.png" />
+  <meta property="og:image" content="/images/missing.png" />
   <meta property="og:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
 
@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="3.2 Asreml-R | How to fit an animal model" />
   
   <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="twitter:image" content="images/missing.png" />
+  <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
 
@@ -32,7 +32,7 @@
   
 <link rel="prev" href="scenario-and-data-1.html"/>
 <link rel="next" href="gremlin-2.html"/>
-<script src="libs/header-attrs-2.7.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -117,6 +119,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
@@ -163,19 +188,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.3" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-fixed-effects"><i class="fa fa-check"></i><b>2.2.3</b> Adding fixed effects</a></li>
 <li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
-<li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#futher-partitionning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Futher partitionning the variance</a></li>
-<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-different-random-effect-and-possible-negative-variance"><i class="fa fa-check"></i><b>2.2.7</b> Covariance between different random effect and possible negative variance</a></li>
+<li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#further-partitioning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Further partitioning the variance</a></li>
+<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.2.7</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.2.8" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-two-random-effects"><i class="fa fa-check"></i><b>2.2.8</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
 <li class="chapter" data-level="2.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html"><i class="fa fa-check"></i><b>2.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#running-the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> Running the model</a></li>
-<li class="chapter" data-level="2.4.2" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#estimating-heritability-1"><i class="fa fa-check"></i><b>2.4.2</b> Estimating heritability</a></li>
-<li class="chapter" data-level="2.4.3" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-fixed-effects-1"><i class="fa fa-check"></i><b>2.4.3</b> Adding fixed effects</a></li>
-<li class="chapter" data-level="2.4.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.4</b> Adding random effects</a></li>
-<li class="chapter" data-level="2.4.5" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.5</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.4.2" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#change-in-iteration-and-sampling"><i class="fa fa-check"></i><b>2.4.2</b> Change in iteration and sampling</a></li>
+<li class="chapter" data-level="2.4.3" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#change-priors-parameters"><i class="fa fa-check"></i><b>2.4.3</b> Change priors parameters</a></li>
+<li class="chapter" data-level="2.4.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#estimating-heritability-1"><i class="fa fa-check"></i><b>2.4.4</b> Estimating heritability</a></li>
+<li class="chapter" data-level="2.4.5" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-fixed-effects-1"><i class="fa fa-check"></i><b>2.4.5</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a></li>
+<li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="brms-1.html"><a href="brms-1.html#running-the-model-2"><i class="fa fa-check"></i><b>2.5.1</b> Running the model</a></li>
+<li class="chapter" data-level="2.5.2" data-path="brms-1.html"><a href="brms-1.html#adding-fixed-effects-2"><i class="fa fa-check"></i><b>2.5.2</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.5.3" data-path="brms-1.html"><a href="brms-1.html#adding-random-effects-2"><i class="fa fa-check"></i><b>2.5.3</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.5.4" data-path="brms-1.html"><a href="brms-1.html#testing-significance-of-variance-components-1"><i class="fa fa-check"></i><b>2.5.4</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.5.5" data-path="brms-1.html"><a href="brms-1.html#further-partitioning-of-the-variance"><i class="fa fa-check"></i><b>2.5.5</b> Further partitioning of the variance</a></li>
+<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-2"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.5.7" data-path="brms-1.html"><a href="brms-1.html#covariance-between-two-random-effects-2"><i class="fa fa-check"></i><b>2.5.7</b> Covariance between two random effects</a></li>
+</ul></li>
 <li class="chapter" data-level="2.6" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>2.6</b> stan</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multivariate-animal-model.html"><a href="multivariate-animal-model.html"><i class="fa fa-check"></i><b>3</b> Multivariate animal model</a>
@@ -187,15 +227,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="asreml-biv.html"><a href="asreml-biv.html"><i class="fa fa-check"></i><b>3.2</b> Asreml-R</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="asreml-biv.html"><a href="asreml-biv.html#running-the-model-2"><i class="fa fa-check"></i><b>3.2.1</b> Running the model</a></li>
+<li class="chapter" data-level="3.2.1" data-path="asreml-biv.html"><a href="asreml-biv.html#running-the-model-3"><i class="fa fa-check"></i><b>3.2.1</b> Running the model</a></li>
 <li class="chapter" data-level="3.2.2" data-path="asreml-biv.html"><a href="asreml-biv.html#adding-fixed-and-random-effects"><i class="fa fa-check"></i><b>3.2.2</b> Adding fixed and random effects</a></li>
 <li class="chapter" data-level="3.2.3" data-path="asreml-biv.html"><a href="asreml-biv.html#significance-testing"><i class="fa fa-check"></i><b>3.2.3</b> Significance testing</a></li>
+<li class="chapter" data-level="3.2.4" data-path="asreml-biv.html"><a href="asreml-biv.html#estimate-directly-the-genetic-correlation-within-the-model"><i class="fa fa-check"></i><b>3.2.4</b> Estimate directly the genetic correlation within the model</a></li>
+<li class="chapter" data-level="3.2.5" data-path="asreml-biv.html"><a href="asreml-biv.html#partitionning-covariance-between-groups"><i class="fa fa-check"></i><b>3.2.5</b> Partitionning (co)variance between groups</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="gremlin-2.html"><a href="gremlin-2.html"><i class="fa fa-check"></i><b>3.3</b> gremlin</a></li>
 <li class="chapter" data-level="3.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html"><i class="fa fa-check"></i><b>3.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#fitting-the-model"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
 <li class="chapter" data-level="3.4.2" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#adding-fixed-and-random-effects-1"><i class="fa fa-check"></i><b>3.4.2</b> Adding fixed and random effects</a></li>
+<li class="chapter" data-level="3.4.3" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#partitioning-covariances"><i class="fa fa-check"></i><b>3.4.3</b> Partitioning (co)variances</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a></li>
 <li class="chapter" data-level="3.6" data-path="stan-1.html"><a href="stan-1.html"><i class="fa fa-check"></i><b>3.6</b> stan</a></li>
@@ -263,150 +306,473 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="asreml-biv" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Asreml-R</h2>
-<div id="running-the-model-2" class="section level3" number="3.2.1">
+<div id="running-the-model-3" class="section level3" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Running the model</h3>
-<p>For running multivariate analyses in ASReml-R, the code is slightly more complex than for the univariate case. This is because ASReml-R allows us to make different assumptions about the way in which traits might be related and so we need to explicitly code a model of the (co)variance structure we want to fit. We have also specified some starting values. These are can be very approximate <em>guestimates</em>, but having reasonable starting values can aid convergence. Finally, we have increased the default maximum number of iterations (<code>maxiter</code>) which can help to achieve convergence for more complicated models.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="asreml-biv.html#cb116-1" aria-hidden="true" tabindex="-1"></a>ainv <span class="ot">&lt;-</span> <span class="fu">ainverse</span>(gryphonped)</span>
-<span id="cb116-2"><a href="asreml-biv.html#cb116-2" aria-hidden="true" tabindex="-1"></a>modela <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
-<span id="cb116-3"><a href="asreml-biv.html#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait,</span>
-<span id="cb116-4"><a href="asreml-biv.html#cb116-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">us</span>(trait)<span class="sc">:</span><span class="fu">vm</span>(animal, ainv), <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>),</span>
-<span id="cb116-5"><a href="asreml-biv.html#cb116-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)),</span>
-<span id="cb116-6"><a href="asreml-biv.html#cb116-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
-<span id="cb116-7"><a href="asreml-biv.html#cb116-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span></span>
-<span id="cb116-8"><a href="asreml-biv.html#cb116-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>First we need to load the <code>asreml</code> library:</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="asreml-biv.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(asreml)</span></code></pre></div>
+<p>For running multivariate analyses in ASReml-R, the code is slightly more complex than for the univariate case. This is because ASReml-R allows us to make different assumptions about the way in which traits might be related. So we need to explicitly code a model of the (co)variance structure we want to fit by specified some starting values. These are can be very approximate <em>guestimates</em>, but having reasonable starting values can aid convergence. Finally, we have increased the default maximum number of iterations (<code>maxiter</code>) which can help to achieve convergence for more complicated models. Another way to increase the number of iteration will be to use the <code>update</code> function. Notes that if the <code>LogLik</code> is not stabilized after several iterations, it is good indication of the model require more iteration.</p>
+<p>It is also possible to let the model running without any specify starting values but usually univariate model will allow to get some <em>guestimates</em> in the additive genetic variances.</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="asreml-biv.html#cb152-1" aria-hidden="true" tabindex="-1"></a>ainv <span class="ot">&lt;-</span> <span class="fu">ainverse</span>(gryphonped)</span>
+<span id="cb152-2"><a href="asreml-biv.html#cb152-2" aria-hidden="true" tabindex="-1"></a>modela <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
+<span id="cb152-3"><a href="asreml-biv.html#cb152-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait,</span>
+<span id="cb152-4"><a href="asreml-biv.html#cb152-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">us</span>(trait)<span class="sc">:</span><span class="fu">vm</span>(animal, ainv), <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>),</span>
+<span id="cb152-5"><a href="asreml-biv.html#cb152-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)),</span>
+<span id="cb152-6"><a href="asreml-biv.html#cb152-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb152-7"><a href="asreml-biv.html#cb152-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> <span class="fu">na.method</span>(<span class="at">x =</span> <span class="st">&quot;include&quot;</span>, <span class="at">y =</span> <span class="st">&quot;include&quot;</span>),</span>
+<span id="cb152-8"><a href="asreml-biv.html#cb152-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span></span>
+<span id="cb152-9"><a href="asreml-biv.html#cb152-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Thu Mar 18 21:27:05 2021
+## ASReml 4.1.0 Fri May 21 01:45:55 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -5118.122           1.0   1535 21:27:05    0.0
-##  2     -4358.769           1.0   1535 21:27:05    0.0
-##  3     -3540.792           1.0   1535 21:27:05    0.0
-##  4     -3004.970           1.0   1535 21:27:05    0.0
-##  5     -2747.831           1.0   1535 21:27:05    0.0
-##  6     -2687.807           1.0   1535 21:27:05    0.0
-##  7     -2680.057           1.0   1535 21:27:05    0.0
-##  8     -2679.743           1.0   1535 21:27:05    0.0
-##  9     -2679.741           1.0   1535 21:27:05    0.0</code></pre>
-<p>This has fitted a bivariate model of <code>bwt</code> and <code>tarsus</code>, with the mean for each of the traits as a fixed effect (<code>trait</code>). The additive genetic variance-covariance matrix (<span class="math inline">\(\textbf{G}\)</span>) is unstructured (<code>us</code>; <em>i.e.</em> all elements are free to vary) and the starting values for <span class="math inline">\(V_A\)</span> for <code>bwt</code>, <span class="math inline">\(COV_A\)</span> between <code>bwt</code> and <code>tarsus</code>, and <span class="math inline">\(V_A\)</span> for <code>tarsus</code> are set to 1, 0.1 and 1, respectively. Similarly, the residual matrix is unstructured and uses the same starting values.</p>
-<p>Let’s have a look at the variance components, and notice that there are now six (co)variance components reported in the table:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="asreml-biv.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modela)<span class="sc">$</span>varcomp</span></code></pre></div>
+##  1     -5118.122           1.0   1535 01:45:55    0.0
+##  2     -4358.769           1.0   1535 01:45:55    0.0
+##  3     -3540.792           1.0   1535 01:45:55    0.0
+##  4     -3004.970           1.0   1535 01:45:55    0.0
+##  5     -2747.831           1.0   1535 01:45:55    0.0
+##  6     -2687.807           1.0   1535 01:45:55    0.0
+##  7     -2680.057           1.0   1535 01:45:55    0.0
+##  8     -2679.743           1.0   1535 01:45:55    0.0
+##  9     -2679.741           1.0   1535 01:45:55    0.0</code></pre>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="asreml-biv.html#cb154-1" aria-hidden="true" tabindex="-1"></a>modela <span class="ot">&lt;-</span> <span class="fu">update</span>(modela)</span></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:45:55 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -2679.741           1.0   1535 01:45:56    0.0
+##  2     -2679.741           1.0   1535 01:45:56    0.0</code></pre>
+<p><code>modela</code> has fitted a bivariate model of <code>bwt</code> and <code>tarsus</code>, with the mean for each of the traits as a fixed effect (<code>trait</code>). The additive genetic variance-covariance matrix (<span class="math inline">\(\textbf{G}\)</span>) is unstructured (<code>us</code>; <em>i.e.</em> all elements are free to vary) and the starting values for <span class="math inline">\(V_A\)</span> for <code>bwt</code>, <span class="math inline">\(COV_A\)</span> between <code>bwt</code> and <code>tarsus</code>, and <span class="math inline">\(V_A\)</span> for <code>tarsus</code> are set to 1, 0.1 and 1, respectively. Similarly, the residual matrix is unstructured and uses the same starting values.</p>
+<p>Note that the argument <code>na.action = na.method(x = "include", y = "include")</code> can be add to the model.In a bivariate model, it will help calculate the covariance between two traits with different missing information <code>NA</code> and so help imbalance phenotypage and save sample size. However, it is important to scale ( mean =0, var =1) the two traits to correctly adjust the model(see Asreml-R manual for more information).
+For the example, no missing information are present in the dataset.</p>
+<p>Let’s have a look at the variance components, and notice that there are now seven (co)variance components reported in the table:</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="asreml-biv.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modela)<span class="sc">$</span>varcomp</span></code></pre></div>
 <pre><code>##                                            component std.error  z.ratio bound %ch
-## trait:vm(animal, ainv)!trait_bwt:bwt        3.368498 0.6349441 5.305188     P 0.0
-## trait:vm(animal, ainv)!trait_tarsus:bwt     2.460195 1.0735865 2.291567     P 0.2
-## trait:vm(animal, ainv)!trait_tarsus:tarsus 12.346837 3.0753775 4.014739     P 0.1
-## units:trait!R                               1.000000        NA       NA     F 0.0
-## units:trait!trait_bwt:bwt                   3.849836 0.5199897 7.403677     P 0.0
-## units:trait!trait_tarsus:bwt                3.312978 0.9128834 3.629136     P 0.1
-## units:trait!trait_tarsus:tarsus            17.645584 2.6668492 6.616641     P 0.1</code></pre>
-<p>The first three terms relate to the genetic matrix and, in order are <span class="math inline">\(V_{A,bwt}\)</span>, <span class="math inline">\(COV_A\)</span>, <span class="math inline">\(V_{A, tarsus}\)</span>. Below is again a line where the <code>units:traitr!R</code> component equals 1, which again can be ignored. The final three terms relate to the residual matrix and correspond to <span class="math inline">\(V_{R,bwt}\)</span>, <span class="math inline">\(COV_R\)</span>, <span class="math inline">\(V_{R,tarsus}\)</span>. Based on our quick and dirty check (is <code>z.ratio</code> &gt; 1.96?) all components look to be statistically significant.</p>
-<p>We can calculate the genetic correlation as <span class="math inline">\(COV_A / \sqrt{V_{A,bwt} \cdot V_{A,tarsus}}\)</span>. Thus this model gives an estimate of <span class="math inline">\(r_A\)</span> = 0.38. Although we can calculate this by hand, we can also use <code>vpredict()</code>, which also provides an (approximate) standard error:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="asreml-biv.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modela, rA <span class="sc">~</span> V2 <span class="sc">/</span> <span class="fu">sqrt</span>(V1 <span class="sc">*</span> V3))</span></code></pre></div>
-<pre><code>##     Estimate       SE
-## rA 0.3814816 0.129991</code></pre>
+## trait:vm(animal, ainv)!trait_bwt:bwt        3.368405 0.6348356 5.305948     P   0
+## trait:vm(animal, ainv)!trait_tarsus:bwt     2.459827 1.0732809 2.291876     P   0
+## trait:vm(animal, ainv)!trait_tarsus:tarsus 12.345849 3.0744787 4.015591     P   0
+## units:trait!R                               1.000000        NA       NA     F   0
+## units:trait!trait_bwt:bwt                   3.849910 0.5200095 7.403539     P   0
+## units:trait!trait_tarsus:bwt                3.313269 0.9129222 3.629300     P   0
+## units:trait!trait_tarsus:tarsus            17.646386 2.6670308 6.616491     P   0</code></pre>
+<p>The first three terms are related to the genetic matrix and, in order are <span class="math inline">\(V_{A,bwt}\)</span>, <span class="math inline">\(COV_A\)</span>, <span class="math inline">\(V_{A, tarsus}\)</span>. Below is again a line where the <code>units:traitr!R</code> component equals to 1, which again can be ignored. The final three terms relate to the residual matrix and correspond to <span class="math inline">\(V_{R,bwt}\)</span>, <span class="math inline">\(COV_R\)</span>, <span class="math inline">\(V_{R,tarsus}\)</span>. Based on our quick and dirty check (is <code>z.ratio</code> &gt; 1.96?) all components look to be statistically significant.</p>
+<p>We can calculate the genetic correlation as <span class="math inline">\(COV_A / \sqrt{V_{A,bwt} \cdot V_{A,tarsus}}\)</span>. Thus this model gives an estimate of <span class="math inline">\(r_A\)</span> = 0.38. It is also possible to estimate the residual correlation <span class="math inline">\(r_res\)</span> = 0.4.</p>
+<!-- Should we add an explication of the nature of the residual correlation or genetic correlation no? -->
+<p>Although we can calculate this by hand, we can also use <code>vpredict()</code>, which also provides an (approximate) standard error:</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="asreml-biv.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modela, r_A <span class="sc">~</span> V2 <span class="sc">/</span> <span class="fu">sqrt</span>(V1 <span class="sc">*</span> V3))</span></code></pre></div>
+<pre><code>##     Estimate        SE
+## r_A 0.381445 0.1299765</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="asreml-biv.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modela, r_res <span class="sc">~</span> V6 <span class="sc">/</span> <span class="fu">sqrt</span>(V5 <span class="sc">*</span> V7))</span></code></pre></div>
+<pre><code>##        Estimate         SE
+## r_res 0.4019791 0.08607119</code></pre>
 <p>Of course we can also calculate the heritability of <code>bwt</code> and <code>tarsus</code> from this model:</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="asreml-biv.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modela, h2.bwt <span class="sc">~</span> V1 <span class="sc">/</span> (V1 <span class="sc">+</span> V5))</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="asreml-biv.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modela, h2.bwt <span class="sc">~</span> V1 <span class="sc">/</span> (V1 <span class="sc">+</span> V5))</span></code></pre></div>
 <pre><code>##         Estimate         SE
-## h2.bwt 0.4666586 0.07672219</code></pre>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="asreml-biv.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modela, h2.tarsus <span class="sc">~</span> V3 <span class="sc">/</span> (V3 <span class="sc">+</span> V7))</span></code></pre></div>
-<pre><code>##            Estimate        SE
-## h2.tarsus 0.4116652 0.0930738</code></pre>
+## h2.bwt 0.4666469 0.07671563</code></pre>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="asreml-biv.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modela, h2.tarsus <span class="sc">~</span> V3 <span class="sc">/</span> (V3 <span class="sc">+</span> V7))</span></code></pre></div>
+<pre><code>##            Estimate         SE
+## h2.tarsus 0.4116348 0.09305947</code></pre>
 </div>
 <div id="adding-fixed-and-random-effects" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Adding fixed and random effects</h3>
-<p>Fixed and random effects can be added just as for the univariate case. Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of birth year and mother we could specify a bivariate formulation of this using:</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="asreml-biv.html#cb126-1" aria-hidden="true" tabindex="-1"></a>modelb <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
-<span id="cb126-2"><a href="asreml-biv.html#cb126-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait <span class="sc">+</span> trait<span class="sc">:</span>sex,</span>
-<span id="cb126-3"><a href="asreml-biv.html#cb126-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span><span class="fu">vm</span>(animal, ainv) <span class="sc">+</span></span>
-<span id="cb126-4"><a href="asreml-biv.html#cb126-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>byear <span class="sc">+</span></span>
-<span id="cb126-5"><a href="asreml-biv.html#cb126-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>mother,</span>
-<span id="cb126-6"><a href="asreml-biv.html#cb126-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)),</span>
-<span id="cb126-7"><a href="asreml-biv.html#cb126-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
-<span id="cb126-8"><a href="asreml-biv.html#cb126-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span></span>
-<span id="cb126-9"><a href="asreml-biv.html#cb126-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Fixed and random effects can be added just as for the univariate case. Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as birth year and mother as random effects, we could specify a bivariate formulation with the same complexity:</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="asreml-biv.html#cb166-1" aria-hidden="true" tabindex="-1"></a>modelb <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
+<span id="cb166-2"><a href="asreml-biv.html#cb166-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait <span class="sc">+</span> <span class="fu">at</span>(trait)<span class="sc">:</span>sex,</span>
+<span id="cb166-3"><a href="asreml-biv.html#cb166-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span><span class="fu">vm</span>(animal, ainv) <span class="sc">+</span></span>
+<span id="cb166-4"><a href="asreml-biv.html#cb166-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>byear <span class="sc">+</span></span>
+<span id="cb166-5"><a href="asreml-biv.html#cb166-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>mother,</span>
+<span id="cb166-6"><a href="asreml-biv.html#cb166-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)),</span>
+<span id="cb166-7"><a href="asreml-biv.html#cb166-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb166-8"><a href="asreml-biv.html#cb166-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> <span class="fu">na.method</span>(<span class="at">x =</span> <span class="st">&quot;include&quot;</span>, <span class="at">y =</span> <span class="st">&quot;include&quot;</span>),</span>
+<span id="cb166-9"><a href="asreml-biv.html#cb166-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span></span>
+<span id="cb166-10"><a href="asreml-biv.html#cb166-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Thu Mar 18 21:27:05 2021
+## ASReml 4.1.0 Fri May 21 01:45:56 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4672.301           1.0   1533 21:27:05    0.0
-##  2     -4005.615           1.0   1533 21:27:05    0.0
-##  3     -3271.483           1.0   1533 21:27:05    0.0 (1 restrained)
-##  4     -2761.414           1.0   1533 21:27:05    0.0 (1 restrained)
-##  5     -2481.356           1.0   1533 21:27:05    0.0
-##  6     -2395.858           1.0   1533 21:27:05    0.0
-##  7     -2381.050           1.0   1533 21:27:06    0.0
-##  8     -2380.251           1.0   1533 21:27:06    0.0
-##  9     -2380.246           1.0   1533 21:27:06    0.0</code></pre>
-<p>Note that we have specified a covariance structure for each random effect and an estimate of the effect of sex on both birth weight and tarsus length by interacting sex with trait in the fixed effect structure.</p>
-<p>There will now be twelve (co)variance components reported after running the code:</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="asreml-biv.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelb)<span class="sc">$</span>varcomp</span></code></pre></div>
-<pre><code>##                                             component std.error    z.ratio bound
-## trait:byear!trait_bwt:bwt                   0.9746500 0.2825643  3.4493030     P
-## trait:byear!trait_tarsus:bwt                0.1624455 0.4185658  0.3881003     P
-## trait:byear!trait_tarsus:tarsus             3.7384670 1.2069893  3.0973489     P
-## trait:mother!trait_bwt:bwt                  1.1445030 0.2302062  4.9716424     P
-## trait:mother!trait_tarsus:bwt              -1.5566953 0.4051695 -3.8420841     P
-## trait:mother!trait_tarsus:tarsus            4.8206658 1.3200970  3.6517512     P
-## trait:vm(animal, ainv)!trait_bwt:bwt        1.9893623 0.4410265  4.5107542     P
-## trait:vm(animal, ainv)!trait_tarsus:bwt     3.3168101 0.9030192  3.6730229     P
-## trait:vm(animal, ainv)!trait_tarsus:tarsus 10.2277887 2.8065673  3.6442343     P
-## units:trait!R                               1.0000000        NA         NA     F
-## units:trait!trait_bwt:bwt                   1.8443114 0.3443161  5.3564488     P
-## units:trait!trait_tarsus:bwt                4.0144042 0.7411868  5.4161844     P
-## units:trait!trait_tarsus:tarsus            12.4857174 2.2890289  5.4545915     P
-##                                            %ch
-## trait:byear!trait_bwt:bwt                  0.0
-## trait:byear!trait_tarsus:bwt               0.0
-## trait:byear!trait_tarsus:tarsus            0.0
-## trait:mother!trait_bwt:bwt                 0.0
-## trait:mother!trait_tarsus:bwt              0.0
-## trait:mother!trait_tarsus:tarsus           0.0
-## trait:vm(animal, ainv)!trait_bwt:bwt       0.0
-## trait:vm(animal, ainv)!trait_tarsus:bwt    0.1
-## trait:vm(animal, ainv)!trait_tarsus:tarsus 0.1
-## units:trait!R                              0.0
-## units:trait!trait_bwt:bwt                  0.0
-## units:trait!trait_tarsus:bwt               0.0
-## units:trait!trait_tarsus:tarsus            0.1</code></pre>
+##  1     -4672.301           1.0   1533 01:45:56    0.1
+##  2     -4005.615           1.0   1533 01:45:56    0.0
+##  3     -3271.483           1.0   1533 01:45:56    0.0 (1 restrained)
+##  4     -2761.414           1.0   1533 01:45:56    0.0 (1 restrained)
+##  5     -2481.357           1.0   1533 01:45:56    0.0
+##  6     -2395.858           1.0   1533 01:45:56    0.0
+##  7     -2381.050           1.0   1533 01:45:56    0.0
+##  8     -2380.251           1.0   1533 01:45:56    0.0
+##  9     -2380.246           1.0   1533 01:45:56    0.0</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="asreml-biv.html#cb168-1" aria-hidden="true" tabindex="-1"></a>modelb <span class="ot">&lt;-</span> <span class="fu">update</span>(modelb)</span></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:45:56 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -2380.246           1.0   1533 01:45:56    0.1
+##  2     -2380.246           1.0   1533 01:45:56    0.0</code></pre>
+<p>Note that we have specified a covariance structure for each random effect and an estimate of the effect of sex on both birth weight and tarsus length.
+<!-- trait:sex actually combined the effect of sex on both trait in the wald test, so I change it for at(trait): --></p>
+<p>There will now be thirteen (co)variance components reported after running the code:</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="asreml-biv.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelb)<span class="sc">$</span>varcomp</span></code></pre></div>
+<pre><code>##                                             component std.error    z.ratio bound %ch
+## trait:byear!trait_bwt:bwt                   0.9746385 0.2825727  3.4491602     P   0
+## trait:byear!trait_tarsus:bwt                0.1624076 0.4185079  0.3880635     P   0
+## trait:byear!trait_tarsus:tarsus             3.7383721 1.2065992  3.0982716     P   0
+## trait:mother!trait_bwt:bwt                  1.1445184 0.2302182  4.9714512     P   0
+## trait:mother!trait_tarsus:bwt              -1.5567306 0.4051848 -3.8420260     P   0
+## trait:mother!trait_tarsus:tarsus            4.8206132 1.3201300  3.6516202     P   0
+## trait:vm(animal, ainv)!trait_bwt:bwt        1.9893546 0.4410246  4.5107569     P   0
+## trait:vm(animal, ainv)!trait_tarsus:bwt     3.3170404 0.9032323  3.6724110     P   0
+## trait:vm(animal, ainv)!trait_tarsus:tarsus 10.2294887 2.8077066  3.6433610     P   0
+## units:trait!R                               1.0000000        NA         NA     F   0
+## units:trait!trait_bwt:bwt                   1.8443110 0.3443178  5.3564203     P   0
+## units:trait!trait_tarsus:bwt                4.0142841 0.7412540  5.4155308     P   0
+## units:trait!trait_tarsus:tarsus            12.4845955 2.2893363  5.4533690     P   0</code></pre>
+<p>we can estimate the different correlations using <code>vpredict</code>:</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="asreml-biv.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modelb, r_byear <span class="sc">~</span> V2 <span class="sc">/</span> <span class="fu">sqrt</span>(V1 <span class="sc">*</span> V3))</span></code></pre></div>
+<pre><code>##           Estimate        SE
+## r_byear 0.08508312 0.2134209</code></pre>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="asreml-biv.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modelb, r_M <span class="sc">~</span> V5 <span class="sc">/</span> <span class="fu">sqrt</span>(V4 <span class="sc">*</span> V6))</span></code></pre></div>
+<pre><code>##       Estimate        SE
+## r_M -0.6627518 0.2487963</code></pre>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="asreml-biv.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modelb, r_A <span class="sc">~</span> V8 <span class="sc">/</span> <span class="fu">sqrt</span>(V7 <span class="sc">*</span> V9))</span></code></pre></div>
+<pre><code>##      Estimate        SE
+## r_A 0.7353053 0.1094747</code></pre>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="asreml-biv.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(modelb, r_res <span class="sc">~</span> V12 <span class="sc">/</span> <span class="fu">sqrt</span>(V11 <span class="sc">*</span> V13))</span></code></pre></div>
+<pre><code>##        Estimate         SE
+## r_res 0.8365729 0.07366762</code></pre>
+<p>Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="asreml-biv.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelb, <span class="at">coef =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>coef.fi</span></code></pre></div>
+<pre><code>##                           solution std error    z.ratio
+## at(trait, tarsus):sex_1  0.0000000        NA         NA
+## at(trait, tarsus):sex_2 -0.0684413 0.3823448 -0.1790041
+## at(trait, bwt):sex_1     0.0000000        NA         NA
+## at(trait, bwt):sex_2     1.9502053 0.1480467 13.1729086
+## trait_bwt                6.3844483 0.2328210 27.4221324
+## trait_tarsus            20.5936436 0.5098944 40.3880569</code></pre>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="asreml-biv.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wald.asreml</span>(modelb, <span class="at">denDF =</span> <span class="st">&quot;default&quot;</span>, <span class="at">ssType =</span> <span class="st">&quot;conditional&quot;</span>)<span class="sc">$</span>Wald</span></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:45:56 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -2380.246           1.0   1533 01:45:56    0.0
+##  2     -2380.246           1.0   1533 01:45:56    0.0
+## Calculating denominator DF</code></pre>
+<pre><code>## [0;34m
+## Wald tests for fixed effects.[0m
+## [0;34mResponse: cbind(bwt, tarsus)[0m
+## 
+##                       Df denDF   F.inc   F.con Margin      Pr
+## trait                  2  52.6 1396.00 1396.00        0.00000
+## at(trait, bwt):sex     1 812.8  298.40  173.50      B 0.00000
+## at(trait, tarsus):sex  1 747.9    0.03    0.03      B 0.85798</code></pre>
+<p>Note that it is possible to specify a fixed effect to a specific trait by adding the number of order within <code>cbind</code> inside the argument <code>at(trait,x)</code>. For example, here we apply the fixed effect <code>sex</code> only to the response variable <code>tarsus</code>.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="asreml-biv.html#cb185-1" aria-hidden="true" tabindex="-1"></a>modelb_2 <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
+<span id="cb185-2"><a href="asreml-biv.html#cb185-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait <span class="sc">+</span> <span class="fu">at</span>(trait, <span class="dv">2</span>)<span class="sc">:</span>sex,</span>
+<span id="cb185-3"><a href="asreml-biv.html#cb185-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span><span class="fu">vm</span>(animal, ainv) <span class="sc">+</span></span>
+<span id="cb185-4"><a href="asreml-biv.html#cb185-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>byear <span class="sc">+</span></span>
+<span id="cb185-5"><a href="asreml-biv.html#cb185-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>mother,</span>
+<span id="cb185-6"><a href="asreml-biv.html#cb185-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)),</span>
+<span id="cb185-7"><a href="asreml-biv.html#cb185-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb185-8"><a href="asreml-biv.html#cb185-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> <span class="fu">na.method</span>(<span class="at">x =</span> <span class="st">&quot;include&quot;</span>, <span class="at">y =</span> <span class="st">&quot;include&quot;</span>),</span>
+<span id="cb185-9"><a href="asreml-biv.html#cb185-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span></span>
+<span id="cb185-10"><a href="asreml-biv.html#cb185-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:45:57 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -4810.563           1.0   1534 01:45:57    0.0
+##  2     -4129.799           1.0   1534 01:45:57    0.0
+##  3     -3382.529           1.0   1534 01:45:57    0.0 (1 restrained)
+##  4     -2864.076           1.0   1534 01:45:57    0.0
+##  5     -2574.891           1.0   1534 01:45:57    0.0
+##  6     -2478.879           1.0   1534 01:45:57    0.0
+##  7     -2458.305           1.0   1534 01:45:57    0.0
+##  8     -2456.425           1.0   1534 01:45:57    0.0
+##  9     -2456.377           1.0   1534 01:45:57    0.0
+## 10     -2456.376           1.0   1534 01:45:57    0.0</code></pre>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="asreml-biv.html#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelb_2, <span class="at">coef =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>coef.fi</span></code></pre></div>
+<pre><code>##                          solution std error   z.ratio
+## at(trait, tarsus):sex_1  0.000000        NA        NA
+## at(trait, tarsus):sex_2 -3.267042 0.2953279 -11.06242
+## trait_bwt                7.636226 0.2389515  31.95722
+## trait_tarsus            22.703658 0.4827348  47.03133</code></pre>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="asreml-biv.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wald.asreml</span>(modelb_2, <span class="at">denDF =</span> <span class="st">&quot;default&quot;</span>, <span class="at">ssType =</span> <span class="st">&quot;conditional&quot;</span>)<span class="sc">$</span>Wald</span></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:45:57 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -2456.376           1.0   1534 01:45:57    0.0
+##  2     -2456.376           1.0   1534 01:45:57    0.0
+## Calculating denominator DF</code></pre>
+<pre><code>## [0;34m
+## Wald tests for fixed effects.[0m
+## [0;34mResponse: cbind(bwt, tarsus)[0m
+## 
+##                       Df denDF  F.inc  F.con Margin          Pr
+## trait                  2  50.7 1233.0 1233.0        0.00000e+00
+## at(trait, tarsus):sex  1 522.9  122.4  122.4      B 1.02886e-25</code></pre>
 </div>
 <div id="significance-testing" class="section level3" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Significance testing</h3>
 <p>Under the model above <span class="math inline">\(r_M\)</span> is estimated as -0.66 and the <code>z.ratio</code> associated with the corresponding covariance (<span class="math inline">\(COV_M\)</span>) is &gt;2 (in absolute terms). We might therefore infer that there is evidence for a strong negative correlation between the traits with respect to the mother and that while maternal identity explains variance in both traits those mothers that tend to produce heavier offspring actually tend to produce offspring with shorter tarsus lengths.</p>
 <p>To formally test if <span class="math inline">\(COV_M\)</span> is significantly different from zero, we can compare the log-likelihood for this model:</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="asreml-biv.html#cb130-1" aria-hidden="true" tabindex="-1"></a>modelb<span class="sc">$</span>loglik</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="asreml-biv.html#cb192-1" aria-hidden="true" tabindex="-1"></a>modelb<span class="sc">$</span>loglik</span></code></pre></div>
 <pre><code>## [1] -2380.246</code></pre>
-<p>to a model in which we specify that <span class="math inline">\(COV_M\)</span>=0. Since this constraint reduces the number of parameters to be estimated by one, we can use a likelihood ratio test with one degree of freedom. To run the constrained model, we modify the G structure definition for the <code>mother</code> random effect to diagonal (<code>diag</code>), which means we only estimate the variances (the diagonal of the matrix) but not the covariance:</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="asreml-biv.html#cb132-1" aria-hidden="true" tabindex="-1"></a>modelc <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
-<span id="cb132-2"><a href="asreml-biv.html#cb132-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait <span class="sc">+</span> trait<span class="sc">:</span>sex,</span>
-<span id="cb132-3"><a href="asreml-biv.html#cb132-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span><span class="fu">vm</span>(animal, ainv) <span class="sc">+</span></span>
-<span id="cb132-4"><a href="asreml-biv.html#cb132-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>byear <span class="sc">+</span></span>
-<span id="cb132-5"><a href="asreml-biv.html#cb132-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diag</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))<span class="sc">:</span>mother,</span>
-<span id="cb132-6"><a href="asreml-biv.html#cb132-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)),</span>
-<span id="cb132-7"><a href="asreml-biv.html#cb132-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
-<span id="cb132-8"><a href="asreml-biv.html#cb132-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span></span>
-<span id="cb132-9"><a href="asreml-biv.html#cb132-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>to a model in which we specify that <span class="math inline">\(COV_M\)</span>=0. Since this constraint reduces the number of parameters to be estimated by one, we can use a likelihood ratio test (LRT) with one degree of freedom. To run the constrained model, we modify the G structure defined for the <code>mother</code> random effect to diagonal (<code>diag</code>), which means we only estimate the variances (the diagonal of the matrix) but not the covariance (the covariance are fixed to 0):</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="asreml-biv.html#cb194-1" aria-hidden="true" tabindex="-1"></a>modelc <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
+<span id="cb194-2"><a href="asreml-biv.html#cb194-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait <span class="sc">+</span> <span class="fu">at</span>(trait)<span class="sc">:</span>sex,</span>
+<span id="cb194-3"><a href="asreml-biv.html#cb194-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span><span class="fu">vm</span>(animal, ainv) <span class="sc">+</span></span>
+<span id="cb194-4"><a href="asreml-biv.html#cb194-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>byear <span class="sc">+</span></span>
+<span id="cb194-5"><a href="asreml-biv.html#cb194-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diag</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))<span class="sc">:</span>mother,</span>
+<span id="cb194-6"><a href="asreml-biv.html#cb194-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)),</span>
+<span id="cb194-7"><a href="asreml-biv.html#cb194-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb194-8"><a href="asreml-biv.html#cb194-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> <span class="fu">na.method</span>(<span class="at">x =</span> <span class="st">&quot;include&quot;</span>, <span class="at">y =</span> <span class="st">&quot;include&quot;</span>),</span>
+<span id="cb194-9"><a href="asreml-biv.html#cb194-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span></span>
+<span id="cb194-10"><a href="asreml-biv.html#cb194-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Thu Mar 18 21:27:06 2021
+## ASReml 4.1.0 Fri May 21 01:45:58 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4677.820           1.0   1533 21:27:06    0.0
-##  2     -4010.442           1.0   1533 21:27:06    0.0
-##  3     -3275.409           1.0   1533 21:27:06    0.0
-##  4     -2763.519           1.0   1533 21:27:06    0.0
-##  5     -2483.732           1.0   1533 21:27:06    0.0
-##  6     -2400.242           1.0   1533 21:27:06    0.0
-##  7     -2386.663           1.0   1533 21:27:06    0.0
-##  8     -2386.049           1.0   1533 21:27:06    0.0
-##  9     -2386.045           1.0   1533 21:27:06    0.0</code></pre>
+##  1     -4677.820           1.0   1533 01:45:58    0.0
+##  2     -4010.442           1.0   1533 01:45:58    0.0
+##  3     -3275.409           1.0   1533 01:45:58    0.0
+##  4     -2763.519           1.0   1533 01:45:58    0.0
+##  5     -2483.732           1.0   1533 01:45:58    0.0
+##  6     -2400.242           1.0   1533 01:45:58    0.0
+##  7     -2386.663           1.0   1533 01:45:58    0.0
+##  8     -2386.049           1.0   1533 01:45:58    0.0
+##  9     -2386.045           1.0   1533 01:45:58    0.0</code></pre>
 <p>You can run <code>summary(modelc)$varcomp</code> to confirm this worked. We can now obtain the log-likelihood of this model and compare this to that of <code>modelb</code> using a likelihood ratio test:</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="asreml-biv.html#cb134-1" aria-hidden="true" tabindex="-1"></a>modelc<span class="sc">$</span>loglik</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="asreml-biv.html#cb196-1" aria-hidden="true" tabindex="-1"></a>modelc<span class="sc">$</span>loglik</span></code></pre></div>
 <pre><code>## [1] -2386.045</code></pre>
 <p>We can see that the model log-likelihood is now -2386.05.
 And comparing the models using a likelihood ratio test:</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="asreml-biv.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (modelb<span class="sc">$</span>loglik <span class="sc">-</span> modelc<span class="sc">$</span>loglik)</span></code></pre></div>
-<pre><code>## [1] 11.59831</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="asreml-biv.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (modelb<span class="sc">$</span>loglik <span class="sc">-</span> modelc<span class="sc">$</span>loglik)</span></code></pre></div>
+<pre><code>## [1] 11.59835</code></pre>
 <p>So our chi-square test statistic is <span class="math inline">\(\chi^2_1\)</span>= 11.6.
 The p-value that goes with this is obtained by:</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="asreml-biv.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(<span class="dv">2</span> <span class="sc">*</span> (modelb<span class="sc">$</span>loglik <span class="sc">-</span> modelc<span class="sc">$</span>loglik), <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [1] 0.000660117</code></pre>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="asreml-biv.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(<span class="dv">2</span> <span class="sc">*</span> (modelb<span class="sc">$</span>loglik <span class="sc">-</span> modelc<span class="sc">$</span>loglik), <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0006601037</code></pre>
 <p>We would therefore conclude that the maternal covariance is significantly different from zero.</p>
 <p>We could apply the same procedure to show that the residual (environmental) covariance and the genetic covariance estimates are significantly greater than zero (<em>i.e.</em>, heavier individuals tend to have longer tarsus lengths). In contrast, we should find that the byear covariance between the two traits is non-significant.</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="asreml-biv.html#cb202-1" aria-hidden="true" tabindex="-1"></a>modeld <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
+<span id="cb202-2"><a href="asreml-biv.html#cb202-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait <span class="sc">+</span> <span class="fu">at</span>(trait)<span class="sc">:</span>sex,</span>
+<span id="cb202-3"><a href="asreml-biv.html#cb202-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span><span class="fu">vm</span>(animal, ainv) <span class="sc">+</span></span>
+<span id="cb202-4"><a href="asreml-biv.html#cb202-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">diag</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))<span class="sc">:</span>byear <span class="sc">+</span></span>
+<span id="cb202-5"><a href="asreml-biv.html#cb202-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>mother,</span>
+<span id="cb202-6"><a href="asreml-biv.html#cb202-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)),</span>
+<span id="cb202-7"><a href="asreml-biv.html#cb202-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb202-8"><a href="asreml-biv.html#cb202-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> <span class="fu">na.method</span>(<span class="at">x =</span> <span class="st">&quot;include&quot;</span>, <span class="at">y =</span> <span class="st">&quot;include&quot;</span>),</span>
+<span id="cb202-9"><a href="asreml-biv.html#cb202-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span></span>
+<span id="cb202-10"><a href="asreml-biv.html#cb202-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:45:58 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -4672.708           1.0   1533 01:45:58    0.0
+##  2     -4005.953           1.0   1533 01:45:58    0.0
+##  3     -3271.737           1.0   1533 01:45:58    0.0 (1 restrained)
+##  4     -2761.626           1.0   1533 01:45:58    0.0 (1 restrained)
+##  5     -2481.649           1.0   1533 01:45:58    0.0
+##  6     -2395.992           1.0   1533 01:45:58    0.0
+##  7     -2381.136           1.0   1533 01:45:58    0.0
+##  8     -2380.331           1.0   1533 01:45:59    0.0
+##  9     -2380.326           1.0   1533 01:45:59    0.0</code></pre>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="asreml-biv.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (modelb<span class="sc">$</span>loglik <span class="sc">-</span> modeld<span class="sc">$</span>loglik)</span></code></pre></div>
+<pre><code>## [1] 0.1600641</code></pre>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="asreml-biv.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(<span class="dv">2</span> <span class="sc">*</span> (modelb<span class="sc">$</span>loglik <span class="sc">-</span> modeld<span class="sc">$</span>loglik), <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] 0.6890975</code></pre>
+</div>
+<div id="estimate-directly-the-genetic-correlation-within-the-model" class="section level3" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Estimate directly the genetic correlation within the model</h3>
+<p>Within Asreml-r, different matrix structure can be specify such as <code>us</code>,<code>corg</code>, <code>diag</code>, etc (cf see the Asreml-r guide). Instead of the fitting an unstructured matrix with the argument <code>us</code> or a reduced model with no covariance with the argument <code>diag</code>, we can also directly estimate the genetic correlation between the <code>bwt</code> and <code>tarsus</code> with <code>corgh</code>.
+Here we decide to estimate directly the additive genetic correlation.</p>
+<!-- I dont know if we can specify initial values with corgh !, i remove it -->
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="asreml-biv.html#cb208-1" aria-hidden="true" tabindex="-1"></a>modele <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
+<span id="cb208-2"><a href="asreml-biv.html#cb208-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait <span class="sc">+</span> <span class="fu">at</span>(trait)<span class="sc">:</span>sex,</span>
+<span id="cb208-3"><a href="asreml-biv.html#cb208-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">corgh</span>(trait)<span class="sc">:</span><span class="fu">vm</span>(animal, ainv) <span class="sc">+</span></span>
+<span id="cb208-4"><a href="asreml-biv.html#cb208-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>byear <span class="sc">+</span></span>
+<span id="cb208-5"><a href="asreml-biv.html#cb208-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>mother,</span>
+<span id="cb208-6"><a href="asreml-biv.html#cb208-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)),</span>
+<span id="cb208-7"><a href="asreml-biv.html#cb208-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb208-8"><a href="asreml-biv.html#cb208-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> <span class="fu">na.method</span>(<span class="at">x =</span> <span class="st">&quot;include&quot;</span>, <span class="at">y =</span> <span class="st">&quot;include&quot;</span>),</span>
+<span id="cb208-9"><a href="asreml-biv.html#cb208-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span></span>
+<span id="cb208-10"><a href="asreml-biv.html#cb208-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:45:59 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -3544.356           1.0   1533 01:45:59    0.0
+##  2     -3177.908           1.0   1533 01:45:59    0.0 (1 restrained)
+##  3     -2784.992           1.0   1533 01:45:59    0.0
+##  4     -2527.352           1.0   1533 01:45:59    0.0
+##  5     -2406.422           1.0   1533 01:45:59    0.0
+##  6     -2382.062           1.0   1533 01:45:59    0.0
+##  7     -2380.263           1.0   1533 01:45:59    0.0
+##  8     -2380.246           1.0   1533 01:45:59    0.0
+##  9     -2380.246           1.0   1533 01:45:59    0.0</code></pre>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="asreml-biv.html#cb210-1" aria-hidden="true" tabindex="-1"></a>modele <span class="ot">&lt;-</span> <span class="fu">update</span>(modele)</span></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:45:59 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -2380.246           1.0   1533 01:45:59    0.1
+##  2     -2380.246           1.0   1533 01:45:59    0.0</code></pre>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="asreml-biv.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modele)<span class="sc">$</span>varcomp</span></code></pre></div>
+<pre><code>##                                                     component std.error   z.ratio bound %ch
+## trait:byear!trait_bwt:bwt                           0.9746376 0.2825690  3.449203     P   0
+## trait:byear!trait_tarsus:bwt                        0.1624052 0.4184989  0.388066     P   0
+## trait:byear!trait_tarsus:tarsus                     3.7383599 1.2065684  3.098341     P   0
+## trait:mother!trait_bwt:bwt                          1.1445196 0.2302189  4.971441     P   0
+## trait:mother!trait_tarsus:bwt                      -1.5567326 0.4051847 -3.842032     P   0
+## trait:mother!trait_tarsus:tarsus                    4.8206100 1.3201239  3.651634     P   0
+## trait:vm(animal, ainv)!trait!tarsus:!trait!bwt.cor  0.7353034 0.1094744  6.716668     U   0
+## trait:vm(animal, ainv)!trait_bwt                    1.9893544 0.4410242  4.510760     P   0
+## trait:vm(animal, ainv)!trait_tarsus                10.2296667 2.8078190  3.643279     P   0
+## units:trait!R                                       1.0000000        NA        NA     F   0
+## units:trait!trait_bwt:bwt                           1.8443104 0.3443173  5.356427     P   0
+## units:trait!trait_tarsus:bwt                        4.0142731 0.7412587  5.415482     P   0
+## units:trait!trait_tarsus:tarsus                    12.4844745 2.2893621  5.453255     P   0</code></pre>
+<p>It is important to note that using <code>corgh</code> change the order of the estimate (co)variance. All different calculation need to be adjust in consequence.
+It is also important to check the difference between the model with <code>us</code> and <code>corgh</code> to make sure any mistake are made.</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="asreml-biv.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelb)<span class="sc">$</span>loglik</span></code></pre></div>
+<pre><code>## [1] -2380.246</code></pre>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="asreml-biv.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modele)<span class="sc">$</span>loglik</span></code></pre></div>
+<pre><code>## [1] -2380.246</code></pre>
+<p>There two main advantages to use <code>corgh</code>: first, a direct estimation of correlation within the G matrix can avoid mistake in the <code>vpredict</code> calculation; second, it is possible to test if the correlation is significantly different than 0 (similar result as LRT with the covariance) but also to -1 and 1 which correspond of the correlation boundaries.
+The following code showed how to create a reduced model with the correlation close to 1 and compared to the initial model.
+Since we compared the correlation to its boundary, the degree of freedom is only half as a one tail LTR.</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="asreml-biv.html#cb218-1" aria-hidden="true" tabindex="-1"></a>MODEL_MODIF <span class="ot">&lt;-</span> <span class="fu">update.asreml</span>(modele, <span class="at">start.values =</span> T)</span>
+<span id="cb218-2"><a href="asreml-biv.html#cb218-2" aria-hidden="true" tabindex="-1"></a>G_MOD <span class="ot">&lt;-</span> MODEL_MODIF<span class="sc">$</span>vparameters.table[(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>), ]</span>
+<span id="cb218-3"><a href="asreml-biv.html#cb218-3" aria-hidden="true" tabindex="-1"></a>G_MOD[<span class="dv">1</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fl">0.99999</span></span>
+<span id="cb218-4"><a href="asreml-biv.html#cb218-4" aria-hidden="true" tabindex="-1"></a>G_MOD[<span class="dv">1</span>, <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;F&quot;</span></span>
+<span id="cb218-5"><a href="asreml-biv.html#cb218-5" aria-hidden="true" tabindex="-1"></a>modele.red <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
+<span id="cb218-6"><a href="asreml-biv.html#cb218-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait <span class="sc">+</span> <span class="fu">at</span>(trait)<span class="sc">:</span>sex,</span>
+<span id="cb218-7"><a href="asreml-biv.html#cb218-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">corgh</span>(trait)<span class="sc">:</span><span class="fu">vm</span>(animal, ainv) <span class="sc">+</span></span>
+<span id="cb218-8"><a href="asreml-biv.html#cb218-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>byear <span class="sc">+</span></span>
+<span id="cb218-9"><a href="asreml-biv.html#cb218-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>mother,</span>
+<span id="cb218-10"><a href="asreml-biv.html#cb218-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)),</span>
+<span id="cb218-11"><a href="asreml-biv.html#cb218-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb218-12"><a href="asreml-biv.html#cb218-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> <span class="fu">na.method</span>(<span class="at">x =</span> <span class="st">&quot;include&quot;</span>, <span class="at">y =</span> <span class="st">&quot;include&quot;</span>),</span>
+<span id="cb218-13"><a href="asreml-biv.html#cb218-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span>,</span>
+<span id="cb218-14"><a href="asreml-biv.html#cb218-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">G.param =</span> G_MOD</span>
+<span id="cb218-15"><a href="asreml-biv.html#cb218-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Model fitted using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:45:59 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -2545.227           1.0   1533 01:45:59    0.0
+##  2     -2483.880           1.0   1533 01:45:59    0.0
+##  3     -2423.502           1.0   1533 01:45:59    0.0
+##  4     -2392.508           1.0   1533 01:46:00    0.0
+##  5     -2383.661           1.0   1533 01:46:00    0.0
+##  6     -2383.084           1.0   1533 01:46:00    0.0
+##  7     -2383.033           1.0   1533 01:46:00    0.0
+##  8     -2383.022           1.0   1533 01:46:00    0.0
+##  9     -2383.019           1.0   1533 01:46:00    0.0
+## 10     -2383.019           1.0   1533 01:46:00    0.0</code></pre>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="asreml-biv.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (modele<span class="sc">$</span>loglik <span class="sc">-</span> modele.red<span class="sc">$</span>loglik)</span></code></pre></div>
+<pre><code>## [1] 5.544679</code></pre>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="asreml-biv.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pchisq</span>(<span class="dv">2</span> <span class="sc">*</span> (modele<span class="sc">$</span>loglik <span class="sc">-</span> modele.red<span class="sc">$</span>loglik), <span class="at">df =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>## [1] 0.006598675</code></pre>
+</div>
+<div id="partitionning-covariance-between-groups" class="section level3" number="3.2.5">
+<h3><span class="header-section-number">3.2.5</span> Partitionning (co)variance between groups</h3>
+<p>Similar to the univariate model, it is possible to partition the variance and also the covariance between different groups within the dataset. Here, we can estimate sex-specific genetic correlation.
+Note, to partition a correlation, it is require to have important sample size within each group. For this example, we simplify the model !</p>
+<!-- SAme her I don't know how to specify initial values so I remove it -->
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="asreml-biv.html#cb224-1" aria-hidden="true" tabindex="-1"></a>gryphon <span class="ot">&lt;-</span> gryphon[<span class="fu">order</span>(gryphon<span class="sc">$</span>sex), ]</span>
+<span id="cb224-2"><a href="asreml-biv.html#cb224-2" aria-hidden="true" tabindex="-1"></a>model_sex <span class="ot">&lt;-</span> <span class="fu">asreml</span>(</span>
+<span id="cb224-3"><a href="asreml-biv.html#cb224-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fixed =</span> <span class="fu">cbind</span>(bwt, tarsus) <span class="sc">~</span> trait <span class="sc">+</span> <span class="fu">at</span>(trait)<span class="sc">:</span>sex,</span>
+<span id="cb224-4"><a href="asreml-biv.html#cb224-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> <span class="fu">at</span>(sex)<span class="sc">:</span><span class="fu">us</span>(trait)<span class="sc">:</span><span class="fu">vm</span>(animal, ainv) <span class="sc">+</span></span>
+<span id="cb224-5"><a href="asreml-biv.html#cb224-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>byear <span class="sc">+</span></span>
+<span id="cb224-6"><a href="asreml-biv.html#cb224-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">us</span>(trait, <span class="at">init =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.1</span>, <span class="dv">1</span>))<span class="sc">:</span>mother,</span>
+<span id="cb224-7"><a href="asreml-biv.html#cb224-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">residual =</span> <span class="sc">~</span> <span class="fu">dsum</span>(<span class="sc">~</span> <span class="fu">id</span>(units)<span class="sc">:</span><span class="fu">us</span>(trait) <span class="sc">|</span> sex),</span>
+<span id="cb224-8"><a href="asreml-biv.html#cb224-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphon,</span>
+<span id="cb224-9"><a href="asreml-biv.html#cb224-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">na.action =</span> <span class="fu">na.method</span>(<span class="at">x =</span> <span class="st">&quot;include&quot;</span>, <span class="at">y =</span> <span class="st">&quot;include&quot;</span>),</span>
+<span id="cb224-10"><a href="asreml-biv.html#cb224-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxit =</span> <span class="dv">20</span></span>
+<span id="cb224-11"><a href="asreml-biv.html#cb224-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Multi-section model using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:46:00 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -2495.853           1.0   1807 01:46:00    0.1 (1 restrained)
+##  2     -2444.497           1.0   1807 01:46:00    0.1
+##  3     -2401.367           1.0   1807 01:46:00    0.1
+##  4     -2390.943           1.0   1807 01:46:00    0.1
+##  5     -2388.819           1.0   1807 01:46:00    0.1
+##  6     -2388.738           1.0   1807 01:46:00    0.1
+##  7     -2388.736           1.0   1807 01:46:01    0.1</code></pre>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="asreml-biv.html#cb226-1" aria-hidden="true" tabindex="-1"></a>model_sex <span class="ot">&lt;-</span> <span class="fu">update</span>(model_sex)</span></code></pre></div>
+<pre><code>## Multi-section model using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:46:01 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -2388.736           1.0   1807 01:46:01    0.1
+##  2     -2388.736           1.0   1807 01:46:01    0.1</code></pre>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="asreml-biv.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_sex)<span class="sc">$</span>varcomp</span></code></pre></div>
+<pre><code>##                                                        component std.error    z.ratio bound %ch
+## trait:byear!trait_bwt:bwt                              0.9858502 0.2863930  3.4422982     P 0.0
+## trait:byear!trait_tarsus:bwt                           0.1525073 0.4334219  0.3518681     P 0.0
+## trait:byear!trait_tarsus:tarsus                        3.9981750 1.2798231  3.1240060     P 0.0
+## trait:mother!trait_bwt:bwt                             1.3312802 0.2484496  5.3583516     P 0.0
+## trait:mother!trait_tarsus:bwt                         -1.6173911 0.4283985 -3.7754356     P 0.0
+## trait:mother!trait_tarsus:tarsus                       4.7543015 1.3546795  3.5095396     P 0.0
+## at(sex, 1):trait:vm(animal, ainv)!trait_bwt:bwt        1.3402726 0.5670807  2.3634603     P 0.0
+## at(sex, 1):trait:vm(animal, ainv)!trait_tarsus:bwt     2.3607838 1.1348534  2.0802544     P 0.0
+## at(sex, 1):trait:vm(animal, ainv)!trait_tarsus:tarsus  6.0624925 3.1304679  1.9366091     P 0.0
+## at(sex, 2):trait:vm(animal, ainv)!trait_bwt:bwt        1.8645331 0.8887843  2.0978466     P 0.0
+## at(sex, 2):trait:vm(animal, ainv)!trait_tarsus:bwt     5.0952433 2.0683128  2.4634781     P 0.0
+## at(sex, 2):trait:vm(animal, ainv)!trait_tarsus:tarsus 14.9762227 6.4472652  2.3228799     P 0.0
+## sex_1!R                                                1.0000000        NA         NA     F 0.0
+## sex_1!trait_bwt:bwt                                    2.3079924 0.5015700  4.6015360     P 0.0
+## sex_1!trait_tarsus:bwt                                 4.4288323 1.0376540  4.2681204     P 0.0
+## sex_1!trait_tarsus:tarsus                             13.4858721 2.9285483  4.6049683     P 0.0
+## sex_2!R                                                1.0000000        NA         NA     F 0.0
+## sex_2!trait_bwt:bwt                                    1.7957128 0.7549623  2.3785463     P 0.0
+## sex_2!trait_tarsus:bwt                                 2.6342177 1.7685005  1.4895205     P 0.1
+## sex_2!trait_tarsus:tarsus                              9.6101885 5.4914087  1.7500407     P 0.1</code></pre>
+<p>we can estimate the different correlations using <code>vpredict</code>:</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="asreml-biv.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(model_sex, r_byear <span class="sc">~</span> V2 <span class="sc">/</span> <span class="fu">sqrt</span>(V1 <span class="sc">*</span> V3))</span></code></pre></div>
+<pre><code>##           Estimate       SE
+## r_byear 0.07681647 0.213139</code></pre>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="asreml-biv.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(model_sex, r_M <span class="sc">~</span> V5 <span class="sc">/</span> <span class="fu">sqrt</span>(V4 <span class="sc">*</span> V6))</span></code></pre></div>
+<pre><code>##       Estimate        SE
+## r_M -0.6428904 0.2489498</code></pre>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="asreml-biv.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(model_sex, r_A<span class="fl">.1</span> <span class="sc">~</span> V8 <span class="sc">/</span> <span class="fu">sqrt</span>(V7 <span class="sc">*</span> V9))</span></code></pre></div>
+<pre><code>##        Estimate        SE
+## r_A.1 0.8281977 0.1723661</code></pre>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="asreml-biv.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(model_sex, r_A<span class="fl">.2</span> <span class="sc">~</span> V11 <span class="sc">/</span> <span class="fu">sqrt</span>(V10 <span class="sc">*</span> V12))</span></code></pre></div>
+<pre><code>##        Estimate        SE
+## r_A.2 0.9642258 0.1241699</code></pre>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="asreml-biv.html#cb238-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(model_sex, r_res<span class="fl">.1</span> <span class="sc">~</span> V15 <span class="sc">/</span> <span class="fu">sqrt</span>(V14 <span class="sc">*</span> V16))</span></code></pre></div>
+<pre><code>##          Estimate        SE
+## r_res.1 0.7938392 0.0789263</code></pre>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="asreml-biv.html#cb240-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(model_sex, r_res<span class="fl">.2</span> <span class="sc">~</span> V19 <span class="sc">/</span> <span class="fu">sqrt</span>(V18 <span class="sc">*</span> V20))</span></code></pre></div>
+<pre><code>##          Estimate        SE
+## r_res.2 0.6341139 0.1894661</code></pre>
+<p>and the heritability too:</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="asreml-biv.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(model_sex, h2.bwt<span class="fl">.1</span> <span class="sc">~</span> V7 <span class="sc">/</span> (V1 <span class="sc">+</span> V4 <span class="sc">+</span> V7 <span class="sc">+</span> V14))</span></code></pre></div>
+<pre><code>##           Estimate         SE
+## h2.bwt.1 0.2246746 0.09176899</code></pre>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="asreml-biv.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(model_sex, h2.bwt<span class="fl">.2</span> <span class="sc">~</span> V10 <span class="sc">/</span> (V1 <span class="sc">+</span> V4 <span class="sc">+</span> V10 <span class="sc">+</span> V18))</span></code></pre></div>
+<pre><code>##           Estimate        SE
+## h2.bwt.2 0.3119317 0.1442501</code></pre>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="asreml-biv.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(model_sex, h2.tarsus<span class="fl">.1</span> <span class="sc">~</span> V9 <span class="sc">/</span> (V3 <span class="sc">+</span> V6 <span class="sc">+</span> V9 <span class="sc">+</span> V16))</span></code></pre></div>
+<pre><code>##             Estimate        SE
+## h2.tarsus.1 0.214216 0.1070477</code></pre>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="asreml-biv.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vpredict</span>(model_sex, h2.tarsus<span class="fl">.2</span> <span class="sc">~</span> V12 <span class="sc">/</span> (V3 <span class="sc">+</span> V6 <span class="sc">+</span> V12 <span class="sc">+</span> V20))</span></code></pre></div>
+<pre><code>##              Estimate        SE
+## h2.tarsus.2 0.4492118 0.1833703</code></pre>
+<p>Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="asreml-biv.html#cb250-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_sex, <span class="at">coef =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>coef.fi</span></code></pre></div>
+<pre><code>##                            solution std error    z.ratio
+## at(trait, tarsus):sex_1  0.00000000        NA         NA
+## at(trait, tarsus):sex_2 -0.05549717 0.4758546 -0.1166263
+## at(trait, bwt):sex_1     0.00000000        NA         NA
+## at(trait, bwt):sex_2     1.93936200 0.1903213 10.1899393
+## trait_bwt                6.37791872 0.2311775 27.5888427
+## trait_tarsus            20.58389296 0.4942600 41.6458836</code></pre>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="asreml-biv.html#cb252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wald.asreml</span>(model_sex, <span class="at">denDF =</span> <span class="st">&quot;default&quot;</span>, <span class="at">ssType =</span> <span class="st">&quot;conditional&quot;</span>)<span class="sc">$</span>Wald</span></code></pre></div>
+<pre><code>## Multi-section model using the sigma parameterization.
+## ASReml 4.1.0 Fri May 21 01:46:01 2021
+##           LogLik        Sigma2     DF     wall    cpu
+##  1     -2388.736           1.0   1807 01:46:01    0.1
+##  2     -2388.736           1.0   1807 01:46:01    0.1
+## Calculating denominator DF</code></pre>
+<pre><code>## [0;34m
+## Wald tests for fixed effects.[0m
+## [0;34mResponse: cbind(bwt, tarsus)[0m
+## 
+##                       Df denDF   F.inc   F.con Margin      Pr
+## trait                  2  44.8 1522.00 1522.00        0.00000
+## at(trait, bwt):sex     1 137.5  220.90  103.80      B 0.00000
+## at(trait, tarsus):sex  1 138.6    0.01    0.01      B 0.90737</code></pre>
+<!--  what do I need to add ?  comparison model partitionn and not !
+  how to change parameter, already done with reduced model part ! 
+  cov betweem random effect?? but meed to fix the univ part first -->
 
 </div>
 </div>
@@ -439,6 +805,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

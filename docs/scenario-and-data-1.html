@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.1 Scenario and data | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.1 Scenario and data | How to fit an animal model" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="images/missing.png" />
+  <meta property="og:image" content="/images/missing.png" />
   <meta property="og:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
 
@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="3.1 Scenario and data | How to fit an animal model" />
   
   <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="twitter:image" content="images/missing.png" />
+  <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
 
@@ -32,7 +32,7 @@
   
 <link rel="prev" href="multivariate-animal-model.html"/>
 <link rel="next" href="asreml-biv.html"/>
-<script src="libs/header-attrs-2.7.3/header-attrs.js"></script>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,6 +50,8 @@
 
 
 
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -117,6 +119,29 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
@@ -163,19 +188,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.3" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-fixed-effects"><i class="fa fa-check"></i><b>2.2.3</b> Adding fixed effects</a></li>
 <li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
-<li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#futher-partitionning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Futher partitionning the variance</a></li>
-<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-different-random-effect-and-possible-negative-variance"><i class="fa fa-check"></i><b>2.2.7</b> Covariance between different random effect and possible negative variance</a></li>
+<li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#further-partitioning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Further partitioning the variance</a></li>
+<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.2.7</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.2.8" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-two-random-effects"><i class="fa fa-check"></i><b>2.2.8</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
 <li class="chapter" data-level="2.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html"><i class="fa fa-check"></i><b>2.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="2.4.1" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#running-the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> Running the model</a></li>
-<li class="chapter" data-level="2.4.2" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#estimating-heritability-1"><i class="fa fa-check"></i><b>2.4.2</b> Estimating heritability</a></li>
-<li class="chapter" data-level="2.4.3" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-fixed-effects-1"><i class="fa fa-check"></i><b>2.4.3</b> Adding fixed effects</a></li>
-<li class="chapter" data-level="2.4.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.4</b> Adding random effects</a></li>
-<li class="chapter" data-level="2.4.5" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.5</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.4.2" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#change-in-iteration-and-sampling"><i class="fa fa-check"></i><b>2.4.2</b> Change in iteration and sampling</a></li>
+<li class="chapter" data-level="2.4.3" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#change-priors-parameters"><i class="fa fa-check"></i><b>2.4.3</b> Change priors parameters</a></li>
+<li class="chapter" data-level="2.4.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#estimating-heritability-1"><i class="fa fa-check"></i><b>2.4.4</b> Estimating heritability</a></li>
+<li class="chapter" data-level="2.4.5" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-fixed-effects-1"><i class="fa fa-check"></i><b>2.4.5</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a></li>
+<li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="brms-1.html"><a href="brms-1.html#running-the-model-2"><i class="fa fa-check"></i><b>2.5.1</b> Running the model</a></li>
+<li class="chapter" data-level="2.5.2" data-path="brms-1.html"><a href="brms-1.html#adding-fixed-effects-2"><i class="fa fa-check"></i><b>2.5.2</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.5.3" data-path="brms-1.html"><a href="brms-1.html#adding-random-effects-2"><i class="fa fa-check"></i><b>2.5.3</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.5.4" data-path="brms-1.html"><a href="brms-1.html#testing-significance-of-variance-components-1"><i class="fa fa-check"></i><b>2.5.4</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.5.5" data-path="brms-1.html"><a href="brms-1.html#further-partitioning-of-the-variance"><i class="fa fa-check"></i><b>2.5.5</b> Further partitioning of the variance</a></li>
+<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-2"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.5.7" data-path="brms-1.html"><a href="brms-1.html#covariance-between-two-random-effects-2"><i class="fa fa-check"></i><b>2.5.7</b> Covariance between two random effects</a></li>
+</ul></li>
 <li class="chapter" data-level="2.6" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>2.6</b> stan</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="multivariate-animal-model.html"><a href="multivariate-animal-model.html"><i class="fa fa-check"></i><b>3</b> Multivariate animal model</a>
@@ -187,15 +227,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="asreml-biv.html"><a href="asreml-biv.html"><i class="fa fa-check"></i><b>3.2</b> Asreml-R</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="asreml-biv.html"><a href="asreml-biv.html#running-the-model-2"><i class="fa fa-check"></i><b>3.2.1</b> Running the model</a></li>
+<li class="chapter" data-level="3.2.1" data-path="asreml-biv.html"><a href="asreml-biv.html#running-the-model-3"><i class="fa fa-check"></i><b>3.2.1</b> Running the model</a></li>
 <li class="chapter" data-level="3.2.2" data-path="asreml-biv.html"><a href="asreml-biv.html#adding-fixed-and-random-effects"><i class="fa fa-check"></i><b>3.2.2</b> Adding fixed and random effects</a></li>
 <li class="chapter" data-level="3.2.3" data-path="asreml-biv.html"><a href="asreml-biv.html#significance-testing"><i class="fa fa-check"></i><b>3.2.3</b> Significance testing</a></li>
+<li class="chapter" data-level="3.2.4" data-path="asreml-biv.html"><a href="asreml-biv.html#estimate-directly-the-genetic-correlation-within-the-model"><i class="fa fa-check"></i><b>3.2.4</b> Estimate directly the genetic correlation within the model</a></li>
+<li class="chapter" data-level="3.2.5" data-path="asreml-biv.html"><a href="asreml-biv.html#partitionning-covariance-between-groups"><i class="fa fa-check"></i><b>3.2.5</b> Partitionning (co)variance between groups</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="gremlin-2.html"><a href="gremlin-2.html"><i class="fa fa-check"></i><b>3.3</b> gremlin</a></li>
 <li class="chapter" data-level="3.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html"><i class="fa fa-check"></i><b>3.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#fitting-the-model"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
 <li class="chapter" data-level="3.4.2" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#adding-fixed-and-random-effects-1"><i class="fa fa-check"></i><b>3.4.2</b> Adding fixed and random effects</a></li>
+<li class="chapter" data-level="3.4.3" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#partitioning-covariances"><i class="fa fa-check"></i><b>3.4.3</b> Partitioning (co)variances</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a></li>
 <li class="chapter" data-level="3.6" data-path="stan-1.html"><a href="stan-1.html"><i class="fa fa-check"></i><b>3.6</b> stan</a></li>
@@ -265,25 +308,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.1</span> Scenario and data</h2>
 <div id="scenario-1" class="section level3" number="3.1.1">
 <h3><span class="header-section-number">3.1.1</span> Scenario</h3>
-<p>Since natural selection rarely acts on single traits, to understand how birth weight might evolve in our population of gryphons, we may also want to think about possible covariance with other traits. If tarsus length at fledging is also under positive selection, what implications does this have for birth weight and vice versa? If the two traits are positively genetically correlated then this will facilitate evolution of larger size (since response of one trait will induce a positively correlated response in the other). If there is negative genetic covariance then this could act as an evolutionary constraint.</p>
+<p>Since natural selection rarely acts on single traits, to understand how birth weight might evolve in our population of gryphons, we may also want to think about possible covariance with other traits. If tarsus length at fledging is also under positive selection, what implications does it have for birth weight and vice versa? If the two traits are positively genetically correlated then this will facilitate evolution of larger size (since response of one trait will induce a positively correlated response in the other). If there is negative genetic covariance then this could act as an evolutionary constraint.</p>
 <p>Using multivariate models allows the estimation of parameters relating to each trait alone (<em>i.e.</em> <span class="math inline">\(V_A\)</span>, <span class="math inline">\(h^2\)</span>, etc), but also yields estimates of covariance components between traits. These include the (additive) genetic covariance <span class="math inline">\(COV_A\)</span> which is often rescaled to give the additive genetic correlation <span class="math inline">\(r_A\)</span>. However, covariance can also arise through other random effects (<em>e.g.</em> maternal covariance) and these sources can also be explicitly modelled in a bivariate analysis.</p>
 </div>
 <div id="gryphon-files" class="section level3" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> gryphon files</h3>
 <p>gryphonpedigree and phenotypic data files are the same as those used in tutorial 1 (<em>i.e</em>, <code>gryphonped.csv</code> and <code>gryphon.csv</code> respectively).</p>
 <p>Reading the data</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="scenario-and-data-1.html#cb114-1" aria-hidden="true" tabindex="-1"></a>gryphon <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/gryphon.csv&quot;</span>)</span>
-<span id="cb114-2"><a href="scenario-and-data-1.html#cb114-2" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>animal <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>animal)</span>
-<span id="cb114-3"><a href="scenario-and-data-1.html#cb114-3" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>mother <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>mother)</span>
-<span id="cb114-4"><a href="scenario-and-data-1.html#cb114-4" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>byear <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>byear)</span>
-<span id="cb114-5"><a href="scenario-and-data-1.html#cb114-5" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>sex)</span>
-<span id="cb114-6"><a href="scenario-and-data-1.html#cb114-6" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>bwt <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gryphon<span class="sc">$</span>bwt)</span>
-<span id="cb114-7"><a href="scenario-and-data-1.html#cb114-7" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>tarsus <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gryphon<span class="sc">$</span>tarsus)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="scenario-and-data-1.html#cb149-1" aria-hidden="true" tabindex="-1"></a>gryphon <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/gryphon.csv&quot;</span>)</span>
+<span id="cb149-2"><a href="scenario-and-data-1.html#cb149-2" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>animal <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>animal)</span>
+<span id="cb149-3"><a href="scenario-and-data-1.html#cb149-3" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>mother <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>mother)</span>
+<span id="cb149-4"><a href="scenario-and-data-1.html#cb149-4" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>byear <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>byear)</span>
+<span id="cb149-5"><a href="scenario-and-data-1.html#cb149-5" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>sex)</span>
+<span id="cb149-6"><a href="scenario-and-data-1.html#cb149-6" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>bwt <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gryphon<span class="sc">$</span>bwt)</span>
+<span id="cb149-7"><a href="scenario-and-data-1.html#cb149-7" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>tarsus <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gryphon<span class="sc">$</span>tarsus)</span></code></pre></div>
 <p>Reading the pedigree</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="scenario-and-data-1.html#cb115-1" aria-hidden="true" tabindex="-1"></a>gryphonped <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/gryphonped.csv&quot;</span>)</span>
-<span id="cb115-2"><a href="scenario-and-data-1.html#cb115-2" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>id)</span>
-<span id="cb115-3"><a href="scenario-and-data-1.html#cb115-3" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>father <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>father)</span>
-<span id="cb115-4"><a href="scenario-and-data-1.html#cb115-4" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>mother <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>mother)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="scenario-and-data-1.html#cb150-1" aria-hidden="true" tabindex="-1"></a>gryphonped <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/gryphonped.csv&quot;</span>)</span>
+<span id="cb150-2"><a href="scenario-and-data-1.html#cb150-2" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>id)</span>
+<span id="cb150-3"><a href="scenario-and-data-1.html#cb150-3" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>father <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>father)</span>
+<span id="cb150-4"><a href="scenario-and-data-1.html#cb150-4" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>mother <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>mother)</span></code></pre></div>
 
 </div>
 </div>
@@ -316,6 +359,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
