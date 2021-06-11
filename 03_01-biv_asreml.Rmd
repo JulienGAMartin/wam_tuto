@@ -28,9 +28,7 @@ modela <- update(modela)
 
 `modela` has fitted a bivariate model of `bwt` and `tarsus`, with the mean for each of the traits as a fixed effect (`trait`). The additive genetic variance-covariance matrix ($\textbf{G}$) is unstructured (`us`; _i.e._ all elements are free to vary) and the starting values for $V_A$ for `bwt`, $COV_A$ between `bwt` and `tarsus`, and $V_A$ for `tarsus` are set to 1, 0.1 and 1, respectively. Similarly, the residual matrix is unstructured and uses the same starting values.
 
-Note that the argument `na.action = na.method(x = "include", y = "include")` can be add to the model.In a bivariate model, it will help calculate the covariance between two traits with different missing information `NA` and so help imbalance phenotypage and save sample size. However, it is important to scale ( mean =0, var =1) the two traits to correctly adjust the model(see Asreml-R manual for more information). 
-For the example, no missing information are present in the dataset. 
-
+Note that the argument `na.action = na.method(x = "include", y = "include")` can be added to the model. In a bivariate model, it will help calculate the covariance between two traits with different missing information `NA` and so help imbalance phenotypage and save sample size. However, it is important to scale ( mean =0, var =1) the two traits to correctly adjust the model(see Asreml-R manual for more information). 
 
 Let's have a look at the variance components, and notice that there are now seven (co)variance components reported in the table:
 
@@ -41,8 +39,11 @@ summary(modela)$varcomp
 The first three terms are related to the genetic matrix and, in order are $V_{A,bwt}$, $COV_A$, $V_{A, tarsus}$. Below is again a line where the `units:traitr!R` component equals to 1, which again can be ignored. The final three terms relate to the residual matrix and correspond to $V_{R,bwt}$, $COV_R$, $V_{R,tarsus}$. Based on our quick and dirty check (is `z.ratio` > 1.96?) all components look to be statistically significant.
 
 We can calculate the genetic correlation as $COV_A / \sqrt{V_{A,bwt} \cdot V_{A,tarsus}}$. Thus this model gives an estimate of $r_A$ = `r round(summary(modela)$varcomp[2,1]/sqrt(summary(modela)$varcomp[1,1]*summary(modela)$varcomp[3,1]), 2)`. It is also possible to estimate the residual correlation  $r_res$ = `r round(summary(modela)$varcomp[6,1]/sqrt(summary(modela)$varcomp[5,1]*summary(modela)$varcomp[7,1]), 2)`. 
+<!--  issue the annotation of the residual correlation-->
 
 <!-- Should we add an explication of the nature of the residual correlation or genetic correlation no? -->
+
+
 
 Although we can calculate this by hand, we can also use `vpredict()`, which also provides an (approximate) standard error:
 ```{r}
@@ -247,15 +248,75 @@ modele.red <- asreml(
 1 - pchisq(2 * (modele$loglik - modele.red$loglik), df = 0.5)
 ```
 
+Here, the correlation is significantly different than 1 (~0.99999). 
 
 
+### Visualisation of the correlation (aka BLUP extraction)
+When estimating correlation between traits, having a visualisation of it can help the interpretation. In addition, visualizing the correlation can spot outlier in the dataset.
+Thanks to mixed model, each breeding values is stored within the model and can be extract as BLUP (Best Linear Unbiaised Predictor). 
+BLUP should be normaly distributed, if not you need to check the assumption of your animal model.extract
+
+<!-- I think we need to define Breedign values and also BLUPs)-->
+To simplify the following code, we rename the variable T1 and T2.
+
+```{r}
+gryphon$T1<-gryphon$bwt
+gryphon$T2<-gryphon$tarsus
+############
+modele <- asreml(
+  fixed = cbind(T1, T2) ~ trait + at(trait):sex,
+  random = ~ corgh(trait):vm(animal, ainv) +
+    us(trait, init = c(1, 0.1, 1)):byear +
+    us(trait, init = c(1, 0.1, 1)):mother,
+  residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
+  data = gryphon,
+  na.action = na.method(x = "include", y = "include"),
+  maxit = 20
+)
+modele <- update(modele)
+summary(modele)$varcomp
+############
+DvsS<-data.frame(Trait = rownames(modele$coefficients$random),
+                 BLUP = modele$coefficients$random,
+                 SE = sqrt(modele$vcoeff$random*modele$sigma2))
+DvsS$ID<-substr(DvsS$Trait, 27,30)
+DvsS$TRAIT<-substr(DvsS$Trait, 7,8)
+DvsS<-DvsS[927:3544,] #keep only row associated to animal 
+summary(factor(DvsS$TRAIT)) # 1309 each
+#
+DvsS$Trait<-NULL
+colnames(DvsS)[1]<-"BLUP"
+BLUPS<-reshape(DvsS, v.names = c("BLUP","SE"), idvar = "ID",timevar = "TRAIT", direction = "wide")
+nrow(BLUPS)
+rownames(BLUPS) <- c()
+colnames(BLUPS) <- c("ID","BLUP.btw","SE.btw","BLUP.tarsus","SE.tarsus")
+summary(BLUPS)
+write.csv(BLUPS,file="BLUPS_6x6.csv",row.names=F)
+############
+par(mfrow=c(2,2))
+  hist(BLUPS$BLUP.btw)
+qqnorm(BLUPS$BLUP.btw)
+qqline(BLUPS$BLUP.btw)
+  hist(BLUPS$BLUP.tarsus)
+qqnorm(BLUPS$BLUP.tarsus)
+qqline(BLUPS$BLUP.tarsus)
+#
+plot(BLUP.tarsus~BLUP.btw,BLUPS,xlab="",ylab="", las=1.2, bty="o", col="white")
+arrows(x0=BLUPS$BLUP.btw,y0=BLUPS$BLUP.tarsus-BLUPS$SE.tarsus,x1=BLUPS$BLUP.btw,y1=BLUPS$BLUP.tarsus+BLUPS$SE.tarsus,col="black",code=3,angle=90,length=0)
+arrows(x0=BLUPS$BLUP.btw-BLUPS$SE.btw,y0=BLUPS$BLUP.tarsus,x1=BLUPS$BLUP.btw+BLUPS$SE.btw,y1=BLUPS$BLUP.tarsus,col="black",code=3,angle=90,length=0)
+points(BLUP.tarsus~BLUP.btw,BLUPS,pch=16,col="red", cex=1.5)
+points(BLUP.tarsus~BLUP.btw,BLUPS,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
+mtext("btw (BV±SE)",  side=1, line=2.4)
+mtext("tarsus (BV±SE)",  side=2, line=2,las=3)
+mtext(expression(paste(italic(r)[A]," = 0.7353065 ±  0.1094838")),side=1,line=-1,adj=0.95,cex=0.9)
+```
 
 ### Partitionning (co)variance between groups 
 
 Similar to the univariate model, it is possible to partition the variance and also the covariance between different groups within the dataset. Here, we can estimate sex-specific genetic correlation. 
 Note, to partition a correlation, it is require to have important sample size within each group. For this example, we simplify the model !
 
-<!-- SAme her I don't know how to specify initial values so I remove it -->
+<!-- SAme here I don't know how to specify initial values so I remove it -->
 
 ```{r}
 gryphon <- gryphon[order(gryphon$sex), ]
@@ -311,6 +372,5 @@ wa
 ```
 
 <!--  what do I need to add ?  comparison model partitionn and not !
-  how to change parameter, already done with reduced model part ! 
-  cov betweem random effect?? but meed to fix the univ part first -->
+
 
