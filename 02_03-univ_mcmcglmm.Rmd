@@ -110,7 +110,7 @@ and we can therefore conclude that the difference in the priors has little effec
 
 ### Estimating heritability
 
-A useful property of Bayesian posterior distributions is that we can apply almost any transformation to these distributions and they will remain valid. This applies to the calculation of heritabilities. We can obtain an estimate of the heritability by applying the basic formula h 2 =V A /V P to each sample of the posterior disribution:
+A useful property of Bayesian posterior distributions is that we can apply almost any transformation to these distributions and they will remain valid. This applies to the calculation of heritabilities. We can obtain an estimate of the heritability by applying the basic formula $h^2$ =$V_A /V_P$ to each sample of the posterior disribution:
 
 ```{r}
 posterior.heritability1.1 <- model1.1$VCV[, "animal"] / 
@@ -201,7 +201,7 @@ model1.4 <- MCMCglmm(bwt ~ sex,
 posterior.mode(model1.4$VCV)
 ```
 
-Here partitioning of significant maternal variance has resulted in a further decrease in $V_R$ but also a decrease in $V_A$. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in $V_A$and so $h^2$. Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:
+Here partitioning of significant maternal variance has resulted in a further decrease in $V_R$ but also a decrease in $V_A$. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in $V_A$ and so $h^2$. Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:
 
 ```{r}
 posterior.heritability1.3 <- model1.3$VCV[, "animal"] /
@@ -263,11 +263,11 @@ posterior.mode(posterior.heritability1.4.MAL)
 HPDinterval(posterior.heritability1.4.MAL, 0.95)
 ```
 
-Here, we can estimate the heritability for each sex. Both doesn't overlap with zero, so we can conclude both sexes have significant. However due to their overlaps CIs, we can not conclude the heritability is not significantly different between sexes. 
+Here, we can estimate the heritability for each sex. Both doesn't overlap with zero, so we can conclude both sexes have significant heritability. However due to their overlaps CIs, we can not conclude the heritability is not significantly different between sexes. 
 An important quote to remember is "A difference in significance is not a significant difference" 
 
 
 
-### Modification of model parameter
+### Modification of model parameter <!-- I dont think we can play with this in MCMCglmmm-->
 ### Covariance between two random effects
 

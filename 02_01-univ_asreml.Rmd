@@ -87,10 +87,6 @@ summary(model2)$varcomp
 In fact since `sex` effects were previously contributing to the residual variance of the model, our estimate of $V_R$ (denoted `units!R` in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate $V_P$ as $V_A$+$V_R$ then as we include fixed effects we will soak up more residual variance driving $V_P$. Assuming that $V_A$ is more or less unaffected by the fixed effects fitted then as $V_P$ goes down we expect our estimate of $h^2$ will go up:
 
 ```{r}
-vpredict(model2, h2.bwt ~ V1 / (V1 + V2))
-```
-
-```{r, echo=FALSE}
 (h2.1 <- vpredict(model1, h2.bwt ~ V1 / (V1 + V2)))
 (h2.2 <- vpredict(model2, h2.bwt ~ V1 / (V1 + V2)))
 ```
@@ -171,7 +167,7 @@ As P < 0.0001 we would therefore conclude that the additional of maternal identi
 A population can be further fragmented into different groups or categories (such as females and males, juveniles and adults or treated and untreated). Some scientific questions require further and deeper analysis of the variance. 
 To avoid multiple model (one for each group), we can directly partition the variance between groups in a unique model. In addition, by doing so, we can also test if the variance are different between groups.
 
-As example, we decide to take the model4 and partition its additive genetic variance and residual variance by sex. It is impossible to further partition the other variances but complexify an animal model requires sufficient sample size.  
+As example, we decide to take the model4 and partition its additive genetic variance and residual variance by sex. It is possible to further partition the other random effects but it will complexify the animal model and requires sufficient sample size.  
 First, the dataset needs to be order by group (here sex).
 
 ```{r}
@@ -186,7 +182,7 @@ model_SEX <- asreml(
 )
 ```
 
-To partition variance, two distinct function are requires `at()` at the random level, and `dsum()` at the residual level. Both are specify structure.
+To partition variance, two distinct function are requires `at()` at the random level, and `dsum()` at the residual level. 
 
 ```{r}
 summary(model_SEX)$varcomp
@@ -237,7 +233,7 @@ R.temp <- model.temp$vparameters[-(1:3), ]
 R.temp$Constraint[2] <- "U"
 ```
 
-The argument `start.values=T` allowed the `model.temp` to change its random parameters. We can create the two different matrices and specify which parameters will be modified. For this example we modified the G and the R matrix to fit all variance to be `U` unstructured. it is important to not for the R matrix the lines `units!R` has to be fix to 1, so it will never change.
+The argument `start.values=T` allowed the `model.temp` to change its random parameters. We can create the two different matrices and specify which parameters will be modified. For this example we modified the G and the R matrix to fit all variance to be `U` unstructured. it is important to note for the R matrix the line `units!R` has to be fix to 1, so it will never change.
 
 The object G.temp and R.temp can be implemented in the following model as new parameters using the argument `R.param` and `G.param`.
 
@@ -259,42 +255,33 @@ Since `model4` did not showed boundary, `the model5` is very similar.
 
 Sometimes, but changing the parameters of the model and allowing unstructured variance instead of boundary, significant negative variance can appeared.
 A negative variance is counter-intuitive because statistically the mean within the random effect is less similar than expected by chance. However a possible biological reason can be hypothesized,such as a sibling competition within the nest creating a negative among-individual covariance within the nest.
-To test this hypotheses, we need to estimate the covariance between two random effect in a univariate model.
-Fo example, we can estimate the covariance between the additive genetic variance and the mother variance is negative using the argument `str`. This argument has two components, first the equation term `~vm(animal,Ainv)+mother` and second the structural term `~us(2):id(4500)`. Here within the structural term, we fit a 2x2 unstructured matrix `us(2)` which estimated the variance and the covariance between the random effects in the equation term. To successfully work, the structural term also requires the number of level identified within `id()`
+To test this hypotheses, we need to estimate the covariance between two random effects in a univariate model.
+For example, we can estimate the covariance between the additive genetic variance and the mother variance using the argument `str`. This argument has two components, first the equation term `~vm(animal,Ainv)+mother` and second the structural term `~us(2):id(number)`. Here within the structural term, we fit a 2x2 unstructured matrix `us(2)` which estimated the variance and the covariance between the random effects in the equation term. To successfully work, the structural term also requires the number of level identified within `id()`
+Here's a small tip, if you dont know the number of level identified within id(), run the model with a random number and the model will not converge and a error message will appear like this one: `Size of direct product (4) does not conform with total size of included terms (2618)`. The error message can help you determine the required level within the `str` function, as here 2618 divide by 2.
 
-
-
-
-  <!--
 ```{r, eval = FALSE}
-
-length(unique(gryphon$mother)) # 429
-length(unique(gryphon$animal)) # 1084
-
 model.temp2 <- asreml(
   fixed = bwt ~ 1,
-  random = ~ str(~ vm(animal, ainv) + vm(mother, ainv), ~ us(2):id(2618)) + byear,
+  random = ~ str(~ vm(animal, ainv) + vm(mother, ainv), ~ us(2):id(1309)) + byear,
   residual = ~ idv(units),
   data = gryphon,
   na.action = na.method(x = "omit", y = "omit"),
   start.values = T
 )
-# Size of direct product (3026) does not conform with total size of included terms (2618)
 
 G.temp2 <- model.temp2$vparameters[(1:4), ]
 G.temp2$Constraint <- "U"
-# no change in the r matrix
-
 model6 <- asreml(
   fixed = bwt ~ 1 + sex,
-  random = ~ str(~ vm(animal, ainv) + vm(mother, ainv), ~ us(2):id(2618)) + byear,
+  random = ~ str(~ vm(animal, ainv) + vm(mother, ainv), ~ us(2):id(1309)) + byear,
   residual = ~ idv(units),
   data = gryphon,
   na.action = na.method(x = "omit", y = "omit"),
   # equate.levels = c("animal", "mother"),
   , G.param = G.temp2
 )
-summary(momodel6del_6)$varcomp
+summary(model6)$varcomp
 ```
-.
+
+We have succesedfull produced a code to estimate the covariance between two random effects, however for this example, the dataset is not sufficient to properly estimate it and the model did not converge but you have the idea of how to use the fonction `str`.
 
