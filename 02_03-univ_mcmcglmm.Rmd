@@ -268,6 +268,10 @@ An important quote to remember is "A difference in significance is not a signifi
 
 
 
+<<<<<<< HEAD
 ### Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm-->
+=======
+### Modification of model parameter <!-- I dont think we can play with this in MCMCglmmm-->
+>>>>>>> 16f8809a82c6093bae5313d853ba4e62e635a3fc
 ### Covariance between two random effects
 
