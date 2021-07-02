@@ -39,9 +39,9 @@ summary(modela)$varcomp
 The first three terms are related to the genetic matrix and, in order are $V_{A,bwt}$, $COV_A$, $V_{A, tarsus}$. Below is again a line where the `units:traitr!R` component equals to 1, which again can be ignored. The final three terms relate to the residual matrix and correspond to $V_{R,bwt}$, $COV_R$, $V_{R,tarsus}$. Based on our quick and dirty check (is `z.ratio` > 1.96?) all components look to be statistically significant.
 
 We can calculate the genetic correlation as $COV_A / \sqrt{V_{A,bwt} \cdot V_{A,tarsus}}$. Thus this model gives an estimate of $r_A$ = `r round(summary(modela)$varcomp[2,1]/sqrt(summary(modela)$varcomp[1,1]*summary(modela)$varcomp[3,1]), 2)`. It is also possible to estimate the residual correlation  $r_res$ = `r round(summary(modela)$varcomp[6,1]/sqrt(summary(modela)$varcomp[5,1]*summary(modela)$varcomp[7,1]), 2)`. 
-<!--  issue the annotation of the residual correlation-->
+<!-- C1 issue the annotation of the residual correlation-->
 
-<!-- Should we add an explication of the nature of the residual correlation or genetic correlation no? -->
+<!-- C2 Should we add an explication of the nature of the residual correlation or genetic correlation no? -->
 
 
 
@@ -77,7 +77,7 @@ modelb <- update(modelb)
 ```
 
 Note that we have specified a covariance structure for each random effect and an estimate of the effect of sex on both birth weight and tarsus length.
-<!-- trait:sex actually combined the effect of sex on both trait in the wald test, so I change it for at(trait): -->
+<!-- C3 trait:sex actually combined the effect of sex on both trait in the wald test, so I change it for at(trait): -->
 
 There will now be thirteen (co)variance components reported after running the code:
 ```{r}
@@ -198,7 +198,7 @@ modeld <- asreml(
 Within Asreml-r, different matrix structure can be specify such as `us`,`corg`, `diag`, etc (cf see the Asreml-r guide). Instead of the fitting an unstructured matrix with the argument `us` or a reduced model with no covariance with the argument `diag`, we can also directly estimate the genetic correlation between the `bwt` and `tarsus` with `corgh`. 
 Here we decide to estimate directly the additive genetic correlation.
 
-<!-- I dont know if we can specify initial values with corgh !, i remove it -->
+<!-- C4 I dont know if we can specify initial values with corgh !, i remove it -->
 
 ```{r}
 modele <- asreml(
@@ -256,7 +256,7 @@ When estimating correlation between traits, having a visualisation of it can hel
 Thanks to mixed model, each breeding values is stored within the model and can be extract as BLUP (Best Linear Unbiaised Predictor). 
 BLUP should be normaly distributed, if not you need to check the assumption of your animal model.extract
 
-<!-- I think we need to define Breedign values and also BLUPs)-->
+<!-- C5 I think we need to define Breedign values and also BLUPs)-->
 To simplify the following code, we rename the variable T1 and T2.
 
 ```{r}
@@ -370,6 +370,6 @@ attr(wa, "heading") <- NULL
 wa
 ```
 
-<!--  what do I need to add ?  comparison model partitionn and not !
+<!-- C6  what do I need to add ?  comparison model partitionn and not !
 
 

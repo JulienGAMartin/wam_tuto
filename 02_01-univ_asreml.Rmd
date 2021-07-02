@@ -207,7 +207,7 @@ model4$loglik
 Here, we can see the point estimates of $h^2$ seems to differ between sexes (`r round(h2.F[1],2)` and `r round(h2.M[1],2)`), but their SE overlaps.
 LRT give more information and showed that partitioning the variance and the residual between group (sex) did not improved the fit of the model and so their variance are not significantly different. 
 
-<!-- May be add a graph of the different h2-->
+<!-- C1 May be add a graph of the different h2-->
 
 
 ### Modification of model parameter

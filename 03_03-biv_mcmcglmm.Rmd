@@ -2,7 +2,7 @@
 
 `MCMCglmm` has the advantage to keep automatically keep the lines with missing data and will try to fit the model use latent variables for missing data.
 For comparison, we will remove the missing values from the data before fitting the model.
-<!-- I don t know about it but for what i read you dont compare with and without NA -->
+<!-- C1 you dont compare with and without NA -->
 
 ```{r}
 gryphon2 <- subset(gryphon, !is.na(bwt) & !is.na(tarsus))
@@ -40,7 +40,7 @@ autocorr.diag(model2.1$VCV)[, "traittarsus:traittarsus.animal"][2]
 We have constructed the prior similarly to the those in the univariate models in tutorial 1, only we are specifying a 2x2 covariance matrix rather than a single variance. In order to provide proper priors, we have set the degree of belief parameter to greater than 1 (1.002). Those priors are not necessarily weak or uninformative in all circumstances. We will consider them adequate nonetheless for this tutorial. Please the vignette of the MCMCglmm packages [@R-MCMCglmm] for more information on priors. In tutorial 1, we used full autocorrelation tables to evaluate the validity of the posterior distribution. Note that we have not done this here. 
 For a bivariate model this table can become very complex. Nonetheless, it is worth evaluating, rather it is simply to large to include here. It can be viewed in the console as before. Here we have displayed only the autocorrelation for estimates of additive genetic effects for tarsus length with a lag of one samples (10 iterations given this MCMCglmm run with default values). This lag of `r autocorr.diag(model2.1$VCV)[,"traittarsus:traittarsus.animal"][2]` is clearly unacceptable. The posterior distribution of the additive genetic effect on tarsus length is shown in Figure 4 (p. 15), note the autocorrelation evident in the left-hand plot. 
 
-<!-- do we have to speak about eff.samp in the summary (model)-->
+<!-- C2 do we have to speak about eff.samp in the summary (model) -->
 
 We will opt to run the analysis for longer. This longer run could be run using the following code (including a line to save the output):
 
@@ -206,7 +206,7 @@ mtext("tarsus (BV±SE)",  side=2, line=2,las=3)
 ### Partitioning (co)variances
 As in the tutorial 1, it is possible to partition the variance-covariance matrix between groups (here sex)
 
-<!--  The model works but it is not elegante-->
+<!-- C3 The model works but it is not elegante-->
 
 ```{r, eval = params$fit_all}
 prior2.3 <- list(
@@ -268,3 +268,6 @@ HPDinterval(residual.correlation2.4.M, 0.95)
 ```
 
 Neither or these posterior distributions overlaps between each other, which sugest the correlation were not significantly different between sexes. All correlations were significant (posterior distribution did not overlaps with zero) except for the male residual correlation.
+
+
+<!-- C4  what do I need to add ? -->
