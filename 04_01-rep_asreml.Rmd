@@ -2,7 +2,9 @@
 
 ### Estimating repeatability
 
-With repeated measures on individuals it is often of interest, prior to fitting a genetic model, to see how repeatable a trait is. We can estimate the repeatability of a trait as the proportion of phenotypic variance explained by individual identity.
+With repeated measures on individuals it is often of interest to see how repeatable a trait is. 
+We can estimate the repeatability of a trait as the proportion of phenotypic variance $V_P$ explained by individual variance $V_{ind}$; $R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)$.
+
 
 ```{r}
 modelv <- asreml(
@@ -12,15 +14,19 @@ modelv <- asreml(
   data = gryphonRM,
   na.action = na.method(x = "omit", y = "omit")
 )
+
+plot(modelv)
 ```
-Note that since we want to estimate the amount of variance explained by individual identity (rather than by additive effects), we fit `animal` as a normal random effect and we don't associate it with the pedigree.
+The model assumption seems correct, so we can look at the different estimates.
+Note that since we want to estimate the amount of variance explained by individual identity (rather than by additive genetic effects), we fit `animal` as a normal random effect and we don't associate it with the pedigree.
+Here, we also ask the model to remove any `NA` in `laydate`.
 
 This model partitions the phenotypic variance in `laydate` as follows:
 ```{r}
 summary(modelv)$varcomp
 ```
 
-Between-individual variance is given by the `animal` component, while the residual component (`units!units`) represents within-individual variance. Here then the repeatability of the trait can be determined by hand as `r round(summary(modelv)$varcomp[1,1]/(summary(modelv)$varcomp[1,1]+summary(modelv)$varcomp[2,1]),2)` (_i.e._, as `r round(summary(modelv)$varcomp[1,1],3)`/(`r round(summary(modelv)$varcomp[1,1],3)` + `r round(summary(modelv)$varcomp[2,1], 3)`)).
+Between-individual (or among-individual) variance is given by the `animal` component, while the residual component (`units!units`) represents within-individual variance. Here then the repeatability of the trait can be determined by hand as `r round(summary(modelv)$varcomp[1,1]/(summary(modelv)$varcomp[1,1]+summary(modelv)$varcomp[2,1]),2)` (_i.e._, as `r round(summary(modelv)$varcomp[1,1],3)`/(`r round(summary(modelv)$varcomp[1,1],3)` + `r round(summary(modelv)$varcomp[2,1], 3)`)).
 
 Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding `age` into the model as a fixed effect.
 ```{r}
@@ -35,16 +41,45 @@ modelw <- asreml(
 summary(modelw)$varcomp
 ```
 
-The repeatability of lay date, after accounting for age effects, is now estimated as `r round(summary(modelw)$varcomp[1,1]/(summary(modelw)$varcomp[1,1]+summary(modelw)$varcomp[2,1]), 2)` (_i.e._, as `r round(summary(modelw)$varcomp[1,1], 3)`/(`r round(summary(modelw)$varcomp[1,1], 3)` + `r round(summary(modelw)$varcomp[2,1], 3)`)). So, just as we saw when estimating $h^2$ in Tutorial 1, the inclusion of fixed effects will alter the estimated effect size if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
+The repeatability of lay date, after accounting for age effects, is now estimated as `r round(summary(modelw)$varcomp[1,1]/(summary(modelw)$varcomp[1,1]+summary(modelw)$varcomp[2,1]), 2)` (_i.e._, as `r round(summary(modelw)$varcomp[1,1], 3)`/(`r round(summary(modelw)$varcomp[1,1], 3)` + `r round(summary(modelw)$varcomp[2,1], 3)`)). 
+So, just as we saw when estimating $h^2$ in Tutorial 1, the inclusion of fixed effects will alter the estimated effect size <!-- effect size or just the variance estimate --> if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
 
-Here age is modelled as a 5-level factor (specified using the function `as.factor()` at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.
+```{r}
+summary(modelw, coef = TRUE)$coef.fixed
+wald.asreml(modelw, ssType = "conditional", denDF = "numeric")
+```
+
+Here age is modeled as a 5-level factor (specified using the function `as.factor()` at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.
+In addition, using `age` as continuous variable can help in saving some degree of freedom in the analysis.
+
+<!-- C1 I dont know why the quadratic fixed effect dont work, need to remember how to do this 
+```{r}
+gryphonRM$age_c <- as.numeric(gryphonRM$age)
+
+modelw2 <- asreml(
+  fixed = laydate ~ age_c+ I(age_c^2),
+  random = ~animal,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+
+summary(modelw2)$varcomp
+summary(modelw2, coef = TRUE)$coef.fixed
+wald.asreml(modelw2, ssType = "conditional", denDF = "numeric")
+
+```
+-->
 
 ### Partitioning additive and permanent environment effects
 
-Generally we expect that the repeatability will set the upper limit for heritability since, while additive genetic effects will cause among-individual variation, so will other types of effects. Non-additive contributions to fixed among-individual differences are normally referred to as _permanent environment effects_. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in $V_A$.
+Generally we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals. 
+Non-additive contributions to fixed among-individual differences are normally referred to as _permanent environment effects_. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in $V_A$.
 
-To illustrate this fit the animal model:
+To illustrate it, we first fit the animal model:
 ```{r}
+ainv <- ainverse(gryphonped)
+
 modelx <- asreml(
   fixed = laydate ~ age,
   random = ~ vm(animal, ainv),
@@ -54,12 +89,15 @@ modelx <- asreml(
 )
 ```
 
-Variance components are almost unchanged:
+Variance components are almost unchanged if we compare the previous model:
 ```{r}
-summary.asreml(modelx)$varcomp
+summary(modelx)$varcomp
+summary(modelw)$varcomp
 ```
 
-This suggests that all of the among-individual variance is – rightly or wrongly – being partitioned as $V_A$ here. To instead obtain an unbiased estimate of $V_A$ we need to allow for both additive genetic _and_ non-genetic sources of individual variation. We do this by fitting `animal` twice, once with a pedigree, and once without a pedigree (using `ide()`).
+This suggests that most of the among-individual variance is – rightly or wrongly – being partitioned as $V_A$ here. To instead to obtain an unbiased estimate of $V_A$, we need to partition for both additive genetic _and_ non-genetic sources of individual variation. We do it by fitting `animal` twice, once with a pedigree, and once without a pedigree (using `ide()`).
+Here, the command `ide` allow to create a second effect using a similar variable.
+
 ```{r}
 modely <- asreml(
   fixed = laydate ~ age,
@@ -92,6 +130,41 @@ modelz <- asreml(
 summary(modelz)$varcomp
 ```
 
-This model will return additional variance components corresponding to variation in lay dates between years of measurement and between birth cohorts of females. $V_{byear}$ is very low and if you compare this model to a reduced model with byear excluded the log-likelihood remains unchanged.
+This model will return additional variance components corresponding to variation in lay dates between years of measurement and between birth cohorts of females. $V_{byear}$ is very low and `B` appeared which tell us that the model had fixed the variance as a boundary. If you compare this model to a reduced model with byear excluded the log-likelihood remains unchanged.
 
-`year` effects could alternatively be included as fixed effects (try this!). This will reduce $V_R$ and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.
+```{r}
+modelz_2 <- asreml(
+  fixed = laydate ~ age,
+  random = ~ vm(animal, ainv) + ide(animal) +
+    year,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+summary(modelz_2)$varcomp
+
+modelz$loglik
+modelz_2$loglik
+1 - pchisq(2 * (modelz_2$loglik - modelz$loglik), 1)
+
+```
+
+`year` effects could alternatively be included as fixed effects (try it!). This will reduce $V_R$ and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.
+
+
+```{r}
+modelz_3 <- asreml(
+  fixed = laydate ~ age+byear,
+  random = ~ vm(animal, ainv) + ide(animal) +
+    year,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+summary(modelz_3)$varcomp
+wald.asreml(modelz_3, ssType = "conditional", denDF = "numeric")
+
+```
+
+
+<!-- C2  What to do more , may be extrac BLUP also !-->

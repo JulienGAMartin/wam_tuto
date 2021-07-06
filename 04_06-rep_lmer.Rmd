@@ -1,0 +1,6 @@
+## lmer
+
+### Estimating repeatability
+
+With repeated measures on individuals it is often of interest to see how repeatable a trait is. 
+We can estimate the repeatability of a trait as the proportion of phenotypic variance $V_P$ explained by individual variance $V_{ind}$; $R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)$.
