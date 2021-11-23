@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2.1 Scenario and data | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2.1 Scenario and data | How to fit an animal model" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="univariate-animal-model.html"/>
 <link rel="next" href="asreml-r-1.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,7 +50,7 @@
 
 
 
-
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
@@ -58,7 +59,6 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -119,28 +119,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
@@ -203,7 +181,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
-<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm--></a></li>
 <li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
@@ -231,19 +209,21 @@ div.csl-indent {
 <li class="chapter" data-level="3.2.2" data-path="asreml-biv.html"><a href="asreml-biv.html#adding-fixed-and-random-effects"><i class="fa fa-check"></i><b>3.2.2</b> Adding fixed and random effects</a></li>
 <li class="chapter" data-level="3.2.3" data-path="asreml-biv.html"><a href="asreml-biv.html#significance-testing"><i class="fa fa-check"></i><b>3.2.3</b> Significance testing</a></li>
 <li class="chapter" data-level="3.2.4" data-path="asreml-biv.html"><a href="asreml-biv.html#estimate-directly-the-genetic-correlation-within-the-model"><i class="fa fa-check"></i><b>3.2.4</b> Estimate directly the genetic correlation within the model</a></li>
-<li class="chapter" data-level="3.2.5" data-path="asreml-biv.html"><a href="asreml-biv.html#partitionning-covariance-between-groups"><i class="fa fa-check"></i><b>3.2.5</b> Partitionning (co)variance between groups</a></li>
+<li class="chapter" data-level="3.2.5" data-path="asreml-biv.html"><a href="asreml-biv.html#visualisation-of-the-correlation-aka-blup-extraction"><i class="fa fa-check"></i><b>3.2.5</b> Visualisation of the correlation (aka BLUP extraction)</a></li>
+<li class="chapter" data-level="3.2.6" data-path="asreml-biv.html"><a href="asreml-biv.html#partitionning-covariance-between-groups"><i class="fa fa-check"></i><b>3.2.6</b> Partitionning (co)variance between groups</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="gremlin-2.html"><a href="gremlin-2.html"><i class="fa fa-check"></i><b>3.3</b> gremlin</a></li>
 <li class="chapter" data-level="3.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html"><i class="fa fa-check"></i><b>3.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#fitting-the-model"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
 <li class="chapter" data-level="3.4.2" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#adding-fixed-and-random-effects-1"><i class="fa fa-check"></i><b>3.4.2</b> Adding fixed and random effects</a></li>
-<li class="chapter" data-level="3.4.3" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#partitioning-covariances"><i class="fa fa-check"></i><b>3.4.3</b> Partitioning (co)variances</a></li>
+<li class="chapter" data-level="3.4.3" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#direct-estimate-of-the-correlation-instead-of-the-covariance."><i class="fa fa-check"></i><b>3.4.3</b> Direct estimate of the correlation instead of the covariance.</a></li>
+<li class="chapter" data-level="3.4.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#partitioning-covariances"><i class="fa fa-check"></i><b>3.4.4</b> Partitioning (co)variances</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a></li>
 <li class="chapter" data-level="3.6" data-path="stan-1.html"><a href="stan-1.html"><i class="fa fa-check"></i><b>3.6</b> stan</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="rep-measures.html"><a href="rep-measures.html"><i class="fa fa-check"></i><b>4</b> A repeated measures animal model</a>
+<li class="chapter" data-level="4" data-path="rep_measures.html"><a href="rep_measures.html"><i class="fa fa-check"></i><b>4</b> A repeated measures animal model</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="scenario-and-data-2.html"><a href="scenario-and-data-2.html"><i class="fa fa-check"></i><b>4.1</b> Scenario and data</a>
 <ul>
@@ -316,20 +296,20 @@ div.csl-indent {
 The phenotype data, as well as additional factors and covariates that we may wish to include in our model are contained in <code>gryphon.csv</code>. Columns correspond to individual identity (<code>animal</code>), maternal identity (<code>mother</code>), year of birth (<code>byear</code>), sex (<code>sex</code>, where <code>1</code> is female and <code>2</code> is male), birth weight (<code>bwt</code>), and tarsus length (<code>tarsus</code>). Each row of the data file contains a record for a different offspring individual. Note that all individuals included in the data file must be included as offspring in the pedigree file.</p>
 <p>We can read teh data file, using <code>read.csv()</code> which consider by default that <code>NA</code> is the symbol for missing values and that the first line of the file contains the column headers.</p>
 <p>It is a good idea to make sure that all variables are correctly assigned as numeric or factors:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="scenario-and-data.html#cb1-1" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>animal <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>animal)</span>
-<span id="cb1-2"><a href="scenario-and-data.html#cb1-2" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>mother <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>mother)</span>
-<span id="cb1-3"><a href="scenario-and-data.html#cb1-3" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>byear <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>byear)</span>
-<span id="cb1-4"><a href="scenario-and-data.html#cb1-4" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphon<span class="sc">$</span>sex)</span>
-<span id="cb1-5"><a href="scenario-and-data.html#cb1-5" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>bwt <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gryphon<span class="sc">$</span>bwt)</span>
-<span id="cb1-6"><a href="scenario-and-data.html#cb1-6" aria-hidden="true" tabindex="-1"></a>gryphon<span class="sc">$</span>tarsus <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(gryphon<span class="sc">$</span>tarsus)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="scenario-and-data.html#cb1-1" aria-hidden="true"></a>gryphon<span class="op">$</span>animal &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>animal)</span>
+<span id="cb1-2"><a href="scenario-and-data.html#cb1-2" aria-hidden="true"></a>gryphon<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>mother)</span>
+<span id="cb1-3"><a href="scenario-and-data.html#cb1-3" aria-hidden="true"></a>gryphon<span class="op">$</span>byear &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>byear)</span>
+<span id="cb1-4"><a href="scenario-and-data.html#cb1-4" aria-hidden="true"></a>gryphon<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>sex)</span>
+<span id="cb1-5"><a href="scenario-and-data.html#cb1-5" aria-hidden="true"></a>gryphon<span class="op">$</span>bwt &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>bwt)</span>
+<span id="cb1-6"><a href="scenario-and-data.html#cb1-6" aria-hidden="true"></a>gryphon<span class="op">$</span>tarsus &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>tarsus)</span></code></pre></div>
 <p>Similarly we can read in the pedigree file, using <code>read.csv()</code> which consider by default that <code>NA</code> is the symbol for missing values and that the first line of the file contains the column headers.</p>
 <pre><code>## &#39;data.frame&#39;:    1309 obs. of  3 variables:
 ##  $ id    : int  1306 1304 1298 1293 1290 1288 1284 1283 1282 1278 ...
 ##  $ father: int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ mother: int  NA NA NA NA NA NA NA NA NA NA ...</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="scenario-and-data.html#cb3-1" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>id)</span>
-<span id="cb3-2"><a href="scenario-and-data.html#cb3-2" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>father <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>father)</span>
-<span id="cb3-3"><a href="scenario-and-data.html#cb3-3" aria-hidden="true" tabindex="-1"></a>gryphonped<span class="sc">$</span>mother <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gryphonped<span class="sc">$</span>mother)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="scenario-and-data.html#cb3-1" aria-hidden="true"></a>gryphonped<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>id)</span>
+<span id="cb3-2"><a href="scenario-and-data.html#cb3-2" aria-hidden="true"></a>gryphonped<span class="op">$</span>father &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>father)</span>
+<span id="cb3-3"><a href="scenario-and-data.html#cb3-3" aria-hidden="true"></a>gryphonped<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>mother)</span></code></pre></div>
 <p>Now that we have imported the data and the pedigree file, we are ready to fit an animal model.</p>
 
 </div>
@@ -344,7 +324,6 @@ The phenotype data, as well as additional factors and covariates that we may wis
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -384,6 +363,10 @@ gitbook.start({
 "text": null
 },
 "download": ["wam_tuto.pdf", "wam_tuto.epub", "wam_tuto.mobi"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection",
 "scroll_highlight": true
