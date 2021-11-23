@@ -6,16 +6,16 @@ First we need to load the `brms` library:
 ```{r}
 library(brms)
 ```
-<!--  May be add a sentence about brms and its link to stan ? -->
+<!-- C1 May be add a sentence about brms and its link to stan ? -->
 To be able to fit an animal model, brms needs the relationship matrix (and not its inverse as in other softwares).
 This can be estimated using the `nadiv` package
-<!--  May be add a sentence about nadiv? -->
+<!-- C2 May be add a sentence about nadiv? -->
 
 ```{r}
 Amat <- as.matrix(nadiv::makeA(gryphonped))
 ```
 We are now ready to specify our first model:
-The structure of a bmrs model is similar to `lme4`, the random effect is added to the model with the term `(1 | gr(animal, cov = Amat)`. (<!-- more explanation-->)
+The structure of a bmrs model is similar to `lme4`, the random effect is added to the model with the term `(1 | gr(animal, cov = Amat)`. (<!-- C3 more explanation aboout this structure becaue is not intuive for other biologists-->)
 
 ```{r eval = params$fit_all}
 brms_m1.1 <- brm(
@@ -43,7 +43,7 @@ h.bwt <- as.mcmc(v_animal / (v_animal + v_r))
 summary(h.bwt)
 ```
 
-<!-- autocorrelation diagnostic -->
+<!-- C4 autocorrelation diagnostic -->
 
 
 
@@ -98,14 +98,14 @@ plot(brms_m1.3, ask = FALSE, N = 3)
 
 ### Testing significance of variance components
 
-<!-- how to compare models?  DIC or Ci of estimate or other test  -->
+<!--C5 how to compare models?  DIC or Ci of estimate or other test  -->
 
 
 ### Further partitioning of the variance
 
 Depending of the research question and the presence of different group within the dataset, MCMCglmm allowed to partition the variance at different level. For the example, we can partition the additive genetic and residual variance between SEXE (male and female) to estimate the sex-specific heritability 
 
- <!-- need to check the code  I never partition a random effect with lme4 + need to apply it to the residual level too, more too do here -->
+ <!-- C6 need to check the code  I never partition a random effect with lme4 + need to apply it to the residual level too, more too do here -->
 
 ```{r eval = params$fit_all}
 brms_m1.4 <- brm(

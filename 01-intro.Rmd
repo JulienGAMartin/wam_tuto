@@ -37,12 +37,12 @@ You should check that you have the most current version of R and R packages. You
 
 #### asreml-r
 
-ASReml-R is commercial software published by VSN international (http://www.vsni.co.uk/software/asreml/). This package is not free and requires a key access (<!--add the price of it!-->)
+ASReml-R is commercial software published by VSN international (http://www.vsni.co.uk/software/asreml/). This package is not free and requires a key access <!-- C2 add the price of it!-->
 Additional information and guide can be find in the Asreml-R manual: (https://asreml.kb.vsni.co.uk/wp-content/uploads/sites/3/2018/02/ASReml-R-Reference-Manual-4.pdf)
 
 #### gremlin
 
-`gremlin` is a little monster appearing <!-- water just multiply them (if you wet a mugwai and--> if you feed a mugwai after midnight. It is also a great and promising software to fit mixed models using a frequentist approach.
+`gremlin` is a little monster appearing <!--C1 water just multiply them (if you wet a mugwai and--> if you feed a mugwai after midnight. It is also a great and promising software to fit mixed models using a frequentist approach.
 
 #### MCMCglmm
 
@@ -54,7 +54,7 @@ Most importantly, this applies to some of the simplest ways of determining the p
 This tutorial is not a substitute for working through the MCMCglmm course notes, which is available from CRAN (the Comprehensive R ArchiveNetwork, http://cran.r-project.org/, or can be accessed in R using the command vignette("CourseNotes","MCMCglmm")).
 These tutorials do not introduce one of the main advantages of using MCMCglmm for analyses of data from natural populations -the ability to properly model non-normal responses.
 These capabilities are introduced in the documentation that is distributed with MCMCglmm, and available from CRAN.
-<!-- i think we have to also cite Pierre de Villemereuil, he wrote a guide for estimating heritability with MCMCglmmm http://devillemereuil.legtux.org/wp-content/uploads/2012/12/tuto_en.pdf -->
+<!-- C3 i think we have to also cite Pierre de Villemereuil, he wrote a guide for estimating heritability with MCMCglmmm http://devillemereuil.legtux.org/wp-content/uploads/2012/12/tuto_en.pdf -->
 
 #### brms
 
