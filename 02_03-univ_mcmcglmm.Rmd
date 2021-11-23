@@ -267,10 +267,7 @@ Here, we can estimate the heritability for each sex. Both doesn't overlap with z
 An important quote to remember is "A difference in significance is not a significant difference" 
 
 
-
-<<<<<<< HEAD
 ### Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm-->
-=======
-### Modification of model parameter <!-- I dont think we can play with this in MCMCglmmm-->
+
 ### Covariance between two random effects
 
