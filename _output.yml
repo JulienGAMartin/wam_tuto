@@ -17,7 +17,7 @@ bookdown::gitbook:
       after: |
         <li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
     download: [pdf, epub, mobi]
-    edit: https://github.com/JulienGAMartin/wam_tuto/%s
+    edit: https://github.com/JulienGAMartin/wam_tuto/edit/master/%s
     sharing:
       github: yes
       twitter: yes

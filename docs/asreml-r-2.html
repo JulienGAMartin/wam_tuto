@@ -298,18 +298,18 @@ We can estimate the repeatability of a trait as the proportion of phenotypic var
 <span id="cb357-6"><a href="asreml-r-2.html#cb357-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb357-7"><a href="asreml-r-2.html#cb357-7" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 15:45:27 2021
+## ASReml 4.1.0 Tue Nov 23 22:10:02 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -10182.83           1.0   1606 15:45:27    0.0
-##  2      -8266.10           1.0   1606 15:45:27    0.0
-##  3      -6145.01           1.0   1606 15:45:27    0.0
-##  4      -4651.57           1.0   1606 15:45:27    0.0
-##  5      -3819.31           1.0   1606 15:45:27    0.0
-##  6      -3554.22           1.0   1606 15:45:27    0.0
-##  7      -3501.56           1.0   1606 15:45:27    0.0
-##  8      -3497.58           1.0   1606 15:45:27    0.0
-##  9      -3497.54           1.0   1606 15:45:27    0.0
-## 10      -3497.54           1.0   1606 15:45:27    0.0</code></pre>
+##  1     -10182.83           1.0   1606 22:10:02    0.0
+##  2      -8266.10           1.0   1606 22:10:02    0.0
+##  3      -6145.01           1.0   1606 22:10:02    0.0
+##  4      -4651.57           1.0   1606 22:10:02    0.0
+##  5      -3819.31           1.0   1606 22:10:02    0.0
+##  6      -3554.22           1.0   1606 22:10:02    0.0
+##  7      -3501.56           1.0   1606 22:10:02    0.0
+##  8      -3497.58           1.0   1606 22:10:02    0.0
+##  9      -3497.54           1.0   1606 22:10:02    0.0
+## 10      -3497.54           1.0   1606 22:10:02    0.0</code></pre>
 <div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="asreml-r-2.html#cb359-1" aria-hidden="true"></a><span class="kw">plot</span>(modelv)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-114-1.svg" width="672" />
 The model assumption seems correct, so we can look at the different estimates.
@@ -331,17 +331,17 @@ Here, we also ask the model to remove any <code>NA</code> in <code>laydate</code
 <span id="cb362-6"><a href="asreml-r-2.html#cb362-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb362-7"><a href="asreml-r-2.html#cb362-7" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 15:45:28 2021
+## ASReml 4.1.0 Tue Nov 23 22:10:03 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -8402.968           1.0   1602 15:45:28    0.0
-##  2     -6912.361           1.0   1602 15:45:28    0.0
-##  3     -5274.379           1.0   1602 15:45:28    0.0
-##  4     -4143.634           1.0   1602 15:45:28    0.0
-##  5     -3541.895           1.0   1602 15:45:28    0.0
-##  6     -3372.909           1.0   1602 15:45:28    0.0
-##  7     -3347.670           1.0   1602 15:45:28    0.0
-##  8     -3346.655           1.0   1602 15:45:28    0.0
-##  9     -3346.652           1.0   1602 15:45:28    0.0</code></pre>
+##  1     -8402.968           1.0   1602 22:10:03    0.0
+##  2     -6912.361           1.0   1602 22:10:03    0.0
+##  3     -5274.379           1.0   1602 22:10:03    0.0
+##  4     -4143.634           1.0   1602 22:10:03    0.0
+##  5     -3541.895           1.0   1602 22:10:03    0.0
+##  6     -3372.909           1.0   1602 22:10:03    0.0
+##  7     -3347.670           1.0   1602 22:10:03    0.0
+##  8     -3346.655           1.0   1602 22:10:03    0.0
+##  9     -3346.652           1.0   1602 22:10:03    0.0</code></pre>
 <div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="asreml-r-2.html#cb364-1" aria-hidden="true"></a><span class="kw">summary</span>(modelw)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##             component std.error  z.ratio bound %ch
 ## animal       12.28982  1.156115 10.63027     P   0
@@ -359,11 +359,11 @@ So, just as we saw when estimating <span class="math inline">\(h^2\)</span> in T
 ## (Intercept) 20.305073 0.2899515 70.029214</code></pre>
 <div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="asreml-r-2.html#cb368-1" aria-hidden="true"></a><span class="kw">wald.asreml</span>(modelw, <span class="dt">ssType =</span> <span class="st">&quot;conditional&quot;</span>, <span class="dt">denDF =</span> <span class="st">&quot;numeric&quot;</span>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 15:45:28 2021
+## ASReml 4.1.0 Tue Nov 23 22:10:03 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -3346.652           1.0   1602 15:45:28    0.0
-##  2     -3346.652           1.0   1602 15:45:28    0.0
-##  3     -3346.652           1.0   1602 15:45:28    0.0</code></pre>
+##  1     -3346.652           1.0   1602 22:10:03    0.0
+##  2     -3346.652           1.0   1602 22:10:03    0.0
+##  3     -3346.652           1.0   1602 22:10:03    0.0</code></pre>
 <pre><code>## $Wald
 ## [0;34m
 ## Wald tests for fixed effects.[0m
@@ -395,17 +395,17 @@ modelw2 <- asreml(
 
 ```
 ## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 15:45:28 2021
+## ASReml 4.1.0 Tue Nov 23 22:10:03 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -8585.167           1.0   1604 15:45:28    0.0
-##  2     -7051.124           1.0   1604 15:45:28    0.0
-##  3     -5364.007           1.0   1604 15:45:28    0.0
-##  4     -4196.614           1.0   1604 15:45:28    0.0
-##  5     -3571.977           1.0   1604 15:45:28    0.0
-##  6     -3393.937           1.0   1604 15:45:28    0.0
-##  7     -3366.445           1.0   1604 15:45:28    0.0
-##  8     -3365.254           1.0   1604 15:45:28    0.0
-##  9     -3365.250           1.0   1604 15:45:28    0.0
+##  1     -8585.167           1.0   1604 22:10:03    0.0
+##  2     -7051.124           1.0   1604 22:10:03    0.0
+##  3     -5364.007           1.0   1604 22:10:03    0.0
+##  4     -4196.614           1.0   1604 22:10:03    0.0
+##  5     -3571.977           1.0   1604 22:10:03    0.0
+##  6     -3393.937           1.0   1604 22:10:03    0.0
+##  7     -3366.445           1.0   1604 22:10:03    0.0
+##  8     -3365.254           1.0   1604 22:10:03    0.0
+##  9     -3365.250           1.0   1604 22:10:03    0.0
 ```
 
 ```r
@@ -436,11 +436,11 @@ wald.asreml(modelw2, ssType = "conditional", denDF = "numeric")
 
 ```
 ## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 15:45:28 2021
+## ASReml 4.1.0 Tue Nov 23 22:10:03 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -3365.250           1.0   1604 15:45:28    0.0
-##  2     -3365.250           1.0   1604 15:45:28    0.0
-##  3     -3365.250           1.0   1604 15:45:28    0.0
+##  1     -3365.250           1.0   1604 22:10:03    0.0
+##  2     -3365.250           1.0   1604 22:10:03    0.0
+##  3     -3365.250           1.0   1604 22:10:03    0.0
 ```
 
 ```
@@ -476,17 +476,17 @@ Non-additive contributions to fixed among-individual differences are normally re
 <span id="cb371-8"><a href="asreml-r-2.html#cb371-8" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb371-9"><a href="asreml-r-2.html#cb371-9" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 15:45:28 2021
+## ASReml 4.1.0 Tue Nov 23 22:10:04 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -8751.390           1.0   1602 15:45:28    0.0
-##  2     -7169.205           1.0   1602 15:45:28    0.0
-##  3     -5427.604           1.0   1602 15:45:28    0.0
-##  4     -4219.598           1.0   1602 15:45:28    0.0
-##  5     -3569.815           1.0   1602 15:45:28    0.0
-##  6     -3382.341           1.0   1602 15:45:28    0.0
-##  7     -3352.867           1.0   1602 15:45:28    0.0
-##  8     -3351.565           1.0   1602 15:45:28    0.0
-##  9     -3351.560           1.0   1602 15:45:28    0.0</code></pre>
+##  1     -8751.390           1.0   1602 22:10:04    0.0
+##  2     -7169.205           1.0   1602 22:10:04    0.0
+##  3     -5427.604           1.0   1602 22:10:04    0.0
+##  4     -4219.598           1.0   1602 22:10:04    0.0
+##  5     -3569.815           1.0   1602 22:10:04    0.0
+##  6     -3382.341           1.0   1602 22:10:04    0.0
+##  7     -3352.867           1.0   1602 22:10:04    0.0
+##  8     -3351.565           1.0   1602 22:10:04    0.0
+##  9     -3351.560           1.0   1602 22:10:04    0.0</code></pre>
 <p>Variance components are almost unchanged if we compare the previous model:</p>
 <div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="asreml-r-2.html#cb373-1" aria-hidden="true"></a><span class="kw">summary</span>(modelx)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error   z.ratio bound %ch
@@ -508,17 +508,17 @@ Here, the command <code>ide</code> allow to create a second effect using a simil
 <span id="cb377-6"><a href="asreml-r-2.html#cb377-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb377-7"><a href="asreml-r-2.html#cb377-7" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 15:45:28 2021
+## ASReml 4.1.0 Tue Nov 23 22:10:04 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -7731.394           1.0   1602 15:45:28    0.0
-##  2     -6426.548           1.0   1602 15:45:28    0.0
-##  3     -4997.252           1.0   1602 15:45:28    0.0
-##  4     -4018.486           1.0   1602 15:45:28    0.0
-##  5     -3504.988           1.0   1602 15:45:28    0.0
-##  6     -3363.160           1.0   1602 15:45:28    0.0
-##  7     -3341.611           1.0   1602 15:45:28    0.0
-##  8     -3340.682           1.0   1602 15:45:28    0.0
-##  9     -3340.679           1.0   1602 15:45:28    0.0</code></pre>
+##  1     -7731.394           1.0   1602 22:10:04    0.0
+##  2     -6426.548           1.0   1602 22:10:04    0.0
+##  3     -4997.252           1.0   1602 22:10:04    0.0
+##  4     -4018.486           1.0   1602 22:10:04    0.0
+##  5     -3504.988           1.0   1602 22:10:04    0.0
+##  6     -3363.160           1.0   1602 22:10:04    0.0
+##  7     -3341.611           1.0   1602 22:10:04    0.0
+##  8     -3340.682           1.0   1602 22:10:04    0.0
+##  9     -3340.679           1.0   1602 22:10:04    0.0</code></pre>
 <div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="asreml-r-2.html#cb379-1" aria-hidden="true"></a><span class="kw">summary</span>(modely)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error   z.ratio bound %ch
 ## vm(animal, ainv)  4.876101 1.8087709  2.695809     P   0
@@ -545,17 +545,17 @@ Here, the command <code>ide</code> allow to create a second effect using a simil
 <span id="cb385-7"><a href="asreml-r-2.html#cb385-7" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb385-8"><a href="asreml-r-2.html#cb385-8" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 15:45:28 2021
+## ASReml 4.1.0 Tue Nov 23 22:10:04 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4650.748           1.0   1602 15:45:28    0.0
-##  2     -4088.264           1.0   1602 15:45:28    0.0
-##  3     -3494.147           1.0   1602 15:45:28    0.0
-##  4     -3127.161           1.0   1602 15:45:28    0.0 (1 restrained)
-##  5     -2976.449           1.0   1602 15:45:28    0.0 (1 restrained)
-##  6     -2955.785           1.0   1602 15:45:28    0.0 (1 restrained)
-##  7     -2955.097           1.0   1602 15:45:28    0.0 (1 restrained)
-##  8     -2955.095           1.0   1602 15:45:28    0.0 (1 restrained)
-##  9     -2955.095           1.0   1602 15:45:28    0.0</code></pre>
+##  1     -4650.748           1.0   1602 22:10:04    0.0
+##  2     -4088.264           1.0   1602 22:10:04    0.0
+##  3     -3494.147           1.0   1602 22:10:04    0.0
+##  4     -3127.161           1.0   1602 22:10:04    0.0 (1 restrained)
+##  5     -2976.449           1.0   1602 22:10:04    0.0 (1 restrained)
+##  6     -2955.785           1.0   1602 22:10:04    0.0 (1 restrained)
+##  7     -2955.097           1.0   1602 22:10:04    0.0 (1 restrained)
+##  8     -2955.095           1.0   1602 22:10:04    0.0 (1 restrained)
+##  9     -2955.095           1.0   1602 22:10:04    0.0</code></pre>
 <div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="asreml-r-2.html#cb387-1" aria-hidden="true"></a><span class="kw">summary</span>(modelz)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                     component std.error   z.ratio bound %ch
 ## byear            1.650876e-07        NA        NA     B   0
@@ -574,16 +574,16 @@ Here, the command <code>ide</code> allow to create a second effect using a simil
 <span id="cb389-7"><a href="asreml-r-2.html#cb389-7" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb389-8"><a href="asreml-r-2.html#cb389-8" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 15:45:29 2021
+## ASReml 4.1.0 Tue Nov 23 22:10:04 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4665.606           1.0   1602 15:45:29    0.0
-##  2     -4097.928           1.0   1602 15:45:29    0.0
-##  3     -3498.611           1.0   1602 15:45:29    0.0
-##  4     -3128.789           1.0   1602 15:45:29    0.0
-##  5     -2976.883           1.0   1602 15:45:29    0.0
-##  6     -2955.806           1.0   1602 15:45:29    0.0
-##  7     -2955.096           1.0   1602 15:45:29    0.0
-##  8     -2955.095           1.0   1602 15:45:29    0.0</code></pre>
+##  1     -4665.606           1.0   1602 22:10:04    0.0
+##  2     -4097.928           1.0   1602 22:10:04    0.0
+##  3     -3498.611           1.0   1602 22:10:04    0.0
+##  4     -3128.789           1.0   1602 22:10:04    0.0
+##  5     -2976.883           1.0   1602 22:10:04    0.0
+##  6     -2955.806           1.0   1602 22:10:04    0.0
+##  7     -2955.096           1.0   1602 22:10:05    0.0
+##  8     -2955.095           1.0   1602 22:10:05    0.0</code></pre>
 <div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="asreml-r-2.html#cb391-1" aria-hidden="true"></a><span class="kw">summary</span>(modelz_<span class="dv">2</span>)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error   z.ratio bound %ch
 ## year              7.938576 1.9344829  4.103720     P   0
@@ -607,16 +607,16 @@ Here, the command <code>ide</code> allow to create a second effect using a simil
 <span id="cb399-7"><a href="asreml-r-2.html#cb399-7" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb399-8"><a href="asreml-r-2.html#cb399-8" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 15:45:29 2021
+## ASReml 4.1.0 Tue Nov 23 22:10:05 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4623.985           1.0   1569 15:45:29    0.0
-##  2     -4063.535           1.0   1569 15:45:29    0.0
-##  3     -3471.618           1.0   1569 15:45:29    0.0
-##  4     -3105.972           1.0   1569 15:45:29    0.0
-##  5     -2955.436           1.0   1569 15:45:29    0.0
-##  6     -2934.435           1.0   1569 15:45:29    0.0
-##  7     -2933.721           1.0   1569 15:45:29    0.0
-##  8     -2933.720           1.0   1569 15:45:29    0.0</code></pre>
+##  1     -4623.985           1.0   1569 22:10:05    0.0
+##  2     -4063.535           1.0   1569 22:10:05    0.0
+##  3     -3471.618           1.0   1569 22:10:05    0.0
+##  4     -3105.972           1.0   1569 22:10:05    0.0
+##  5     -2955.436           1.0   1569 22:10:05    0.0
+##  6     -2934.435           1.0   1569 22:10:05    0.0
+##  7     -2933.721           1.0   1569 22:10:05    0.0
+##  8     -2933.720           1.0   1569 22:10:05    0.0</code></pre>
 <div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="asreml-r-2.html#cb401-1" aria-hidden="true"></a><span class="kw">summary</span>(modelz_<span class="dv">3</span>)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error   z.ratio bound %ch
 ## year              8.029139 1.9920127  4.030666     P   0
@@ -628,10 +628,10 @@ Here, the command <code>ide</code> allow to create a second effect using a simil
 <pre><code>## Model fitted using the sigma parameterization.</code></pre>
 <pre><code>## Warning in asreml(fixed = laydate ~ age + byear, random = ~vm(animal, ainv) + :
 ## Algebraic derivatives for denominator df not available.</code></pre>
-<pre><code>## ASReml 4.1.0 Tue Nov 23 15:45:29 2021
+<pre><code>## ASReml 4.1.0 Tue Nov 23 22:10:05 2021
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2933.720           1.0   1569 15:45:29    0.0
-##  2     -2933.720           1.0   1569 15:45:29    0.0
+##  1     -2933.720           1.0   1569 22:10:05    0.0
+##  2     -2933.720           1.0   1569 22:10:05    0.0
 ## Calculating denominator DF</code></pre>
 <pre><code>## $Wald
 ## [0;34m
@@ -695,7 +695,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/JulienGAMartin/wam_tuto/04_01-rep_asreml.Rmd",
+"link": "https://github.com/JulienGAMartin/wam_tuto/edit/master/04_01-rep_asreml.Rmd",
 "text": "Edit"
 },
 "history": {
