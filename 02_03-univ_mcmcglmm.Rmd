@@ -86,14 +86,14 @@ HPDinterval(model1.1$VCV)
 
 ### Change priors parameters
 
-We specified weak priors in this analyses. Now we will check whether or not proper priors would have influenced the results that we obtained. The simplest way to do this is to rerun the model with different priors. Here we construct priors with a larger degree of belief parameter (`nu`), and we will specify that a large proportion (50%) of the variation is under genetic control (`V`):
+We specified weak priors in this analyses. Now we will check whether or not proper priors would have influenced the results that we obtained. The simplest way to do this is to rerun the model with different priors. In the previous model we specified a prior where the size of genetic and residual variance were similar. Here we construct priors with a larger degree of belief parameter (`nu`), and we will specify that a large proportion (95%) of the variation is under genetic control (`V`):
 <!-- C2 we should explain what we do to the residual matrix too -->
 
 ```{r, cache=TRUE}
 p.var <- var(gryphon$bwt, na.rm = TRUE)
 prior1.1.2 <- list(
-  G = list(G1 = list(V = matrix(p.var * 0.05), nu = 1)),
-  R = list(V = matrix(p.var * 0.95), nu = 1)
+  G = list(G1 = list(V = matrix(p.var * 0.95), nu = 1)),
+  R = list(V = matrix(p.var * 0.05), nu = 1)
 )
 
 model1.1.2 <- MCMCglmm(bwt ~ 1,
@@ -267,10 +267,7 @@ Here, we can estimate the heritability for each sex. Both doesn't overlap with z
 An important quote to remember is "A difference in significance is not a significant difference" 
 
 
-
-<<<<<<< HEAD
 ### Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm-->
-=======
-### Modification of model parameter <!-- I dont think we can play with this in MCMCglmmm-->
+
 ### Covariance between two random effects
 

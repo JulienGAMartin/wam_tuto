@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Page not found | How to fit an animal model</title>
+  <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Page not found | How to fit an animal model" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="/images/missing.png" />
+  <meta property="og:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
+  <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Page not found | How to fit an animal model" />
+  
+  <meta name="twitter:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
+  <meta name="twitter:image" content="/images/missing.png" />
+
+<meta name="author" content="Julien Martin" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">How to fit an animal model</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#contributors"><i class="fa fa-check"></i>Contributors</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>1.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path="data.html"><a href="data.html#data-files"><i class="fa fa-check"></i><b>1.1.1</b> Data files</a></li>
+<li class="chapter" data-level="1.1.2" data-path="data.html"><a href="data.html#notes-on-data-and-pedigree"><i class="fa fa-check"></i><b>1.1.2</b> Notes on data and pedigree</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="r.html"><a href="r.html"><i class="fa fa-check"></i><b>1.2</b> R</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="r.html"><a href="r.html#r-packages"><i class="fa fa-check"></i><b>1.2.1</b> R packages</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="univariate-animal-model.html"><a href="univariate-animal-model.html"><i class="fa fa-check"></i><b>2</b> Univariate animal model</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="scenario-and-data.html"><a href="scenario-and-data.html"><i class="fa fa-check"></i><b>2.1</b> Scenario and data</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="scenario-and-data.html"><a href="scenario-and-data.html#scenario"><i class="fa fa-check"></i><b>2.1.1</b> Scenario</a></li>
+<li class="chapter" data-level="2.1.2" data-path="scenario-and-data.html"><a href="scenario-and-data.html#data-files-1"><i class="fa fa-check"></i><b>2.1.2</b> Data files</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="asreml-r-1.html"><a href="asreml-r-1.html"><i class="fa fa-check"></i><b>2.2</b> Asreml-R</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="asreml-r-1.html"><a href="asreml-r-1.html#running-the-model"><i class="fa fa-check"></i><b>2.2.1</b> Running the model</a></li>
+<li class="chapter" data-level="2.2.2" data-path="asreml-r-1.html"><a href="asreml-r-1.html#estimating-heritability"><i class="fa fa-check"></i><b>2.2.2</b> Estimating heritability</a></li>
+<li class="chapter" data-level="2.2.3" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-fixed-effects"><i class="fa fa-check"></i><b>2.2.3</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
+<li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#further-partitioning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Further partitioning the variance</a></li>
+<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.2.7</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.2.8" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-two-random-effects"><i class="fa fa-check"></i><b>2.2.8</b> Covariance between two random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
+<li class="chapter" data-level="2.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html"><i class="fa fa-check"></i><b>2.4</b> MCMCglmm</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#running-the-model-1"><i class="fa fa-check"></i><b>2.4.1</b> Running the model</a></li>
+<li class="chapter" data-level="2.4.2" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#change-in-iteration-and-sampling"><i class="fa fa-check"></i><b>2.4.2</b> Change in iteration and sampling</a></li>
+<li class="chapter" data-level="2.4.3" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#change-priors-parameters"><i class="fa fa-check"></i><b>2.4.3</b> Change priors parameters</a></li>
+<li class="chapter" data-level="2.4.4" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#estimating-heritability-1"><i class="fa fa-check"></i><b>2.4.4</b> Estimating heritability</a></li>
+<li class="chapter" data-level="2.4.5" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-fixed-effects-1"><i class="fa fa-check"></i><b>2.4.5</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm--></a></li>
+<li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="brms-1.html"><a href="brms-1.html#running-the-model-2"><i class="fa fa-check"></i><b>2.5.1</b> Running the model</a></li>
+<li class="chapter" data-level="2.5.2" data-path="brms-1.html"><a href="brms-1.html#adding-fixed-effects-2"><i class="fa fa-check"></i><b>2.5.2</b> Adding fixed effects</a></li>
+<li class="chapter" data-level="2.5.3" data-path="brms-1.html"><a href="brms-1.html#adding-random-effects-2"><i class="fa fa-check"></i><b>2.5.3</b> Adding random effects</a></li>
+<li class="chapter" data-level="2.5.4" data-path="brms-1.html"><a href="brms-1.html#testing-significance-of-variance-components-1"><i class="fa fa-check"></i><b>2.5.4</b> Testing significance of variance components</a></li>
+<li class="chapter" data-level="2.5.5" data-path="brms-1.html"><a href="brms-1.html#further-partitioning-of-the-variance"><i class="fa fa-check"></i><b>2.5.5</b> Further partitioning of the variance</a></li>
+<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-2"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.5.7" data-path="brms-1.html"><a href="brms-1.html#covariance-between-two-random-effects-2"><i class="fa fa-check"></i><b>2.5.7</b> Covariance between two random effects</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>2.6</b> stan</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="multivariate-animal-model.html"><a href="multivariate-animal-model.html"><i class="fa fa-check"></i><b>3</b> Multivariate animal model</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="scenario-and-data-1.html"><a href="scenario-and-data-1.html"><i class="fa fa-check"></i><b>3.1</b> Scenario and data</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="scenario-and-data-1.html"><a href="scenario-and-data-1.html#scenario-1"><i class="fa fa-check"></i><b>3.1.1</b> Scenario</a></li>
+<li class="chapter" data-level="3.1.2" data-path="scenario-and-data-1.html"><a href="scenario-and-data-1.html#gryphon-files"><i class="fa fa-check"></i><b>3.1.2</b> gryphon files</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="asreml-biv.html"><a href="asreml-biv.html"><i class="fa fa-check"></i><b>3.2</b> Asreml-R</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="asreml-biv.html"><a href="asreml-biv.html#running-the-model-3"><i class="fa fa-check"></i><b>3.2.1</b> Running the model</a></li>
+<li class="chapter" data-level="3.2.2" data-path="asreml-biv.html"><a href="asreml-biv.html#adding-fixed-and-random-effects"><i class="fa fa-check"></i><b>3.2.2</b> Adding fixed and random effects</a></li>
+<li class="chapter" data-level="3.2.3" data-path="asreml-biv.html"><a href="asreml-biv.html#significance-testing"><i class="fa fa-check"></i><b>3.2.3</b> Significance testing</a></li>
+<li class="chapter" data-level="3.2.4" data-path="asreml-biv.html"><a href="asreml-biv.html#estimate-directly-the-genetic-correlation-within-the-model"><i class="fa fa-check"></i><b>3.2.4</b> Estimate directly the genetic correlation within the model</a></li>
+<li class="chapter" data-level="3.2.5" data-path="asreml-biv.html"><a href="asreml-biv.html#visualisation-of-the-correlation-aka-blup-extraction"><i class="fa fa-check"></i><b>3.2.5</b> Visualisation of the correlation (aka BLUP extraction)</a></li>
+<li class="chapter" data-level="3.2.6" data-path="asreml-biv.html"><a href="asreml-biv.html#partitionning-covariance-between-groups"><i class="fa fa-check"></i><b>3.2.6</b> Partitionning (co)variance between groups</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="gremlin-2.html"><a href="gremlin-2.html"><i class="fa fa-check"></i><b>3.3</b> gremlin</a></li>
+<li class="chapter" data-level="3.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html"><i class="fa fa-check"></i><b>3.4</b> MCMCglmm</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#fitting-the-model"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.4.2" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#adding-fixed-and-random-effects-1"><i class="fa fa-check"></i><b>3.4.2</b> Adding fixed and random effects</a></li>
+<li class="chapter" data-level="3.4.3" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#direct-estimate-of-the-correlation-instead-of-the-covariance."><i class="fa fa-check"></i><b>3.4.3</b> Direct estimate of the correlation instead of the covariance.</a></li>
+<li class="chapter" data-level="3.4.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#partitioning-covariances"><i class="fa fa-check"></i><b>3.4.4</b> Partitioning (co)variances</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a></li>
+<li class="chapter" data-level="3.6" data-path="stan-1.html"><a href="stan-1.html"><i class="fa fa-check"></i><b>3.6</b> stan</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="rep_measures.html"><a href="rep_measures.html"><i class="fa fa-check"></i><b>4</b> A repeated measures animal model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="scenario-and-data-2.html"><a href="scenario-and-data-2.html"><i class="fa fa-check"></i><b>4.1</b> Scenario and data</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="scenario-and-data-2.html"><a href="scenario-and-data-2.html#scenario-2"><i class="fa fa-check"></i><b>4.1.1</b> scenario</a></li>
+<li class="chapter" data-level="4.1.2" data-path="scenario-and-data-2.html"><a href="scenario-and-data-2.html#data-files-2"><i class="fa fa-check"></i><b>4.1.2</b> Data files</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="asreml-r-2.html"><a href="asreml-r-2.html"><i class="fa fa-check"></i><b>4.2</b> Asreml-R</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="asreml-r-2.html"><a href="asreml-r-2.html#estimating-repeatability"><i class="fa fa-check"></i><b>4.2.1</b> Estimating repeatability</a></li>
+<li class="chapter" data-level="4.2.2" data-path="asreml-r-2.html"><a href="asreml-r-2.html#partitioning-additive-and-permanent-environment-effects"><i class="fa fa-check"></i><b>4.2.2</b> Partitioning additive and permanent environment effects</a></li>
+<li class="chapter" data-level="4.2.3" data-path="asreml-r-2.html"><a href="asreml-r-2.html#adding-additional-effects-and-testing-significance"><i class="fa fa-check"></i><b>4.2.3</b> Adding additional effects and testing significance</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gremlin-3.html"><a href="gremlin-3.html"><i class="fa fa-check"></i><b>4.3</b> gremlin</a></li>
+<li class="chapter" data-level="4.4" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html"><i class="fa fa-check"></i><b>4.4</b> MCMCglmm</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#estimating-repeatability-1"><i class="fa fa-check"></i><b>4.4.1</b> Estimating repeatability</a></li>
+<li class="chapter" data-level="4.4.2" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#partitioning-additive-and-permanent-environment-effects-1"><i class="fa fa-check"></i><b>4.4.2</b> Partitioning additive and permanent environment effects</a></li>
+<li class="chapter" data-level="4.4.3" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#adding-additional-effects-and-testing-significance-1"><i class="fa fa-check"></i><b>4.4.3</b> Adding additional effects and testing significance</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="brms-3.html"><a href="brms-3.html"><i class="fa fa-check"></i><b>4.5</b> brms</a></li>
+<li class="chapter" data-level="4.6" data-path="stan-2.html"><a href="stan-2.html"><i class="fa fa-check"></i><b>4.6</b> stan</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="quick-comparison-of-codes.html"><a href="quick-comparison-of-codes.html"><i class="fa fa-check"></i><b>5</b> Quick comparison of codes</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html"><i class="fa fa-check"></i><b>5.1</b> Univariate model with repeated measures</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#asreml-r-3"><i class="fa fa-check"></i><b>5.1.1</b> Asreml-R</a></li>
+<li class="chapter" data-level="5.1.2" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#gremlin-4"><i class="fa fa-check"></i><b>5.1.2</b> gremlin</a></li>
+<li class="chapter" data-level="5.1.3" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#mcmcglmm-4"><i class="fa fa-check"></i><b>5.1.3</b> MCMCglmm</a></li>
+<li class="chapter" data-level="5.1.4" data-path="univariate-model-with-repeated-measures.html"><a href="univariate-model-with-repeated-measures.html#brms-4"><i class="fa fa-check"></i><b>5.1.4</b> brms</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="bivariate-model.html"><a href="bivariate-model.html"><i class="fa fa-check"></i><b>5.2</b> bivariate model</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="bivariate-model.html"><a href="bivariate-model.html#asreml-r-4"><i class="fa fa-check"></i><b>5.2.1</b> Asreml-R</a></li>
+<li class="chapter" data-level="5.2.2" data-path="bivariate-model.html"><a href="bivariate-model.html#gremlin-5"><i class="fa fa-check"></i><b>5.2.2</b> gremlin</a></li>
+<li class="chapter" data-level="5.2.3" data-path="bivariate-model.html"><a href="bivariate-model.html#mcmcglmm-5"><i class="fa fa-check"></i><b>5.2.3</b> MCMCglmm</a></li>
+<li class="chapter" data-level="5.2.4" data-path="bivariate-model.html"><a href="bivariate-model.html#brms-5"><i class="fa fa-check"></i><b>5.2.4</b> brms</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="_blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">How to fit an animal model</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/JulienGAMartin/wam_tuto/edit/master/%s",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["wam_tuto.pdf", "wam_tuto.epub", "wam_tuto.mobi"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toc_depth": 4
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

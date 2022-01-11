@@ -266,13 +266,8 @@ HPDinterval(genetic.correlation2.4.M, 0.95)
 HPDinterval(residual.correlation2.4.F, 0.95)
 HPDinterval(residual.correlation2.4.M, 0.95)
 ```
-<<<<<<< HEAD
 
-Neither or these posterior distributions overlaps between each other, which sugest the correlation were not significantly different between sexes. All correlations were significant (posterior distribution did not overlaps with zero) except for the male residual correlation.
+Neither or these posterior distributions overlaps between each other, which suggest the correlation were not significantly different between sexes. All correlations were significant (posterior distribution did not overlaps with zero) except for the male residual correlation.
 
 
 <!-- C4  what do I need to add ? -->
-=======
-
-Neither or these posterior distributions overlaps between each other, which sugest the correlation were not significantly different between sexes. All correlations were significant (posterior distribution did not overlaps with zero) except for the male residual correlation.
->>>>>>> 16f8809a82c6093bae5313d853ba4e62e635a3fc

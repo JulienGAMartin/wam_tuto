@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.4 MCMCglmm | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.4 MCMCglmm | How to fit an animal model" />
   <meta property="og:type" content="book" />
@@ -32,8 +32,9 @@
   
 <link rel="prev" href="gremlin-3.html"/>
 <link rel="next" href="brms-3.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,7 +50,7 @@
 
 
 
-
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
@@ -58,7 +59,6 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -119,28 +119,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
@@ -203,7 +181,7 @@ div.csl-indent {
 <li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
-<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm--></a></li>
 <li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
@@ -231,19 +209,21 @@ div.csl-indent {
 <li class="chapter" data-level="3.2.2" data-path="asreml-biv.html"><a href="asreml-biv.html#adding-fixed-and-random-effects"><i class="fa fa-check"></i><b>3.2.2</b> Adding fixed and random effects</a></li>
 <li class="chapter" data-level="3.2.3" data-path="asreml-biv.html"><a href="asreml-biv.html#significance-testing"><i class="fa fa-check"></i><b>3.2.3</b> Significance testing</a></li>
 <li class="chapter" data-level="3.2.4" data-path="asreml-biv.html"><a href="asreml-biv.html#estimate-directly-the-genetic-correlation-within-the-model"><i class="fa fa-check"></i><b>3.2.4</b> Estimate directly the genetic correlation within the model</a></li>
-<li class="chapter" data-level="3.2.5" data-path="asreml-biv.html"><a href="asreml-biv.html#partitionning-covariance-between-groups"><i class="fa fa-check"></i><b>3.2.5</b> Partitionning (co)variance between groups</a></li>
+<li class="chapter" data-level="3.2.5" data-path="asreml-biv.html"><a href="asreml-biv.html#visualisation-of-the-correlation-aka-blup-extraction"><i class="fa fa-check"></i><b>3.2.5</b> Visualisation of the correlation (aka BLUP extraction)</a></li>
+<li class="chapter" data-level="3.2.6" data-path="asreml-biv.html"><a href="asreml-biv.html#partitionning-covariance-between-groups"><i class="fa fa-check"></i><b>3.2.6</b> Partitionning (co)variance between groups</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="gremlin-2.html"><a href="gremlin-2.html"><i class="fa fa-check"></i><b>3.3</b> gremlin</a></li>
 <li class="chapter" data-level="3.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html"><i class="fa fa-check"></i><b>3.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="3.4.1" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#fitting-the-model"><i class="fa fa-check"></i><b>3.4.1</b> Fitting the model</a></li>
 <li class="chapter" data-level="3.4.2" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#adding-fixed-and-random-effects-1"><i class="fa fa-check"></i><b>3.4.2</b> Adding fixed and random effects</a></li>
-<li class="chapter" data-level="3.4.3" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#partitioning-covariances"><i class="fa fa-check"></i><b>3.4.3</b> Partitioning (co)variances</a></li>
+<li class="chapter" data-level="3.4.3" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#direct-estimate-of-the-correlation-instead-of-the-covariance."><i class="fa fa-check"></i><b>3.4.3</b> Direct estimate of the correlation instead of the covariance.</a></li>
+<li class="chapter" data-level="3.4.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#partitioning-covariances"><i class="fa fa-check"></i><b>3.4.4</b> Partitioning (co)variances</a></li>
 </ul></li>
 <li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a></li>
 <li class="chapter" data-level="3.6" data-path="stan-1.html"><a href="stan-1.html"><i class="fa fa-check"></i><b>3.6</b> stan</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="rep-measures.html"><a href="rep-measures.html"><i class="fa fa-check"></i><b>4</b> A repeated measures animal model</a>
+<li class="chapter" data-level="4" data-path="rep_measures.html"><a href="rep_measures.html"><i class="fa fa-check"></i><b>4</b> A repeated measures animal model</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="scenario-and-data-2.html"><a href="scenario-and-data-2.html"><i class="fa fa-check"></i><b>4.1</b> Scenario and data</a>
 <ul>
@@ -308,93 +288,179 @@ div.csl-indent {
 <h2><span class="header-section-number">4.4</span> MCMCglmm</h2>
 <div id="estimating-repeatability-1" class="section level3" number="4.4.1">
 <h3><span class="header-section-number">4.4.1</span> Estimating repeatability</h3>
-<p>With repeated measures on individuals it is often of interest, prior to fitting a genetic model, to see how repeatable a trait is. We can estimate the repeatability of a trait as the proportion of phenotypic variance explained by individual identity using the commands below</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="mcmcglmm-3.html#cb339-1" aria-hidden="true" tabindex="-1"></a>p.var <span class="ot">&lt;-</span> <span class="fu">var</span>(gryphonRM<span class="sc">$</span>laydate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb339-2"><a href="mcmcglmm-3.html#cb339-2" aria-hidden="true" tabindex="-1"></a>prior3<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">G =</span> <span class="fu">list</span>(<span class="at">G1 =</span> <span class="fu">list</span>(<span class="at">V =</span> <span class="dv">1</span>, <span class="at">nu =</span> <span class="fl">0.002</span>)), <span class="at">R =</span> <span class="fu">list</span>(</span>
-<span id="cb339-3"><a href="mcmcglmm-3.html#cb339-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">V =</span> <span class="dv">1</span>,</span>
-<span id="cb339-4"><a href="mcmcglmm-3.html#cb339-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">nu =</span> <span class="fl">0.002</span></span>
-<span id="cb339-5"><a href="mcmcglmm-3.html#cb339-5" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb339-6"><a href="mcmcglmm-3.html#cb339-6" aria-hidden="true" tabindex="-1"></a>model3<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">MCMCglmm</span>(laydate <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb339-7"><a href="mcmcglmm-3.html#cb339-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span>animal, <span class="at">data =</span> gryphonRM,</span>
-<span id="cb339-8"><a href="mcmcglmm-3.html#cb339-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> prior3<span class="fl">.1</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
-<span id="cb339-9"><a href="mcmcglmm-3.html#cb339-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb339-10"><a href="mcmcglmm-3.html#cb339-10" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior.mode</span>(model3<span class="fl">.1</span><span class="sc">$</span>VCV)</span></code></pre></div>
+<p>With repeated measures on individuals it is often of interest to see how repeatable a trait is.
+We can estimate the repeatability of a trait as the proportion of phenotypic variance <span class="math inline">\(V_P\)</span> explained by individual variance <span class="math inline">\(V_{ind}\)</span>; <span class="math inline">\(R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)\)</span>.
+As you already know, bayesian modelisation requires prior. Here, we create a unformative prior with one estimate for the G matrix and one estimate for the Residual matrix, in addition
+<!-- C1 I dont know wht you calculate p.var if you dont use it in the prior --></p>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="mcmcglmm-3.html#cb408-1" aria-hidden="true"></a><span class="co">#p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
+<span id="cb408-2"><a href="mcmcglmm-3.html#cb408-2" aria-hidden="true"></a>prior3<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)), <span class="dt">R =</span> <span class="kw">list</span>(</span>
+<span id="cb408-3"><a href="mcmcglmm-3.html#cb408-3" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
+<span id="cb408-4"><a href="mcmcglmm-3.html#cb408-4" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
+<span id="cb408-5"><a href="mcmcglmm-3.html#cb408-5" aria-hidden="true"></a>))</span>
+<span id="cb408-6"><a href="mcmcglmm-3.html#cb408-6" aria-hidden="true"></a>model3<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
+<span id="cb408-7"><a href="mcmcglmm-3.html#cb408-7" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb408-8"><a href="mcmcglmm-3.html#cb408-8" aria-hidden="true"></a>  <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb408-9"><a href="mcmcglmm-3.html#cb408-9" aria-hidden="true"></a>)</span>
+<span id="cb408-10"><a href="mcmcglmm-3.html#cb408-10" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
-## 10.96105 21.36733</code></pre>
-<p>Note the use of the term <code>animal</code>, since neither the <code>pedigree</code> nor the <code>ginv</code> argument are provided, it represents the between-individual variance, while the residual compo- nent (Variance) therefore represents within-individual variance. Here then the repeata- bility of the trait can be determined by as 0.353 (i.e., 11.4532/(11.4532+21.1432). Given that we set up the simulation such that mean lay date changes with age (initially increas- ing to age 5 before a late life decline) we might ask what the repeatability of lay date is after conditioning on age effect. This would be done by adding age into the model as a fixed effect.</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="mcmcglmm-3.html#cb341-1" aria-hidden="true" tabindex="-1"></a>model3<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">MCMCglmm</span>(laydate <span class="sc">~</span> age,</span>
-<span id="cb341-2"><a href="mcmcglmm-3.html#cb341-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span>animal, <span class="at">data =</span> gryphonRM,</span>
-<span id="cb341-3"><a href="mcmcglmm-3.html#cb341-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">prior =</span> prior3<span class="fl">.1</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
-<span id="cb341-4"><a href="mcmcglmm-3.html#cb341-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb341-5"><a href="mcmcglmm-3.html#cb341-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model3<span class="fl">.2</span><span class="sc">$</span>Sol)</span></code></pre></div>
-<p><img src="wam_tuto_files/figure-html/unnamed-chunk-123-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-123-2.svg" width="672" /></p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="mcmcglmm-3.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model3<span class="fl">.2</span><span class="sc">$</span>VCV)</span></code></pre></div>
-<p><img src="wam_tuto_files/figure-html/unnamed-chunk-123-3.svg" width="672" /></p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="mcmcglmm-3.html#cb343-1" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior.mode</span>(model3<span class="fl">.2</span><span class="sc">$</span>VCV)</span></code></pre></div>
+## 10.84015 21.63040</code></pre>
+<p>Note the use of the term <code>animal</code> as random allowed to partition the phenotypic variance <span class="math inline">\(V_P\)</span> into among individual variance <span class="math inline">\(V_{ind}\)</span> associated with <code>animal</code> and residual variance <span class="math inline">\(V_R\)</span> associated with <code>units</code>.</p>
+<p>Here then the repeatability of the <code>laydate</code> can be determined as: 22.63 (<em>i.e.</em>, as 10.84/(10.84 + 21.63)). Just a friendly remember, we work with Monte Carlo chain with model iteration, so the point estimate can be different (but very similar) each time you run the model.</p>
+<p>Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding <code>age</code> into the model as a fixed effect.</p>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="mcmcglmm-3.html#cb410-1" aria-hidden="true"></a>model3<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span>age,</span>
+<span id="cb410-2"><a href="mcmcglmm-3.html#cb410-2" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb410-3"><a href="mcmcglmm-3.html#cb410-3" aria-hidden="true"></a>  <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb410-4"><a href="mcmcglmm-3.html#cb410-4" aria-hidden="true"></a>)</span>
+<span id="cb410-5"><a href="mcmcglmm-3.html#cb410-5" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-128-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-128-2.svg" width="672" /></p>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="mcmcglmm-3.html#cb411-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-128-3.svg" width="672" /></p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="mcmcglmm-3.html#cb412-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
-## 12.68713 16.36486</code></pre>
-<p>Note that the random effect structure has remained unchaged, and so we have not modified the prior between models 3.1 and 3.2. So that the repeatability of laydate, after accounting for age effects, is now estimated as 0.445 (i.e., 12.6379/(12.6379+16.465). So, just as we saw when estimating h 2 in tutorial 1, the inclusion of fixed effects will alter the estimated effect size if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.</p>
-<p>Here age is modelled as a 5 level factor (see the convertion of age to a factor in section 3.2). We could equally have fitted it as a continuous variable instead in which case, given the late life decline, we would probably also include a quadratic term.</p>
+## 12.27716 16.57213</code></pre>
+<p>The model assumption seems correct, so we can look at the different estimates.
+Note that the random effect structure has remained unchanged because we did not modified the prior <code>prior3.1</code>.
+The repeatability of <code>laydate</code>, after accounting for age effects, is now estimated as22.63 (<em>i.e.</em>, as 10.84/(10.84 + 21.63)).
+Just as we saw when estimating <span class="math inline">\(h_2\)</span> in tutorial 1, the inclusion of fixed effects will alter the estimated effect size <!-- C3 effect size or just the variance estimate -->if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.</p>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="mcmcglmm-3.html#cb414-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-129-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-129-2.svg" width="672" /></p>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="mcmcglmm-3.html#cb415-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol)</span></code></pre></div>
+<pre><code>## (Intercept)        age3        age4        age5        age6 
+##   20.183460    2.289288    4.251726    6.069901    3.277197</code></pre>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="mcmcglmm-3.html#cb417-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol, <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>##                 lower     upper
+## (Intercept) 19.724218 20.832820
+## age3         1.891526  3.248765
+## age4         3.629328  4.914958
+## age5         5.443188  6.773146
+## age6         2.442343  3.755304
+## attr(,&quot;Probability&quot;)
+## [1] 0.95</code></pre>
+<p>Here age is modeled as a 5-level factor (specified using the function <code>as.factor()</code> at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.
+In addition, using <code>age</code> as continuous variable can help in saving some degree of freedom in the analysis.</p>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="mcmcglmm-3.html#cb419-1" aria-hidden="true"></a>gryphonRM<span class="op">$</span>age_c &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphonRM<span class="op">$</span>age)</span>
+<span id="cb419-2"><a href="mcmcglmm-3.html#cb419-2" aria-hidden="true"></a></span>
+<span id="cb419-3"><a href="mcmcglmm-3.html#cb419-3" aria-hidden="true"></a>model3<span class="fl">.2</span>_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span>age_c<span class="op">+</span><span class="st"> </span><span class="kw">I</span>(age_c<span class="op">^</span><span class="dv">2</span>),</span>
+<span id="cb419-4"><a href="mcmcglmm-3.html#cb419-4" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb419-5"><a href="mcmcglmm-3.html#cb419-5" aria-hidden="true"></a>  <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb419-6"><a href="mcmcglmm-3.html#cb419-6" aria-hidden="true"></a>)</span>
+<span id="cb419-7"><a href="mcmcglmm-3.html#cb419-7" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>Sol)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-130-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="mcmcglmm-3.html#cb420-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-130-2.svg" width="672" /></p>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="mcmcglmm-3.html#cb421-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<pre><code>##  animal   units 
+## 12.4652 16.8547</code></pre>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="mcmcglmm-3.html#cb423-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>Sol)</span></code></pre></div>
+<pre><code>## (Intercept)       age_c  I(age_c^2) 
+##  15.0070566   5.7839990  -0.7691493</code></pre>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="mcmcglmm-3.html#cb425-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>Sol, <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>##                  lower     upper
+## (Intercept) 14.0637229 16.147764
+## age_c        4.9085712  6.389649
+## I(age_c^2)  -0.9062759 -0.665899
+## attr(,&quot;Probability&quot;)
+## [1] 0.95</code></pre>
 </div>
 <div id="partitioning-additive-and-permanent-environment-effects-1" class="section level3" number="4.4.2">
 <h3><span class="header-section-number">4.4.2</span> Partitioning additive and permanent environment effects</h3>
-<p>Generally we expect that the repeatability will set the upper limit for heritability since, while additive genetic effects will cause among-individual variation, so will other types of effect. Non-additive contributions to fixed among-individual differences are normally referred to as ‘permanent environment effects,’ although ‘non-heritable effects’ that are consistent within individuals may be a better way to think of modelling this effect. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in V A . To illustrate this fit the animal model</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="mcmcglmm-3.html#cb345-1" aria-hidden="true" tabindex="-1"></a>Ainv <span class="ot">&lt;-</span> <span class="fu">inverseA</span>(gryphonped)<span class="sc">$</span>Ainv</span>
-<span id="cb345-2"><a href="mcmcglmm-3.html#cb345-2" aria-hidden="true" tabindex="-1"></a>model3<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">MCMCglmm</span>(laydate <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age,</span>
-<span id="cb345-3"><a href="mcmcglmm-3.html#cb345-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span>animal, <span class="at">ginv =</span> <span class="fu">list</span>(<span class="at">animal =</span> Ainv),</span>
-<span id="cb345-4"><a href="mcmcglmm-3.html#cb345-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> gryphonRM, <span class="at">prior =</span> prior3<span class="fl">.1</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
-<span id="cb345-5"><a href="mcmcglmm-3.html#cb345-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb345-6"><a href="mcmcglmm-3.html#cb345-6" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior.mode</span>(model3<span class="fl">.3</span><span class="sc">$</span>VCV)</span></code></pre></div>
+<p>Generally we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals.
+Non-additive contributions to fixed among-individual differences are normally referred to as <em>permanent environment effects</em>. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in <span class="math inline">\(V_A\)</span>.</p>
+<p>To illustrate it, we first fit the animal model:</p>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="mcmcglmm-3.html#cb427-1" aria-hidden="true"></a>Ainv &lt;-<span class="st"> </span><span class="kw">inverseA</span>(gryphonped)<span class="op">$</span>Ainv</span>
+<span id="cb427-2"><a href="mcmcglmm-3.html#cb427-2" aria-hidden="true"></a>model3<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
+<span id="cb427-3"><a href="mcmcglmm-3.html#cb427-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
+<span id="cb427-4"><a href="mcmcglmm-3.html#cb427-4" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb427-5"><a href="mcmcglmm-3.html#cb427-5" aria-hidden="true"></a>)</span></code></pre></div>
+<p>Variance components are almost unchanged if we compare the previous model:</p>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="mcmcglmm-3.html#cb428-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.3</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
-## 13.64563 16.74446</code></pre>
-<p>This suggests that all of the among-individual variance is - rightly or wrongly - being partitioned as V A here. In fact here the partition is wrong since the simulation included both additive genetic effects and additional fixed heterogeneity that was not associated with the pedigree structure (i.e. permanent environment effects).
-In order to fit both permanent environemnt and additive genetic effects, we need to fit the individual identity twice in the model: once linked to the pedigree (genetic effect) and once not linked to the pedigree (permanenet environemnt effect).
-To do so, we need to duplicate the variable containing the individual identity and give it a new name.
-An more appropriate estimate of V A is given by the model:</p>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="mcmcglmm-3.html#cb347-1" aria-hidden="true" tabindex="-1"></a>gryphonRM<span class="sc">$</span>animal_pe <span class="ot">&lt;-</span> gryphonRM<span class="sc">$</span>animal</span>
-<span id="cb347-2"><a href="mcmcglmm-3.html#cb347-2" aria-hidden="true" tabindex="-1"></a>p.var <span class="ot">&lt;-</span> <span class="fu">var</span>(gryphonRM<span class="sc">$</span>laydate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb347-3"><a href="mcmcglmm-3.html#cb347-3" aria-hidden="true" tabindex="-1"></a>prior3<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">G =</span> <span class="fu">list</span>(<span class="at">G1 =</span> <span class="fu">list</span>(<span class="at">V =</span> <span class="dv">1</span>, <span class="at">nu =</span> <span class="fl">0.002</span>), <span class="at">G2 =</span> <span class="fu">list</span>(</span>
-<span id="cb347-4"><a href="mcmcglmm-3.html#cb347-4" aria-hidden="true" tabindex="-1"></a> <span class="at">V =</span> <span class="dv">1</span>,</span>
-<span id="cb347-5"><a href="mcmcglmm-3.html#cb347-5" aria-hidden="true" tabindex="-1"></a> <span class="at">nu =</span> <span class="fl">0.002</span></span>
-<span id="cb347-6"><a href="mcmcglmm-3.html#cb347-6" aria-hidden="true" tabindex="-1"></a>)), <span class="at">R =</span> <span class="fu">list</span>(<span class="at">V =</span> <span class="dv">1</span>, <span class="at">nu =</span> <span class="fl">0.002</span>))</span>
-<span id="cb347-7"><a href="mcmcglmm-3.html#cb347-7" aria-hidden="true" tabindex="-1"></a>model3<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">MCMCglmm</span>(laydate <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age,</span>
-<span id="cb347-8"><a href="mcmcglmm-3.html#cb347-8" aria-hidden="true" tabindex="-1"></a> <span class="at">random =</span> <span class="sc">~</span> animal <span class="sc">+</span> animal_pe,</span>
-<span id="cb347-9"><a href="mcmcglmm-3.html#cb347-9" aria-hidden="true" tabindex="-1"></a> <span class="at">ginv =</span> <span class="fu">list</span>(<span class="at">animal =</span> Ainv), <span class="at">data =</span> gryphonRM, <span class="at">prior =</span> prior3<span class="fl">.4</span>, <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
-<span id="cb347-10"><a href="mcmcglmm-3.html#cb347-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb347-11"><a href="mcmcglmm-3.html#cb347-11" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior.mode</span>(model3<span class="fl">.4</span><span class="sc">$</span>VCV)</span></code></pre></div>
+## 13.63208 16.90563</code></pre>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="mcmcglmm-3.html#cb430-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<pre><code>##   animal    units 
+## 12.27716 16.57213</code></pre>
+<p>This suggests that most of the among-individual variance is – rightly or wrongly – being partitioned as <span class="math inline">\(V_A\)</span> here. In fact here the partition is wrong since the simulation included both additive genetic effects and additional fixed heterogeneity that was not associated with the pedigree structure (i.e. permanent environment effects).
+In order to o obtain an unbiased estimate of <span class="math inline">\(V_A\)</span>, we need to fit the individual identity twice in the model: once linked to the pedigree (genetic effect) and once not linked to the pedigree (permanent environment effect).To do so, we need to duplicate the variable containing the individual identity <code>animal</code> and give it a new name. In addition, the prior need to be modified to integrate a seconf random effect.An more appropriate estimate of <span class="math inline">\(V_A\)</span> is given by the model:</p>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="mcmcglmm-3.html#cb432-1" aria-hidden="true"></a>gryphonRM<span class="op">$</span>animal_pe &lt;-<span class="st"> </span>gryphonRM<span class="op">$</span>animal</span>
+<span id="cb432-2"><a href="mcmcglmm-3.html#cb432-2" aria-hidden="true"></a><span class="co">#p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
+<span id="cb432-3"><a href="mcmcglmm-3.html#cb432-3" aria-hidden="true"></a>prior3<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(</span>
+<span id="cb432-4"><a href="mcmcglmm-3.html#cb432-4" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
+<span id="cb432-5"><a href="mcmcglmm-3.html#cb432-5" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
+<span id="cb432-6"><a href="mcmcglmm-3.html#cb432-6" aria-hidden="true"></a>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</span>
+<span id="cb432-7"><a href="mcmcglmm-3.html#cb432-7" aria-hidden="true"></a>model3<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
+<span id="cb432-8"><a href="mcmcglmm-3.html#cb432-8" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>animal_pe,</span>
+<span id="cb432-9"><a href="mcmcglmm-3.html#cb432-9" aria-hidden="true"></a>  <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.4</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb432-10"><a href="mcmcglmm-3.html#cb432-10" aria-hidden="true"></a>)</span>
+<span id="cb432-11"><a href="mcmcglmm-3.html#cb432-11" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.4</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##    animal animal_pe     units 
-##  5.279355  6.927251 16.261324</code></pre>
-<p>The estimate of V A is now much lower (reduced from 13.6735 to 5.1238) since the ad- ditive and permanent environment effects are being properly separated. We could obtain estimates of h 2 and of the repeatability from this model using the following commands:</p>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="mcmcglmm-3.html#cb349-1" aria-hidden="true" tabindex="-1"></a>model3.<span class="fl">4.</span>VP <span class="ot">&lt;-</span> model3<span class="fl">.4</span><span class="sc">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="sc">+</span> model3<span class="fl">.4</span><span class="sc">$</span>VCV[, <span class="st">&quot;animal_pe&quot;</span>] <span class="sc">+</span> model3<span class="fl">.4</span><span class="sc">$</span>VCV[, <span class="st">&quot;units&quot;</span>]</span>
-<span id="cb349-2"><a href="mcmcglmm-3.html#cb349-2" aria-hidden="true" tabindex="-1"></a>model3.<span class="fl">4.</span>PE_VA <span class="ot">&lt;-</span> model3<span class="fl">.4</span><span class="sc">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="sc">+</span> model3<span class="fl">.4</span><span class="sc">$</span>VCV[, <span class="st">&quot;animal_pe&quot;</span>]</span>
-<span id="cb349-3"><a href="mcmcglmm-3.html#cb349-3" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior.mode</span>(model3.<span class="fl">4.</span>PE_VA <span class="sc">/</span> model3.<span class="fl">4.</span>VP)</span></code></pre></div>
+##  5.268277  6.712845 16.474657</code></pre>
+<p>The estimate of<span class="math inline">\(V_A\)</span> is now much lower (reduced from 13.6735 to 5.1238) due to a proper separation in the additive and permanent environment effects.
+We can estimate <span class="math inline">\(h^2\)</span> and the repeatability from this model:</p>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="mcmcglmm-3.html#cb434-1" aria-hidden="true"></a>model3.<span class="fl">4.</span>VP &lt;-<span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal_pe&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>]</span>
+<span id="cb434-2"><a href="mcmcglmm-3.html#cb434-2" aria-hidden="true"></a>model3.<span class="fl">4.</span>PE_VA &lt;-<span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal_pe&quot;</span>]</span>
+<span id="cb434-3"><a href="mcmcglmm-3.html#cb434-3" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3.<span class="fl">4.</span>PE_VA <span class="op">/</span><span class="st"> </span>model3.<span class="fl">4.</span>VP)</span></code></pre></div>
 <pre><code>##      var1 
-## 0.4356713</code></pre>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="mcmcglmm-3.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior.mode</span>(model3<span class="fl">.4</span><span class="sc">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="sc">/</span> model3.<span class="fl">4.</span>VP)</span></code></pre></div>
+## 0.4357653</code></pre>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="mcmcglmm-3.html#cb436-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span><span class="st"> </span>model3.<span class="fl">4.</span>VP)</span></code></pre></div>
 <pre><code>##      var1 
-## 0.1722527</code></pre>
+## 0.1724381</code></pre>
 </div>
 <div id="adding-additional-effects-and-testing-significance-1" class="section level3" number="4.4.3">
 <h3><span class="header-section-number">4.4.3</span> Adding additional effects and testing significance</h3>
 <p>Models of repeated measures can be extended to include other fixed or random effects.
-For example try including year of measurement (year).</p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="mcmcglmm-3.html#cb353-1" aria-hidden="true" tabindex="-1"></a>p.var <span class="ot">&lt;-</span> <span class="fu">var</span>(gryphonRM<span class="sc">$</span>laydate, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb353-2"><a href="mcmcglmm-3.html#cb353-2" aria-hidden="true" tabindex="-1"></a>prior3<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">G =</span> <span class="fu">list</span>(<span class="at">G1 =</span> <span class="fu">list</span>(<span class="at">V =</span> <span class="dv">1</span>, <span class="at">nu =</span> <span class="fl">0.002</span>), <span class="at">G2 =</span> <span class="fu">list</span>(</span>
-<span id="cb353-3"><a href="mcmcglmm-3.html#cb353-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">V =</span> <span class="dv">1</span>,</span>
-<span id="cb353-4"><a href="mcmcglmm-3.html#cb353-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">nu =</span> <span class="fl">0.002</span></span>
-<span id="cb353-5"><a href="mcmcglmm-3.html#cb353-5" aria-hidden="true" tabindex="-1"></a>), <span class="at">G3 =</span> <span class="fu">list</span>(<span class="at">V =</span> <span class="dv">1</span>, <span class="at">nu =</span> <span class="fl">0.002</span>), <span class="at">G4 =</span> <span class="fu">list</span>(</span>
-<span id="cb353-6"><a href="mcmcglmm-3.html#cb353-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">V =</span> <span class="dv">1</span>,</span>
-<span id="cb353-7"><a href="mcmcglmm-3.html#cb353-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">nu =</span> <span class="fl">0.002</span></span>
-<span id="cb353-8"><a href="mcmcglmm-3.html#cb353-8" aria-hidden="true" tabindex="-1"></a>)), <span class="at">R =</span> <span class="fu">list</span>(<span class="at">V =</span> <span class="dv">1</span>, <span class="at">nu =</span> <span class="fl">0.002</span>))</span>
-<span id="cb353-9"><a href="mcmcglmm-3.html#cb353-9" aria-hidden="true" tabindex="-1"></a>model3<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">MCMCglmm</span>(laydate <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> age,</span>
-<span id="cb353-10"><a href="mcmcglmm-3.html#cb353-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">random =</span> <span class="sc">~</span> animal <span class="sc">+</span> animal_pe <span class="sc">+</span></span>
-<span id="cb353-11"><a href="mcmcglmm-3.html#cb353-11" aria-hidden="true" tabindex="-1"></a>    year <span class="sc">+</span> byear, <span class="at">ginv =</span> <span class="fu">list</span>(<span class="at">animal =</span> Ainv), <span class="at">data =</span> gryphonRM, <span class="at">prior =</span> prior3<span class="fl">.5</span>,</span>
-<span id="cb353-12"><a href="mcmcglmm-3.html#cb353-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
-<span id="cb353-13"><a href="mcmcglmm-3.html#cb353-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb353-14"><a href="mcmcglmm-3.html#cb353-14" aria-hidden="true" tabindex="-1"></a><span class="fu">posterior.mode</span>(model3<span class="fl">.5</span><span class="sc">$</span>VCV)</span></code></pre></div>
+For example we can try including year of measurement (<code>year</code>) and birth year (<code>byear</code>) as other random effects.</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="mcmcglmm-3.html#cb438-1" aria-hidden="true"></a><span class="co">#p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
+<span id="cb438-2"><a href="mcmcglmm-3.html#cb438-2" aria-hidden="true"></a>prior3<span class="fl">.5</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(</span>
+<span id="cb438-3"><a href="mcmcglmm-3.html#cb438-3" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
+<span id="cb438-4"><a href="mcmcglmm-3.html#cb438-4" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
+<span id="cb438-5"><a href="mcmcglmm-3.html#cb438-5" aria-hidden="true"></a>), <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G4 =</span> <span class="kw">list</span>(</span>
+<span id="cb438-6"><a href="mcmcglmm-3.html#cb438-6" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
+<span id="cb438-7"><a href="mcmcglmm-3.html#cb438-7" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
+<span id="cb438-8"><a href="mcmcglmm-3.html#cb438-8" aria-hidden="true"></a>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</span>
+<span id="cb438-9"><a href="mcmcglmm-3.html#cb438-9" aria-hidden="true"></a></span>
+<span id="cb438-10"><a href="mcmcglmm-3.html#cb438-10" aria-hidden="true"></a>model3<span class="fl">.5</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
+<span id="cb438-11"><a href="mcmcglmm-3.html#cb438-11" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>animal_pe <span class="op">+</span></span>
+<span id="cb438-12"><a href="mcmcglmm-3.html#cb438-12" aria-hidden="true"></a><span class="st">    </span>year <span class="op">+</span><span class="st"> </span>byear, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.5</span>,</span>
+<span id="cb438-13"><a href="mcmcglmm-3.html#cb438-13" aria-hidden="true"></a>  <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb438-14"><a href="mcmcglmm-3.html#cb438-14" aria-hidden="true"></a>)</span>
+<span id="cb438-15"><a href="mcmcglmm-3.html#cb438-15" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.5</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##      animal   animal_pe        year       byear       units 
-## 2.914285557 9.456423358 8.490992969 0.002853262 7.857895713</code></pre>
-<p>This model will return additional variance components corresponding to year of mea- surement effects and birth year (of the female effects). The latter were not simulated as should be apparent from the parameter estimate (and by the support interval derivable from the posterior distribution and from DIC-based comparison of model3.5 and a model from which the birth year term had been eliminated, see tutorial 1). However, year ef- fects were simulated as should be apparent from the from the modal estimate and from the support interval (try this yourself using HPDinterval()) and this could be formally confirmed by comparison of DIC. year effects could alternatively be included as fixed effects (try this, you should be able to handle the new prior specification at this point). Since we simulated large year of measurement effects this treatment will reduce V R and increase the the estimates of heritability and repeatability which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.</p>
+## 4.129219372 8.503677014 6.972578727 0.001652363 7.836321999</code></pre>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="mcmcglmm-3.html#cb440-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model3<span class="fl">.5</span><span class="op">$</span>VCV, <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>##                  lower      upper
+## animal    1.8070502637  7.7024035
+## animal_pe 5.5135401046 11.3205438
+## year      4.7717338922 13.1216625
+## byear     0.0002457895  0.2184504
+## units     7.2179169545  8.4812537
+## attr(,&quot;Probability&quot;)
+## [1] 0.95</code></pre>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="mcmcglmm-3.html#cb442-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.5</span><span class="op">$</span>VCV)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-135-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-135-2.svg" width="672" /></p>
+<p>This model will return additional variance components corresponding to year of measurement effects and birth year (of the female effects) <!-- I dont understand the statement of female effect-->.</p>
+<p><span class="math inline">\(V_{byear}\)</span> is very low and its posterior distribution (via the function <code>HPDinterval</code> or <code>plot</code>) is very close to zero indicating its not significance. You have to remember bayesien model never estimate variable to 0 or passing zero, so you will never see a credible interval <code>CI</code> crossing zero for a variance.
+If you compared the DIC of model3.5 to a reduced model without <code>byear</code>, it should be very similar.</p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="mcmcglmm-3.html#cb443-1" aria-hidden="true"></a><span class="co">#p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
+<span id="cb443-2"><a href="mcmcglmm-3.html#cb443-2" aria-hidden="true"></a>prior3<span class="fl">.5</span>_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(</span>
+<span id="cb443-3"><a href="mcmcglmm-3.html#cb443-3" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
+<span id="cb443-4"><a href="mcmcglmm-3.html#cb443-4" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
+<span id="cb443-5"><a href="mcmcglmm-3.html#cb443-5" aria-hidden="true"></a>), <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)), </span>
+<span id="cb443-6"><a href="mcmcglmm-3.html#cb443-6" aria-hidden="true"></a><span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</span>
+<span id="cb443-7"><a href="mcmcglmm-3.html#cb443-7" aria-hidden="true"></a></span>
+<span id="cb443-8"><a href="mcmcglmm-3.html#cb443-8" aria-hidden="true"></a>model3<span class="fl">.5</span>_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
+<span id="cb443-9"><a href="mcmcglmm-3.html#cb443-9" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>animal_pe <span class="op">+</span></span>
+<span id="cb443-10"><a href="mcmcglmm-3.html#cb443-10" aria-hidden="true"></a><span class="st">    </span>year, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.5</span>_<span class="dv">2</span>,</span>
+<span id="cb443-11"><a href="mcmcglmm-3.html#cb443-11" aria-hidden="true"></a>  <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb443-12"><a href="mcmcglmm-3.html#cb443-12" aria-hidden="true"></a>)</span>
+<span id="cb443-13"><a href="mcmcglmm-3.html#cb443-13" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.5</span>_<span class="dv">2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<pre><code>##    animal animal_pe      year     units 
+##  4.040191  9.024435  8.110159  7.816669</code></pre>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="mcmcglmm-3.html#cb445-1" aria-hidden="true"></a>model3<span class="fl">.5</span><span class="op">$</span>DIC</span></code></pre></div>
+<pre><code>## [1] 8291.129</code></pre>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="mcmcglmm-3.html#cb447-1" aria-hidden="true"></a>model3<span class="fl">.5</span>_<span class="dv">2</span><span class="op">$</span>DIC</span></code></pre></div>
+<pre><code>## [1] 8289.873</code></pre>
+<p><code>year</code> effects could alternatively be included as fixed effects (try it!, you should be able to handle the new prior specification at this point). This will reduce <span class="math inline">\(V_R\)</span> and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.</p>
+<!-- CX  What to do more , may be extract BLUP also !-->
 
 </div>
 </div>
@@ -408,7 +474,6 @@ For example try including year of measurement (year).</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -436,7 +501,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/JulienGAMartin/wam_tuto/04_03-rep_mcmcglmm.Rmd",
+"link": "https://github.com/JulienGAMartin/wam_tuto/edit/master/04_03-rep_mcmcglmm.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -448,6 +513,10 @@ gitbook.start({
 "text": null
 },
 "download": ["wam_tuto.pdf", "wam_tuto.epub", "wam_tuto.mobi"],
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection",
 "scroll_highlight": true

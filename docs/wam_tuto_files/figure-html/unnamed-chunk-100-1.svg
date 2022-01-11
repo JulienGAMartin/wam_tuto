@@ -34,15 +34,15 @@
 <line x1='84.70' y1='59.53' x2='84.70' y2='64.28' style='stroke-width: 0.75;' />
 <line x1='100.47' y1='59.53' x2='100.47' y2='64.28' style='stroke-width: 0.75;' />
 <line x1='116.24' y1='59.53' x2='116.24' y2='64.28' style='stroke-width: 0.75;' />
-<text x='53.16' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>1e+05</text>
-<text x='100.47' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>4e+05</text>
+<text x='53.16' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>1e+05</text>
+<text x='100.47' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>4e+05</text>
 <line x1='38.97' y1='58.22' x2='38.97' y2='40.05' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='58.22' x2='34.21' y2='58.22' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='52.16' x2='34.21' y2='52.16' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='46.11' x2='34.21' y2='46.11' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='40.05' x2='34.21' y2='40.05' style='stroke-width: 0.75;' />
-<text transform='translate(27.56,58.22) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>5.5</text>
-<polyline points='38.97,59.53 124.04,59.53 124.04,38.97 38.97,38.97 38.97,59.53 ' style='stroke-width: 0.75;' />
+<text transform='translate(27.56,58.22) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>5.5</text>
+<polygon points='38.97,59.53 124.04,59.53 124.04,38.97 38.97,38.97 ' style='stroke-width: 0.75; fill: none;' />
 </g>
 <defs>
   <clipPath id='cpMC4wMHwxNDQuMDB8MC4wMHwxMDguMDA='>
@@ -50,8 +50,8 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHwxNDQuMDB8MC4wMHwxMDguMDA=)'>
-<text x='81.50' y='95.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='37.66px' lengthAdjust='spacingAndGlyphs'>Iterations</text>
-<text x='81.50' y='22.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Arial;' textLength='89.41px' lengthAdjust='spacingAndGlyphs'>Trace of traitbwt</text>
+<text x='81.50' y='95.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='37.66px' lengthAdjust='spacingAndGlyphs'>Iterations</text>
+<text x='81.50' y='22.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Liberation Sans;' textLength='89.41px' lengthAdjust='spacingAndGlyphs'>Trace of traitbwt</text>
 </g>
 <defs>
   <clipPath id='cpMTgyLjk3fDI2OC4wNHwzOC45N3w1OS41Mw=='>
@@ -67,17 +67,17 @@
 <line x1='215.67' y1='59.53' x2='215.67' y2='64.28' style='stroke-width: 0.75;' />
 <line x1='236.10' y1='59.53' x2='236.10' y2='64.28' style='stroke-width: 0.75;' />
 <line x1='256.53' y1='59.53' x2='256.53' y2='64.28' style='stroke-width: 0.75;' />
-<text x='195.24' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>5.5</text>
-<text x='215.67' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>6.0</text>
-<text x='236.10' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>6.5</text>
-<text x='256.53' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>7.0</text>
+<text x='195.24' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>5.5</text>
+<text x='215.67' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>6.0</text>
+<text x='236.10' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>6.5</text>
+<text x='256.53' y='76.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>7.0</text>
 <line x1='182.97' y1='58.77' x2='182.97' y2='41.81' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='58.77' x2='178.21' y2='58.77' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='53.12' x2='178.21' y2='53.12' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='47.47' x2='178.21' y2='47.47' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='41.81' x2='178.21' y2='41.81' style='stroke-width: 0.75;' />
-<text transform='translate(171.56,58.77) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>0.0</text>
-<polyline points='182.97,59.53 268.04,59.53 268.04,38.97 182.97,38.97 182.97,59.53 ' style='stroke-width: 0.75;' />
+<text transform='translate(171.56,58.77) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>0.0</text>
+<polygon points='182.97,59.53 268.04,59.53 268.04,38.97 182.97,38.97 ' style='stroke-width: 0.75; fill: none;' />
 </g>
 <defs>
   <clipPath id='cpMTQ0LjAwfDI4OC4wMHwwLjAwfDEwOC4wMA=='>
@@ -85,8 +85,8 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMTQ0LjAwfDI4OC4wMHwwLjAwfDEwOC4wMA==)'>
-<text x='225.50' y='22.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Arial;' textLength='101.54px' lengthAdjust='spacingAndGlyphs'>Density of traitbwt</text>
-<text x='225.50' y='95.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='131.68px' lengthAdjust='spacingAndGlyphs'>N = 1000   Bandwidth = 0.05932</text>
+<text x='225.50' y='22.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Liberation Sans;' textLength='101.54px' lengthAdjust='spacingAndGlyphs'>Density of traitbwt</text>
+<text x='225.50' y='95.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='131.68px' lengthAdjust='spacingAndGlyphs'>N = 1000   Bandwidth = 0.05932</text>
 </g>
 <g clip-path='url(#cpMTgyLjk3fDI2OC4wNHwzOC45N3w1OS41Mw==)'>
 <line x1='182.97' y1='58.77' x2='268.04' y2='58.77' style='stroke-width: 0.075; stroke: #BEBEBE;' />
@@ -1106,8 +1106,8 @@
 <line x1='84.70' y1='167.53' x2='84.70' y2='172.28' style='stroke-width: 0.75;' />
 <line x1='100.47' y1='167.53' x2='100.47' y2='172.28' style='stroke-width: 0.75;' />
 <line x1='116.24' y1='167.53' x2='116.24' y2='172.28' style='stroke-width: 0.75;' />
-<text x='53.16' y='184.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>1e+05</text>
-<text x='100.47' y='184.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>4e+05</text>
+<text x='53.16' y='184.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>1e+05</text>
+<text x='100.47' y='184.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>4e+05</text>
 <line x1='38.97' y1='166.93' x2='38.97' y2='149.90' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='166.93' x2='34.21' y2='166.93' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='163.52' x2='34.21' y2='163.52' style='stroke-width: 0.75;' />
@@ -1115,8 +1115,8 @@
 <line x1='38.97' y1='156.71' x2='34.21' y2='156.71' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='153.30' x2='34.21' y2='153.30' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='149.90' x2='34.21' y2='149.90' style='stroke-width: 0.75;' />
-<text transform='translate(27.56,166.93) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>19.0</text>
-<polyline points='38.97,167.53 124.04,167.53 124.04,146.97 38.97,146.97 38.97,167.53 ' style='stroke-width: 0.75;' />
+<text transform='translate(27.56,166.93) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>19.0</text>
+<polygon points='38.97,167.53 124.04,167.53 124.04,146.97 38.97,146.97 ' style='stroke-width: 0.75; fill: none;' />
 </g>
 <defs>
   <clipPath id='cpMC4wMHwxNDQuMDB8MTA4LjAwfDIxNi4wMA=='>
@@ -1124,8 +1124,8 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHwxNDQuMDB8MTA4LjAwfDIxNi4wMA==)'>
-<text x='81.50' y='203.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='37.66px' lengthAdjust='spacingAndGlyphs'>Iterations</text>
-<text x='81.50' y='130.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Arial;' textLength='102.99px' lengthAdjust='spacingAndGlyphs'>Trace of traittarsus</text>
+<text x='81.50' y='203.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='37.66px' lengthAdjust='spacingAndGlyphs'>Iterations</text>
+<text x='81.50' y='130.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Liberation Sans;' textLength='102.99px' lengthAdjust='spacingAndGlyphs'>Trace of traittarsus</text>
 </g>
 <defs>
   <clipPath id='cpMTgyLjk3fDI2OC4wNHwxNDYuOTd8MTY3LjUz'>
@@ -1144,17 +1144,17 @@
 <line x1='238.43' y1='167.53' x2='238.43' y2='172.28' style='stroke-width: 0.75;' />
 <line x1='249.59' y1='167.53' x2='249.59' y2='172.28' style='stroke-width: 0.75;' />
 <line x1='260.76' y1='167.53' x2='260.76' y2='172.28' style='stroke-width: 0.75;' />
-<text x='193.78' y='184.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>19.0</text>
-<text x='227.27' y='184.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>20.5</text>
-<text x='260.76' y='184.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>22.0</text>
+<text x='193.78' y='184.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>19.0</text>
+<text x='227.27' y='184.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>20.5</text>
+<text x='260.76' y='184.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='17.61px' lengthAdjust='spacingAndGlyphs'>22.0</text>
 <line x1='182.97' y1='166.77' x2='182.97' y2='149.42' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='166.77' x2='178.21' y2='166.77' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='162.43' x2='178.21' y2='162.43' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='158.10' x2='178.21' y2='158.10' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='153.76' x2='178.21' y2='153.76' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='149.42' x2='178.21' y2='149.42' style='stroke-width: 0.75;' />
-<text transform='translate(171.56,166.77) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>0.0</text>
-<polyline points='182.97,167.53 268.04,167.53 268.04,146.97 182.97,146.97 182.97,167.53 ' style='stroke-width: 0.75;' />
+<text transform='translate(171.56,166.77) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>0.0</text>
+<polygon points='182.97,167.53 268.04,167.53 268.04,146.97 182.97,146.97 ' style='stroke-width: 0.75; fill: none;' />
 </g>
 <defs>
   <clipPath id='cpMTQ0LjAwfDI4OC4wMHwxMDguMDB8MjE2LjAw'>
@@ -1162,8 +1162,8 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMTQ0LjAwfDI4OC4wMHwxMDguMDB8MjE2LjAw)'>
-<text x='225.50' y='130.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Arial;' textLength='115.12px' lengthAdjust='spacingAndGlyphs'>Density of traittarsus</text>
-<text x='225.50' y='203.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='126.65px' lengthAdjust='spacingAndGlyphs'>N = 1000   Bandwidth = 0.1223</text>
+<text x='225.50' y='130.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Liberation Sans;' textLength='115.12px' lengthAdjust='spacingAndGlyphs'>Density of traittarsus</text>
+<text x='225.50' y='203.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='126.65px' lengthAdjust='spacingAndGlyphs'>N = 1000   Bandwidth = 0.1223</text>
 </g>
 <g clip-path='url(#cpMTgyLjk3fDI2OC4wNHwxNDYuOTd8MTY3LjUz)'>
 <line x1='182.97' y1='166.77' x2='268.04' y2='166.77' style='stroke-width: 0.075; stroke: #BEBEBE;' />
@@ -2183,16 +2183,16 @@
 <line x1='84.70' y1='275.53' x2='84.70' y2='280.28' style='stroke-width: 0.75;' />
 <line x1='100.47' y1='275.53' x2='100.47' y2='280.28' style='stroke-width: 0.75;' />
 <line x1='116.24' y1='275.53' x2='116.24' y2='280.28' style='stroke-width: 0.75;' />
-<text x='53.16' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>1e+05</text>
-<text x='100.47' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>4e+05</text>
+<text x='53.16' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>1e+05</text>
+<text x='100.47' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>4e+05</text>
 <line x1='38.97' y1='273.40' x2='38.97' y2='258.08' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='273.40' x2='34.21' y2='273.40' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='269.57' x2='34.21' y2='269.57' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='265.74' x2='34.21' y2='265.74' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='261.91' x2='34.21' y2='261.91' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='258.08' x2='34.21' y2='258.08' style='stroke-width: 0.75;' />
-<text transform='translate(27.56,273.40) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>1.6</text>
-<polyline points='38.97,275.53 124.04,275.53 124.04,254.97 38.97,254.97 38.97,275.53 ' style='stroke-width: 0.75;' />
+<text transform='translate(27.56,273.40) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>1.6</text>
+<polygon points='38.97,275.53 124.04,275.53 124.04,254.97 38.97,254.97 ' style='stroke-width: 0.75; fill: none;' />
 </g>
 <defs>
   <clipPath id='cpMC4wMHwxNDQuMDB8MjE2LjAwfDMyNC4wMA=='>
@@ -2200,8 +2200,8 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHwxNDQuMDB8MjE2LjAwfDMyNC4wMA==)'>
-<text x='81.50' y='311.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='37.66px' lengthAdjust='spacingAndGlyphs'>Iterations</text>
-<text x='81.50' y='238.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Arial;' textLength='118.04px' lengthAdjust='spacingAndGlyphs'>Trace of traitbwt:sex2</text>
+<text x='81.50' y='311.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='37.66px' lengthAdjust='spacingAndGlyphs'>Iterations</text>
+<text x='81.50' y='238.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Liberation Sans;' textLength='118.04px' lengthAdjust='spacingAndGlyphs'>Trace of traitbwt:sex2</text>
 </g>
 <defs>
   <clipPath id='cpMTgyLjk3fDI2OC4wNHwyNTQuOTd8Mjc1LjUz'>
@@ -2220,18 +2220,18 @@
 <line x1='236.43' y1='275.53' x2='236.43' y2='280.28' style='stroke-width: 0.75;' />
 <line x1='248.96' y1='275.53' x2='248.96' y2='280.28' style='stroke-width: 0.75;' />
 <line x1='261.49' y1='275.53' x2='261.49' y2='280.28' style='stroke-width: 0.75;' />
-<text x='186.31' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>1.4</text>
-<text x='211.37' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>1.8</text>
-<text x='236.43' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>2.2</text>
-<text x='261.49' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>2.6</text>
+<text x='186.31' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>1.4</text>
+<text x='211.37' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>1.8</text>
+<text x='236.43' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>2.2</text>
+<text x='261.49' y='292.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>2.6</text>
 <line x1='182.97' y1='274.77' x2='182.97' y2='258.75' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='274.77' x2='178.21' y2='274.77' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='270.77' x2='178.21' y2='270.77' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='266.76' x2='178.21' y2='266.76' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='262.76' x2='178.21' y2='262.76' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='258.75' x2='178.21' y2='258.75' style='stroke-width: 0.75;' />
-<text transform='translate(171.56,274.77) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>0.0</text>
-<polyline points='182.97,275.53 268.04,275.53 268.04,254.97 182.97,254.97 182.97,275.53 ' style='stroke-width: 0.75;' />
+<text transform='translate(171.56,274.77) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>0.0</text>
+<polygon points='182.97,275.53 268.04,275.53 268.04,254.97 182.97,254.97 ' style='stroke-width: 0.75; fill: none;' />
 </g>
 <defs>
   <clipPath id='cpMTQ0LjAwfDI4OC4wMHwyMTYuMDB8MzI0LjAw'>
@@ -2239,8 +2239,8 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMTQ0LjAwfDI4OC4wMHwyMTYuMDB8MzI0LjAw)'>
-<text x='225.50' y='238.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Arial;' textLength='130.17px' lengthAdjust='spacingAndGlyphs'>Density of traitbwt:sex2</text>
-<text x='225.50' y='311.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='131.68px' lengthAdjust='spacingAndGlyphs'>N = 1000   Bandwidth = 0.04378</text>
+<text x='225.50' y='238.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Liberation Sans;' textLength='130.17px' lengthAdjust='spacingAndGlyphs'>Density of traitbwt:sex2</text>
+<text x='225.50' y='311.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='131.68px' lengthAdjust='spacingAndGlyphs'>N = 1000   Bandwidth = 0.04378</text>
 </g>
 <g clip-path='url(#cpMTgyLjk3fDI2OC4wNHwyNTQuOTd8Mjc1LjUz)'>
 <line x1='182.97' y1='274.77' x2='268.04' y2='274.77' style='stroke-width: 0.075; stroke: #BEBEBE;' />
@@ -3260,8 +3260,8 @@
 <line x1='84.70' y1='383.53' x2='84.70' y2='388.28' style='stroke-width: 0.75;' />
 <line x1='100.47' y1='383.53' x2='100.47' y2='388.28' style='stroke-width: 0.75;' />
 <line x1='116.24' y1='383.53' x2='116.24' y2='388.28' style='stroke-width: 0.75;' />
-<text x='53.16' y='400.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>1e+05</text>
-<text x='100.47' y='400.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>4e+05</text>
+<text x='53.16' y='400.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>1e+05</text>
+<text x='100.47' y='400.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='26.59px' lengthAdjust='spacingAndGlyphs'>4e+05</text>
 <line x1='38.97' y1='380.71' x2='38.97' y2='363.94' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='380.71' x2='34.21' y2='380.71' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='377.35' x2='34.21' y2='377.35' style='stroke-width: 0.75;' />
@@ -3269,8 +3269,8 @@
 <line x1='38.97' y1='370.64' x2='34.21' y2='370.64' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='367.29' x2='34.21' y2='367.29' style='stroke-width: 0.75;' />
 <line x1='38.97' y1='363.94' x2='34.21' y2='363.94' style='stroke-width: 0.75;' />
-<text transform='translate(27.56,380.71) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='15.43px' lengthAdjust='spacingAndGlyphs'>-1.0</text>
-<polyline points='38.97,383.53 124.04,383.53 124.04,362.97 38.97,362.97 38.97,383.53 ' style='stroke-width: 0.75;' />
+<text transform='translate(27.56,380.71) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='15.43px' lengthAdjust='spacingAndGlyphs'>-1.0</text>
+<polygon points='38.97,383.53 124.04,383.53 124.04,362.97 38.97,362.97 ' style='stroke-width: 0.75; fill: none;' />
 </g>
 <defs>
   <clipPath id='cpMC4wMHwxNDQuMDB8MzI0LjAwfDQzMi4wMA=='>
@@ -3278,8 +3278,8 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMC4wMHwxNDQuMDB8MzI0LjAwfDQzMi4wMA==)'>
-<text x='81.50' y='419.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='37.66px' lengthAdjust='spacingAndGlyphs'>Iterations</text>
-<text x='81.50' y='346.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Arial;' textLength='131.62px' lengthAdjust='spacingAndGlyphs'>Trace of traittarsus:sex2</text>
+<text x='81.50' y='419.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='37.66px' lengthAdjust='spacingAndGlyphs'>Iterations</text>
+<text x='81.50' y='346.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Liberation Sans;' textLength='131.62px' lengthAdjust='spacingAndGlyphs'>Trace of traittarsus:sex2</text>
 </g>
 <defs>
   <clipPath id='cpMTgyLjk3fDI2OC4wNHwzNjIuOTd8MzgzLjUz'>
@@ -3298,9 +3298,9 @@
 <line x1='234.29' y1='383.53' x2='234.29' y2='388.28' style='stroke-width: 0.75;' />
 <line x1='245.62' y1='383.53' x2='245.62' y2='388.28' style='stroke-width: 0.75;' />
 <line x1='256.94' y1='383.53' x2='256.94' y2='388.28' style='stroke-width: 0.75;' />
-<text x='189.00' y='400.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='15.43px' lengthAdjust='spacingAndGlyphs'>-1.5</text>
-<text x='222.97' y='400.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>0.0</text>
-<text x='245.62' y='400.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>1.0</text>
+<text x='189.00' y='400.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='15.43px' lengthAdjust='spacingAndGlyphs'>-1.5</text>
+<text x='222.97' y='400.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>0.0</text>
+<text x='245.62' y='400.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>1.0</text>
 <line x1='182.97' y1='382.77' x2='182.97' y2='363.49' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='382.77' x2='178.21' y2='382.77' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='378.91' x2='178.21' y2='378.91' style='stroke-width: 0.75;' />
@@ -3308,8 +3308,8 @@
 <line x1='182.97' y1='371.20' x2='178.21' y2='371.20' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='367.35' x2='178.21' y2='367.35' style='stroke-width: 0.75;' />
 <line x1='182.97' y1='363.49' x2='178.21' y2='363.49' style='stroke-width: 0.75;' />
-<text transform='translate(171.56,382.77) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>0.0</text>
-<polyline points='182.97,383.53 268.04,383.53 268.04,362.97 182.97,362.97 182.97,383.53 ' style='stroke-width: 0.75;' />
+<text transform='translate(171.56,382.77) rotate(-90)' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='12.58px' lengthAdjust='spacingAndGlyphs'>0.0</text>
+<polygon points='182.97,383.53 268.04,383.53 268.04,362.97 182.97,362.97 ' style='stroke-width: 0.75; fill: none;' />
 </g>
 <defs>
   <clipPath id='cpMTQ0LjAwfDI4OC4wMHwzMjQuMDB8NDMyLjAw'>
@@ -3317,8 +3317,8 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpMTQ0LjAwfDI4OC4wMHwzMjQuMDB8NDMyLjAw)'>
-<text x='225.50' y='346.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Arial;' textLength='143.75px' lengthAdjust='spacingAndGlyphs'>Density of traittarsus:sex2</text>
-<text x='225.50' y='419.64' text-anchor='middle' style='font-size: 7.92px; font-family: Arial;' textLength='126.65px' lengthAdjust='spacingAndGlyphs'>N = 1000   Bandwidth = 0.1067</text>
+<text x='225.50' y='346.95' text-anchor='middle' style='font-size: 9.50px; font-weight: bold; font-family: Liberation Sans;' textLength='143.75px' lengthAdjust='spacingAndGlyphs'>Density of traittarsus:sex2</text>
+<text x='225.50' y='419.64' text-anchor='middle' style='font-size: 7.92px; font-family: Liberation Sans;' textLength='126.65px' lengthAdjust='spacingAndGlyphs'>N = 1000   Bandwidth = 0.1067</text>
 </g>
 <g clip-path='url(#cpMTgyLjk3fDI2OC4wNHwzNjIuOTd8MzgzLjUz)'>
 <line x1='182.97' y1='382.77' x2='268.04' y2='382.77' style='stroke-width: 0.075; stroke: #BEBEBE;' />
