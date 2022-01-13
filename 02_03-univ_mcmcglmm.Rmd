@@ -8,8 +8,7 @@ library(MCMCglmm)
 ```
 
 The first model we will fit is a simple animal model with no fixed effects, and only an ‘animal’ random effect relating individuals to their additive genetic values through the pedigree. 
-First we are going to define priors. In a way we might want to avoid using priors, because we would like all of the information in our analysis to come from our data.<!-- C1 I dont understand this sentence -->
-By default MCMCglmm uses improper priors, but this can cause inferential and numerical problems. We will specify priors for the animal effect and the residual variance using the following code:
+First we are going to define the priors.<!-- C5" In a way we might want to avoid using priors, because we would like all of the information in our analysis to come from our data." I don't understand this sentence. Thus I remove it !--> By default MCMCglmm uses improper priors, but this can cause inferential and numerical problems. We will specify priors for the animal effect and the residual variance using the following code:
 
 ```{r}
 prior1.1 <- list(
@@ -19,7 +18,7 @@ prior1.1 <- list(
 ```
 
 A prior allowed the model to fit different variance structures. With the unique random effect "animal", we partitioned the phenotypic variance into two distinct variances matrices `G` (additive genetic) and `R` (residual).
-This prior specification is the simplistic one and often used because it was believed to be relatively uninformative, and is equivalent to an inverse-gamma prior with shape and scale equal to 0.001. In many cases it is relatively uninformative but when the posterior distribution for the variances has support close to zero it can behave poorly. Parameter expanded priors (See Chapter 8 of the MCMCglmm CourseNotes, available from CRAN) are gaining in popularity due to their better behaviour but for the purposes of this tutorial we will stick with the inverse-gamma prior. 
+This prior specification is the simplistic one and often used because it was believed to be relatively uninformative, and is equivalent to an inverse-gamma prior with shape and scale equal to 0.001. In many cases it is relatively uninformative but when the posterior distribution for the variances has support close to zero it can behave poorly. Parameter expanded priors (See Chapter 8 of the MCMCglmm CourseNotes, available from CRAN) are gaining in popularity due to their better behaviour but for the purposes of this tutorial we will stick with the inverse-gamma prior (thus uninformative). 
 
 We have told MCMCglmm to pay little heed to our prior expectation (V) by specifying a small degree of belief parameter (nu) of 0.002. Since this is a univariate analysis, the priors are matrix of order 1 and thus nu>0 is the smallest degree of belief that provides what is known as a ‘proper’ prior, avoiding numerical problems. In fact, there is a lot of information in the data regarding the marginal distributions of the parameters, and MCMCglmm will run most of the models that we suggest in these tutorials without priors. However, this is poor practice, but we will therefore use this simple priors throughout these tutorials. We can now fit an animal model. The model to decompose variation in birth weight into genetic and residual effects is as follows:
 
@@ -35,13 +34,13 @@ model1.1 <- MCMCglmm(bwt ~ 1,
 )
 ```
 
-After typing this code, MCMCglmm will run, taking about 20 seconds on a modern desk- top computer. The progress of the run will be printed to the screen. Also, note the warning message will be printed at the end of the run. This is natural too. In order for the MCMC algorithm to work, MCMCglmm must keep track of effects associated with unmeasured individuals appearing in the pedigree. This will not affect the answers, but when many unmeasured individuals exist, it can hinder the ability of the algorithm to explore the parameter space (more on this, and a solution, later). Lets have a look at the MCMCglmm outputs. First we will evaluate how confident we can be that MCMCglmm found good answers. By entering
+After typing this code, MCMCglmm will run, taking about 20 seconds on a modern desktop computer. The progress of the run will be printed to the screen. Also, note the warning message will be printed at the end of the run. This is natural too. In order for the MCMC algorithm to work, MCMCglmm must keep track of effects associated with unmeasured individuals appearing in the pedigree. This will not affect the answers, but when many unmeasured individuals exist, it can hinder the ability of the algorithm to explore the parameter space (more on this, and a solution, later). Lets have a look at the MCMCglmm outputs. First we will evaluate how confident we can be that MCMCglmm found good answers. By entering
 
 ```{r, fig.cap = "The posterior distribution of the fixed effect (the intercept, or mean) in model 1.1"}
 plot(model1.1$Sol)
 ```
 
-in the console, we get Figure 1 (p. 5). The plot on the left shows a time series of the values of 1000 samples of the posterior distribution of the the model intercept (mean birthweight). The plot on the right shows the same data as a distribution. Complicated statistical methods for estimating population means are of course of little interest; rather, we are examining these outputs to check that MCMCglmm’s algorithms worked well for our data and for this model. The important point here is that a consistent amount of variation around a largely unchanging mean value of the intercept was obtained (which give this fluctuating trace concentrated around the mean), and the posterior distribution of the intercept appears to be valid. More rigorous means of evaluation the independence of the samples in the posterior distribution (evaluating autocorrelation) are discussed in the MCMCglmm CourseNotes, available from CRAN. Note that your output for `model 1.1` may not be identical to this due to Monte Carlo (random number) error. So every times, you run the model, you will get similar but slightly different results. 
+in the console, we get Figure 2.2. The plot on the left shows a time series of the values of 1000 samples of the posterior distribution of the the model intercept (mean birth weight). The plot on the right shows the same data as a distribution. Complicated statistical methods for estimating population means are of course of little interest; rather, we are examining these outputs to check that MCMCglmm’s algorithms worked well for our data and for this model. The important point here is that a consistent amount of variation around a largely unchanging mean value of the intercept was obtained (which give this fluctuating trace concentrated around the mean), and the posterior distribution of the intercept appears to be valid. More rigorous means of evaluation the independence of the samples in the posterior distribution (evaluating autocorrelation) are discussed in the MCMCglmm CourseNotes, available from CRAN. Note that your output for `model 1.1` may not be identical to this due to Monte Carlo (random number) error. So every times, you run the model, you will get similar but slightly different results. 
 
 The posterior distributions of the the variance components are generally of more interest to animal model users. We can view plots of the posterior distribution for the variance components for model 1.1 by
 
@@ -49,12 +48,12 @@ The posterior distributions of the the variance components are generally of more
 plot(model1.1$VCV)
 ```
 
-which generates Figure 2 (p. 6). Here we see distributions of the estimates of the additive genetic (animal) and residual (units) effects. These samples contain some au- tocorrelation, i.e., trends are apparent in the left-hand plot. We can deal with this easily.
+which generates Figure 2.3. Here we see distributions of the estimates of the additive genetic (animal) and residual (units) effects. These samples contain some autocorrelation, i.e., trends are apparent in the left-hand plot. We can deal with this easily.
 
 
 ### Change in iteration and sampling
 
-We will simply re-run the model for a longer number of iterations, and sample the chain less frequently. So far we have been running MCMCglmm with its default values. These defaults are a total run length of 13000 iterations, the first 3000 of which are discarded as a ‘burn-in’ period to make sure that the converges to the part of the parameter space where the maximum likelihood exists. The remaining 10000 iterations are sampled (estimates retained) every 10 iterations (the thinning interval). Because the values in the left-hand plots in figure 2 to appear to have different values at the beginning of the run, we might suspect that a longer burn-in period might be required. We can reduce the autocorrelation by lengthening the rest of the run and sampling the chain less frequently. The following code runs the same model 1.1, but is likely to produce better samples of the posterior distributions. This model should take about two minutes to analyze.
+We will simply re-run the model for a longer number of iterations, and sample the chain less frequently. So far we have been running MCMCglmm with its default values. These defaults are a total run length of 13000 iterations, the first 3000 of which are discarded as a ‘burn-in’ period to make sure that the converges to the part of the parameter space where the maximum likelihood exists. The remaining 10000 iterations are sampled (estimates retained) every 10 iterations (the thinning interval). Because the values in the left-hand plots in figure 2.2 to appear to have different values at the beginning of the run, we might suspect that a longer burn-in period might be required. We can reduce the autocorrelation by lengthening the rest of the run and sampling the chain less frequently. The following code runs the same model 1.1, but is likely to produce better samples of the posterior distributions. This model should take about two minutes to analyze.
 
 ```{r, cache=TRUE}
 model1.1 <- MCMCglmm(bwt ~ 1,
@@ -64,7 +63,7 @@ model1.1 <- MCMCglmm(bwt ~ 1,
 )
 ```
 
-Notes that we have now included the argument verbose=FALSE in the MCMCglmm call. We will continue this throughout the tutorial so that more complete screen outputs can be included in this document without using too much space. Now produce the plots of the samples of the fixed and random effects (they have not been included in this document). Note that the autocorrelation is much reduced. A more compact way to evaluate the validity of the posterior distributions is to calculate autocorrelation among samples, as follows:
+Notes that we have now included the argument verbose=FALSE in the MCMCglmm call. We will continue this throughout the tutorial so that more complete screen outputs can be included in this document without using too much space. <!--C6 "Now produce the plots of the samples of the fixed and random effects (they have not been included in this document)." I don't understand this sentence!--> Note that the autocorrelation is much reduced. A more compact way to evaluate the validity of the posterior distributions is to calculate autocorrelation among samples, as follows:
 
 ```{r}
 autocorr.diag(model1.1$VCV)
@@ -86,8 +85,8 @@ HPDinterval(model1.1$VCV)
 
 ### Change priors parameters
 
-We specified weak priors in this analyses. Now we will check whether or not proper priors would have influenced the results that we obtained. The simplest way to do this is to rerun the model with different priors. In the previous model we specified a prior where the size of genetic and residual variance were similar. Here we construct priors with a larger degree of belief parameter (`nu`), and we will specify that a large proportion (95%) of the variation is under genetic control (`V`):
-<!-- C2 we should explain what we do to the residual matrix too -->
+We specified weak priors in this analyses. Now we will check whether or not proper priors would have influenced the results that we obtained. The simplest way to do this is to re-run the model with different priors. 
+In the previous model we specified a prior where the size of genetic and residual variance were similar. Here we construct priors with a larger degree of belief parameter (`nu`), and we will specify that a large proportion (95%) of the variation is under genetic control (`V`).Thus, the residual variance contains 05% of the phenotypic variance.
 
 ```{r, cache=TRUE}
 p.var <- var(gryphon$bwt, na.rm = TRUE)
@@ -110,13 +109,14 @@ and we can therefore conclude that the difference in the priors has little effec
 
 ### Estimating heritability
 
-A useful property of Bayesian posterior distributions is that we can apply almost any transformation to these distributions and they will remain valid. This applies to the calculation of heritabilities. We can obtain an estimate of the heritability by applying the basic formula $h^2$ =$V_A /V_P$ to each sample of the posterior disribution:
+A useful property of Bayesian posterior distributions is that we can apply almost any transformation to these distributions and they will remain valid. This applies to the calculation of heritability. We can obtain an estimate of the heritability by applying the basic formula $h^2$ =$V_A /V_P$ to each sample of the posterior distribution:
 
 ```{r}
 posterior.heritability1.1 <- model1.1$VCV[, "animal"] / 
   (model1.1$VCV[, "animal"] + model1.1$VCV[, "units"])
-HPDinterval(posterior.heritability1.1, 0.95)
+
 posterior.mode(posterior.heritability1.1)
+HPDinterval(posterior.heritability1.1, 0.95)
 ```
 
 Generate a plot of the posterior distribution of this heritability estimate:
@@ -135,17 +135,17 @@ model1.2 <- MCMCglmm(bwt ~ sex,
   data = gryphon, prior = prior1.1,
   nitt = 65000, thin = 50, burnin = 15000, verbose = FALSE
 )
+summary(model1.2)
 ```
 
-We can assess the significance of `sex` as a fixed effect by examining its posterior distribution.
+We can assess the significance of `sex` as a fixed effect by examining its posterior distribution. Important notes here, it is important to know how the model names their fixed effect level to call them properly. 
 
 ```{r}
 posterior.mode(model1.2$Sol[, "sex2"])
-
 HPDinterval(model1.2$Sol[, "sex2"], 0.95)
 ```
 
-The posterior distribution of the `sex2` term does not overlap zero. Thus, we can infer that sex has an effect on birthweight (presence of a sexual dimorphism) in this model and is a useful addition to the model, for most purposes. It is also worth noting that the variance components have changed slightly:
+The posterior distribution of the `sex2` term does not overlap zero. Thus, we can infer that sex has an effect on birth weight (presence of a sexual dimorphism) in this model and is a useful addition to the model, for most purposes. It is also worth noting that the variance components have changed slightly:
 
 ```{r}
 posterior.mode(model1.2$VCV)
@@ -172,19 +172,20 @@ This is done by simply modifying the model statement in the same way, but requir
 prior1.3 <- list(
   G = list(G1 = list(V = 1, nu = 0.002), G2 = list(V = 1, nu = 0.002)),
   R = list(V = 1, nu = 0.002))
+
 model1.3 <- MCMCglmm(bwt ~ sex,
   random = ~ animal + byear, ginv = list(animal = Ainv),
   data = gryphon,
   nitt = 65000, thin = 50, burnin = 15000,
   prior = prior1.3, verbose = FALSE
 )
+
 posterior.mode(model1.3$VCV)
 ```
 
-Here the variance in birth weight explained by birth year is 0.7887. Note that although $V_A$ has changed somewhat, most of what is now partitioned as a `birth year` effect was previously partitioned as $V_R$ . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A /(V_A + V_{BY} + V_R )$). However, we get a somewhat different result if we also add a random effect of `mother` to test for maternal effects:
+Here the variance in birth weight explained by birth year is `r `round(posterior.mode(model1.3$VCV)[2],2)`. Note that although $V_A$ has changed somewhat, most of what is now partitioned as a `birth year` effect was previously partitioned as $V_R$ . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A /(V_A + V_{BY} + V_R )$). However, we get a somewhat different result if we also add a random effect of `mother` to test for maternal effects:
 
 ```{r cache=TRUE}
-p.var <- var(gryphon$bwt, na.rm = TRUE)
 prior1.4 <- list(
   G = list(
     G1 = list(V = 1, nu = 0.002),
@@ -192,16 +193,18 @@ prior1.4 <- list(
     G3 = list(V = 1, nu = 0.002)),
   R = list(V = 1, nu = 0.002)
 )
+
 model1.4 <- MCMCglmm(bwt ~ sex,
   random = ~ animal + byear + mother,
   ginv = list(animal = Ainv), data = gryphon,
   nitt = 65000, thin = 50, burnin = 15000,
   prior = prior1.4, verbose = FALSE
 )
+
 posterior.mode(model1.4$VCV)
 ```
 
-Here partitioning of significant maternal variance has resulted in a further decrease in $V_R$ but also a decrease in $V_A$. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in $V_A$ and so $h^2$. Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:
+Here partitioning of significant maternal variance has resulted in a further decrease in $V_R$ but also a decrease in $V_A$. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like an additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in $V_A$ and so $h^2$. Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:
 
 ```{r}
 posterior.heritability1.3 <- model1.3$VCV[, "animal"] /
@@ -227,6 +230,11 @@ model1.4$DIC
 `model 1.4` has a much lower DIC value. Since the maternal effect term is the only difference between the models, we can consider the inclusion of this term statistically justifiable. We should note however that DIC has a large sampling variance and should probably only be calculated based on much longer MCMC runs.
 
 
+<!--C7 
+library(MuMIn)
+AIC.table  <- model.sel(model1.3,model1.4)
+(AIC.table <- AIC.table[ , c("df", "logLik", "AICc", "delta","weight")])
+-->
 
 ### Further partitioning variance
 
@@ -248,6 +256,7 @@ model1.4.SEX <- MCMCglmm(bwt ~ sex,
   ginv = list(animal = Ainv), data = gryphon, nitt = 65000, thin = 50, burnin = 15000,
   prior = prior1.4.SEX, verbose = FALSE
 )
+
 posterior.mode(model1.4.SEX$VCV)
 
 posterior.heritability1.4.FEM <- model1.4.SEX$VCV[, "sex1.animal"] /
@@ -267,7 +276,21 @@ Here, we can estimate the heritability for each sex. Both doesn't overlap with z
 An important quote to remember is "A difference in significance is not a significant difference" 
 
 
-### Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm-->
+```{r, fig.cap = "Female and male heritability of birth weight"}
+h2.sex<-rbind(
+cbind(posterior.mode(posterior.heritability1.4.FEM),HPDinterval(posterior.heritability1.4.FEM, 0.95)),
+cbind(posterior.mode(posterior.heritability1.4.MAL),HPDinterval(posterior.heritability1.4.MAL, 0.95)))
+
+
+plot(c(0.95, 1.05)~h2.sex[,1], xlim=c(0,0.8),ylim=c(0.5,1.5),,xlab="",ylab="",col=c("red","blue"),pch=c(16,17),cex=2,yaxt="n")
+arrows(y0=0.95,x0=h2.sex[1,2],y1=0.95,x1=h2.sex[1,3],code=3,angle=90,length=0,col=c("red"),lwd=2)
+arrows(y0=1.05,x0=H2.sex[2,2],y1=1.05,x1=h2.sex[2,3],code=3,angle=90,length=0,col=c("blue"),lwd=2)
+mtext("Narrow-sense heritability (±CI)", side=1, las=1, adj=0.4,line=3, cex=1.6)
+axis(2,at=1,labels=c("birth weight"),las = 3,cex.axis=1.6)
+```
+
+### Modification of model parameter
+to do ?
 
 ### Covariance between two random effects
-
+to do ?
