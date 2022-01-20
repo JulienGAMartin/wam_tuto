@@ -13,14 +13,14 @@ To work though the different tutorial I would recommend to create a folder where
 
  You will need to download 3 data files for the tutorial in `R`:
 
-- gryphon.csv: data on gryphon birth weight
-- gryphonRM.csv: data
-- gryphonped.csv
+- gryphon.csv: data on gryphon birth weight and morphology
+- gryphonRM.csv: data on gryphon repeated measurement of lay date.
+- gryphonped.csv: data on the associated pedigree of the data gryphon 
 
-In addition, some models presented in the tutorials can take a while to run (sometimes > 1 hour), thus we are also providing model the model outputs to allow you continue the tutorial without waiting for the model to run.
+In addition, some models presented in the tutorials can take a while to run (sometimes > 1 hour), thus we are also providing the model outputs to allow you continue the tutorial without waiting for the model to run. (But you are free to run  models)
 
 The files are available [here](https://github.com/JulienGAMartin/wam_tuto/tree/master/data)
-
+<!-- C1 Should we add a sentence about the origin of the dataset !-->
 I recommend to save the data and Rdata files in a subfolder `data` in the folder you will use as your working directory for R and where you will save your R scripts. It should be noted that the tutorial are using this structure to read or save data.
 
 
@@ -42,7 +42,8 @@ Additional information and guide can be find in the Asreml-R manual: (https://as
 
 #### gremlin
 
-`gremlin` is a little monster appearing <!--C1 water just multiply them (if you wet a mugwai and--> if you feed a mugwai after midnight. It is also a great and promising software to fit mixed models using a frequentist approach.
+`gremlin` is a little monster appearing if you feed a mugwai after midnight. It is also a great and promising software written by Matt Wolak to fit mixed models using a frequentist approach .
+
 
 #### MCMCglmm
 
@@ -54,7 +55,8 @@ Most importantly, this applies to some of the simplest ways of determining the p
 This tutorial is not a substitute for working through the MCMCglmm course notes, which is available from CRAN (the Comprehensive R ArchiveNetwork, http://cran.r-project.org/, or can be accessed in R using the command vignette("CourseNotes","MCMCglmm")).
 These tutorials do not introduce one of the main advantages of using MCMCglmm for analyses of data from natural populations -the ability to properly model non-normal responses.
 These capabilities are introduced in the documentation that is distributed with MCMCglmm, and available from CRAN.
-<!-- C3 i think we have to also cite Pierre de Villemereuil, he wrote a guide for estimating heritability with MCMCglmmm http://devillemereuil.legtux.org/wp-content/uploads/2012/12/tuto_en.pdf -->
+<!-- C3 i think we need to add or cite Pierre de Villemereuil, he update his guide for estimating heritability with MCMCglmmm in 2021 ! https://devillemereuil.legtux.org/wp-content/uploads/2021/09/tuto_en.pdf 
+But we provide more software and also more futher partition of the variance compare to his guide more focuse on no-gaussian variable-->
 
 #### brms
 
