@@ -1,8 +1,25 @@
 ## brms
 
-```{r eval = params$fit_all}
+
+First load brms:
+
+```{r}
 library(brms)
 Amat <- as.matrix(nadiv::makeA(gryphonped))
+```
+
+
+### Fitting the model
+
+Fitting a multivariate model in brms involves several new consideration above those for fitting univariate models. 
+<!-- C2-6   Do we need to create a prior first no?  First, we have to fit multivariate priors;--> 
+First, we need to create two models/objects with the function `bf` fitting the desired univariate model structure for each response variable (here `bwt` and `tarsus`). It is the equivalent of writing `mvbf(bwt, tarsus)`, but the advantage to create two distinct model is to specific different model structure (fixed or random effect) for each response variable.
+
+Then, the two objects/models are added into a third model to quantify all the estimates in addition to their covariance.
+Our most basic model can be specified as:
+
+
+```{r eval = params$fit_all}
 bf_bwt <- bf(bwt ~ 1 + (1 | p | gr(animal, cov = Amat)))
 bf_tarsus <- bf(tarsus ~ 1 + (1 | p | gr(animal, cov = Amat)))
 brms_m2.1 <- brm(
@@ -14,9 +31,42 @@ brms_m2.1 <- brm(
 save(brms_m2.1, file = "data/brms_m2_1.rda")
 ```
 
+Again we have provided the data from one such run. It can be accessed using the code:
+
+
 ```{r}
 load("data/brms_m2_1.rda")
 summary(brms_m2.1)
 plot(brms_m2.1, ask = FALSE)
 VarCorr(brms_m2.1)
 ```
+
+
+### Adding fixed and random effects
+Fixed and random effects can be added just as for the univariate case.
+Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of byear and mother, we could specify a bivariate formulation of this using the following code (including a line to save the output):
+
+
+```{r eval = params$fit_all}
+bf_bwt_2 <- bf(bwt ~ 1 + sex + (1 | gr(animal, cov = Amat))+ (1 | byear) + (1 | mother))
+bf_tarsus_2 <- bf(tarsus ~ 1 +sex + (1 | gr(animal, cov = Amat))+ (1 | byear) + (1 | mother))
+brms_m2.2 <- brm(
+  bf_bwt_2 + bf_tarsus_2 + set_rescor(TRUE),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+save(brms_m2.2, file = "data/brms_m2_2.rda")
+```
+
+Again we have provided the data from one such run. It can be accessed using the code:
+
+
+```{r}
+load("data/brms_m2_2.rda")
+summary(brms_m2.2)
+plot(brms_m2.2, ask = FALSE)
+VarCorr(brms_m2.2)
+```
+
+### Direct estimate of the correlation instead of the covariance.

@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "ikuyadeu.r"
+        "ikuyadeu.r",
+        "REditorSupport.r-lsp"
     ]
 }
