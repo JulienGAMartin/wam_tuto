@@ -195,13 +195,19 @@ loo_compare(brms_m1.3,brms_m1.1, criterion = "waic")
 ### Further partitioning of the variance
 
 Depending of the research question and the presence of different group within the dataset, `brms` allowed to partition the variance at different groups. 
-For the example, we can partition the additive genetic and residual variance between sex (male and female) to estimate the sex-specific heritability 
+For the example, we can partition the additive genetic and residual variance between sex (male and female) to estimate the sex-specific heritability.
 
- <!-- C6 need to check the code  I never partition a random effect with lme4 + need to apply it to the residual level too, more too do here -->
+Unfortunately brms can not partition the residual variance ('sigma level`) into different level yet.So the followed model partitioned only the additive genetic variance. 
+
+ <!-- Here maybe an issue  if i try to partion the random effect byear or mother I got an error message "  "Some levels of 'mother' correspond to multiple levels of 'sex'.  I dont understand why ?? 
+ so I kept the model simple with just animal bwing partitioningby sex-->
 
 ```{r eval = params$fit_all}
+#gryphon <- gryphon[order(gryphon$sex), ]
+
 brms_m1.4 <- brm(
-  bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)) + (1 | byear) + (1 | mother),
+#  bwt ~ 1 +  sex + (1 | gr(animal, cov = Amat, by = sex))+ (1 | gr(byear, by = sex)) + (1 | gr(mother, by = sex)),
+  bwt ~ 1 +  sex + (1 | gr(animal, cov = Amat, by = sex))+ (1 | byear) + (1 | mother),  
   data = gryphon,
   data2 = list(Amat = Amat),
   family = gaussian(),
@@ -219,4 +225,8 @@ plot(brms_m1.4, ask = FALSE, N = 3)
 
 ### Modification of model parameter
 
+
+
 ### Covariance between two random effects
+
+
