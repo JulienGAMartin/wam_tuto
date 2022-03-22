@@ -18,8 +18,10 @@ The structure of a `bmrs` model is similar to `lme4`, thus the random effect is 
 In addition to the synthase of `lme4`, we includes other features or parameters within the models such as `chain` which represent the number of Markov chains (defaults to 4), `core` which represents the number of cores to use when executing the chains in parallel and `iter` which represents the number of total iterations per chain. For more parameters such as `thin` or `warmup/burnin`, you can read the Cran R page of the package (https://cran.r-project.org/web/packages/brms/brms.pdf)
 
 <!-- C8 : we did not fit a prior to the model, is it normal? !-->
-`bmrs` is a Bayesian Multilevel Models using Stan, doing so we can apply a prior to the model to better shape the distribution of the different variances estimated by the model. 
-Thanks to `get_prior`, a uninformative prior can be produce using the same equation as the model itself.
+Given that `bmrs` fit the model using a Bayesian approach via the software `stan`, we need to specify priors for the model.
+Default priors in `brms` work relatively well, however we strongly suggest to carefully select an adequate prior for your analysis.
+In this tutorial we will use the default priors. 
+To get the prior used by default, we can use the `get_prior()` function.
 
 ```{r eval = params$fit_all}
 priors_m1.1<-get_prior( bwt ~ 1 + (1 | gr(animal, cov = Amat)),

@@ -73,6 +73,7 @@ wald.asreml(model2, ssType = "conditional", denDF = "numeric")
 summary(model2, coef = TRUE)$coef.fixed
 a <- wald.asreml(model2, ssType = "conditional", denDF = "numeric")
 attr(a$Wald, "heading") <- NULL
+a
 ```
 
 The very small probability (`Pr`) in the Wald test above shows that `sex` is a highly significant fixed effect, and from the parameter estimates (`summary(model2,coef=T)$coef.fixed`) we can see that the average male (sex 2) is 2.2 kg ($\pm$ 0.16 SE) heavier than the average female (sex 1). However, when we look at the variance components in the model including `sex` as a fixed effect, we see that they have changed slightly from the previous model:
@@ -200,7 +201,7 @@ LRT give more information and showed that partitioning the variance and the resi
 ```{r, fig.cap = "Female and male heritability of birth weight"}
 h2.sex<-rbind(h2.F,h2.M)
 
-plot(c(0.95, 1.05)~[,1], xlim=c(0,0.8),ylim=c(0.5,1.5),,xlab="",ylab="",col=c("red","blue"),pch=c(16,17),cex=2,yaxt="n")
+plot(c(0.95, 1.05)~h2.sex[,1], xlim=c(0,0.8),ylim=c(0.5,1.5),,xlab="",ylab="",col=c("red","blue"),pch=c(16,17),cex=2,yaxt="n")
 arrows(y0=0.95,x0=h2.sex[1,1]-h2.sex[1,2],y1=0.95,x1=h2.sex[1,1]+h2.sex[1,2],code=3,angle=90,length=0,col=c("red"),lwd=2)
 arrows(y0=1.05,x0=H2.sex[2,1]-H2.sex[2,2],y1=1.05,x1=h2.sex[2,1]+h2.sex[2,2],code=3,angle=90,length=0,col=c("blue"),lwd=2)
 mtext("Narrow-sense heritability (±se)", side=1, las=1, adj=0.4,line=3, cex=1.6)

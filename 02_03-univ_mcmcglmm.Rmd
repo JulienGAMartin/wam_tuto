@@ -8,7 +8,8 @@ library(MCMCglmm)
 ```
 
 The first model we will fit is a simple animal model with no fixed effects, and only an ‘animal’ random effect relating individuals to their additive genetic values through the pedigree. 
-First we are going to define the priors.<!-- C5" In a way we might want to avoid using priors, because we would like all of the information in our analysis to come from our data." I don't understand this sentence. Thus I remove it !--> By default MCMCglmm uses improper priors, but this can cause inferential and numerical problems. We will specify priors for the animal effect and the residual variance using the following code:
+First we are going to define the priors. In a way we might want to avoid using priors, because we would like all of the information in our analysis to come from our data.
+By default MCMCglmm uses improper priors, but this can cause inferential and numerical problems. We will specify priors for the animal effect and the residual variance using the following code:
 
 ```{r}
 prior1.1 <- list(
@@ -183,7 +184,7 @@ model1.3 <- MCMCglmm(bwt ~ sex,
 posterior.mode(model1.3$VCV)
 ```
 
-Here the variance in birth weight explained by birth year is `r `round(posterior.mode(model1.3$VCV)[2],2)`. Note that although $V_A$ has changed somewhat, most of what is now partitioned as a `birth year` effect was previously partitioned as $V_R$ . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A /(V_A + V_{BY} + V_R )$). However, we get a somewhat different result if we also add a random effect of `mother` to test for maternal effects:
+Here the variance in birth weight explained by birth year is `r round(posterior.mode(model1.3$VCV)[2],2)`. Note that although $V_A$ has changed somewhat, most of what is now partitioned as a `birth year` effect was previously partitioned as $V_R$ . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A /(V_A + V_{BY} + V_R )$). However, we get a somewhat different result if we also add a random effect of `mother` to test for maternal effects:
 
 ```{r cache=TRUE}
 prior1.4 <- list(
@@ -229,12 +230,6 @@ model1.4$DIC
 
 `model 1.4` has a much lower DIC value. Since the maternal effect term is the only difference between the models, we can consider the inclusion of this term statistically justifiable. We should note however that DIC has a large sampling variance and should probably only be calculated based on much longer MCMC runs.
 
-
-<!--C7 
-library(MuMIn)
-AIC.table  <- model.sel(model1.3,model1.4)
-(AIC.table <- AIC.table[ , c("df", "logLik", "AICc", "delta","weight")])
--->
 
 ### Further partitioning variance
 
