@@ -50,4 +50,15 @@ files_rda <- list.files("data/", pattern = ".rda")
 
 htmlT_pdfF <- ifelse(params$html_pdf == TRUE, TRUE, FALSE)
 htmlF_pdfT <- ifelse(params$html_pdf == TRUE, FALSE, TRUE)
+
+library(lme4)
+library(rptR)
+library(visreg)
+library(asreml)
+library(MCMCglmm)
+library(brms)
+library(mvtnorm)
+library(ggplot2)
+library(gridExtra)
+library(nadiv)
 ```
