@@ -22,6 +22,7 @@
   <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
+<meta name="author" content="Matthieu Videlier" />
 
 
 
@@ -300,17 +301,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-5"><a href="asreml-r-1.html#cb8-5" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb8-6"><a href="asreml-r-1.html#cb8-6" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 09:57:07 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:35 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4128.454           1.0    853 09:57:07    0.0
-##  2     -3284.272           1.0    853 09:57:07    0.0
-##  3     -2354.992           1.0    853 09:57:07    0.0
-##  4     -1710.357           1.0    853 09:57:07    0.0
-##  5     -1363.555           1.0    853 09:57:07    0.0
-##  6     -1263.516           1.0    853 09:57:07    0.0
-##  7     -1247.854           1.0    853 09:57:07    0.0
-##  8     -1247.185           1.0    853 09:57:07    0.0
-##  9     -1247.183           1.0    853 09:57:07    0.0</code></pre>
+##  1     -4128.454           1.0    853 10:33:35    0.0
+##  2     -3284.272           1.0    853 10:33:35    0.0
+##  3     -2354.992           1.0    853 10:33:35    0.0
+##  4     -1710.357           1.0    853 10:33:35    0.0
+##  5     -1363.555           1.0    853 10:33:35    0.0
+##  6     -1263.516           1.0    853 10:33:35    0.0
+##  7     -1247.854           1.0    853 10:33:35    0.0
+##  8     -1247.185           1.0    853 10:33:35    0.0
+##  9     -1247.183           1.0    853 10:33:35    0.0</code></pre>
 <p>In this model, <code>bwt</code> is the response variable and the only fixed effect is the intercept, denoted as <code>1</code>. The only random effect we have fitted is <code>animal</code>, which will provide an estimate of <span class="math inline">\(V_A\)</span>. Our random <code>animal</code> effect is connected to the inverse related matrix <code>ainv</code> which integrate the relativeness or pedigree information.<br />
 <code>data=</code> specifies the name of the dataframe that contains our variables. Finally, we inform <code>asreml()</code> what to when it encounters <code>NA</code>s in either the dependent or predictor variables (in this case we choose to remove the records).
 If you use the argument “include” instead of “omit”, model will keep the NA. With x=“include”, the model will exchange <code>NA</code> with 0. Be careful you need to standardize your trait so the mean will be equal to 0, if not estimates (including covariance in multivariate models) could be strongly biased due to the the missing values considered as 0. y=“include” will exchange <code>NA</code> with a factor labeled <code>mv</code> which will be included in the sparse equation. For more details see Asreml-R manual.</p>
@@ -345,17 +346,17 @@ If you use the argument “include” instead of “omit”, model will keep the
 <span id="cb15-6"><a href="asreml-r-1.html#cb15-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb15-7"><a href="asreml-r-1.html#cb15-7" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 09:57:08 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:36 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -3364.126           1.0    852 09:57:08    0.0
-##  2     -2702.117           1.0    852 09:57:08    0.0
-##  3     -1978.916           1.0    852 09:57:08    0.0
-##  4     -1487.834           1.0    852 09:57:08    0.0
-##  5     -1236.350           1.0    852 09:57:08    0.0
-##  6     -1172.771           1.0    852 09:57:08    0.0
-##  7     -1165.270           1.0    852 09:57:08    0.0
-##  8     -1165.093           1.0    852 09:57:08    0.0
-##  9     -1165.093           1.0    852 09:57:08    0.0</code></pre>
+##  1     -3364.126           1.0    852 10:33:36    0.0
+##  2     -2702.117           1.0    852 10:33:36    0.0
+##  3     -1978.916           1.0    852 10:33:36    0.0
+##  4     -1487.834           1.0    852 10:33:36    0.0
+##  5     -1236.350           1.0    852 10:33:36    0.0
+##  6     -1172.771           1.0    852 10:33:36    0.0
+##  7     -1165.270           1.0    852 10:33:36    0.0
+##  8     -1165.093           1.0    852 10:33:36    0.0
+##  9     -1165.093           1.0    852 10:33:36    0.0</code></pre>
 <p>Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="asreml-r-1.html#cb17-1" aria-hidden="true"></a><span class="kw">summary</span>(model2, <span class="dt">coef =</span> <span class="ot">TRUE</span>)<span class="op">$</span>coef.fixed</span></code></pre></div>
 <pre><code>##             solution std error  z.ratio
@@ -364,11 +365,12 @@ If you use the argument “include” instead of “omit”, model will keep the
 ## (Intercept) 6.058669 0.1718244 35.26082</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="asreml-r-1.html#cb19-1" aria-hidden="true"></a><span class="kw">wald.asreml</span>(model2, <span class="dt">ssType =</span> <span class="st">&quot;conditional&quot;</span>, <span class="dt">denDF =</span> <span class="st">&quot;numeric&quot;</span>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.</code></pre>
-<pre><code>## Warning in asreml(fixed = bwt ~ 1 + sex, random = ~vm(animal, ainv), residual = ~idv(units), : Algebraic derivatives for denominator df not available.</code></pre>
-<pre><code>## ASReml 4.1.0 Wed Mar 23 09:57:08 2022
+<pre><code>## Warning in asreml(fixed = bwt ~ 1 + sex, random = ~vm(animal, ainv), residual =
+## ~idv(units), : Algebraic derivatives for denominator df not available.</code></pre>
+<pre><code>## ASReml 4.1.0 Wed Mar 23 10:33:36 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -1165.093           1.0    852 09:57:08    0.0
-##  2     -1165.093           1.0    852 09:57:08    0.0
+##  1     -1165.093           1.0    852 10:33:36    0.0
+##  2     -1165.093           1.0    852 10:33:36    0.0
 ## Calculating denominator DF</code></pre>
 <pre><code>## $Wald
 ## [0;34m
@@ -410,17 +412,17 @@ If you use the argument “include” instead of “omit”, model will keep the
 <span id="cb30-6"><a href="asreml-r-1.html#cb30-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb30-7"><a href="asreml-r-1.html#cb30-7" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 09:57:08 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:36 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2742.658           1.0    852 09:57:08    0.0
-##  2     -2237.268           1.0    852 09:57:08    0.0
-##  3     -1690.453           1.0    852 09:57:08    0.0
-##  4     -1328.910           1.0    852 09:57:08    0.0
-##  5     -1154.597           1.0    852 09:57:08    0.0
-##  6     -1116.992           1.0    852 09:57:08    0.0
-##  7     -1113.809           1.0    852 09:57:08    0.0
-##  8     -1113.772           1.0    852 09:57:08    0.0
-##  9     -1113.772           1.0    852 09:57:08    0.0</code></pre>
+##  1     -2742.658           1.0    852 10:33:36    0.0
+##  2     -2237.268           1.0    852 10:33:36    0.0
+##  3     -1690.453           1.0    852 10:33:36    0.0
+##  4     -1328.910           1.0    852 10:33:36    0.0
+##  5     -1154.597           1.0    852 10:33:36    0.0
+##  6     -1116.992           1.0    852 10:33:36    0.0
+##  7     -1113.809           1.0    852 10:33:36    0.0
+##  8     -1113.772           1.0    852 10:33:36    0.0
+##  9     -1113.772           1.0    852 10:33:36    0.0</code></pre>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="asreml-r-1.html#cb32-1" aria-hidden="true"></a><span class="kw">summary</span>(model3)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error  z.ratio bound %ch
 ## byear            0.8862604 0.2695918 3.287416     P   0
@@ -440,16 +442,16 @@ If you use the argument “include” instead of “omit”, model will keep the
 <span id="cb36-6"><a href="asreml-r-1.html#cb36-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb36-7"><a href="asreml-r-1.html#cb36-7" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 09:57:08 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:36 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2033.178           1.0    852 09:57:08    0.0
-##  2     -1723.734           1.0    852 09:57:08    0.0
-##  3     -1396.354           1.0    852 09:57:08    0.0
-##  4     -1193.012           1.0    852 09:57:08    0.0
-##  5     -1107.946           1.0    852 09:57:08    0.0
-##  6     -1095.327           1.0    852 09:57:08    0.0
-##  7     -1094.816           1.0    852 09:57:08    0.0
-##  8     -1094.815           1.0    852 09:57:08    0.0</code></pre>
+##  1     -2033.178           1.0    852 10:33:36    0.0
+##  2     -1723.734           1.0    852 10:33:36    0.0
+##  3     -1396.354           1.0    852 10:33:36    0.0
+##  4     -1193.012           1.0    852 10:33:36    0.0
+##  5     -1107.946           1.0    852 10:33:36    0.0
+##  6     -1095.327           1.0    852 10:33:36    0.0
+##  7     -1094.816           1.0    852 10:33:36    0.0
+##  8     -1094.815           1.0    852 10:33:36    0.0</code></pre>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="asreml-r-1.html#cb38-1" aria-hidden="true"></a><span class="kw">summary</span>(model4)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error  z.ratio bound %ch
 ## byear            0.8820313 0.2632455 3.350604     P   0
@@ -495,14 +497,14 @@ To avoid multiple model (one for each group), we can directly partition the vari
 <span id="cb49-6"><a href="asreml-r-1.html#cb49-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
 <span id="cb49-7"><a href="asreml-r-1.html#cb49-7" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Multi-section model using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 09:57:09 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:37 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -1142.164           1.0    852 09:57:09    0.0
-##  2     -1126.308           1.0    852 09:57:09    0.0
-##  3     -1111.536           1.0    852 09:57:09    0.0
-##  4     -1105.383           1.0    852 09:57:09    0.0
-##  5     -1104.375           1.0    852 09:57:09    0.0
-##  6     -1104.364           1.0    852 09:57:09    0.0</code></pre>
+##  1     -1142.164           1.0    852 10:33:37    0.0
+##  2     -1126.308           1.0    852 10:33:37    0.0
+##  3     -1111.536           1.0    852 10:33:37    0.0
+##  4     -1105.383           1.0    852 10:33:37    0.0
+##  5     -1104.375           1.0    852 10:33:37    0.0
+##  6     -1104.364           1.0    852 10:33:37    0.0</code></pre>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="asreml-r-1.html#cb51-1" aria-hidden="true"></a><span class="kw">summary</span>(model_SEX)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                             component std.error  z.ratio bound %ch
 ## byear                       0.9001595 0.2690012 3.346303     P 0.0
@@ -570,16 +572,16 @@ Due to a lack of power, a structural problem in the dataset or a very low varian
 <span id="cb65-7"><a href="asreml-r-1.html#cb65-7" aria-hidden="true"></a>  <span class="dt">R.param =</span> R.temp, <span class="dt">G.param =</span> G.temp</span>
 <span id="cb65-8"><a href="asreml-r-1.html#cb65-8" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 09:57:09 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:37 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2033.178           1.0    852 09:57:09    0.0
-##  2     -1723.734           1.0    852 09:57:09    0.0
-##  3     -1396.354           1.0    852 09:57:09    0.0
-##  4     -1193.012           1.0    852 09:57:09    0.0
-##  5     -1107.946           1.0    852 09:57:09    0.0
-##  6     -1095.327           1.0    852 09:57:09    0.0
-##  7     -1094.816           1.0    852 09:57:09    0.0
-##  8     -1094.815           1.0    852 09:57:09    0.0</code></pre>
+##  1     -2033.178           1.0    852 10:33:37    0.0
+##  2     -1723.734           1.0    852 10:33:37    0.0
+##  3     -1396.354           1.0    852 10:33:37    0.0
+##  4     -1193.012           1.0    852 10:33:37    0.0
+##  5     -1107.946           1.0    852 10:33:37    0.0
+##  6     -1095.327           1.0    852 10:33:37    0.0
+##  7     -1094.816           1.0    852 10:33:37    0.0
+##  8     -1094.815           1.0    852 10:33:37    0.0</code></pre>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="asreml-r-1.html#cb67-1" aria-hidden="true"></a><span class="kw">summary</span>(model5)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error  z.ratio bound %ch
 ## byear            0.8820313 0.2632455 3.350604     U   0

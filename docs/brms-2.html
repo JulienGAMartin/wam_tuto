@@ -22,6 +22,7 @@
   <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
+<meta name="author" content="Matthieu Videlier" />
 
 
 
@@ -299,7 +300,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb366-11"><a href="brms-2.html#cb366-11" aria-hidden="true"></a><span class="kw">save</span>(brms_m2<span class="fl">.1</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m2_1.rda&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="brms-2.html#cb367-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m2_1.rda&quot;</span>)</span>
 <span id="cb367-2"><a href="brms-2.html#cb367-2" aria-hidden="true"></a><span class="kw">summary</span>(brms_m2<span class="fl">.1</span>)</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>##  Family: MV(gaussian, gaussian) 
 ##   Links: mu = identity; sigma = identity
 ##          mu = identity; sigma = identity 
@@ -311,10 +314,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## Group-Level Effects: 
 ## ~animal (Number of levels: 683) 
-##                                     Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(bwt_Intercept)                       1.81      0.21     1.41     2.20 1.06       31      192
-## sd(tarsus_Intercept)                    3.44      0.43     2.49     4.25 1.05       61      173
-## cor(bwt_Intercept,tarsus_Intercept)     0.38      0.14     0.08     0.62 1.02      101      232
+##                                     Estimate Est.Error l-95% CI u-95% CI Rhat
+## sd(bwt_Intercept)                       1.81      0.21     1.41     2.20 1.06
+## sd(tarsus_Intercept)                    3.44      0.43     2.49     4.25 1.05
+## cor(bwt_Intercept,tarsus_Intercept)     0.38      0.14     0.08     0.62 1.02
+##                                     Bulk_ESS Tail_ESS
+## sd(bwt_Intercept)                         31      192
+## sd(tarsus_Intercept)                      61      173
+## cor(bwt_Intercept,tarsus_Intercept)      101      232
 ## 
 ## Population-Level Effects: 
 ##                  Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS

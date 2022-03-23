@@ -22,6 +22,7 @@
   <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
+<meta name="author" content="Matthieu Videlier" />
 
 
 
@@ -301,42 +302,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb181-7"><a href="asreml-biv.html#cb181-7" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;include&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;include&quot;</span>),</span>
 <span id="cb181-8"><a href="asreml-biv.html#cb181-8" aria-hidden="true"></a>  <span class="dt">maxit =</span> <span class="dv">20</span></span>
 <span id="cb181-9"><a href="asreml-biv.html#cb181-9" aria-hidden="true"></a>)</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:43 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:56 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -5118.122           1.0   1535 10:05:43    0.0
-##  2     -4358.769           1.0   1535 10:05:43    0.0
-##  3     -3540.792           1.0   1535 10:05:43    0.0
-##  4     -3004.970           1.0   1535 10:05:43    0.0
-##  5     -2747.831           1.0   1535 10:05:43    0.0
-##  6     -2687.807           1.0   1535 10:05:43    0.0
-##  7     -2680.057           1.0   1535 10:05:43    0.0
-##  8     -2679.743           1.0   1535 10:05:43    0.0
-##  9     -2679.741           1.0   1535 10:05:43    0.0</code></pre>
+##  1     -5118.122           1.0   1535 10:33:56    0.0
+##  2     -4358.769           1.0   1535 10:33:56    0.0
+##  3     -3540.792           1.0   1535 10:33:56    0.0
+##  4     -3004.970           1.0   1535 10:33:56    0.0
+##  5     -2747.831           1.0   1535 10:33:56    0.0
+##  6     -2687.807           1.0   1535 10:33:56    0.0
+##  7     -2680.057           1.0   1535 10:33:56    0.0
+##  8     -2679.743           1.0   1535 10:33:56    0.0
+##  9     -2679.741           1.0   1535 10:33:56    0.0</code></pre>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="asreml-biv.html#cb184-1" aria-hidden="true"></a>modela &lt;-<span class="st"> </span><span class="kw">update</span>(modela)</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:43 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:56 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2679.741           1.0   1535 10:05:43    0.0
-##  2     -2679.741           1.0   1535 10:05:43    0.0</code></pre>
+##  1     -2679.741           1.0   1535 10:33:56    0.0
+##  2     -2679.741           1.0   1535 10:33:56    0.0</code></pre>
 <p><code>modela</code> has fitted a bivariate model of <code>bwt</code> and <code>tarsus</code>, with the mean for each of the traits as a fixed effect (<code>trait</code>). The additive genetic variance-covariance matrix (<span class="math inline">\(\textbf{G}\)</span>) is unstructured (<code>us</code>; <em>i.e.</em> all elements are free to vary) and the starting values for <span class="math inline">\(V_A\)</span> for <code>bwt</code>, <span class="math inline">\(COV_A\)</span> between <code>bwt</code> and <code>tarsus</code>, and <span class="math inline">\(V_A\)</span> for <code>tarsus</code> are set to 1, 0.1 and 1, respectively. Similarly, the residual matrix is unstructured and uses the same starting values.</p>
 <p>Note that the argument <code>na.action = na.method(x = "include", y = "include")</code> can be added to the model. In a bivariate model, it will help calculate the covariance between two traits with different missing information <code>NA</code> and so help imbalance phenotypage and save sample size. However, it is important to scale ( mean =0, var =1) the two traits to correctly adjust the model(see Asreml-R manual for more information).</p>
 <p>Let’s have a look at the variance components, and notice that there are now seven (co)variance components reported in the table:</p>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="asreml-biv.html#cb187-1" aria-hidden="true"></a><span class="kw">summary</span>(modela)<span class="op">$</span>varcomp</span></code></pre></div>
-<pre><code>##                                            component std.error  z.ratio bound %ch
-## trait:vm(animal, ainv)!trait_bwt:bwt        3.368405 0.6348356 5.305948     P   0
-## trait:vm(animal, ainv)!trait_tarsus:bwt     2.459827 1.0732809 2.291876     P   0
-## trait:vm(animal, ainv)!trait_tarsus:tarsus 12.345849 3.0744787 4.015591     P   0
-## units:trait!R                               1.000000        NA       NA     F   0
-## units:trait!trait_bwt:bwt                   3.849910 0.5200095 7.403539     P   0
-## units:trait!trait_tarsus:bwt                3.313269 0.9129222 3.629300     P   0
-## units:trait!trait_tarsus:tarsus            17.646386 2.6670308 6.616491     P   0</code></pre>
+<pre><code>##                                            component std.error  z.ratio bound
+## trait:vm(animal, ainv)!trait_bwt:bwt        3.368405 0.6348356 5.305948     P
+## trait:vm(animal, ainv)!trait_tarsus:bwt     2.459827 1.0732809 2.291876     P
+## trait:vm(animal, ainv)!trait_tarsus:tarsus 12.345849 3.0744787 4.015591     P
+## units:trait!R                               1.000000        NA       NA     F
+## units:trait!trait_bwt:bwt                   3.849910 0.5200095 7.403539     P
+## units:trait!trait_tarsus:bwt                3.313269 0.9129222 3.629300     P
+## units:trait!trait_tarsus:tarsus            17.646386 2.6670308 6.616491     P
+##                                            %ch
+## trait:vm(animal, ainv)!trait_bwt:bwt         0
+## trait:vm(animal, ainv)!trait_tarsus:bwt      0
+## trait:vm(animal, ainv)!trait_tarsus:tarsus   0
+## units:trait!R                                0
+## units:trait!trait_bwt:bwt                    0
+## units:trait!trait_tarsus:bwt                 0
+## units:trait!trait_tarsus:tarsus              0</code></pre>
 <p>The first three terms are related to the genetic matrix and, in order are <span class="math inline">\(V_{A,bwt}\)</span>, <span class="math inline">\(COV_A\)</span>, <span class="math inline">\(V_{A, tarsus}\)</span>. Below is again a line where the <code>units:traitr!R</code> component equals to 1, which again can be ignored. The final three terms relate to the residual matrix and correspond to <span class="math inline">\(V_{R,bwt}\)</span>, <span class="math inline">\(COV_R\)</span>, <span class="math inline">\(V_{R,tarsus}\)</span>. Based on our quick and dirty check (is <code>z.ratio</code> &gt; 1.96?) all components look to be statistically significant.</p>
 <p>We can calculate the genetic correlation as <span class="math inline">\(COV_A / \sqrt{V_{A,bwt} \cdot V_{A,tarsus}}\)</span>. Thus this model gives an estimate of <span class="math inline">\(r_A\)</span> = 0.38. It is also possible to estimate the residual correlation <span class="math inline">\(r_res\)</span> = 0.4.
 <!-- C1 issue the annotation of the residual correlation--></p>
@@ -370,41 +383,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb197-9"><a href="asreml-biv.html#cb197-9" aria-hidden="true"></a>  <span class="dt">maxit =</span> <span class="dv">20</span></span>
 <span id="cb197-10"><a href="asreml-biv.html#cb197-10" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:43 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:56 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4672.301           1.0   1533 10:05:43    0.0
-##  2     -4005.615           1.0   1533 10:05:43    0.0
-##  3     -3271.483           1.0   1533 10:05:43    0.0 (1 restrained)
-##  4     -2761.414           1.0   1533 10:05:43    0.0 (1 restrained)
-##  5     -2481.357           1.0   1533 10:05:43    0.0
-##  6     -2395.858           1.0   1533 10:05:43    0.0
-##  7     -2381.050           1.0   1533 10:05:43    0.0
-##  8     -2380.251           1.0   1533 10:05:43    0.0
-##  9     -2380.246           1.0   1533 10:05:43    0.0</code></pre>
+##  1     -4672.301           1.0   1533 10:33:56    0.0
+##  2     -4005.615           1.0   1533 10:33:56    0.0
+##  3     -3271.483           1.0   1533 10:33:56    0.0 (1 restrained)
+##  4     -2761.414           1.0   1533 10:33:56    0.0 (1 restrained)
+##  5     -2481.357           1.0   1533 10:33:56    0.0
+##  6     -2395.858           1.0   1533 10:33:56    0.0
+##  7     -2381.050           1.0   1533 10:33:56    0.0
+##  8     -2380.251           1.0   1533 10:33:56    0.0
+##  9     -2380.246           1.0   1533 10:33:56    0.1</code></pre>
 <div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="asreml-biv.html#cb199-1" aria-hidden="true"></a>modelb &lt;-<span class="st"> </span><span class="kw">update</span>(modelb)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:43 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:57 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2380.246           1.0   1533 10:05:43    0.1
-##  2     -2380.246           1.0   1533 10:05:44    0.0</code></pre>
+##  1     -2380.246           1.0   1533 10:33:57    0.0
+##  2     -2380.246           1.0   1533 10:33:57    0.0</code></pre>
 <p>Note that we have specified a covariance structure for each random effect and an estimate of the effect of sex on both birth weight and tarsus length.
 <!-- C3 trait:sex actually combined the effect of sex on both trait in the wald test, so I change it for at(trait): --></p>
 <p>There will now be thirteen (co)variance components reported after running the code:</p>
 <div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="asreml-biv.html#cb201-1" aria-hidden="true"></a><span class="kw">summary</span>(modelb)<span class="op">$</span>varcomp</span></code></pre></div>
-<pre><code>##                                             component std.error    z.ratio bound %ch
-## trait:byear!trait_bwt:bwt                   0.9746385 0.2825727  3.4491602     P   0
-## trait:byear!trait_tarsus:bwt                0.1624076 0.4185079  0.3880635     P   0
-## trait:byear!trait_tarsus:tarsus             3.7383721 1.2065992  3.0982716     P   0
-## trait:mother!trait_bwt:bwt                  1.1445184 0.2302182  4.9714512     P   0
-## trait:mother!trait_tarsus:bwt              -1.5567306 0.4051848 -3.8420260     P   0
-## trait:mother!trait_tarsus:tarsus            4.8206132 1.3201300  3.6516202     P   0
-## trait:vm(animal, ainv)!trait_bwt:bwt        1.9893546 0.4410246  4.5107569     P   0
-## trait:vm(animal, ainv)!trait_tarsus:bwt     3.3170404 0.9032323  3.6724110     P   0
-## trait:vm(animal, ainv)!trait_tarsus:tarsus 10.2294887 2.8077066  3.6433610     P   0
-## units:trait!R                               1.0000000        NA         NA     F   0
-## units:trait!trait_bwt:bwt                   1.8443110 0.3443178  5.3564203     P   0
-## units:trait!trait_tarsus:bwt                4.0142841 0.7412540  5.4155308     P   0
-## units:trait!trait_tarsus:tarsus            12.4845955 2.2893363  5.4533690     P   0</code></pre>
+<pre><code>##                                             component std.error    z.ratio bound
+## trait:byear!trait_bwt:bwt                   0.9746385 0.2825727  3.4491602     P
+## trait:byear!trait_tarsus:bwt                0.1624076 0.4185079  0.3880635     P
+## trait:byear!trait_tarsus:tarsus             3.7383721 1.2065992  3.0982716     P
+## trait:mother!trait_bwt:bwt                  1.1445184 0.2302182  4.9714512     P
+## trait:mother!trait_tarsus:bwt              -1.5567306 0.4051848 -3.8420260     P
+## trait:mother!trait_tarsus:tarsus            4.8206132 1.3201300  3.6516202     P
+## trait:vm(animal, ainv)!trait_bwt:bwt        1.9893546 0.4410246  4.5107569     P
+## trait:vm(animal, ainv)!trait_tarsus:bwt     3.3170404 0.9032323  3.6724110     P
+## trait:vm(animal, ainv)!trait_tarsus:tarsus 10.2294887 2.8077066  3.6433610     P
+## units:trait!R                               1.0000000        NA         NA     F
+## units:trait!trait_bwt:bwt                   1.8443110 0.3443178  5.3564203     P
+## units:trait!trait_tarsus:bwt                4.0142841 0.7412540  5.4155308     P
+## units:trait!trait_tarsus:tarsus            12.4845955 2.2893363  5.4533690     P
+##                                            %ch
+## trait:byear!trait_bwt:bwt                    0
+## trait:byear!trait_tarsus:bwt                 0
+## trait:byear!trait_tarsus:tarsus              0
+## trait:mother!trait_bwt:bwt                   0
+## trait:mother!trait_tarsus:bwt                0
+## trait:mother!trait_tarsus:tarsus             0
+## trait:vm(animal, ainv)!trait_bwt:bwt         0
+## trait:vm(animal, ainv)!trait_tarsus:bwt      0
+## trait:vm(animal, ainv)!trait_tarsus:tarsus   0
+## units:trait!R                                0
+## units:trait!trait_bwt:bwt                    0
+## units:trait!trait_tarsus:bwt                 0
+## units:trait!trait_tarsus:tarsus              0</code></pre>
 <p>we can estimate the different correlations using <code>vpredict</code>:</p>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="asreml-biv.html#cb203-1" aria-hidden="true"></a><span class="kw">vpredict</span>(modelb, r_byear <span class="op">~</span><span class="st"> </span>V2 <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(V1 <span class="op">*</span><span class="st"> </span>V3))</span></code></pre></div>
 <pre><code>##           Estimate        SE
@@ -429,10 +456,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## trait_tarsus            20.5936436 0.5098944 40.3880569</code></pre>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="asreml-biv.html#cb213-1" aria-hidden="true"></a><span class="kw">wald.asreml</span>(modelb, <span class="dt">denDF =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">ssType =</span> <span class="st">&quot;conditional&quot;</span>)<span class="op">$</span>Wald</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:44 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:57 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2380.246           1.0   1533 10:05:44    0.0
-##  2     -2380.246           1.0   1533 10:05:44    0.0
+##  1     -2380.246           1.0   1533 10:33:57    0.0
+##  2     -2380.246           1.0   1533 10:33:57    0.0
 ## Calculating denominator DF</code></pre>
 <pre><code>## [0;34m
 ## Wald tests for fixed effects.[0m
@@ -454,18 +481,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb216-9"><a href="asreml-biv.html#cb216-9" aria-hidden="true"></a>  <span class="dt">maxit =</span> <span class="dv">20</span></span>
 <span id="cb216-10"><a href="asreml-biv.html#cb216-10" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:44 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:57 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4810.563           1.0   1534 10:05:44    0.0
-##  2     -4129.799           1.0   1534 10:05:44    0.0
-##  3     -3382.529           1.0   1534 10:05:44    0.0 (1 restrained)
-##  4     -2864.076           1.0   1534 10:05:44    0.0
-##  5     -2574.891           1.0   1534 10:05:44    0.0
-##  6     -2478.879           1.0   1534 10:05:44    0.0
-##  7     -2458.305           1.0   1534 10:05:44    0.0
-##  8     -2456.425           1.0   1534 10:05:44    0.0
-##  9     -2456.377           1.0   1534 10:05:44    0.0
-## 10     -2456.376           1.0   1534 10:05:44    0.0</code></pre>
+##  1     -4810.563           1.0   1534 10:33:57    0.0
+##  2     -4129.799           1.0   1534 10:33:57    0.0
+##  3     -3382.529           1.0   1534 10:33:57    0.0 (1 restrained)
+##  4     -2864.076           1.0   1534 10:33:57    0.0
+##  5     -2574.891           1.0   1534 10:33:58    0.0
+##  6     -2478.879           1.0   1534 10:33:58    0.0
+##  7     -2458.305           1.0   1534 10:33:58    0.0
+##  8     -2456.425           1.0   1534 10:33:58    0.0
+##  9     -2456.377           1.0   1534 10:33:58    0.0
+## 10     -2456.376           1.0   1534 10:33:58    0.0</code></pre>
 <div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="asreml-biv.html#cb218-1" aria-hidden="true"></a><span class="kw">summary</span>(modelb_<span class="dv">2</span>, <span class="dt">coef =</span> <span class="ot">TRUE</span>)<span class="op">$</span>coef.fi</span></code></pre></div>
 <pre><code>##                          solution std error   z.ratio
 ## at(trait, tarsus):sex_1  0.000000        NA        NA
@@ -474,10 +501,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## trait_tarsus            22.703658 0.4827348  47.03133</code></pre>
 <div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="asreml-biv.html#cb220-1" aria-hidden="true"></a><span class="kw">wald.asreml</span>(modelb_<span class="dv">2</span>, <span class="dt">denDF =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">ssType =</span> <span class="st">&quot;conditional&quot;</span>)<span class="op">$</span>Wald</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:45 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:58 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2456.376           1.0   1534 10:05:45    0.0
-##  2     -2456.376           1.0   1534 10:05:45    0.0
+##  1     -2456.376           1.0   1534 10:33:58    0.1
+##  2     -2456.376           1.0   1534 10:33:58    0.0
 ## Calculating denominator DF</code></pre>
 <pre><code>## [0;34m
 ## Wald tests for fixed effects.[0m
@@ -505,17 +532,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb225-9"><a href="asreml-biv.html#cb225-9" aria-hidden="true"></a>  <span class="dt">maxit =</span> <span class="dv">20</span></span>
 <span id="cb225-10"><a href="asreml-biv.html#cb225-10" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:45 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:58 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4677.820           1.0   1533 10:05:45    0.0
-##  2     -4010.442           1.0   1533 10:05:45    0.0
-##  3     -3275.409           1.0   1533 10:05:45    0.0
-##  4     -2763.519           1.0   1533 10:05:45    0.0
-##  5     -2483.732           1.0   1533 10:05:45    0.0
-##  6     -2400.242           1.0   1533 10:05:45    0.0
-##  7     -2386.663           1.0   1533 10:05:45    0.0
-##  8     -2386.049           1.0   1533 10:05:45    0.0
-##  9     -2386.045           1.0   1533 10:05:45    0.0</code></pre>
+##  1     -4677.820           1.0   1533 10:33:58    0.0
+##  2     -4010.442           1.0   1533 10:33:58    0.0
+##  3     -3275.409           1.0   1533 10:33:58    0.0
+##  4     -2763.519           1.0   1533 10:33:58    0.0
+##  5     -2483.732           1.0   1533 10:33:59    0.0
+##  6     -2400.242           1.0   1533 10:33:59    0.0
+##  7     -2386.663           1.0   1533 10:33:59    0.0
+##  8     -2386.049           1.0   1533 10:33:59    0.0
+##  9     -2386.045           1.0   1533 10:33:59    0.0</code></pre>
 <p>You can run <code>summary(modelc)$varcomp</code> to confirm this worked. We can now obtain the log-likelihood of this model and compare this to that of <code>modelb</code> using a likelihood ratio test:</p>
 <div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="asreml-biv.html#cb227-1" aria-hidden="true"></a>modelc<span class="op">$</span>loglik</span></code></pre></div>
 <pre><code>## [1] -2386.045</code></pre>
@@ -540,17 +567,17 @@ The p-value that goes with this is obtained by:</p>
 <span id="cb233-9"><a href="asreml-biv.html#cb233-9" aria-hidden="true"></a>  <span class="dt">maxit =</span> <span class="dv">20</span></span>
 <span id="cb233-10"><a href="asreml-biv.html#cb233-10" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:45 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:59 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4672.708           1.0   1533 10:05:45    0.0
-##  2     -4005.953           1.0   1533 10:05:46    0.0
-##  3     -3271.737           1.0   1533 10:05:46    0.0 (1 restrained)
-##  4     -2761.626           1.0   1533 10:05:46    0.0 (1 restrained)
-##  5     -2481.649           1.0   1533 10:05:46    0.0
-##  6     -2395.992           1.0   1533 10:05:46    0.0
-##  7     -2381.136           1.0   1533 10:05:46    0.0
-##  8     -2380.331           1.0   1533 10:05:46    0.0
-##  9     -2380.326           1.0   1533 10:05:46    0.0</code></pre>
+##  1     -4672.708           1.0   1533 10:33:59    0.0
+##  2     -4005.953           1.0   1533 10:33:59    0.0
+##  3     -3271.737           1.0   1533 10:33:59    0.0 (1 restrained)
+##  4     -2761.626           1.0   1533 10:33:59    0.0 (1 restrained)
+##  5     -2481.649           1.0   1533 10:33:59    0.0
+##  6     -2395.992           1.0   1533 10:33:59    0.0
+##  7     -2381.136           1.0   1533 10:33:59    0.0
+##  8     -2380.331           1.0   1533 10:33:59    0.0
+##  9     -2380.326           1.0   1533 10:33:59    0.0</code></pre>
 <div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="asreml-biv.html#cb235-1" aria-hidden="true"></a><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(modelb<span class="op">$</span>loglik <span class="op">-</span><span class="st"> </span>modeld<span class="op">$</span>loglik)</span></code></pre></div>
 <pre><code>## [1] 0.1600641</code></pre>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="asreml-biv.html#cb237-1" aria-hidden="true"></a><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pchisq</span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(modelb<span class="op">$</span>loglik <span class="op">-</span><span class="st"> </span>modeld<span class="op">$</span>loglik), <span class="dv">1</span>)</span></code></pre></div>
@@ -571,45 +598,63 @@ Here we decide to estimate directly the additive genetic correlation.</p>
 <span id="cb239-8"><a href="asreml-biv.html#cb239-8" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;include&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;include&quot;</span>),</span>
 <span id="cb239-9"><a href="asreml-biv.html#cb239-9" aria-hidden="true"></a>  <span class="dt">maxit =</span> <span class="dv">20</span></span>
 <span id="cb239-10"><a href="asreml-biv.html#cb239-10" aria-hidden="true"></a>)</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:46 2022
+## ASReml 4.1.0 Wed Mar 23 10:33:59 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -3544.356           1.0   1533 10:05:46    0.0
-##  2     -3177.908           1.0   1533 10:05:46    0.0 (1 restrained)
-##  3     -2784.992           1.0   1533 10:05:46    0.0
-##  4     -2527.352           1.0   1533 10:05:46    0.0
-##  5     -2406.422           1.0   1533 10:05:46    0.0
-##  6     -2382.062           1.0   1533 10:05:46    0.0
-##  7     -2380.263           1.0   1533 10:05:46    0.0
-##  8     -2380.246           1.0   1533 10:05:46    0.0
-##  9     -2380.246           1.0   1533 10:05:46    0.0</code></pre>
+##  1     -3544.356           1.0   1533 10:33:59    0.0
+##  2     -3177.908           1.0   1533 10:33:59    0.0 (1 restrained)
+##  3     -2784.992           1.0   1533 10:33:59    0.0
+##  4     -2527.352           1.0   1533 10:33:59    0.0
+##  5     -2406.422           1.0   1533 10:33:59    0.0
+##  6     -2382.062           1.0   1533 10:33:59    0.0
+##  7     -2380.263           1.0   1533 10:33:59    0.0
+##  8     -2380.246           1.0   1533 10:34:00    0.0
+##  9     -2380.246           1.0   1533 10:34:00    0.0</code></pre>
 <div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="asreml-biv.html#cb242-1" aria-hidden="true"></a>modele &lt;-<span class="st"> </span><span class="kw">update</span>(modele)</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:46 2022
+## ASReml 4.1.0 Wed Mar 23 10:34:00 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2380.246           1.0   1533 10:05:46    0.0
-##  2     -2380.246           1.0   1533 10:05:46    0.0</code></pre>
+##  1     -2380.246           1.0   1533 10:34:00    0.1
+##  2     -2380.246           1.0   1533 10:34:00    0.0</code></pre>
 <div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="asreml-biv.html#cb245-1" aria-hidden="true"></a><span class="kw">summary</span>(modele)<span class="op">$</span>varcomp</span></code></pre></div>
-<pre><code>##                                                     component std.error   z.ratio bound %ch
-## trait:byear!trait_bwt:bwt                           0.9746376 0.2825690  3.449203     P   0
-## trait:byear!trait_tarsus:bwt                        0.1624052 0.4184989  0.388066     P   0
-## trait:byear!trait_tarsus:tarsus                     3.7383599 1.2065684  3.098341     P   0
-## trait:mother!trait_bwt:bwt                          1.1445196 0.2302189  4.971441     P   0
-## trait:mother!trait_tarsus:bwt                      -1.5567326 0.4051847 -3.842032     P   0
-## trait:mother!trait_tarsus:tarsus                    4.8206100 1.3201239  3.651634     P   0
-## trait:vm(animal, ainv)!trait!tarsus:!trait!bwt.cor  0.7353034 0.1094744  6.716668     U   0
-## trait:vm(animal, ainv)!trait_bwt                    1.9893544 0.4410242  4.510760     P   0
-## trait:vm(animal, ainv)!trait_tarsus                10.2296667 2.8078190  3.643279     P   0
-## units:trait!R                                       1.0000000        NA        NA     F   0
-## units:trait!trait_bwt:bwt                           1.8443104 0.3443173  5.356427     P   0
-## units:trait!trait_tarsus:bwt                        4.0142731 0.7412587  5.415482     P   0
-## units:trait!trait_tarsus:tarsus                    12.4844745 2.2893621  5.453255     P   0</code></pre>
+<pre><code>##                                                     component std.error
+## trait:byear!trait_bwt:bwt                           0.9746376 0.2825690
+## trait:byear!trait_tarsus:bwt                        0.1624052 0.4184989
+## trait:byear!trait_tarsus:tarsus                     3.7383599 1.2065684
+## trait:mother!trait_bwt:bwt                          1.1445196 0.2302189
+## trait:mother!trait_tarsus:bwt                      -1.5567326 0.4051847
+## trait:mother!trait_tarsus:tarsus                    4.8206100 1.3201239
+## trait:vm(animal, ainv)!trait!tarsus:!trait!bwt.cor  0.7353034 0.1094744
+## trait:vm(animal, ainv)!trait_bwt                    1.9893544 0.4410242
+## trait:vm(animal, ainv)!trait_tarsus                10.2296667 2.8078190
+## units:trait!R                                       1.0000000        NA
+## units:trait!trait_bwt:bwt                           1.8443104 0.3443173
+## units:trait!trait_tarsus:bwt                        4.0142731 0.7412587
+## units:trait!trait_tarsus:tarsus                    12.4844745 2.2893621
+##                                                      z.ratio bound %ch
+## trait:byear!trait_bwt:bwt                           3.449203     P   0
+## trait:byear!trait_tarsus:bwt                        0.388066     P   0
+## trait:byear!trait_tarsus:tarsus                     3.098341     P   0
+## trait:mother!trait_bwt:bwt                          4.971441     P   0
+## trait:mother!trait_tarsus:bwt                      -3.842032     P   0
+## trait:mother!trait_tarsus:tarsus                    3.651634     P   0
+## trait:vm(animal, ainv)!trait!tarsus:!trait!bwt.cor  6.716668     U   0
+## trait:vm(animal, ainv)!trait_bwt                    4.510760     P   0
+## trait:vm(animal, ainv)!trait_tarsus                 3.643279     P   0
+## units:trait!R                                             NA     F   0
+## units:trait!trait_bwt:bwt                           5.356427     P   0
+## units:trait!trait_tarsus:bwt                        5.415482     P   0
+## units:trait!trait_tarsus:tarsus                     5.453255     P   0</code></pre>
 <p>It is important to note that using <code>corgh</code> change the order of the estimate (co)variance. All different calculation need to be adjust in consequence.
 It is also important to check the difference between the model with <code>us</code> and <code>corgh</code> to make sure any mistake are made.</p>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="asreml-biv.html#cb247-1" aria-hidden="true"></a><span class="kw">summary</span>(modelb)<span class="op">$</span>loglik</span></code></pre></div>
@@ -620,9 +665,11 @@ It is also important to check the difference between the model with <code>us</co
 The following code showed how to create a reduced model with the correlation close to 1 and compared to the initial model.
 Since we compared the correlation to its boundary, the degree of freedom is only half as a one tail LTR.</p>
 <div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="asreml-biv.html#cb251-1" aria-hidden="true"></a>MODEL_MODIF &lt;-<span class="st"> </span><span class="kw">update.asreml</span>(modele, <span class="dt">start.values =</span> T)</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="asreml-biv.html#cb253-1" aria-hidden="true"></a>G_MOD &lt;-<span class="st"> </span>MODEL_MODIF<span class="op">$</span>vparameters.table[(<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>), ]</span>
 <span id="cb253-2"><a href="asreml-biv.html#cb253-2" aria-hidden="true"></a>G_MOD[<span class="dv">1</span>, <span class="dv">2</span>] &lt;-<span class="st"> </span><span class="fl">0.99999</span></span>
 <span id="cb253-3"><a href="asreml-biv.html#cb253-3" aria-hidden="true"></a>G_MOD[<span class="dv">1</span>, <span class="dv">3</span>] &lt;-<span class="st"> &quot;F&quot;</span></span>
@@ -637,22 +684,24 @@ Since we compared the correlation to its boundary, the degree of freedom is only
 <span id="cb253-12"><a href="asreml-biv.html#cb253-12" aria-hidden="true"></a>  <span class="dt">maxit =</span> <span class="dv">20</span>,</span>
 <span id="cb253-13"><a href="asreml-biv.html#cb253-13" aria-hidden="true"></a>  <span class="dt">G.param =</span> G_MOD</span>
 <span id="cb253-14"><a href="asreml-biv.html#cb253-14" aria-hidden="true"></a>)</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:47 2022
+## ASReml 4.1.0 Wed Mar 23 10:34:00 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2545.227           1.0   1533 10:05:47    0.0
-##  2     -2483.880           1.0   1533 10:05:47    0.0
-##  3     -2423.502           1.0   1533 10:05:47    0.0
-##  4     -2392.508           1.0   1533 10:05:47    0.0
-##  5     -2383.661           1.0   1533 10:05:47    0.0
-##  6     -2383.084           1.0   1533 10:05:47    0.0
-##  7     -2383.033           1.0   1533 10:05:47    0.0
-##  8     -2383.022           1.0   1533 10:05:47    0.0
-##  9     -2383.019           1.0   1533 10:05:47    0.0
-## 10     -2383.019           1.0   1533 10:05:47    0.0</code></pre>
+##  1     -2545.227           1.0   1533 10:34:00    0.1
+##  2     -2483.880           1.0   1533 10:34:00    0.0
+##  3     -2423.502           1.0   1533 10:34:00    0.0
+##  4     -2392.508           1.0   1533 10:34:00    0.0
+##  5     -2383.661           1.0   1533 10:34:00    0.0
+##  6     -2383.084           1.0   1533 10:34:00    0.0
+##  7     -2383.033           1.0   1533 10:34:00    0.0
+##  8     -2383.022           1.0   1533 10:34:00    0.0
+##  9     -2383.019           1.0   1533 10:34:00    0.0
+## 10     -2383.019           1.0   1533 10:34:00    0.1</code></pre>
 <div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="asreml-biv.html#cb256-1" aria-hidden="true"></a><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(modele<span class="op">$</span>loglik <span class="op">-</span><span class="st"> </span>modele.red<span class="op">$</span>loglik)</span></code></pre></div>
 <pre><code>## [1] 5.544679</code></pre>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="asreml-biv.html#cb258-1" aria-hidden="true"></a><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pchisq</span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(modele<span class="op">$</span>loglik <span class="op">-</span><span class="st"> </span>modele.red<span class="op">$</span>loglik), <span class="dt">df =</span> <span class="fl">0.5</span>)</span></code></pre></div>
@@ -679,45 +728,63 @@ BLUP should be normaly distributed, if not you need to check the assumption of y
 <span id="cb260-11"><a href="asreml-biv.html#cb260-11" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;include&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;include&quot;</span>),</span>
 <span id="cb260-12"><a href="asreml-biv.html#cb260-12" aria-hidden="true"></a>  <span class="dt">maxit =</span> <span class="dv">20</span></span>
 <span id="cb260-13"><a href="asreml-biv.html#cb260-13" aria-hidden="true"></a>)</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:47 2022
+## ASReml 4.1.0 Wed Mar 23 10:34:01 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -3544.356           1.0   1533 10:05:47    0.0
-##  2     -3177.908           1.0   1533 10:05:47    0.0 (1 restrained)
-##  3     -2784.992           1.0   1533 10:05:47    0.0
-##  4     -2527.352           1.0   1533 10:05:47    0.0
-##  5     -2406.422           1.0   1533 10:05:47    0.0
-##  6     -2382.062           1.0   1533 10:05:47    0.0
-##  7     -2380.263           1.0   1533 10:05:47    0.0
-##  8     -2380.246           1.0   1533 10:05:47    0.0
-##  9     -2380.246           1.0   1533 10:05:47    0.0</code></pre>
+##  1     -3544.356           1.0   1533 10:34:01    0.1
+##  2     -3177.908           1.0   1533 10:34:01    0.0 (1 restrained)
+##  3     -2784.992           1.0   1533 10:34:01    0.0
+##  4     -2527.352           1.0   1533 10:34:01    0.0
+##  5     -2406.422           1.0   1533 10:34:01    0.0
+##  6     -2382.062           1.0   1533 10:34:01    0.0
+##  7     -2380.263           1.0   1533 10:34:01    0.0
+##  8     -2380.246           1.0   1533 10:34:01    0.0
+##  9     -2380.246           1.0   1533 10:34:01    0.0</code></pre>
 <div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="asreml-biv.html#cb263-1" aria-hidden="true"></a>modele &lt;-<span class="st"> </span><span class="kw">update</span>(modele)</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:48 2022
+## ASReml 4.1.0 Wed Mar 23 10:34:01 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2380.246           1.0   1533 10:05:48    0.0
-##  2     -2380.246           1.0   1533 10:05:48    0.0</code></pre>
+##  1     -2380.246           1.0   1533 10:34:01    0.1
+##  2     -2380.246           1.0   1533 10:34:01    0.1</code></pre>
 <div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="asreml-biv.html#cb266-1" aria-hidden="true"></a><span class="kw">summary</span>(modele)<span class="op">$</span>varcomp</span></code></pre></div>
-<pre><code>##                                                component std.error   z.ratio bound %ch
-## trait:byear!trait_T1:T1                        0.9746376 0.2825690  3.449203     P   0
-## trait:byear!trait_T2:T1                        0.1624052 0.4184989  0.388066     P   0
-## trait:byear!trait_T2:T2                        3.7383599 1.2065684  3.098341     P   0
-## trait:mother!trait_T1:T1                       1.1445196 0.2302189  4.971441     P   0
-## trait:mother!trait_T2:T1                      -1.5567326 0.4051847 -3.842032     P   0
-## trait:mother!trait_T2:T2                       4.8206100 1.3201239  3.651634     P   0
-## trait:vm(animal, ainv)!trait!T2:!trait!T1.cor  0.7353034 0.1094744  6.716668     U   0
-## trait:vm(animal, ainv)!trait_T1                1.9893544 0.4410242  4.510760     P   0
-## trait:vm(animal, ainv)!trait_T2               10.2296667 2.8078190  3.643279     P   0
-## units:trait!R                                  1.0000000        NA        NA     F   0
-## units:trait!trait_T1:T1                        1.8443104 0.3443173  5.356427     P   0
-## units:trait!trait_T2:T1                        4.0142731 0.7412587  5.415482     P   0
-## units:trait!trait_T2:T2                       12.4844745 2.2893621  5.453255     P   0</code></pre>
+<pre><code>##                                                component std.error   z.ratio
+## trait:byear!trait_T1:T1                        0.9746376 0.2825690  3.449203
+## trait:byear!trait_T2:T1                        0.1624052 0.4184989  0.388066
+## trait:byear!trait_T2:T2                        3.7383599 1.2065684  3.098341
+## trait:mother!trait_T1:T1                       1.1445196 0.2302189  4.971441
+## trait:mother!trait_T2:T1                      -1.5567326 0.4051847 -3.842032
+## trait:mother!trait_T2:T2                       4.8206100 1.3201239  3.651634
+## trait:vm(animal, ainv)!trait!T2:!trait!T1.cor  0.7353034 0.1094744  6.716668
+## trait:vm(animal, ainv)!trait_T1                1.9893544 0.4410242  4.510760
+## trait:vm(animal, ainv)!trait_T2               10.2296667 2.8078190  3.643279
+## units:trait!R                                  1.0000000        NA        NA
+## units:trait!trait_T1:T1                        1.8443104 0.3443173  5.356427
+## units:trait!trait_T2:T1                        4.0142731 0.7412587  5.415482
+## units:trait!trait_T2:T2                       12.4844745 2.2893621  5.453255
+##                                               bound %ch
+## trait:byear!trait_T1:T1                           P   0
+## trait:byear!trait_T2:T1                           P   0
+## trait:byear!trait_T2:T2                           P   0
+## trait:mother!trait_T1:T1                          P   0
+## trait:mother!trait_T2:T1                          P   0
+## trait:mother!trait_T2:T2                          P   0
+## trait:vm(animal, ainv)!trait!T2:!trait!T1.cor     U   0
+## trait:vm(animal, ainv)!trait_T1                   P   0
+## trait:vm(animal, ainv)!trait_T2                   P   0
+## units:trait!R                                     F   0
+## units:trait!trait_T1:T1                           P   0
+## units:trait!trait_T2:T1                           P   0
+## units:trait!trait_T2:T2                           P   0</code></pre>
 <div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="asreml-biv.html#cb268-1" aria-hidden="true"></a><span class="co">############</span></span>
 <span id="cb268-2"><a href="asreml-biv.html#cb268-2" aria-hidden="true"></a>DvsS&lt;-<span class="kw">data.frame</span>(<span class="dt">Trait =</span> <span class="kw">rownames</span>(modele<span class="op">$</span>coefficients<span class="op">$</span>random),</span>
 <span id="cb268-3"><a href="asreml-biv.html#cb268-3" aria-hidden="true"></a>                 <span class="dt">BLUP =</span> modele<span class="op">$</span>coefficients<span class="op">$</span>random,</span>
@@ -737,13 +804,20 @@ BLUP should be normaly distributed, if not you need to check the assumption of y
 <div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="asreml-biv.html#cb272-1" aria-hidden="true"></a><span class="kw">rownames</span>(BLUPS) &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
 <span id="cb272-2"><a href="asreml-biv.html#cb272-2" aria-hidden="true"></a><span class="kw">colnames</span>(BLUPS) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ID&quot;</span>,<span class="st">&quot;BLUP.btw&quot;</span>,<span class="st">&quot;SE.btw&quot;</span>,<span class="st">&quot;BLUP.tarsus&quot;</span>,<span class="st">&quot;SE.tarsus&quot;</span>)</span>
 <span id="cb272-3"><a href="asreml-biv.html#cb272-3" aria-hidden="true"></a><span class="kw">summary</span>(BLUPS)</span></code></pre></div>
-<pre><code>##       ID               BLUP.btw             SE.btw        BLUP.tarsus         SE.tarsus    
-##  Length:1309        Min.   :-3.165477   Min.   :0.7984   Min.   :-6.34167   Min.   :1.928  
-##  Class :character   1st Qu.:-0.559295   1st Qu.:0.9967   1st Qu.:-1.14433   1st Qu.:2.371  
-##  Mode  :character   Median :-0.001902   Median :1.0367   Median :-0.02629   Median :2.451  
-##                     Mean   :-0.009007   Mean   :1.0933   Mean   : 0.02134   Mean   :2.577  
-##                     3rd Qu.: 0.533983   3rd Qu.:1.2210   3rd Qu.: 1.18113   3rd Qu.:2.811  
-##                     Max.   : 3.319620   Max.   :1.4377   Max.   : 6.71613   Max.   :3.287</code></pre>
+<pre><code>##       ID               BLUP.btw             SE.btw        BLUP.tarsus      
+##  Length:1309        Min.   :-3.165477   Min.   :0.7984   Min.   :-6.34167  
+##  Class :character   1st Qu.:-0.559295   1st Qu.:0.9967   1st Qu.:-1.14433  
+##  Mode  :character   Median :-0.001902   Median :1.0367   Median :-0.02629  
+##                     Mean   :-0.009007   Mean   :1.0933   Mean   : 0.02134  
+##                     3rd Qu.: 0.533983   3rd Qu.:1.2210   3rd Qu.: 1.18113  
+##                     Max.   : 3.319620   Max.   :1.4377   Max.   : 6.71613  
+##    SE.tarsus    
+##  Min.   :1.928  
+##  1st Qu.:2.371  
+##  Median :2.451  
+##  Mean   :2.577  
+##  3rd Qu.:2.811  
+##  Max.   :3.287</code></pre>
 <div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="asreml-biv.html#cb274-1" aria-hidden="true"></a><span class="kw">write.csv</span>(BLUPS,<span class="dt">file=</span><span class="st">&quot;BLUPS_6x6.csv&quot;</span>,<span class="dt">row.names=</span>F)</span>
 <span id="cb274-2"><a href="asreml-biv.html#cb274-2" aria-hidden="true"></a><span class="co">############</span></span>
 <span id="cb274-3"><a href="asreml-biv.html#cb274-3" aria-hidden="true"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
@@ -781,74 +855,111 @@ Note, to partition a correlation, it is require to have important sample size wi
 <span id="cb276-9"><a href="asreml-biv.html#cb276-9" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;include&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;include&quot;</span>),</span>
 <span id="cb276-10"><a href="asreml-biv.html#cb276-10" aria-hidden="true"></a>  <span class="dt">maxit =</span> <span class="dv">20</span></span>
 <span id="cb276-11"><a href="asreml-biv.html#cb276-11" aria-hidden="true"></a>)</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <pre><code>## Multi-section model using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:48 2022
+## ASReml 4.1.0 Wed Mar 23 10:34:02 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2495.853           1.0   1807 10:05:48    0.1 (1 restrained)
-##  2     -2444.497           1.0   1807 10:05:48    0.1
-##  3     -2401.367           1.0   1807 10:05:48    0.1
-##  4     -2390.943           1.0   1807 10:05:48    0.1
-##  5     -2388.819           1.0   1807 10:05:48    0.1
-##  6     -2388.738           1.0   1807 10:05:49    0.1
-##  7     -2388.736           1.0   1807 10:05:49    0.1</code></pre>
+##  1     -2495.853           1.0   1807 10:34:02    0.2 (1 restrained)
+##  2     -2444.497           1.0   1807 10:34:02    0.1
+##  3     -2401.367           1.0   1807 10:34:02    0.1
+##  4     -2390.943           1.0   1807 10:34:02    0.1
+##  5     -2388.819           1.0   1807 10:34:02    0.1
+##  6     -2388.738           1.0   1807 10:34:02    0.1
+##  7     -2388.736           1.0   1807 10:34:03    0.1</code></pre>
 <div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="asreml-biv.html#cb279-1" aria-hidden="true"></a>model_sex &lt;-<span class="st"> </span><span class="kw">update</span>(model_sex)</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <pre><code>## Multi-section model using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:49 2022
+## ASReml 4.1.0 Wed Mar 23 10:34:03 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2388.736           1.0   1807 10:05:49    0.1
-##  2     -2388.736           1.0   1807 10:05:49    0.1</code></pre>
+##  1     -2388.736           1.0   1807 10:34:03    0.1
+##  2     -2388.736           1.0   1807 10:34:03    0.1</code></pre>
 <div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="asreml-biv.html#cb282-1" aria-hidden="true"></a><span class="kw">summary</span>(model_sex)<span class="op">$</span>varcomp</span></code></pre></div>
-<pre><code>##                                                        component std.error    z.ratio bound %ch
-## trait:byear!trait_bwt:bwt                              0.9858502 0.2863930  3.4422982     P 0.0
-## trait:byear!trait_tarsus:bwt                           0.1525073 0.4334219  0.3518681     P 0.0
-## trait:byear!trait_tarsus:tarsus                        3.9981750 1.2798231  3.1240060     P 0.0
-## trait:mother!trait_bwt:bwt                             1.3312802 0.2484496  5.3583516     P 0.0
-## trait:mother!trait_tarsus:bwt                         -1.6173911 0.4283985 -3.7754356     P 0.0
-## trait:mother!trait_tarsus:tarsus                       4.7543015 1.3546795  3.5095396     P 0.0
-## at(sex, 1):trait:vm(animal, ainv)!trait_bwt:bwt        1.3402726 0.5670807  2.3634603     P 0.0
-## at(sex, 1):trait:vm(animal, ainv)!trait_tarsus:bwt     2.3607838 1.1348534  2.0802544     P 0.0
-## at(sex, 1):trait:vm(animal, ainv)!trait_tarsus:tarsus  6.0624925 3.1304679  1.9366091     P 0.0
-## at(sex, 2):trait:vm(animal, ainv)!trait_bwt:bwt        1.8645331 0.8887843  2.0978466     P 0.0
-## at(sex, 2):trait:vm(animal, ainv)!trait_tarsus:bwt     5.0952433 2.0683128  2.4634781     P 0.0
-## at(sex, 2):trait:vm(animal, ainv)!trait_tarsus:tarsus 14.9762227 6.4472652  2.3228799     P 0.0
-## sex_1!R                                                1.0000000        NA         NA     F 0.0
-## sex_1!trait_bwt:bwt                                    2.3079924 0.5015700  4.6015360     P 0.0
-## sex_1!trait_tarsus:bwt                                 4.4288323 1.0376540  4.2681204     P 0.0
-## sex_1!trait_tarsus:tarsus                             13.4858721 2.9285483  4.6049683     P 0.0
-## sex_2!R                                                1.0000000        NA         NA     F 0.0
-## sex_2!trait_bwt:bwt                                    1.7957128 0.7549623  2.3785463     P 0.0
-## sex_2!trait_tarsus:bwt                                 2.6342177 1.7685005  1.4895205     P 0.1
-## sex_2!trait_tarsus:tarsus                              9.6101885 5.4914087  1.7500407     P 0.1</code></pre>
+<pre><code>##                                                        component std.error
+## trait:byear!trait_bwt:bwt                              0.9858502 0.2863930
+## trait:byear!trait_tarsus:bwt                           0.1525073 0.4334219
+## trait:byear!trait_tarsus:tarsus                        3.9981750 1.2798231
+## trait:mother!trait_bwt:bwt                             1.3312802 0.2484496
+## trait:mother!trait_tarsus:bwt                         -1.6173911 0.4283985
+## trait:mother!trait_tarsus:tarsus                       4.7543015 1.3546795
+## at(sex, 1):trait:vm(animal, ainv)!trait_bwt:bwt        1.3402726 0.5670807
+## at(sex, 1):trait:vm(animal, ainv)!trait_tarsus:bwt     2.3607838 1.1348534
+## at(sex, 1):trait:vm(animal, ainv)!trait_tarsus:tarsus  6.0624925 3.1304679
+## at(sex, 2):trait:vm(animal, ainv)!trait_bwt:bwt        1.8645331 0.8887843
+## at(sex, 2):trait:vm(animal, ainv)!trait_tarsus:bwt     5.0952433 2.0683128
+## at(sex, 2):trait:vm(animal, ainv)!trait_tarsus:tarsus 14.9762227 6.4472652
+## sex_1!R                                                1.0000000        NA
+## sex_1!trait_bwt:bwt                                    2.3079924 0.5015700
+## sex_1!trait_tarsus:bwt                                 4.4288323 1.0376540
+## sex_1!trait_tarsus:tarsus                             13.4858721 2.9285483
+## sex_2!R                                                1.0000000        NA
+## sex_2!trait_bwt:bwt                                    1.7957128 0.7549623
+## sex_2!trait_tarsus:bwt                                 2.6342177 1.7685005
+## sex_2!trait_tarsus:tarsus                              9.6101885 5.4914087
+##                                                          z.ratio bound %ch
+## trait:byear!trait_bwt:bwt                              3.4422982     P 0.0
+## trait:byear!trait_tarsus:bwt                           0.3518681     P 0.0
+## trait:byear!trait_tarsus:tarsus                        3.1240060     P 0.0
+## trait:mother!trait_bwt:bwt                             5.3583516     P 0.0
+## trait:mother!trait_tarsus:bwt                         -3.7754356     P 0.0
+## trait:mother!trait_tarsus:tarsus                       3.5095396     P 0.0
+## at(sex, 1):trait:vm(animal, ainv)!trait_bwt:bwt        2.3634603     P 0.0
+## at(sex, 1):trait:vm(animal, ainv)!trait_tarsus:bwt     2.0802544     P 0.0
+## at(sex, 1):trait:vm(animal, ainv)!trait_tarsus:tarsus  1.9366091     P 0.0
+## at(sex, 2):trait:vm(animal, ainv)!trait_bwt:bwt        2.0978466     P 0.0
+## at(sex, 2):trait:vm(animal, ainv)!trait_tarsus:bwt     2.4634781     P 0.0
+## at(sex, 2):trait:vm(animal, ainv)!trait_tarsus:tarsus  2.3228799     P 0.0
+## sex_1!R                                                       NA     F 0.0
+## sex_1!trait_bwt:bwt                                    4.6015360     P 0.0
+## sex_1!trait_tarsus:bwt                                 4.2681204     P 0.0
+## sex_1!trait_tarsus:tarsus                              4.6049683     P 0.0
+## sex_2!R                                                       NA     F 0.0
+## sex_2!trait_bwt:bwt                                    2.3785463     P 0.0
+## sex_2!trait_tarsus:bwt                                 1.4895205     P 0.1
+## sex_2!trait_tarsus:tarsus                              1.7500407     P 0.1</code></pre>
 <p>we can estimate the different correlations using <code>vpredict</code>:</p>
 <div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="asreml-biv.html#cb284-1" aria-hidden="true"></a><span class="kw">vpredict</span>(model_sex, r_byear <span class="op">~</span><span class="st"> </span>V2 <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(V1 <span class="op">*</span><span class="st"> </span>V3))</span></code></pre></div>
 <pre><code>##           Estimate       SE
@@ -891,26 +1002,34 @@ Note, to partition a correlation, it is require to have important sample size wi
 ## trait_bwt                6.37791872 0.2311775 27.5888427
 ## trait_tarsus            20.58389296 0.4942600 41.6458836</code></pre>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="asreml-biv.html#cb306-1" aria-hidden="true"></a><span class="kw">wald.asreml</span>(model_sex, <span class="dt">denDF =</span> <span class="st">&quot;default&quot;</span>, <span class="dt">ssType =</span> <span class="st">&quot;conditional&quot;</span>)<span class="op">$</span>Wald</span></code></pre></div>
-<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+<pre><code>## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE
 
-## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller; using TRUE</code></pre>
+## Warning in type.convert.default(x): &#39;as.is&#39; should be specified by the caller;
+## using TRUE</code></pre>
 <pre><code>## Multi-section model using the sigma parameterization.
-## ASReml 4.1.0 Wed Mar 23 10:05:49 2022
+## ASReml 4.1.0 Wed Mar 23 10:34:03 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2388.736           1.0   1807 10:05:49    0.1
-##  2     -2388.736           1.0   1807 10:05:50    0.1
+##  1     -2388.736           1.0   1807 10:34:03    0.1
+##  2     -2388.736           1.0   1807 10:34:04    0.1
 ## Calculating denominator DF</code></pre>
 <pre><code>## [0;34m
 ## Wald tests for fixed effects.[0m

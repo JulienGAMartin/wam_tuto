@@ -22,6 +22,7 @@
   <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
+<meta name="author" content="Matthieu Videlier" />
 
 
 
@@ -399,7 +400,9 @@ However, for the purpose of this guide, the Rhat values are acceptable.</p>
 We can assess the significance of <code>sex</code> as a fixed effect by examining its posterior distribution.</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="brms-1.html#cb140-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_2.rda&quot;</span>)</span>
 <span id="cb140-2"><a href="brms-1.html#cb140-2" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)) 
@@ -429,18 +432,24 @@ We can assess the significance of <code>sex</code> as a fixed effect by examinin
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="brms-1.html#cb144-1" aria-hidden="true"></a><span class="kw">mcmc_plot</span>(brms_m1<span class="fl">.2</span>, <span class="dt">type =</span> <span class="st">&quot;pairs&quot;</span>)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-60-2.svg" width="672" /></p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="brms-1.html#cb145-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>fixed</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>##           Estimate Est.Error l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
 ## Intercept 6.064853 0.1726459 5.735170 6.410117 1.002990 357.5666 574.2620
 ## sex2      2.210675 0.1574542 1.898645 2.520026 1.002313 722.8016 657.2121</code></pre>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="brms-1.html#cb148-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>random</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>## $animal
 ##               Estimate Est.Error l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
 ## sd(Intercept) 1.747083 0.1632548 1.419377 2.050884 1.126639 13.10221 113.2445</code></pre>
 <p>The posterior distribution of the <code>sex2</code> term does not overlap zero. Thus, we can infer that sex has an effect on birth weight (presence of a sexual dimorphism) in this model and is a useful addition to the model, for most purposes. It is also worth noting that the variance components have changed slightly:</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="brms-1.html#cb151-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>random</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>## $animal
 ##               Estimate Est.Error l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
 ## sd(Intercept) 1.747083 0.1632548 1.419377 2.050884 1.126639 13.10221 113.2445</code></pre>
@@ -512,7 +521,9 @@ We can assess the significance of <code>sex</code> as a fixed effect by examinin
 <span id="cb159-3"><a href="brms-1.html#cb159-3" aria-hidden="true"></a><span class="kw">plot</span>(brms_m1<span class="fl">.3</span>, <span class="dt">ask =</span> <span class="ot">FALSE</span>, <span class="dt">N =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-64-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-64-2.svg" width="672" /></p>
 <div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="brms-1.html#cb160-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>random</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>## $animal
 ##               Estimate Est.Error l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
 ## sd(Intercept) 1.747083 0.1632548 1.419377 2.050884 1.126639 13.10221 113.2445</code></pre>
@@ -590,7 +601,9 @@ For the example, we can partition the additive genetic and residual variance bet
 <span id="cb173-8"><a href="brms-1.html#cb173-8" aria-hidden="true"></a><span class="kw">save</span>(brms_m1<span class="fl">.4</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m1_4.rda&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="brms-1.html#cb174-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_4.rda&quot;</span>)</span>
 <span id="cb174-2"><a href="brms-1.html#cb174-2" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.4</span>)</span></code></pre></div>
-<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be careful when analysing the results! We recommend running more iterations and/or setting stronger priors.</code></pre>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)) + (1 | byear) + (1 | mother) 
