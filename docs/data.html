@@ -167,7 +167,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
 <li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#further-partitioning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Further partitioning the variance</a></li>
-<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.2.7</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-the-varaince-matrix-parameters"><i class="fa fa-check"></i><b>2.2.7</b> Modification of the varaince matrix parameters</a></li>
 <li class="chapter" data-level="2.2.8" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-two-random-effects"><i class="fa fa-check"></i><b>2.2.8</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
@@ -181,7 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
-<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm--></a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
@@ -191,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.3" data-path="brms-1.html"><a href="brms-1.html#adding-random-effects-2"><i class="fa fa-check"></i><b>2.5.3</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.5.4" data-path="brms-1.html"><a href="brms-1.html#testing-significance-of-variance-components-1"><i class="fa fa-check"></i><b>2.5.4</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.5.5" data-path="brms-1.html"><a href="brms-1.html#further-partitioning-of-the-variance"><i class="fa fa-check"></i><b>2.5.5</b> Further partitioning of the variance</a></li>
-<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-2"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.5.7" data-path="brms-1.html"><a href="brms-1.html#covariance-between-two-random-effects-2"><i class="fa fa-check"></i><b>2.5.7</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>2.6</b> stan</a></li>
@@ -290,13 +290,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">1.1.1</span> Data files</h3>
 <p>You will need to download 3 data files for the tutorial in <code>R</code>:</p>
 <ul>
-<li>gryphon.csv: data on gryphon birth weight</li>
-<li>gryphonRM.csv: data</li>
-<li>gryphonped.csv</li>
+<li>gryphon.csv: data on gryphon birth weight and morphology</li>
+<li>gryphonRM.csv: data on gryphon repeated measurement of lay date.</li>
+<li>gryphonped.csv: data on the associated pedigree of the data gryphon</li>
 </ul>
-<p>In addition, some models presented in the tutorials can take a while to run (sometimes &gt; 1 hour), thus we are also providing model the model outputs to allow you continue the tutorial without waiting for the model to run.</p>
-<p>The files are available <a href="https://github.com/JulienGAMartin/wam_tuto/tree/master/data">here</a></p>
-<p>I recommend to save the data and Rdata files in a subfolder <code>data</code> in the folder you will use as your working directory for R and where you will save your R scripts. It should be noted that the tutorial are using this structure to read or save data.</p>
+<p>In addition, some models presented in the tutorials can take a while to run (sometimes &gt; 1 hour), thus we are also providing the model outputs to allow you continue the tutorial without waiting for the model to run. (But you are free to run models)</p>
+<p>The files are available <a href="https://github.com/JulienGAMartin/wam_tuto/tree/master/data">here</a>
+<!-- C1 Should we add a sentence about the origin of the dataset !-->
+I recommend to save the data and Rdata files in a subfolder <code>data</code> in the folder you will use as your working directory for R and where you will save your R scripts. It should be noted that the tutorial are using this structure to read or save data.</p>
 </div>
 <div id="notes-on-data-and-pedigree" class="section level3" number="1.1.2">
 <h3><span class="header-section-number">1.1.2</span> Notes on data and pedigree</h3>
