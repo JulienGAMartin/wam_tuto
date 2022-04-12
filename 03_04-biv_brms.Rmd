@@ -12,15 +12,14 @@ Amat <- as.matrix(nadiv::makeA(gryphonped))
 ### Fitting the model
 
 Fitting a multivariate model in brms involves several new consideration above those for fitting univariate models. 
-<!-- C2-6   Do we need to create a prior first no?  First, we have to fit multivariate priors;--> 
 First, we need to create two models/objects with the function `bf` fitting the desired univariate model structure for each response variable (here `bwt` and `tarsus`). It is the equivalent of writing `mvbf(bwt, tarsus)`, but the advantage to create two distinct model is to specific different model structure (fixed or random effect) for each response variable.
 
 Then, the two objects/models are added into a third model to quantify all the estimates in addition to their covariance. Contrary to MCMCglmm or asreml-R, brms directly estimate the covariance and the correlation in its outputs.
 Our most basic model can be specified as:
 
 ```{r eval = params$fit_all}
-bf_bwt <- bf(bwt ~ 1 + (1 | p | gr(animal, cov = Amat)))
-bf_tarsus <- bf(tarsus ~ 1 + (1 | p | gr(animal, cov = Amat)))
+bf_bwt <- bf(bwt ~ 1 + (1 | a | gr(animal, cov = Amat)))
+bf_tarsus <- bf(tarsus ~ 1 + (1 | a | gr(animal, cov = Amat)))
 brms_m2.1 <- brm(
   bf_bwt + bf_tarsus + set_rescor(TRUE),
   data = gryphon,
@@ -36,7 +35,7 @@ Again we have provided the data from one such run. It can be accessed using the 
 ```{r}
 load("data/brms_m2_1.rda")
 summary(brms_m2.1)
-plot(brms_m2.1, ask = FALSE)
+windows();plot(brms_m2.1, ask = FALSE)
 VarCorr(brms_m2.1)
 ```
 
@@ -52,8 +51,8 @@ h.tarsus.2 <- as.mcmc(v_animal[,1] / (v_animal[,1] + v_r[,1]))
 
 summary(h.bwt.2)
 summary(h.tarsus.2)
-plot(h.bwt.2)
-plot(h.tarsus.2)
+windows();plot(h.bwt.2)
+windows();plot(h.tarsus.2)
 ```
 
 It is also possible to extract the correlation. Just to remember it is an example, the correlation distribution is skewed to 1 due to a weak prior and model parameters. 
@@ -65,21 +64,21 @@ cor_res <- as.mcmc((VarCorr(brms_m2.1, summary = FALSE)$residual$cor[,1,2]))
 summary(cor_g)
 summary(cor_res)
 
-plot(cor_g)
-plot(cor_res)
+windows();plot(cor_g)
+windows();plot(cor_res)
 ```
 
 
 Here we can plot the genetic correlation by extraction the breeding values or BLUP.
 ```{r}
 #post <- posterior_samples(brms_m2.1, add_chain = T)
-#blup.bwt<-post["sd_animal__bwt_Intercept"]
-#blup.tarsus<-post["sd_animal__tarsus_Intercept"]
+##blup.bwt<-post["sd_animal__bwt_Intercept"]
+#blup.tarsus<-post["sd_animal__tarsus_Intercept"]#
 #res.bwt<-post["sigma_bwt"]
 #res.tarsus<-post["sigma_tarsus"]
 #BLUP<-cbind(blup.bwt,blup.tarsus,res.bwt,res.tarsus)
-#plot(sd_animal__bwt_Intercept~sd_animal__tarsus_Intercept, BLUP)
-#plot(sigma_bwt~sigma_tarsus, BLUP)
+#windows();plot(sd_animal__bwt_Intercept~sd_animal__tarsus_Intercept, BLUP)
+#windows();plot(sigma_bwt~sigma_tarsus, BLUP)
 
 ########################
 BLUPS<-as_draws_df(brms_m2.1, variable = c("r_animal"),regex=TRUE)
@@ -105,9 +104,11 @@ rownames(BLUPS) <- c()
 colnames(BLUPS) <- c("ID","BLUP.btw","CI.btw","BLUP.tarsus","CI.tarsus")
 summary(BLUPS)
 ```
+
+
 Here, some simple code to plot the genetic correlation.
 ```{r}
-plot(BLUP.tarsus~BLUP.btw,BLUPS,xlab="",ylab="", las=1.2, bty="o", col="white")
+windows();plot(BLUP.tarsus~BLUP.btw,BLUPS,xlab="",ylab="", las=1.2, bty="o", col="white")
 arrows(x0=BLUPS$BLUP.btw,y0=BLUPS$BLUP.tarsus-BLUPS$CI.tarsus,x1=BLUPS$BLUP.btw,y1=BLUPS$BLUP.tarsus+BLUPS$CI.tarsus,col="black",code=3,angle=90,length=0)
 arrows(x0=BLUPS$BLUP.btw-BLUPS$CI.btw,y0=BLUPS$BLUP.tarsus,x1=BLUPS$BLUP.btw+BLUPS$CI.btw,y1=BLUPS$BLUP.tarsus,col="black",code=3,angle=90,length=0)
 points(BLUP.tarsus~BLUP.btw,BLUPS,pch=16,col="red", cex=1.5)
@@ -115,7 +116,20 @@ points(BLUP.tarsus~BLUP.btw,BLUPS,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
 mtext("btw (BV±CI)",  side=1, line=2.4)
 mtext("tarsus (BV±CI)",  side=2, line=2,las=3)
 ```
-<!-- C2-7 No idee how to extract the residual point for each individual, Not sure we can used as_draw_df for it-->
+
+Here the code to plot the resiudal correlation.
+#```{r}
+res.model<-as.data.frame(residuals(brms_m2.1))
+windows();
+plot(Estimate.tarsus~Estimate.bwt,res.model,xlab="",ylab="", las=1.2, bty="o", col="white")
+arrows(x0=res.model$Estimate.bwt,y0=res.model$Q2.5.tarsus,x1=res.model$Estimate.bwt,y1=res.model$Q97.5.tarsus,col="black",code=3,angle=90,length=0)
+arrows(x0=res.model$Q2.5.bwt,y0=res.model$Estimate.tarsus,x1=res.model$Q97.5.bwt,y1=res.model$Estimate.tarsus,col="black",code=3,angle=90,length=0)
+points(Estimate.tarsus~Estimate.bwt,res.model,pch=16,col="red", cex=1.5)
+points(Estimate.tarsus~Estimate.bwt,res.model,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
+mtext("btw (residual±CI)",  side=1, line=2.4)
+mtext("tarsus (residual±CI)",  side=2, line=2,las=3)
+#```
+
 
 ### Adding fixed and random effects
 Fixed and random effects can be added just as for the univariate case.
@@ -136,9 +150,7 @@ brms_m2.2 <- brm(
 save(brms_m2.2, file = "data/brms_m2_2.rda")
 ```
 
-<!-- C2-8 Issue with the complex model , no correlation is estimated at the random effects !!!-->
 Again we have provided the data from one such run. It can be accessed using the code:
-
 ```{r}
 load("data/brms_m2_2.rda")
 summary(brms_m2.2)
@@ -218,11 +230,10 @@ plot(cor_res_2)
 
 ### Partitioning (co)variances
 As in the tutorial 1, it is possible to partition the variance-covariance matrix between groups (here sex)
-Note: the model is simplified without sex-specific covariance for the `byear` and `mother` random effect. 
-```{r}
-bf_bwt_3 <- bf(bwt ~ 1 + sex + (1 | a | gr(animal, cov = Amat,by=sex))+ (1  | b | byear) + (1 | c |  mother))
-bf_tarsus_3 <- bf(tarsus ~ 1 +sex + (1 |a | gr(animal, cov = Amat,by=sex))+ (1 |b |  byear) + (1 | c |  mother))
 
+```{r}
+bf_bwt_3 <- bf(bwt ~ 1 + sex + ((1 |a| gr(animal, cov = Amat, by = sex)))+ (1 | b| byear) + (1 | c |mother))
+bf_tarsus_3 <- bf(tarsus ~ 1 +sex + (1| a | gr(animal, cov = Amat, by = sex))+ (1 | b| byear) + (1 | c |mother))
 
 brms_m2.3 <- brm(
   bf_bwt_3 + bf_tarsus_3 + set_rescor(TRUE),
@@ -242,11 +253,35 @@ plot(brms_m2.3, ask = FALSE)
 VarCorr(brms_m2.3)
 ```
 
+However, this model is lacking an important and essentiel group-specific partitionning (we do with the asreml-R and MCMCglmm). We need to partition the residual variance (or sigma) as well. 
+Doing so, we will use the argument `sigma`` to parititon the model by sex. To avoid an estimation of the difference between sexes, we need to remove the estimate of the intercept at the sigma level.
+```{r}
+bf_bwt_4 <- bf(bwt ~ 1 + sex + ((1 |a| gr(animal, cov = Amat, by = sex)))+ (1 | b| byear) + (1 | c |mother),sigma ~ sex-1)
+bf_tarsus_4 <- bf(tarsus ~ 1 +sex + (1| a | gr(animal, cov = Amat, by = sex))+ (1 | b| byear) + (1 | c |mother),sigma ~ sex-1)
+
+brms_m2.4 <- brm(
+  bf_bwt_4 + bf_tarsus_4 + set_rescor(TRUE),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+save(brms_m2.4, file = "data/brms_m2_4.rda")
+```
+
+Again we have provided the data from one such run. It can be accessed using the code:
+```{r}
+load("data/brms_m2_4.rda")
+summary(brms_m2.4)
+plot(brms_m2.4, ask = FALSE)
+VarCorr(brms_m2.4)
+```
+
+
 
 Evaluation of the statistical support for these sex-specific correlations is straightforward. Because we imposed no constraint on their estimation, we can evaluate the extent to which the posterior distributions overlap zero or overlap each other:
 ```{r}
-cor_g_F <- as.mcmc((VarCorr(brms_m2.3, summary = FALSE)$animal$cor[,1,2]))
-cor_g_M <- as.mcmc((VarCorr(brms_m2.3, summary = FALSE)$animal$cor[,3,4]))
+cor_g_F <- as.mcmc((VarCorr(brms_m2.4, summary = FALSE)$animal$cor[,1,2]))
+cor_g_M <- as.mcmc((VarCorr(brms_m2.4, summary = FALSE)$animal$cor[,3,4]))
 
 summary(cor_g_F)
 summary(cor_g_M)
@@ -255,8 +290,6 @@ plot(cor_g_F)
 plot(cor_g_M)
 ```
 
-
-
 Here a plot to visualize the overlaps of covariances.
 ```{r}
 cor.est<-rbind(
@@ -264,9 +297,9 @@ cbind(summary(cor_g_F)$statistics[1],summary(cor_g_F)$quantiles[1],summary(cor_g
 cbind(summary(cor_g_M)$statistics[1],summary(cor_g_M)$quantiles[1],summary(cor_g_M)$quantiles[5]))
 
 
-plot(c(1, 2)~cor.est[,1],xlim=c(0,1.5),ylim=c(0,2.5) ,xlab="",ylab="",col=c("red","blue"),pch=c(16,17),cex=2,yaxt="n")
-arrows(y0=1,x0=cor.est[1,1]-cor.est[1,2],y1=1,x1=cor.est[1,1]+cor.est[1,2],code=3,angle=90,length=0,col=c("red"),lwd=2)
-arrows(y0=2,x0=cor.est[2,1]-cor.est[2,2],y1=2,x1=cor.est[2,1]+cor.est[2,2],code=3,angle=90,length=0,col=c("blue"),lwd=2)
+windows();plot(c(1, 2)~cor.est[,1],xlim=c(0,1.5),ylim=c(0,2.5) ,xlab="",ylab="",col=c("red","blue"),pch=c(16,17),cex=2,yaxt="n")
+arrows(y0=1,x0=cor.est[1,2],y1=1,x1=cor.est[1,3],code=3,angle=90,length=0,col=c("red"),lwd=2)
+arrows(y0=2,x0=cor.est[2,2],y1=2,x1=cor.est[2,3],code=3,angle=90,length=0,col=c("blue"),lwd=2)
 mtext("Covariance (±CI)", side=1, las=1, adj=0.4,line=3, cex=1.6)
 axis(2,at=1,labels=c("female"),las = 3,cex.axis=1.6)
 axis(2,at=2,labels=c("male"),las = 3,cex.axis=1.6)
@@ -276,7 +309,7 @@ axis(2,at=2,labels=c("male"),las = 3,cex.axis=1.6)
 
 Here a simple plot of the sex-specific genetic correlation using the BLUPs
 ```{r}
-BLUPS<-as_draws_df(brms_m2.3, variable = c("r_animal"),regex=TRUE)
+BLUPS<-as_draws_df(brms_m2.4, variable = c("r_animal"),regex=TRUE)
 BLUPS<-BLUPS[c(-1)]
 BLUPS<-BLUPS[c(-1)]
 #
@@ -311,7 +344,7 @@ summary(BLUPS)
 FEM<-subset(BLUPS, SEX=="1")
 MAL<-subset(BLUPS, SEX=="2")
 #
-par(mfrow=c(1,2))
+windows();par(mfrow=c(1,2))
 #
 plot(BLUP.tarsus~BLUP.btw,FEM,xlab="",ylab="", las=1.2, bty="o", col="white")
 arrows(x0=FEM$BLUP.btw,y0=FEM$BLUP.tarsus-FEM$CI.tarsus,x1=FEM$BLUP.btw,y1=FEM$BLUP.tarsus+FEM$CI.tarsus,col="black",code=3,angle=90,length=0)
@@ -328,7 +361,6 @@ points(BLUP.tarsus~BLUP.btw,MAL,pch=17,col="blue", cex=1.5)
 points(BLUP.tarsus~BLUP.btw,MAL,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
 mtext("btw (BV±CI)",  side=1, line=2.4)
 mtext("tarsus (BV±CI)",  side=2, line=2,las=3)
-
 ```
 
 
@@ -339,121 +371,23 @@ Animal models are amazing model. With different group within a population, it is
 This covariance is essential to understand ontogenic or sexual conflict, which can constraint or enhanced response to evolution. 
 As an example, we estimate the cross-sex genetic correlation `r_{fm}`
 
-First, we need to dissociate the trait values for females and males into distinct variables. Then, we use a bivariate model (for one trait: `tarsus`) and a multivariate model (for various traits: `tarsus` and `bwt`). With a multivariate model, the cross-sex-cross trait covariance matrix is also named `B matrix`.
+It is important to keep in mind the covariance matrix at the residual level is zero and it is important to avoid estimating the cross-sex residual covariance because no individual switched sex during the experiment.
 
-The coding is a bit complain but pretty straightforward. It is important to keep in mind the covariance matrix at the residual level is zero and avoid estimating the cross-sex residual covariance because no individual switched sex during the experiment.
-
-```{r}
-gryphon$bwt.1<-NA
-gryphon$tarsus.1<-NA
-gryphon$subF<-NA
-gryphon$subM<-NA
-
-
-animal<-gryphon[gryphon$sex=="1",] $animal
-for (i in unique(animal)){
-gryphon$bwt.1[which(gryphon$animal==i)] <-gryphon$bwt[which(gryphon$animal==i)]
-gryphon$tarsus.1[which(gryphon$animal==i)] <-gryphon$tarsus[which(gryphon$animal==i)]
-gryphon$subF[which(gryphon$animal==i)] <- 1
-gryphon$subM[which(gryphon$animal==i)] <- 0
-}
-#
-gryphon$bwt.2<-NA
-gryphon$tarsus.2<-NA
-animal<-gryphon[gryphon$sex=="2",] $animal
-for (i in unique(animal)){
-gryphon$bwt.2[which(gryphon$animal==i)] <-gryphon$bwt[which(gryphon$animal==i)]
-gryphon$tarsus.2[which(gryphon$animal==i)] <-gryphon$tarsus[which(gryphon$animal==i)]
-gryphon$subF[which(gryphon$animal==i)] <- 0
-gryphon$subM[which(gryphon$animal==i)] <- 1
-}
-#
-bf_tarsus_4_1<- bf(tarsus.1|subset(subF) ~ 1 + (1 |a | gr(animal, cov = Amat))+ (1 |b |  byear) + (1 | c |  mother))
-bf_tarsus_4_2 <- bf(tarsus.2|subset(subM) ~ 1 + (1 |a | gr(animal, cov = Amat))+ (1 |b |  byear) + (1 | c |  mother))
-
-brms_m2.4 <- brm(
-  bf_tarsus_4_1 + bf_tarsus_4_2 + set_rescor(FALSE),
-  data = gryphon,
-  data2 = list(Amat = Amat),
-  chains = 2, cores = 2, iter = 1000
-)
-save(brms_m2.4, file = "data/brms_m2_4.rda")
-```
-
-
-Again we have provided the data from one such run. It can be accessed using the code:
-```{r}
-load("data/brms_m2_4.rda")
-summary(brms_m2.4)
-plot(brms_m2.4, ask = FALSE)
-VarCorr(brms_m2.4)
-```
-
-The cross-sex genetic correlation can estimate form the output of the model. 
-For tarsus length at fledging, sexes shared a lot of genetic variance which is commun for a trait with low sexual dimorphism. If the selection is antagonistic between males and females, sexes can not evolve freely form the other sexes and a sexual conflict appears.
+Note: the way of partitionning variance per sex is a bit different then the previous code ",by=sex".  
+This code is faster and also easier to understand. Note, it is possible to play with the `|` or `||` to estimate or not covariance between sexes. 
 
 ```{r}
-cross_sex.cor <- as.mcmc((VarCorr(brms_m2.4, summary = FALSE)$animal$cor[,1,2]))
-
-summary(cross_sex.cor)
-plot(cross_sex.cor)
-```
-
-Here, some simple code to extract the BLUP.
-```{r}
-BLUPS<-as_draws_df(brms_m2.4, variable = c("r_animal"),regex=TRUE)
-BLUPS<-BLUPS[c(-1)]
-#
-BLUPS_r<-as.data.frame(t(BLUPS))
-BLUPS_r$mean <- apply(BLUPS_r[c(1:1000)],1, FUN=mean,na.rm=T)
-BLUPS_r$CI <- apply(BLUPS_r[c(1:1000)],1, FUN=sd,na.rm=T)
-BLUPS_r<-cbind(rownames(BLUPS_r), BLUPS_r)
-#
-DvsS<-data.frame(Trait = rownames(BLUPS_r),
-                 BLUP = BLUPS_r$mean,
-                 CI = BLUPS_r$CI)
-DvsS$TRAIT<-substr(DvsS$Trait, 11,17)
-DvsS$CLUE<-substr(DvsS$Trait, 18,30)
-DvsS$ID<-as.numeric(gsub(".*?([0-9]+).*", "\\1", DvsS$CLUE))             
-DvsS<-DvsS[!is.na(DvsS$ID),]
-DvsS$CLUE<-NULL
-#
-DvsS$Trait<-NULL
-colnames(DvsS)[1]<-"BLUP"
-BLUPS<-reshape(DvsS, v.names = c("BLUP","CI"), idvar = "ID",timevar = "TRAIT", direction = "wide")
-nrow(BLUPS)
-rownames(BLUPS) <- c()
-colnames(BLUPS) <- c("ID","BLUP.tarsus.1","CI.tarsus.1","BLUP.tarsus.2","CI.tarsus.2")
-summary(BLUPS)
-```
-
-Here, some simple code to plot the cross-sex genetic correlation.
-```{r}
-plot(BLUP.tarsus.2~BLUP.tarsus.1,BLUPS,xlab="",ylab="", las=1.2, bty="o", col="white")
-arrows(x0=BLUPS$BLUP.tarsus.1,y0=BLUPS$BLUP.tarsus.2-BLUPS$CI.tarsus.2,x1=BLUPS$BLUP.tarsus.1,y1=BLUPS$BLUP.tarsus.2+BLUPS$CI.tarsus.2,col="black",code=3,angle=90,length=0)
-arrows(x0=BLUPS$BLUP.tarsus.1-BLUPS$CI.tarsus.1,y0=BLUPS$BLUP.tarsus.2,x1=BLUPS$BLUP.tarsus.1+BLUPS$CI.tarsus.1,y1=BLUPS$BLUP.tarsus.2,col="black",code=3,angle=90,length=0)
-points(BLUP.tarsus.2~BLUP.tarsus.1,BLUPS,pch=16,col="red", cex=1.5)
-points(BLUP.tarsus.2~BLUP.tarsus.1,BLUPS,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
-mtext("tarsus.2 (BV±CI)",  side=1, line=2.4)
-mtext("tarsus.1 (BV±CI)",  side=2, line=2,las=3)
-```
-
-The B matrix used the same code but in a multivariate animal model framework. Here some example code, however due to the nature of the dataset, the cross-sex genetic covariance for birth weight is hard to estimate making difficulty to fit this multivariate animal model.
-This complex model can estimate the B matrix in addition to the sex-specific G matrices.
-
-```{r}
-bf_tarsus_4_1<- bf(tarsus.1|subset(subF)  ~ 1 + (1 |a | gr(animal, cov = Amat))+ (1 |b |  byear) + (1 | c |  mother))
-bf_tarsus_4_2 <- bf(tarsus.2|subset(subM)  ~ 1 + (1 |a | gr(animal, cov = Amat))+ (1 |b |  byear) + (1 | c |  mother))
-bf_bwt_4_1<- bf(bwt.1 |subset(subF) ~ 1 + (1 |a | gr(animal, cov = Amat))+ (1 |b |  byear) + (1 | c |  mother))
-bf_bwt_4_2 <- bf(bwt.2|subset(subM) ~ 1 + (1 |a | gr(animal, cov = Amat))+ (1 |b |  byear) + (1 | c |  mother))
+bf_bwt_5 <- bf(bwt ~ 1 + sex+ (0 + sex|a| gr(animal, cov = Amat))+(0 + sex|b|mother)+(0 + sex|c|byear),
+sigma ~ sex-1)
+bf_tarsus_5 <- bf(tarsus ~ 1 + sex+ (0 + sex|a| gr(animal, cov = Amat))+(0 + sex|b|mother)+(0 + sex|c|byear),
+sigma ~ sex-1)
 
 brms_m2.5 <- brm(
-  bf_tarsus_4_1 + bf_tarsus_4_2 +bf_bwt_4_1+bf_bwt_4_2+ set_rescor(FALSE),
+  bf_bwt_5 + bf_tarsus_5 + set_rescor(TRUE),
   data = gryphon,
   data2 = list(Amat = Amat),
   chains = 2, cores = 2, iter = 1000
 )
-
 save(brms_m2.5, file = "data/brms_m2_5.rda")
 ```
 
@@ -465,5 +399,78 @@ summary(brms_m2.5)
 plot(brms_m2.5, ask = FALSE)
 VarCorr(brms_m2.5)
 ```
+
+The cross-sex genetic correlation can estimate form the output of the model. 
+For tarsus length at fledging, sexes shared a lot of genetic variance which is commun for a trait with low sexual dimorphism. 
+If the selection is antagonistic between males and females, sexes can not evolve freely from the other sexes and a intralocus sexual conflict can appeared.
+
+```{r}
+cross_sex.cor.btw <- as.mcmc((VarCorr(brms_m2.5, summary = FALSE)$animal$cor[,1,2]))
+cross_sex.cor.tarsus <- as.mcmc((VarCorr(brms_m2.5, summary = FALSE)$animal$cor[,3,4]))
+
+summary(cross_sex.cor.btw )
+summary(cross_sex.cor.tarsus)
+plot(cross_sex.cor.btw )
+plot(cross_sex.cor.tarsus)
+
+```
+Here, some simple code to extract the BLUP.
+```{r}
+BLUPS<-as_draws_df(brms_m2.5, variable = c("r_animal"),regex=TRUE)
+BLUPS<-BLUPS[c(-(1:6))]
+#
+BLUPS_r<-as.data.frame(t(BLUPS))
+BLUPS_r$mean <- apply(BLUPS_r[c(1:1000)],1, FUN=mean,na.rm=T)
+BLUPS_r$CI <- apply(BLUPS_r[c(1:1000)],1, FUN=sd,na.rm=T)
+BLUPS_r<-cbind(rownames(BLUPS_r), BLUPS_r)
+#
+DvsS<-data.frame(Trait = rownames(BLUPS_r),
+                 BLUP = BLUPS_r$mean,
+                 CI = BLUPS_r$CI)
+DvsS$TRAIT<-substr(DvsS$Trait, 11,13)
+DvsS$CLUE<-substr(DvsS$Trait, 13,21)
+DvsS$ID<-as.numeric(gsub(".*?([0-9]+).*", "\\1", DvsS$CLUE))             
+DvsS<-DvsS[!is.na(DvsS$ID),]
+DvsS$CLUE<-NA
+DvsS[DvsS$TRAIT=="bwt",]$CLUE<-substr(DvsS[DvsS$TRAIT=="bwt",]$Trait, 19,27)
+DvsS[DvsS$TRAIT=="tar",]$CLUE<-substr(DvsS[DvsS$TRAIT=="tar",]$Trait, 23,27)
+DvsS$sex<-as.numeric(gsub(".*?([0-9]+).*", "\\1", DvsS$CLUE))             
+DvsS$TRAIT<- factor(paste(DvsS$TRAIT,DvsS$sex,sep="_"))
+DvsS$CLUE<-NULL
+DvsS$sex<-NULL
+head(DvsS)
+tail(DvsS)
+#
+DvsS$Trait<-NULL
+colnames(DvsS)[1]<-"BLUP"
+BLUPS<-reshape(DvsS, v.names = c("BLUP","CI"), idvar = c("ID"),timevar = "TRAIT", direction = "wide")
+nrow(BLUPS)
+rownames(BLUPS) <- c()
+summary(BLUPS)
+```
+
+
+Here, some simple code to plot the cross-sex genetic correlation.
+```{r}
+windows();par(mfrow=c(1,2))
+#
+plot(BLUP.bwt_1~BLUP.bwt_2,BLUPS,xlab="",ylab="", las=1.2, bty="o", col="white")
+arrows(x0=BLUPS$BLUP.bwt_1,y0=BLUPS$BLUP.bwt_2-BLUPS$CI.bwt_2,x1=BLUPS$BLUP.bwt_1,y1=BLUPS$BLUP.bwt_2+BLUPS$CI.bwt_2,col="black",code=3,angle=90,length=0)
+arrows(x0=BLUPS$BLUP.bwt_1-BLUPS$CI.bwt_1,y0=BLUPS$BLUP.bwt_2,x1=BLUPS$BLUP.tarsus.1+BLUPS$CI.bwt_1,y1=BLUPS$BLUP.bwt_2,col="black",code=3,angle=90,length=0)
+points(BLUP.bwt_2~BLUP.bwt_1,BLUPS,pch=16,col="red", cex=1.5)
+points(BLUP.bwt_2~BLUP.bwt_1,BLUPS,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
+mtext("bwt male (BV±CI)",  side=1, line=2.4)
+mtext("bwt female (BV±CI)",  side=2, line=2,las=3)
+#
+plot(BLUP.tar_1~BLUP.tar_2,BLUPS,xlab="",ylab="", las=1.2, bty="o", col="white")
+arrows(x0=BLUPS$BLUP.tar_1,y0=BLUPS$BLUP.tar_2-BLUPS$CI.tar_2,x1=BLUPS$BLUP.tar_1,y1=BLUPS$BLUP.tar_2+BLUPS$CI.tar_2,col="black",code=3,angle=90,length=0)
+arrows(x0=BLUPS$BLUP.tar_1-BLUPS$CI.tar_1,y0=BLUPS$BLUP.tar_2,x1=BLUPS$BLUP.tar_1+BLUPS$CI.tar_1,y1=BLUPS$BLUP.tar_2,col="black",code=3,angle=90,length=0)
+points(BLUP.tar_2~BLUP.tar_1,BLUPS,pch=16,col="red", cex=1.5)
+points(BLUP.tar_2~BLUP.tar_1,BLUPS,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
+mtext("tarsus male (BV±CI)",  side=1, line=2.4)
+mtext("tarsus female (BV±CI)",  side=2, line=2,las=3)
+
+```
+Within this model, we also have acces to the rest of the B-matrix. Note, the cross-sex genetic correlation is just the diagonal of the B matrix. For now on, you can explore this matrix and estimate the cross-sex-cross-trait genetic correlation. 
 
 

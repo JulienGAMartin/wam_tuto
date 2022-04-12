@@ -2,7 +2,7 @@
 
 `MCMCglmm` has the advantage to keep automatically keep the lines with missing data and will try to fit the model use latent variables for missing data.
 We will remove the missing values from the data before fitting the model.
-<!-- C2-5 you don't compare with and without NA -->
+
 
 ```{r}
 gryphon2 <- subset(gryphon, !is.na(bwt) & !is.na(tarsus))
@@ -140,7 +140,7 @@ Neither or these posterior distributions overlaps zero, so we can consider them 
 
 ### Direct estimate of the correlation instead of the covariance.
 For this example, we just estimate the correlation at the genetic level, the covariance for the other random effect (`mother` and `byear`) and the residual level was not estimate to help the model to converge and compute faster. The prior will be the same but we change the `pr` argument to be `TRUE` to keep the posterior distribution of random effects.
-To simplify the following code, we rename the variable T1 and T2.
+To simplify the following code and facilitate the BLUP extraction, we rename the variable T1 and T2 and estimate correlation only for the additive genetic and residual matrices.
 
 ```{r, eval = params$fit_all}
 gryphon2$T1<-gryphon2$bwt
@@ -154,6 +154,7 @@ model2.3 <- MCMCglmm(cbind(T1, T2) ~ trait - 1 + trait:sex,
   nitt = 130000, thin = 100, burnin = 30000,
   prior = prior2.2, verbose = FALSE, pr=TRUE,
 )
+
 save(model2.3, file = "data/MCMCglmm_model2_3_LongRun.rda")
 ```
 
@@ -192,6 +193,7 @@ qqnorm(BLUPS$BLUP.tarsus)
 qqline(BLUPS$BLUP.tarsus)
 ```
 
+Here the code to plot the genetic correlation.
 ```{r}
 plot(BLUP.tarsus~BLUP.btw,BLUPS,xlab="",ylab="", las=1.2, bty="o", col="white", ylim=c(-4,4),xlim=c(-4,4))
 arrows(x0=BLUPS$BLUP.btw,y0=BLUPS$CI.L.tarsus,x1=BLUPS$BLUP.btw,y1=BLUPS$CI.U.tarsus,col="black",code=3,angle=90,length=0)
@@ -201,6 +203,8 @@ points(BLUP.tarsus~BLUP.btw,BLUPS,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
 mtext("btw (BV±SE)",  side=1, line=2.4)
 mtext("tarsus (BV±SE)",  side=2, line=2,las=3)
 ```
+
+
 
 ### Partitioning (co)variances
 As in the tutorial 1, it is possible to partition the variance-covariance matrix between groups (here sex)
@@ -232,6 +236,11 @@ model2.4 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1 + trait:sex,
   prior = prior2.3, verbose = FALSE, pr=TRUE,
 )
 save(model2.4, file = "data/MCMCglmm_model2_4_LongRun.rda")
+
+
+
+
+
 ```
 
 Again we have provided the data from one such run. It can be accessed using the code:
@@ -304,6 +313,7 @@ model2.5 <- MCMCglmm(cbind(T1, T2) ~ trait - 1 + trait:sex,
   nitt = 130000, thin = 100, burnin = 30000,
   prior = prior2.3, verbose = FALSE, pr=TRUE,
 )
+
 save(model2.5, file = "data/MCMCglmm_model2_5_LongRun.rda")
 ```
 

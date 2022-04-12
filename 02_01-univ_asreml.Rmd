@@ -158,7 +158,7 @@ As P < 0.0001 we would therefore conclude that the additional of maternal identi
 A population can be further fragmented into different groups or categories (such as females and males, juveniles and adults or treated and untreated). Some scientific questions require further and deeper analysis of the variance. 
 To avoid multiple model (one for each group), we can directly partition the variance between groups in a unique model. In addition, by doing so, we can also test if the variance are different between groups.
 
-As example, we decide to take the model4 and partition its additive genetic variance and residual variance by sex. It is possible to further partition the other random effects but it will complexify the animal model and requires sufficient sample size.
+As example, we decide to take the model4 and partition its additive genetic variance and residual variance by sex. It is possible to further partition the other random effects but it will complexity the animal model and requires sufficient sample size.
 
 First, it required to order the dataset by group (here sex).
 ```{r}
@@ -188,7 +188,6 @@ By partitioning the additive genetic variance and the residual variance, the mod
 To test if the variances are different between sexes, we can compare the model partitioned `model_SEX` and the previous model without the partitioning `model4` in a likelihood ratio test (LRT) with 2 degrees of freedom since models have two components of variance of difference.
 ```{r}
 model_SEX$loglik
-
 model4$loglik
 
 1 - pchisq(2 * (model_SEX$loglik - model4$loglik), 2)
@@ -200,14 +199,12 @@ LRT give more information and showed that partitioning the variance and the resi
 ```{r, fig.cap = "Female and male heritability of birth weight"}
 h2.sex<-rbind(h2.F,h2.M)
 
-plot(c(0.95, 1.05)~[,1], xlim=c(0,0.8),ylim=c(0.5,1.5),,xlab="",ylab="",col=c("red","blue"),pch=c(16,17),cex=2,yaxt="n")
+plot(c(0.95, 1.05)~h2.sex[,1], xlim=c(0,0.8),ylim=c(0.5,1.5),,xlab="",ylab="",col=c("red","blue"),pch=c(16,17),cex=2,yaxt="n")
 arrows(y0=0.95,x0=h2.sex[1,1]-h2.sex[1,2],y1=0.95,x1=h2.sex[1,1]+h2.sex[1,2],code=3,angle=90,length=0,col=c("red"),lwd=2)
-arrows(y0=1.05,x0=h2.sex[2,1]-H2.sex[2,2],y1=1.05,x1=h2.sex[2,1]+h2.sex[2,2],code=3,angle=90,length=0,col=c("blue"),lwd=2)
+arrows(y0=1.05,x0=h2.sex[2,1]-h2.sex[2,2],y1=1.05,x1=h2.sex[2,1]+h2.sex[2,2],code=3,angle=90,length=0,col=c("blue"),lwd=2)
 mtext("Narrow-sense heritability (±se)", side=1, las=1, adj=0.4,line=3, cex=1.6)
 axis(2,at=1,labels=c("birth weight"),las = 3,cex.axis=1.6)
 ```
-
-
 
 ### Modification of the varaince matrix parameters
 
@@ -253,10 +250,12 @@ Since `model4` did not showed boundary, `the model5` is very similar.
 ### Covariance between two random effects
 
 Some research questions require to estimate the covariance between two random effects within a univariate model.To do so, we can use the argument `str`.
-As an example, we fit a model which estimate the covariance between the additive genetic variance and the mother variance.  Both variances require to be associated to the pedigree information.
+As an example, we fit a model which estimate the covariance between the additive genetic variance and the mother variance.  Both variances require to  operate on the same level, thus `animal` and `mother` require to be associated to the pedigree information.
 
 The argument `str`has two components: first the equation term with the two random effects `~vm(animal,Ainv)+vm(mother, ainv)` and second the structural term `~us(2):id(number)`. Here within the structural term, we fit a 2x2 unstructured matrix `us(2)` which estimated the variance and the covariance between the random effects in the equation term. 
 To successfully work, the structural term also requires the number of level identified within `id()`. Here a small tip, if you don't know the number of level identified within id(), run the model with a random number. The model will not converge and a error message will appear like this one: `Size of direct product (4) does not conform with total size of included terms (2618)`. The error message can help you determine the required level within the `str` function, as here 2618 divide by 2.
+In addition, it is necessary the random effects 
+
 ```{r, eval = FALSE}
 model.temp2 <- asreml(
   fixed = bwt ~ 1,
@@ -283,4 +282,4 @@ summary(model6)$varcomp
 We have successfully produced a code to estimate the covariance between two random effects. However for this example, the dataset is not sufficient to properly estimate it and the model did not converge but you have the idea of how to use the function `str`.
 
 Additional and final tip: It is happen that Asreml will estimate negative variance if you allow the variance matrix to be unstructured. A negative variance is counter-intuitive meaning statistically the mean within the random effect is less similar than expected by chance. 
-However a possible biological reason can be hypothesized such as a sibling competition within the nest creating a negative among-individual covariance within the nest.Thus to test this hypotheses,it is require to estimate the covariance between two random effects.
+However a possible biological reason can be hypothesized such as a sibling competition within the nest creating a negative among-individual covariance within the nest.Thus to test this hypotheses,it is required to estimate the covariance between two random effects.

@@ -105,7 +105,6 @@ attr(wa, "heading") <- NULL
 wa
 ```
 
-<!-- C2-2  two distinct code part, why? -->
 
 Note that it is possible to specify a fixed effect to a specific trait by adding the number of order within `cbind` inside the argument `at(trait,x)`. For example, here we apply the fixed effect `sex` only to the response variable `tarsus`. 
 
