@@ -1,10 +1,16 @@
 ## Asreml-R
 
+
+First we need to load the `asreml` library:
+```{r}
+library(asreml)
+```
+
+
 ### Estimating repeatability
 
 With repeated measures on individuals it is often of interest to see how repeatable a trait is. 
 We can estimate the repeatability of a trait as the proportion of phenotypic variance $V_P$ explained by individual variance $V_{ind}$; $R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)$.
-
 
 ```{r}
 modelv <- asreml(
@@ -59,6 +65,7 @@ wa
 Here age is modeled as a 5-level factor (specified using the function `as.factor()` at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.
 In addition, using `age` as continuous variable can help in saving some degree of freedom in the analysis.
 
+
 <!-- C1 I dont know why the quadratic fixed effect dont work, need to remember how to do this 
 ```{r, eval = FALSE, echo = FALSE}
 gryphonRM$age_c <- as.numeric(gryphonRM$age)
@@ -76,7 +83,7 @@ summary(modelw2, coef = TRUE)$coef.fixed
 wald.asreml(modelw2, ssType = "conditional", denDF = "numeric")
 
 ```
--->
+
 
 ### Partitioning additive and permanent environment effects
 
@@ -85,6 +92,11 @@ Non-additive contributions to fixed among-individual differences are normally re
 
 To illustrate it, we first fit the animal model:
 ```{r}
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+
 ainv <- ainverse(gryphonped)
 
 modelx <- asreml(
