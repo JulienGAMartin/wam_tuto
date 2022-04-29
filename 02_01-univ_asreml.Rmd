@@ -73,6 +73,7 @@ wald.asreml(model2, ssType = "conditional", denDF = "numeric")
 summary(model2, coef = TRUE)$coef.fixed
 a <- wald.asreml(model2, ssType = "conditional", denDF = "numeric")
 attr(a$Wald, "heading") <- NULL
+a
 ```
 
 The very small probability (`Pr`) in the Wald test above shows that `sex` is a highly significant fixed effect, and from the parameter estimates (`summary(model2,coef=T)$coef.fixed`) we can see that the average male (sex 2) is 2.2 kg ($\pm$ 0.16 SE) heavier than the average female (sex 1). However, when we look at the variance components in the model including `sex` as a fixed effect, we see that they have changed slightly from the previous model:

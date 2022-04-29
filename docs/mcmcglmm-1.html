@@ -22,6 +22,7 @@
   <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
+<meta name="author" content="Matthieu Videlier" />
 
 
 
@@ -167,7 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
 <li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#further-partitioning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Further partitioning the variance</a></li>
-<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.2.7</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-the-varaince-matrix-parameters"><i class="fa fa-check"></i><b>2.2.7</b> Modification of the varaince matrix parameters</a></li>
 <li class="chapter" data-level="2.2.8" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-two-random-effects"><i class="fa fa-check"></i><b>2.2.8</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
@@ -181,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
-<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm--></a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
@@ -191,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.3" data-path="brms-1.html"><a href="brms-1.html#adding-random-effects-2"><i class="fa fa-check"></i><b>2.5.3</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.5.4" data-path="brms-1.html"><a href="brms-1.html#testing-significance-of-variance-components-1"><i class="fa fa-check"></i><b>2.5.4</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.5.5" data-path="brms-1.html"><a href="brms-1.html#further-partitioning-of-the-variance"><i class="fa fa-check"></i><b>2.5.5</b> Further partitioning of the variance</a></li>
-<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-2"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.5.7" data-path="brms-1.html"><a href="brms-1.html#covariance-between-two-random-effects-2"><i class="fa fa-check"></i><b>2.5.7</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>2.6</b> stan</a></li>
@@ -289,25 +290,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="running-the-model-1" class="section level3" number="2.4.1">
 <h3><span class="header-section-number">2.4.1</span> Running the model</h3>
 <p>First load MCMCglmm:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="mcmcglmm-1.html#cb66-1" aria-hidden="true"></a><span class="kw">library</span>(MCMCglmm)</span></code></pre></div>
-<pre><code>## Loading required package: coda</code></pre>
-<pre><code>## Loading required package: ape</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="mcmcglmm-1.html#cb70-1" aria-hidden="true"></a><span class="kw">library</span>(MCMCglmm)</span></code></pre></div>
 <p>The first model we will fit is a simple animal model with no fixed effects, and only an ‘animal’ random effect relating individuals to their additive genetic values through the pedigree.
-First we are going to define priors. In a way we might want to avoid using priors, because we would like all of the information in our analysis to come from our data.<!-- C1 I dont understand this sentence -->
+First we are going to define the priors. In a way we might want to avoid using priors, because we would like all of the information in our analysis to come from our data.
 By default MCMCglmm uses improper priors, but this can cause inferential and numerical problems. We will specify priors for the animal effect and the residual variance using the following code:</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="mcmcglmm-1.html#cb69-1" aria-hidden="true"></a>prior1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
-<span id="cb69-2"><a href="mcmcglmm-1.html#cb69-2" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</span>
-<span id="cb69-3"><a href="mcmcglmm-1.html#cb69-3" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)</span>
-<span id="cb69-4"><a href="mcmcglmm-1.html#cb69-4" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="mcmcglmm-1.html#cb71-1" aria-hidden="true"></a>prior1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb71-2"><a href="mcmcglmm-1.html#cb71-2" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</span>
+<span id="cb71-3"><a href="mcmcglmm-1.html#cb71-3" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)</span>
+<span id="cb71-4"><a href="mcmcglmm-1.html#cb71-4" aria-hidden="true"></a>)</span></code></pre></div>
 <p>A prior allowed the model to fit different variance structures. With the unique random effect “animal”, we partitioned the phenotypic variance into two distinct variances matrices <code>G</code> (additive genetic) and <code>R</code> (residual).
 This prior specification is the simplistic one and often used because it was believed to be relatively uninformative, and is equivalent to an inverse-gamma prior with shape and scale equal to 0.001. In many cases it is relatively uninformative but when the posterior distribution for the variances has support close to zero it can behave poorly. Parameter expanded priors (See Chapter 8 of the MCMCglmm CourseNotes, available from CRAN) are gaining in popularity due to their better behaviour but for the purposes of this tutorial we will stick with the inverse-gamma prior.</p>
 <p>We have told MCMCglmm to pay little heed to our prior expectation (V) by specifying a small degree of belief parameter (nu) of 0.002. Since this is a univariate analysis, the priors are matrix of order 1 and thus nu&gt;0 is the smallest degree of belief that provides what is known as a ‘proper’ prior, avoiding numerical problems. In fact, there is a lot of information in the data regarding the marginal distributions of the parameters, and MCMCglmm will run most of the models that we suggest in these tutorials without priors. However, this is poor practice, but we will therefore use this simple priors throughout these tutorials. We can now fit an animal model. The model to decompose variation in birth weight into genetic and residual effects is as follows:</p>
 <p>The lower case “animal” is a can be a <strong>special</strong> word for MCMCglmm. If a <code>pedigree</code> argument is provided then <code>MCMCglmm</code> will recognize the term <code>animal</code> as the term to use to estimate additive genetic variance. When the argument <code>pedigree</code> is not provided then the word <code>animal</code> is not different than any other variable. However, instead of providing a pedigree argument to the call to MCMCglmm function, it is much more flexible to use the <code>ginv</code> argument to specify the random effect that must be linked to the pedigree (with the inverse relatedness matrix). We thus first estimate the inverse relatedness matrix using <code>inverseA()</code> then fit the animal model.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="mcmcglmm-1.html#cb70-1" aria-hidden="true"></a>Ainv &lt;-<span class="st"> </span><span class="kw">inverseA</span>(gryphonped)<span class="op">$</span>Ainv</span>
-<span id="cb70-2"><a href="mcmcglmm-1.html#cb70-2" aria-hidden="true"></a>model1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
-<span id="cb70-3"><a href="mcmcglmm-1.html#cb70-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
-<span id="cb70-4"><a href="mcmcglmm-1.html#cb70-4" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon, <span class="dt">prior =</span> prior1<span class="fl">.1</span></span>
-<span id="cb70-5"><a href="mcmcglmm-1.html#cb70-5" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="mcmcglmm-1.html#cb72-1" aria-hidden="true"></a>Ainv &lt;-<span class="st"> </span><span class="kw">inverseA</span>(gryphonped)<span class="op">$</span>Ainv</span>
+<span id="cb72-2"><a href="mcmcglmm-1.html#cb72-2" aria-hidden="true"></a>model1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
+<span id="cb72-3"><a href="mcmcglmm-1.html#cb72-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
+<span id="cb72-4"><a href="mcmcglmm-1.html#cb72-4" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon, <span class="dt">prior =</span> prior1<span class="fl">.1</span></span>
+<span id="cb72-5"><a href="mcmcglmm-1.html#cb72-5" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## 
 ##                        MCMC iteration = 0
 ## 
@@ -336,129 +335,155 @@ This prior specification is the simplistic one and often used because it was bel
 ##                        MCMC iteration = 12000
 ## 
 ##                        MCMC iteration = 13000</code></pre>
-<p>After typing this code, MCMCglmm will run, taking about 20 seconds on a modern desk- top computer. The progress of the run will be printed to the screen. Also, note the warning message will be printed at the end of the run. This is natural too. In order for the MCMC algorithm to work, MCMCglmm must keep track of effects associated with unmeasured individuals appearing in the pedigree. This will not affect the answers, but when many unmeasured individuals exist, it can hinder the ability of the algorithm to explore the parameter space (more on this, and a solution, later). Lets have a look at the MCMCglmm outputs. First we will evaluate how confident we can be that MCMCglmm found good answers. By entering</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="mcmcglmm-1.html#cb72-1" aria-hidden="true"></a><span class="kw">plot</span>(model1<span class="fl">.1</span><span class="op">$</span>Sol)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-33"></span>
-<img src="wam_tuto_files/figure-html/unnamed-chunk-33-1.svg" alt="The posterior distribution of the fixed effect (the intercept, or mean) in model 1.1" width="672" />
+<p>After typing this code, MCMCglmm will run, taking about 20 seconds on a modern desktop computer. The progress of the run will be printed to the screen. Also, note the warning message will be printed at the end of the run. This is natural too. In order for the MCMC algorithm to work, MCMCglmm must keep track of effects associated with unmeasured individuals appearing in the pedigree. This will not affect the answers, but when many unmeasured individuals exist, it can hinder the ability of the algorithm to explore the parameter space (more on this, and a solution, later). Lets have a look at the MCMCglmm outputs. First we will evaluate how confident we can be that MCMCglmm found good answers. By entering</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="mcmcglmm-1.html#cb74-1" aria-hidden="true"></a><span class="kw">plot</span>(model1<span class="fl">.1</span><span class="op">$</span>Sol)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-35"></span>
+<img src="wam_tuto_files/figure-html/unnamed-chunk-35-1.svg" alt="The posterior distribution of the fixed effect (the intercept, or mean) in model 1.1" width="672" />
 <p class="caption">
-Figure 2.2: The posterior distribution of the fixed effect (the intercept, or mean) in model 1.1
+Figure 2.3: The posterior distribution of the fixed effect (the intercept, or mean) in model 1.1
 </p>
 </div>
-<p>in the console, we get Figure 1 (p. 5). The plot on the left shows a time series of the values of 1000 samples of the posterior distribution of the the model intercept (mean birthweight). The plot on the right shows the same data as a distribution. Complicated statistical methods for estimating population means are of course of little interest; rather, we are examining these outputs to check that MCMCglmm’s algorithms worked well for our data and for this model. The important point here is that a consistent amount of variation around a largely unchanging mean value of the intercept was obtained (which give this fluctuating trace concentrated around the mean), and the posterior distribution of the intercept appears to be valid. More rigorous means of evaluation the independence of the samples in the posterior distribution (evaluating autocorrelation) are discussed in the MCMCglmm CourseNotes, available from CRAN. Note that your output for <code>model 1.1</code> may not be identical to this due to Monte Carlo (random number) error. So every times, you run the model, you will get similar but slightly different results.</p>
+<p>in the console, we get Figure 2.2. The plot on the left shows a time series of the values of 1000 samples of the posterior distribution of the the model intercept (mean birth weight). The plot on the right shows the same data as a distribution. Complicated statistical methods for estimating population means are of course of little interest; rather, we are examining these outputs to check that MCMCglmm’s algorithms worked well for our data and for this model. The important point here is that a consistent amount of variation around a largely unchanging mean value of the intercept was obtained (which give this fluctuating trace concentrated around the mean), and the posterior distribution of the intercept appears to be valid. More rigorous means of evaluation the independence of the samples in the posterior distribution (evaluating autocorrelation) are discussed in the MCMCglmm CourseNotes, available from CRAN. Note that your output for <code>model 1.1</code> may not be identical to this due to Monte Carlo (random number) error. So every times, you run the model, you will get similar but slightly different results.</p>
 <p>The posterior distributions of the the variance components are generally of more interest to animal model users. We can view plots of the posterior distribution for the variance components for model 1.1 by</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="mcmcglmm-1.html#cb73-1" aria-hidden="true"></a><span class="kw">plot</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-34"></span>
-<img src="wam_tuto_files/figure-html/unnamed-chunk-34-1.svg" alt="The posterior distributions of the variance components of model 1.1, based on an analysis with the default values for nitt, burnin, and thin in MCMCglmm" width="672" />
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="mcmcglmm-1.html#cb75-1" aria-hidden="true"></a><span class="kw">plot</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-36"></span>
+<img src="wam_tuto_files/figure-html/unnamed-chunk-36-1.svg" alt="The posterior distributions of the variance components of model 1.1, based on an analysis with the default values for nitt, burnin, and thin in MCMCglmm" width="672" />
 <p class="caption">
-Figure 2.3: The posterior distributions of the variance components of model 1.1, based on an analysis with the default values for nitt, burnin, and thin in MCMCglmm
+Figure 2.4: The posterior distributions of the variance components of model 1.1, based on an analysis with the default values for nitt, burnin, and thin in MCMCglmm
 </p>
 </div>
-<p>which generates Figure 2 (p. 6). Here we see distributions of the estimates of the additive genetic (animal) and residual (units) effects. These samples contain some au- tocorrelation, i.e., trends are apparent in the left-hand plot. We can deal with this easily.</p>
+<p>which generates Figure 2.3. Here we see distributions of the estimates of the additive genetic (animal) and residual (units) effects. These samples contain some autocorrelation, i.e., trends are apparent in the left-hand plot. We can deal with this easily.</p>
 </div>
 <div id="change-in-iteration-and-sampling" class="section level3" number="2.4.2">
 <h3><span class="header-section-number">2.4.2</span> Change in iteration and sampling</h3>
-<p>We will simply re-run the model for a longer number of iterations, and sample the chain less frequently. So far we have been running MCMCglmm with its default values. These defaults are a total run length of 13000 iterations, the first 3000 of which are discarded as a ‘burn-in’ period to make sure that the converges to the part of the parameter space where the maximum likelihood exists. The remaining 10000 iterations are sampled (estimates retained) every 10 iterations (the thinning interval). Because the values in the left-hand plots in figure 2 to appear to have different values at the beginning of the run, we might suspect that a longer burn-in period might be required. We can reduce the autocorrelation by lengthening the rest of the run and sampling the chain less frequently. The following code runs the same model 1.1, but is likely to produce better samples of the posterior distributions. This model should take about two minutes to analyze.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="mcmcglmm-1.html#cb74-1" aria-hidden="true"></a>model1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
-<span id="cb74-2"><a href="mcmcglmm-1.html#cb74-2" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
-<span id="cb74-3"><a href="mcmcglmm-1.html#cb74-3" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>,</span>
-<span id="cb74-4"><a href="mcmcglmm-1.html#cb74-4" aria-hidden="true"></a>  <span class="dt">prior =</span> prior1<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb74-5"><a href="mcmcglmm-1.html#cb74-5" aria-hidden="true"></a>)</span></code></pre></div>
-<p>Notes that we have now included the argument verbose=FALSE in the MCMCglmm call. We will continue this throughout the tutorial so that more complete screen outputs can be included in this document without using too much space. Now produce the plots of the samples of the fixed and random effects (they have not been included in this document). Note that the autocorrelation is much reduced. A more compact way to evaluate the validity of the posterior distributions is to calculate autocorrelation among samples, as follows:</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="mcmcglmm-1.html#cb75-1" aria-hidden="true"></a><span class="kw">autocorr.diag</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
+<p>We will simply re-run the model for a longer number of iterations, and sample the chain less frequently. So far we have been running MCMCglmm with its default values. These defaults are a total run length of 13000 iterations, the first 3000 of which are discarded as a ‘burn-in’ period to make sure that the converges to the part of the parameter space where the maximum likelihood exists. The remaining 10000 iterations are sampled (estimates retained) every 10 iterations (the thinning interval). Because the values in the left-hand plots in figure 2.2 to appear to have different values at the beginning of the run, we might suspect that a longer burn-in period might be required. We can reduce the autocorrelation by lengthening the rest of the run and sampling the chain less frequently. The following code runs the same model 1.1, but is likely to produce better samples of the posterior distributions. This model should take about two minutes to analyze.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="mcmcglmm-1.html#cb76-1" aria-hidden="true"></a>model1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
+<span id="cb76-2"><a href="mcmcglmm-1.html#cb76-2" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
+<span id="cb76-3"><a href="mcmcglmm-1.html#cb76-3" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>,</span>
+<span id="cb76-4"><a href="mcmcglmm-1.html#cb76-4" aria-hidden="true"></a>  <span class="dt">prior =</span> prior1<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb76-5"><a href="mcmcglmm-1.html#cb76-5" aria-hidden="true"></a>)</span></code></pre></div>
+<p>Notes that we have now included the argument verbose=FALSE in the MCMCglmm call. We will continue this throughout the tutorial so that more complete screen outputs can be included in this document without using too much space. <!--C6 "Now produce the plots of the samples of the fixed and random effects (they have not been included in this document)." I don't understand this sentence!--> Note that the autocorrelation is much reduced. A more compact way to evaluate the validity of the posterior distributions is to calculate autocorrelation among samples, as follows:</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="mcmcglmm-1.html#cb77-1" aria-hidden="true"></a><span class="kw">autocorr.diag</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##               animal       units
 ## Lag 0     1.00000000  1.00000000
-## Lag 50    0.24081087  0.17303713
-## Lag 250  -0.01596010  0.02993861
-## Lag 500  -0.01183952 -0.01060663
-## Lag 2500  0.02895634  0.01372375</code></pre>
+## Lag 50    0.19032678  0.14166308
+## Lag 250  -0.02198489 -0.05505110
+## Lag 500   0.04389519  0.03391897
+## Lag 2500  0.02547831 -0.03175591</code></pre>
 <p>We will consider these levels of autocorrelation acceptable, at least for the purposes of this tutorial. Ideally, all samples of the posterior distribution should be independent, and the autocorrelation for all lag values greater than zero should be near zero. However, in practice this will not strictly be achievable for all analytic scenarios. Certainly the levels of autocorrelation observed here should not be tolerated in any formal analysis.
 Note that the validity of posterior distributions of any analysis should always be checked; however, for brevity we will not continue to be so consistently diligent throughout the rest of these tutorials. We can now proceed with confidence to recover some more information from these samples. We can obtain estimates of the additive genetic and residual variance by calculating the modes of the posterior distributions:</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="mcmcglmm-1.html#cb77-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="mcmcglmm-1.html#cb79-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
-## 3.306731 3.899117</code></pre>
+## 3.396828 3.548976</code></pre>
 <p>We can obtain the Bayesian equivalent of confidence intervals by calculating the the values of the estimates that bound 95% (or any other proportion) of the posterior distributions:</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="mcmcglmm-1.html#cb79-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="mcmcglmm-1.html#cb81-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##           lower    upper
-## animal 1.965130 4.438959
-## units  2.865658 4.796592
+## animal 2.222668 4.661613
+## units  2.854000 4.840866
 ## attr(,&quot;Probability&quot;)
 ## [1] 0.95</code></pre>
 </div>
 <div id="change-priors-parameters" class="section level3" number="2.4.3">
 <h3><span class="header-section-number">2.4.3</span> Change priors parameters</h3>
-<p>We specified weak priors in this analyses. Now we will check whether or not proper priors would have influenced the results that we obtained. The simplest way to do this is to rerun the model with different priors. In the previous model we specified a prior where the size of genetic and residual variance were similar. Here we construct priors with a larger degree of belief parameter (<code>nu</code>), and we will specify that a large proportion (95%) of the variation is under genetic control (<code>V</code>):
-<!-- C2 we should explain what we do to the residual matrix too --></p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="mcmcglmm-1.html#cb81-1" aria-hidden="true"></a>p.var &lt;-<span class="st"> </span><span class="kw">var</span>(gryphon<span class="op">$</span>bwt, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb81-2"><a href="mcmcglmm-1.html#cb81-2" aria-hidden="true"></a>prior1.<span class="fl">1.2</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
-<span id="cb81-3"><a href="mcmcglmm-1.html#cb81-3" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="kw">matrix</span>(p.var <span class="op">*</span><span class="st"> </span><span class="fl">0.95</span>), <span class="dt">nu =</span> <span class="dv">1</span>)),</span>
-<span id="cb81-4"><a href="mcmcglmm-1.html#cb81-4" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="kw">matrix</span>(p.var <span class="op">*</span><span class="st"> </span><span class="fl">0.05</span>), <span class="dt">nu =</span> <span class="dv">1</span>)</span>
-<span id="cb81-5"><a href="mcmcglmm-1.html#cb81-5" aria-hidden="true"></a>)</span>
-<span id="cb81-6"><a href="mcmcglmm-1.html#cb81-6" aria-hidden="true"></a></span>
-<span id="cb81-7"><a href="mcmcglmm-1.html#cb81-7" aria-hidden="true"></a>model1.<span class="fl">1.2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
-<span id="cb81-8"><a href="mcmcglmm-1.html#cb81-8" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
-<span id="cb81-9"><a href="mcmcglmm-1.html#cb81-9" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon, <span class="dt">prior =</span> prior1.<span class="fl">1.2</span>, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>,</span>
-<span id="cb81-10"><a href="mcmcglmm-1.html#cb81-10" aria-hidden="true"></a>  <span class="dt">burnin =</span> <span class="dv">15000</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb81-11"><a href="mcmcglmm-1.html#cb81-11" aria-hidden="true"></a>)</span>
-<span id="cb81-12"><a href="mcmcglmm-1.html#cb81-12" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
+<p>We specified weak priors in this analyses. Now we will check whether or not proper priors would have influenced the results that we obtained. The simplest way to do this is to re-run the model with different priors.
+In the previous model we specified a prior where the size of genetic and residual variance were similar. Here we construct priors with a larger degree of belief parameter (<code>nu</code>), and we will specify that a large proportion (95%) of the variation is under genetic control (<code>V</code>).Thus, the residual variance contains 05% of the phenotypic variance.</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="mcmcglmm-1.html#cb83-1" aria-hidden="true"></a>p.var &lt;-<span class="st"> </span><span class="kw">var</span>(gryphon<span class="op">$</span>bwt, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb83-2"><a href="mcmcglmm-1.html#cb83-2" aria-hidden="true"></a>prior1.<span class="fl">1.2</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb83-3"><a href="mcmcglmm-1.html#cb83-3" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="kw">matrix</span>(p.var <span class="op">*</span><span class="st"> </span><span class="fl">0.95</span>), <span class="dt">nu =</span> <span class="dv">1</span>)),</span>
+<span id="cb83-4"><a href="mcmcglmm-1.html#cb83-4" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="kw">matrix</span>(p.var <span class="op">*</span><span class="st"> </span><span class="fl">0.05</span>), <span class="dt">nu =</span> <span class="dv">1</span>)</span>
+<span id="cb83-5"><a href="mcmcglmm-1.html#cb83-5" aria-hidden="true"></a>)</span>
+<span id="cb83-6"><a href="mcmcglmm-1.html#cb83-6" aria-hidden="true"></a></span>
+<span id="cb83-7"><a href="mcmcglmm-1.html#cb83-7" aria-hidden="true"></a>model1.<span class="fl">1.2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
+<span id="cb83-8"><a href="mcmcglmm-1.html#cb83-8" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
+<span id="cb83-9"><a href="mcmcglmm-1.html#cb83-9" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon, <span class="dt">prior =</span> prior1.<span class="fl">1.2</span>, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>,</span>
+<span id="cb83-10"><a href="mcmcglmm-1.html#cb83-10" aria-hidden="true"></a>  <span class="dt">burnin =</span> <span class="dv">15000</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb83-11"><a href="mcmcglmm-1.html#cb83-11" aria-hidden="true"></a>)</span>
+<span id="cb83-12"><a href="mcmcglmm-1.html#cb83-12" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
-## 3.306731 3.899117</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="mcmcglmm-1.html#cb83-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1.<span class="fl">1.2</span><span class="op">$</span>VCV)</span></code></pre></div>
+## 3.396828 3.548976</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="mcmcglmm-1.html#cb85-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1.<span class="fl">1.2</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
-## 3.693791 3.746121</code></pre>
+## 3.382195 3.825136</code></pre>
 <p>and we can therefore conclude that the difference in the priors has little effect on the outcome of the analysis. This is typical for an analysis where lots of data are available relative to the complexity of the model, but is often not the case. In all cases, it is important to check the effect of priors on conclusions drawn from a model. In addition, you can also specify the prior with previous knowledge or expectation for the variance.</p>
 </div>
 <div id="estimating-heritability-1" class="section level3" number="2.4.4">
 <h3><span class="header-section-number">2.4.4</span> Estimating heritability</h3>
-<p>A useful property of Bayesian posterior distributions is that we can apply almost any transformation to these distributions and they will remain valid. This applies to the calculation of heritabilities. We can obtain an estimate of the heritability by applying the basic formula <span class="math inline">\(h^2\)</span> =<span class="math inline">\(V_A /V_P\)</span> to each sample of the posterior disribution:</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="mcmcglmm-1.html#cb85-1" aria-hidden="true"></a>posterior.heritability1<span class="fl">.1</span> &lt;-<span class="st"> </span>model1<span class="fl">.1</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span><span class="st"> </span></span>
-<span id="cb85-2"><a href="mcmcglmm-1.html#cb85-2" aria-hidden="true"></a><span class="st">  </span>(model1<span class="fl">.1</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.1</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</span>
-<span id="cb85-3"><a href="mcmcglmm-1.html#cb85-3" aria-hidden="true"></a><span class="kw">HPDinterval</span>(posterior.heritability1<span class="fl">.1</span>, <span class="fl">0.95</span>)</span></code></pre></div>
+<p>A useful property of Bayesian posterior distributions is that we can apply almost any transformation to these distributions and they will remain valid. This applies to the calculation of heritability. We can obtain an estimate of the heritability by applying the basic formula <span class="math inline">\(h^2\)</span> =<span class="math inline">\(V_A /V_P\)</span> to each sample of the posterior distribution:</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="mcmcglmm-1.html#cb87-1" aria-hidden="true"></a>posterior.heritability1<span class="fl">.1</span> &lt;-<span class="st"> </span>model1<span class="fl">.1</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span><span class="st"> </span></span>
+<span id="cb87-2"><a href="mcmcglmm-1.html#cb87-2" aria-hidden="true"></a><span class="st">  </span>(model1<span class="fl">.1</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.1</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</span>
+<span id="cb87-3"><a href="mcmcglmm-1.html#cb87-3" aria-hidden="true"></a></span>
+<span id="cb87-4"><a href="mcmcglmm-1.html#cb87-4" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.1</span>)</span></code></pre></div>
+<pre><code>##      var1 
+## 0.4583729</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="mcmcglmm-1.html#cb89-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(posterior.heritability1<span class="fl">.1</span>, <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>##          lower     upper
-## var1 0.3068094 0.5948203
+## var1 0.3213011 0.6047989
 ## attr(,&quot;Probability&quot;)
 ## [1] 0.95</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="mcmcglmm-1.html#cb87-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.1</span>)</span></code></pre></div>
-<pre><code>##      var1 
-## 0.4843676</code></pre>
 <p>Generate a plot of the posterior distribution of this heritability estimate:</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="mcmcglmm-1.html#cb89-1" aria-hidden="true"></a><span class="kw">plot</span>(posterior.heritability1<span class="fl">.1</span>)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-41"></span>
-<img src="wam_tuto_files/figure-html/unnamed-chunk-41-1.svg" alt="The posterior distributions the heritability from model 1.1" width="672" />
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="mcmcglmm-1.html#cb91-1" aria-hidden="true"></a><span class="kw">plot</span>(posterior.heritability1<span class="fl">.1</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-43"></span>
+<img src="wam_tuto_files/figure-html/unnamed-chunk-43-1.svg" alt="The posterior distributions the heritability from model 1.1" width="672" />
 <p class="caption">
-Figure 2.4: The posterior distributions the heritability from model 1.1
+Figure 2.5: The posterior distributions the heritability from model 1.1
 </p>
 </div>
 </div>
 <div id="adding-fixed-effects-1" class="section level3" number="2.4.5">
 <h3><span class="header-section-number">2.4.5</span> Adding fixed effects</h3>
 <p>To add effects to a univariate model, we simply modify the fixed effect part of the model specification:</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="mcmcglmm-1.html#cb90-1" aria-hidden="true"></a>model1<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex,</span>
-<span id="cb90-2"><a href="mcmcglmm-1.html#cb90-2" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
-<span id="cb90-3"><a href="mcmcglmm-1.html#cb90-3" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon, <span class="dt">prior =</span> prior1<span class="fl">.1</span>,</span>
-<span id="cb90-4"><a href="mcmcglmm-1.html#cb90-4" aria-hidden="true"></a>  <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb90-5"><a href="mcmcglmm-1.html#cb90-5" aria-hidden="true"></a>)</span></code></pre></div>
-<p>We can assess the significance of <code>sex</code> as a fixed effect by examining its posterior distribution.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="mcmcglmm-1.html#cb91-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.2</span><span class="op">$</span>Sol[, <span class="st">&quot;sex2&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="mcmcglmm-1.html#cb92-1" aria-hidden="true"></a>model1<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex,</span>
+<span id="cb92-2"><a href="mcmcglmm-1.html#cb92-2" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
+<span id="cb92-3"><a href="mcmcglmm-1.html#cb92-3" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon, <span class="dt">prior =</span> prior1<span class="fl">.1</span>,</span>
+<span id="cb92-4"><a href="mcmcglmm-1.html#cb92-4" aria-hidden="true"></a>  <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb92-5"><a href="mcmcglmm-1.html#cb92-5" aria-hidden="true"></a>)</span>
+<span id="cb92-6"><a href="mcmcglmm-1.html#cb92-6" aria-hidden="true"></a><span class="kw">summary</span>(model1<span class="fl">.2</span>)</span></code></pre></div>
+<pre><code>## 
+##  Iterations = 15001:64951
+##  Thinning interval  = 50
+##  Sample size  = 1000 
+## 
+##  DIC: 3718.806 
+## 
+##  G-structure:  ~animal
+## 
+##        post.mean l-95% CI u-95% CI eff.samp
+## animal     3.051    2.052    4.024      822
+## 
+##  R-structure:  ~units
+## 
+##       post.mean l-95% CI u-95% CI eff.samp
+## units     2.956    2.188    3.713    817.6
+## 
+##  Location effects: bwt ~ sex 
+## 
+##             post.mean l-95% CI u-95% CI eff.samp  pMCMC    
+## (Intercept)     6.050    5.725    6.388     1000 &lt;0.001 ***
+## sex2            2.210    1.885    2.535     1000 &lt;0.001 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>We can assess the significance of <code>sex</code> as a fixed effect by examining its posterior distribution. Important notes here, it is important to know how the model names their fixed effect level to call them properly.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="mcmcglmm-1.html#cb94-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.2</span><span class="op">$</span>Sol[, <span class="st">&quot;sex2&quot;</span>])</span></code></pre></div>
 <pre><code>##     var1 
-## 2.124885</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="mcmcglmm-1.html#cb93-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model1<span class="fl">.2</span><span class="op">$</span>Sol[, <span class="st">&quot;sex2&quot;</span>], <span class="fl">0.95</span>)</span></code></pre></div>
-<pre><code>##         lower   upper
-## var1 1.866357 2.52261
+## 2.211115</code></pre>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="mcmcglmm-1.html#cb96-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model1<span class="fl">.2</span><span class="op">$</span>Sol[, <span class="st">&quot;sex2&quot;</span>], <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>##         lower    upper
+## var1 1.885026 2.535417
 ## attr(,&quot;Probability&quot;)
 ## [1] 0.95</code></pre>
-<p>The posterior distribution of the <code>sex2</code> term does not overlap zero. Thus, we can infer that sex has an effect on birthweight (presence of a sexual dimorphism) in this model and is a useful addition to the model, for most purposes. It is also worth noting that the variance components have changed slightly:</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="mcmcglmm-1.html#cb95-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<p>The posterior distribution of the <code>sex2</code> term does not overlap zero. Thus, we can infer that sex has an effect on birth weight (presence of a sexual dimorphism) in this model and is a useful addition to the model, for most purposes. It is also worth noting that the variance components have changed slightly:</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="mcmcglmm-1.html#cb98-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
-## 3.033546 2.816690</code></pre>
+## 3.203609 2.862445</code></pre>
 <p>In fact since sex effects were previously contributing to the residual variance of the model our estimate of <span class="math inline">\(V_R\)</span> (denoted ’units’ in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate <span class="math inline">\(V_P\)</span> as <span class="math inline">\(V_A +V_R\)</span> then as we include fixed effects we will soak up more residual variance driving <span class="math inline">\(V_P\)</span> . Assuming that <span class="math inline">\(V_A\)</span> is more or less unaffected by the fixed effects fitted then as <span class="math inline">\(V_P\)</span> goes down we expect our estimate of <span class="math inline">\(h^2\)</span> will go up.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="mcmcglmm-1.html#cb97-1" aria-hidden="true"></a>posterior.heritability1<span class="fl">.2</span> &lt;-<span class="st"> </span>model1<span class="fl">.2</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span></span>
-<span id="cb97-2"><a href="mcmcglmm-1.html#cb97-2" aria-hidden="true"></a><span class="st">  </span>(model1<span class="fl">.2</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.2</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</span>
-<span id="cb97-3"><a href="mcmcglmm-1.html#cb97-3" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="mcmcglmm-1.html#cb100-1" aria-hidden="true"></a>posterior.heritability1<span class="fl">.2</span> &lt;-<span class="st"> </span>model1<span class="fl">.2</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span></span>
+<span id="cb100-2"><a href="mcmcglmm-1.html#cb100-2" aria-hidden="true"></a><span class="st">  </span>(model1<span class="fl">.2</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.2</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</span>
+<span id="cb100-3"><a href="mcmcglmm-1.html#cb100-3" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.2</span>)</span></code></pre></div>
 <pre><code>##      var1 
-## 0.5484059</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="mcmcglmm-1.html#cb99-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(posterior.heritability1<span class="fl">.2</span>, <span class="fl">0.95</span>)</span></code></pre></div>
+## 0.4964765</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="mcmcglmm-1.html#cb102-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(posterior.heritability1<span class="fl">.2</span>, <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>##          lower     upper
-## var1 0.3771745 0.6479627
+## var1 0.3645399 0.6411625
 ## attr(,&quot;Probability&quot;)
 ## [1] 0.95</code></pre>
 <p>Here <span class="math inline">\(h^2\)</span> has increased slightly from 0.4829 to 0.5079 (again, your values may differ slightly due to Monte Carlo error). Which is the better estimate?
@@ -468,59 +493,62 @@ An important piece of advice, each researcher should be consistent in how they n
 <div id="adding-random-effects-1" class="section level3" number="2.4.6">
 <h3><span class="header-section-number">2.4.6</span> Adding random effects</h3>
 <p>This is done by simply modifying the model statement in the same way, but requires addition of a prior for the new random effect. For instance, we can fit an effect of birth year:</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="mcmcglmm-1.html#cb101-1" aria-hidden="true"></a>prior1<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
-<span id="cb101-2"><a href="mcmcglmm-1.html#cb101-2" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</span>
-<span id="cb101-3"><a href="mcmcglmm-1.html#cb101-3" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</span>
-<span id="cb101-4"><a href="mcmcglmm-1.html#cb101-4" aria-hidden="true"></a>model1<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex,</span>
-<span id="cb101-5"><a href="mcmcglmm-1.html#cb101-5" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>byear, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
-<span id="cb101-6"><a href="mcmcglmm-1.html#cb101-6" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
-<span id="cb101-7"><a href="mcmcglmm-1.html#cb101-7" aria-hidden="true"></a>  <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>,</span>
-<span id="cb101-8"><a href="mcmcglmm-1.html#cb101-8" aria-hidden="true"></a>  <span class="dt">prior =</span> prior1<span class="fl">.3</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb101-9"><a href="mcmcglmm-1.html#cb101-9" aria-hidden="true"></a>)</span>
-<span id="cb101-10"><a href="mcmcglmm-1.html#cb101-10" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.3</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="mcmcglmm-1.html#cb104-1" aria-hidden="true"></a>prior1<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb104-2"><a href="mcmcglmm-1.html#cb104-2" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</span>
+<span id="cb104-3"><a href="mcmcglmm-1.html#cb104-3" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</span>
+<span id="cb104-4"><a href="mcmcglmm-1.html#cb104-4" aria-hidden="true"></a></span>
+<span id="cb104-5"><a href="mcmcglmm-1.html#cb104-5" aria-hidden="true"></a>model1<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex,</span>
+<span id="cb104-6"><a href="mcmcglmm-1.html#cb104-6" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>byear, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
+<span id="cb104-7"><a href="mcmcglmm-1.html#cb104-7" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
+<span id="cb104-8"><a href="mcmcglmm-1.html#cb104-8" aria-hidden="true"></a>  <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>,</span>
+<span id="cb104-9"><a href="mcmcglmm-1.html#cb104-9" aria-hidden="true"></a>  <span class="dt">prior =</span> prior1<span class="fl">.3</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb104-10"><a href="mcmcglmm-1.html#cb104-10" aria-hidden="true"></a>)</span>
+<span id="cb104-11"><a href="mcmcglmm-1.html#cb104-11" aria-hidden="true"></a></span>
+<span id="cb104-12"><a href="mcmcglmm-1.html#cb104-12" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.3</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##    animal     byear     units 
-## 2.9352732 0.8900623 2.5269082</code></pre>
-<p>Here the variance in birth weight explained by birth year is 0.7887. Note that although <span class="math inline">\(V_A\)</span> has changed somewhat, most of what is now partitioned as a <code>birth year</code> effect was previously partitioned as <span class="math inline">\(V_R\)</span> . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in <span class="math inline">\(h^2\)</span> (since now <span class="math inline">\(h^2 = V_A /(V_A + V_{BY} + V_R )\)</span>). However, we get a somewhat different result if we also add a random effect of <code>mother</code> to test for maternal effects:</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="mcmcglmm-1.html#cb103-1" aria-hidden="true"></a>p.var &lt;-<span class="st"> </span><span class="kw">var</span>(gryphon<span class="op">$</span>bwt, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb103-2"><a href="mcmcglmm-1.html#cb103-2" aria-hidden="true"></a>prior1<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
-<span id="cb103-3"><a href="mcmcglmm-1.html#cb103-3" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(</span>
-<span id="cb103-4"><a href="mcmcglmm-1.html#cb103-4" aria-hidden="true"></a>    <span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>),</span>
-<span id="cb103-5"><a href="mcmcglmm-1.html#cb103-5" aria-hidden="true"></a>    <span class="dt">G2 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>),</span>
-<span id="cb103-6"><a href="mcmcglmm-1.html#cb103-6" aria-hidden="true"></a>    <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</span>
-<span id="cb103-7"><a href="mcmcglmm-1.html#cb103-7" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)</span>
-<span id="cb103-8"><a href="mcmcglmm-1.html#cb103-8" aria-hidden="true"></a>)</span>
-<span id="cb103-9"><a href="mcmcglmm-1.html#cb103-9" aria-hidden="true"></a>model1<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex,</span>
-<span id="cb103-10"><a href="mcmcglmm-1.html#cb103-10" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>byear <span class="op">+</span><span class="st"> </span>mother,</span>
-<span id="cb103-11"><a href="mcmcglmm-1.html#cb103-11" aria-hidden="true"></a>  <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphon,</span>
-<span id="cb103-12"><a href="mcmcglmm-1.html#cb103-12" aria-hidden="true"></a>  <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>,</span>
-<span id="cb103-13"><a href="mcmcglmm-1.html#cb103-13" aria-hidden="true"></a>  <span class="dt">prior =</span> prior1<span class="fl">.4</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb103-14"><a href="mcmcglmm-1.html#cb103-14" aria-hidden="true"></a>)</span>
-<span id="cb103-15"><a href="mcmcglmm-1.html#cb103-15" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.4</span><span class="op">$</span>VCV)</span></code></pre></div>
+## 2.7617194 0.8376138 2.2551880</code></pre>
+<p>Here the variance in birth weight explained by birth year is 0.84. Note that although <span class="math inline">\(V_A\)</span> has changed somewhat, most of what is now partitioned as a <code>birth year</code> effect was previously partitioned as <span class="math inline">\(V_R\)</span> . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in <span class="math inline">\(h^2\)</span> (since now <span class="math inline">\(h^2 = V_A /(V_A + V_{BY} + V_R )\)</span>). However, we get a somewhat different result if we also add a random effect of <code>mother</code> to test for maternal effects:</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="mcmcglmm-1.html#cb106-1" aria-hidden="true"></a>prior1<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb106-2"><a href="mcmcglmm-1.html#cb106-2" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(</span>
+<span id="cb106-3"><a href="mcmcglmm-1.html#cb106-3" aria-hidden="true"></a>    <span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>),</span>
+<span id="cb106-4"><a href="mcmcglmm-1.html#cb106-4" aria-hidden="true"></a>    <span class="dt">G2 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>),</span>
+<span id="cb106-5"><a href="mcmcglmm-1.html#cb106-5" aria-hidden="true"></a>    <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</span>
+<span id="cb106-6"><a href="mcmcglmm-1.html#cb106-6" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)</span>
+<span id="cb106-7"><a href="mcmcglmm-1.html#cb106-7" aria-hidden="true"></a>)</span>
+<span id="cb106-8"><a href="mcmcglmm-1.html#cb106-8" aria-hidden="true"></a></span>
+<span id="cb106-9"><a href="mcmcglmm-1.html#cb106-9" aria-hidden="true"></a>model1<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex,</span>
+<span id="cb106-10"><a href="mcmcglmm-1.html#cb106-10" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>byear <span class="op">+</span><span class="st"> </span>mother,</span>
+<span id="cb106-11"><a href="mcmcglmm-1.html#cb106-11" aria-hidden="true"></a>  <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphon,</span>
+<span id="cb106-12"><a href="mcmcglmm-1.html#cb106-12" aria-hidden="true"></a>  <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>,</span>
+<span id="cb106-13"><a href="mcmcglmm-1.html#cb106-13" aria-hidden="true"></a>  <span class="dt">prior =</span> prior1<span class="fl">.4</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb106-14"><a href="mcmcglmm-1.html#cb106-14" aria-hidden="true"></a>)</span>
+<span id="cb106-15"><a href="mcmcglmm-1.html#cb106-15" aria-hidden="true"></a></span>
+<span id="cb106-16"><a href="mcmcglmm-1.html#cb106-16" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1<span class="fl">.4</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##    animal     byear    mother     units 
-## 2.1751470 0.8685124 1.0990920 1.5309147</code></pre>
-<p>Here partitioning of significant maternal variance has resulted in a further decrease in <span class="math inline">\(V_R\)</span> but also a decrease in <span class="math inline">\(V_A\)</span>. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in <span class="math inline">\(V_A\)</span> and so <span class="math inline">\(h^2\)</span>. Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="mcmcglmm-1.html#cb105-1" aria-hidden="true"></a>posterior.heritability1<span class="fl">.3</span> &lt;-<span class="st"> </span>model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span></span>
-<span id="cb105-2"><a href="mcmcglmm-1.html#cb105-2" aria-hidden="true"></a><span class="st">  </span>(model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;byear&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</span>
-<span id="cb105-3"><a href="mcmcglmm-1.html#cb105-3" aria-hidden="true"></a>posterior.heritability1<span class="fl">.4</span> &lt;-<span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span></span>
-<span id="cb105-4"><a href="mcmcglmm-1.html#cb105-4" aria-hidden="true"></a><span class="st">  </span>(model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;byear&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;mother&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</span>
-<span id="cb105-5"><a href="mcmcglmm-1.html#cb105-5" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.2</span>)</span></code></pre></div>
+## 2.3669641 0.8369939 1.0456759 1.4627501</code></pre>
+<p>Here partitioning of significant maternal variance has resulted in a further decrease in <span class="math inline">\(V_R\)</span> but also a decrease in <span class="math inline">\(V_A\)</span>. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like an additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in <span class="math inline">\(V_A\)</span> and so <span class="math inline">\(h^2\)</span>. Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="mcmcglmm-1.html#cb108-1" aria-hidden="true"></a>posterior.heritability1<span class="fl">.3</span> &lt;-<span class="st"> </span>model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span></span>
+<span id="cb108-2"><a href="mcmcglmm-1.html#cb108-2" aria-hidden="true"></a><span class="st">  </span>(model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;byear&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.3</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</span>
+<span id="cb108-3"><a href="mcmcglmm-1.html#cb108-3" aria-hidden="true"></a>posterior.heritability1<span class="fl">.4</span> &lt;-<span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span></span>
+<span id="cb108-4"><a href="mcmcglmm-1.html#cb108-4" aria-hidden="true"></a><span class="st">  </span>(model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;byear&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;mother&quot;</span>] <span class="op">+</span><span class="st"> </span>model1<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>])</span>
+<span id="cb108-5"><a href="mcmcglmm-1.html#cb108-5" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.2</span>)</span></code></pre></div>
 <pre><code>##      var1 
-## 0.5484059</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="mcmcglmm-1.html#cb107-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.3</span>)</span></code></pre></div>
+## 0.4964765</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="mcmcglmm-1.html#cb110-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.3</span>)</span></code></pre></div>
 <pre><code>##      var1 
-## 0.4630427</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="mcmcglmm-1.html#cb109-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.4</span>)</span></code></pre></div>
+## 0.4582831</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="mcmcglmm-1.html#cb112-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1<span class="fl">.4</span>)</span></code></pre></div>
 <pre><code>##      var1 
-## 0.3820591</code></pre>
+## 0.3740202</code></pre>
 </div>
 <div id="testing-significance-of-variance-components" class="section level3" number="2.4.7">
 <h3><span class="header-section-number">2.4.7</span> Testing significance of variance components</h3>
 <p>While testing the significance of fixed effects by evaluating whether or not their posterior distributions overlap zero was simple and valid, this approach does not work for variance components.
 Variance components are bounded to be positive (given a proper prior), and thus even when a random effect is not meaningful, its posterior distribution will never overlap zero. Model comparisons can be performed using the deviance information criterion (<code>DIC</code>), although it should be noted that the properties of DIC are not well understood and that the <code>DIC</code> may be focused at the wrong level for most people’s intended level of inference - particularly with non-Gaussian responses. The implementation of <code>DIC</code> in MCMCglmm is further described in the reference manual. <code>DIC</code> values are calculated by MCMCglmm by default. Briefly, <code>DIC</code> like other information criteria balance model fit and model complexity simultaneously, and small values of DIC are preferred. We can compare <code>models 1.4</code> and <code>1.3</code>, i.e., models with and without the mother term:</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="mcmcglmm-1.html#cb111-1" aria-hidden="true"></a>model1<span class="fl">.3</span><span class="op">$</span>DIC</span></code></pre></div>
-<pre><code>## [1] 3544.545</code></pre>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="mcmcglmm-1.html#cb113-1" aria-hidden="true"></a>model1<span class="fl">.4</span><span class="op">$</span>DIC</span></code></pre></div>
-<pre><code>## [1] 3294.453</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="mcmcglmm-1.html#cb114-1" aria-hidden="true"></a>model1<span class="fl">.3</span><span class="op">$</span>DIC</span></code></pre></div>
+<pre><code>## [1] 3549.04</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="mcmcglmm-1.html#cb116-1" aria-hidden="true"></a>model1<span class="fl">.4</span><span class="op">$</span>DIC</span></code></pre></div>
+<pre><code>## [1] 3310.47</code></pre>
 <p><code>model 1.4</code> has a much lower DIC value. Since the maternal effect term is the only difference between the models, we can consider the inclusion of this term statistically justifiable. We should note however that DIC has a large sampling variance and should probably only be calculated based on much longer MCMC runs.</p>
 </div>
 <div id="further-partitioning-variance" class="section level3" number="2.4.8">
@@ -528,51 +556,70 @@ Variance components are bounded to be positive (given a proper prior), and thus 
 <p>A population can be further fragmented into different groups or categories (such as females and males, juveniles and adults or treated and untreated). Some scientific questions require further and deeper analysis of the variance.
 To avoid multiple model (one for each group), we can directly partition the variance between groups in a unique model. In addition, by doing so, we can also test if the variance are different between groups.</p>
 <p>As example, we can partition the additive genetic variance and residual variance by sex. It is impossible to further partition the other variances but complexify an animal model requires sufficient sample size.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="mcmcglmm-1.html#cb115-1" aria-hidden="true"></a>prior1.<span class="fl">4.</span>SEX &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
-<span id="cb115-2"><a href="mcmcglmm-1.html#cb115-2" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="kw">diag</span>(<span class="dv">2</span>), <span class="dt">nu =</span> <span class="fl">1.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</span>
-<span id="cb115-3"><a href="mcmcglmm-1.html#cb115-3" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="kw">diag</span>(<span class="dv">2</span>), <span class="dt">nu =</span> <span class="fl">1.002</span>)</span>
-<span id="cb115-4"><a href="mcmcglmm-1.html#cb115-4" aria-hidden="true"></a>)</span>
-<span id="cb115-5"><a href="mcmcglmm-1.html#cb115-5" aria-hidden="true"></a></span>
-<span id="cb115-6"><a href="mcmcglmm-1.html#cb115-6" aria-hidden="true"></a>model1.<span class="fl">4.</span>SEX &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex,</span>
-<span id="cb115-7"><a href="mcmcglmm-1.html#cb115-7" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idh</span>(sex)<span class="op">:</span>animal <span class="op">+</span><span class="st"> </span>byear <span class="op">+</span><span class="st"> </span>mother,</span>
-<span id="cb115-8"><a href="mcmcglmm-1.html#cb115-8" aria-hidden="true"></a>  <span class="dt">rcov =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idh</span>(sex)<span class="op">:</span>units,</span>
-<span id="cb115-9"><a href="mcmcglmm-1.html#cb115-9" aria-hidden="true"></a>  <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphon, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>,</span>
-<span id="cb115-10"><a href="mcmcglmm-1.html#cb115-10" aria-hidden="true"></a>  <span class="dt">prior =</span> prior1.<span class="fl">4.</span>SEX, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb115-11"><a href="mcmcglmm-1.html#cb115-11" aria-hidden="true"></a>)</span>
-<span id="cb115-12"><a href="mcmcglmm-1.html#cb115-12" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="mcmcglmm-1.html#cb118-1" aria-hidden="true"></a>prior1.<span class="fl">4.</span>SEX &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb118-2"><a href="mcmcglmm-1.html#cb118-2" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="kw">diag</span>(<span class="dv">2</span>), <span class="dt">nu =</span> <span class="fl">1.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</span>
+<span id="cb118-3"><a href="mcmcglmm-1.html#cb118-3" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="kw">diag</span>(<span class="dv">2</span>), <span class="dt">nu =</span> <span class="fl">1.002</span>)</span>
+<span id="cb118-4"><a href="mcmcglmm-1.html#cb118-4" aria-hidden="true"></a>)</span>
+<span id="cb118-5"><a href="mcmcglmm-1.html#cb118-5" aria-hidden="true"></a></span>
+<span id="cb118-6"><a href="mcmcglmm-1.html#cb118-6" aria-hidden="true"></a>model1.<span class="fl">4.</span>SEX &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(bwt <span class="op">~</span><span class="st"> </span>sex,</span>
+<span id="cb118-7"><a href="mcmcglmm-1.html#cb118-7" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idh</span>(sex)<span class="op">:</span>animal <span class="op">+</span><span class="st"> </span>byear <span class="op">+</span><span class="st"> </span>mother,</span>
+<span id="cb118-8"><a href="mcmcglmm-1.html#cb118-8" aria-hidden="true"></a>  <span class="dt">rcov =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idh</span>(sex)<span class="op">:</span>units,</span>
+<span id="cb118-9"><a href="mcmcglmm-1.html#cb118-9" aria-hidden="true"></a>  <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphon, <span class="dt">nitt =</span> <span class="dv">65000</span>, <span class="dt">thin =</span> <span class="dv">50</span>, <span class="dt">burnin =</span> <span class="dv">15000</span>,</span>
+<span id="cb118-10"><a href="mcmcglmm-1.html#cb118-10" aria-hidden="true"></a>  <span class="dt">prior =</span> prior1.<span class="fl">4.</span>SEX, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb118-11"><a href="mcmcglmm-1.html#cb118-11" aria-hidden="true"></a>)</span>
+<span id="cb118-12"><a href="mcmcglmm-1.html#cb118-12" aria-hidden="true"></a></span>
+<span id="cb118-13"><a href="mcmcglmm-1.html#cb118-13" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>## sex1.animal sex2.animal       byear      mother  sex1.units  sex2.units 
-##   1.0585256   2.2465783   0.8692544   1.2884621   2.3796674   1.6227409</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="mcmcglmm-1.html#cb117-1" aria-hidden="true"></a>posterior.heritability1.<span class="fl">4.</span>FEM &lt;-<span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex1.animal&quot;</span>] <span class="op">/</span></span>
-<span id="cb117-2"><a href="mcmcglmm-1.html#cb117-2" aria-hidden="true"></a><span class="st">  </span>(model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex1.animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;byear&quot;</span>] <span class="op">+</span></span>
-<span id="cb117-3"><a href="mcmcglmm-1.html#cb117-3" aria-hidden="true"></a><span class="st">   </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;mother&quot;</span>] <span class="op">+</span><span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex1.units&quot;</span>])</span>
-<span id="cb117-4"><a href="mcmcglmm-1.html#cb117-4" aria-hidden="true"></a>posterior.heritability1.<span class="fl">4.</span>MAL &lt;-<span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex2.animal&quot;</span>] <span class="op">/</span></span>
-<span id="cb117-5"><a href="mcmcglmm-1.html#cb117-5" aria-hidden="true"></a><span class="st">  </span>(model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex2.animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;byear&quot;</span>] <span class="op">+</span></span>
-<span id="cb117-6"><a href="mcmcglmm-1.html#cb117-6" aria-hidden="true"></a><span class="st">   </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;mother&quot;</span>] <span class="op">+</span><span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex2.units&quot;</span>])</span>
-<span id="cb117-7"><a href="mcmcglmm-1.html#cb117-7" aria-hidden="true"></a></span>
-<span id="cb117-8"><a href="mcmcglmm-1.html#cb117-8" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1.<span class="fl">4.</span>FEM)</span></code></pre></div>
-<pre><code>##     var1 
-## 0.226831</code></pre>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="mcmcglmm-1.html#cb119-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(posterior.heritability1.<span class="fl">4.</span>FEM, <span class="fl">0.95</span>)</span></code></pre></div>
+##   1.3246744   0.6612660   0.8095877   1.3185178   2.6626380   2.0996672</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="mcmcglmm-1.html#cb120-1" aria-hidden="true"></a>posterior.heritability1.<span class="fl">4.</span>FEM &lt;-<span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex1.animal&quot;</span>] <span class="op">/</span></span>
+<span id="cb120-2"><a href="mcmcglmm-1.html#cb120-2" aria-hidden="true"></a><span class="st">  </span>(model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex1.animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;byear&quot;</span>] <span class="op">+</span></span>
+<span id="cb120-3"><a href="mcmcglmm-1.html#cb120-3" aria-hidden="true"></a><span class="st">   </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;mother&quot;</span>] <span class="op">+</span><span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex1.units&quot;</span>])</span>
+<span id="cb120-4"><a href="mcmcglmm-1.html#cb120-4" aria-hidden="true"></a>posterior.heritability1.<span class="fl">4.</span>MAL &lt;-<span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex2.animal&quot;</span>] <span class="op">/</span></span>
+<span id="cb120-5"><a href="mcmcglmm-1.html#cb120-5" aria-hidden="true"></a><span class="st">  </span>(model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex2.animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;byear&quot;</span>] <span class="op">+</span></span>
+<span id="cb120-6"><a href="mcmcglmm-1.html#cb120-6" aria-hidden="true"></a><span class="st">   </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;mother&quot;</span>] <span class="op">+</span><span class="st"> </span>model1.<span class="fl">4.</span>SEX<span class="op">$</span>VCV[, <span class="st">&quot;sex2.units&quot;</span>])</span>
+<span id="cb120-7"><a href="mcmcglmm-1.html#cb120-7" aria-hidden="true"></a></span>
+<span id="cb120-8"><a href="mcmcglmm-1.html#cb120-8" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1.<span class="fl">4.</span>FEM)</span></code></pre></div>
+<pre><code>##      var1 
+## 0.1256703</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="mcmcglmm-1.html#cb122-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(posterior.heritability1.<span class="fl">4.</span>FEM, <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>##           lower     upper
-## var1 0.05488892 0.4647428
+## var1 0.03720785 0.4326358
 ## attr(,&quot;Probability&quot;)
 ## [1] 0.95</code></pre>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="mcmcglmm-1.html#cb121-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1.<span class="fl">4.</span>MAL)</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="mcmcglmm-1.html#cb124-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(posterior.heritability1.<span class="fl">4.</span>MAL)</span></code></pre></div>
 <pre><code>##      var1 
-## 0.3561435</code></pre>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="mcmcglmm-1.html#cb123-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(posterior.heritability1.<span class="fl">4.</span>MAL, <span class="fl">0.95</span>)</span></code></pre></div>
+## 0.3145191</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="mcmcglmm-1.html#cb126-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(posterior.heritability1.<span class="fl">4.</span>MAL, <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>##           lower     upper
-## var1 0.08992313 0.6147131
+## var1 0.05126603 0.5916071
 ## attr(,&quot;Probability&quot;)
 ## [1] 0.95</code></pre>
 <p>Here, we can estimate the heritability for each sex. Both doesn’t overlap with zero, so we can conclude both sexes have significant heritability. However due to their overlaps CIs, we can not conclude the heritability is not significantly different between sexes.
 An important quote to remember is “A difference in significance is not a significant difference”</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="mcmcglmm-1.html#cb128-1" aria-hidden="true"></a>h2.sex&lt;-<span class="kw">rbind</span>(</span>
+<span id="cb128-2"><a href="mcmcglmm-1.html#cb128-2" aria-hidden="true"></a><span class="kw">cbind</span>(<span class="kw">posterior.mode</span>(posterior.heritability1.<span class="fl">4.</span>FEM),<span class="kw">HPDinterval</span>(posterior.heritability1.<span class="fl">4.</span>FEM, <span class="fl">0.95</span>)),</span>
+<span id="cb128-3"><a href="mcmcglmm-1.html#cb128-3" aria-hidden="true"></a><span class="kw">cbind</span>(<span class="kw">posterior.mode</span>(posterior.heritability1.<span class="fl">4.</span>MAL),<span class="kw">HPDinterval</span>(posterior.heritability1.<span class="fl">4.</span>MAL, <span class="fl">0.95</span>)))</span>
+<span id="cb128-4"><a href="mcmcglmm-1.html#cb128-4" aria-hidden="true"></a></span>
+<span id="cb128-5"><a href="mcmcglmm-1.html#cb128-5" aria-hidden="true"></a></span>
+<span id="cb128-6"><a href="mcmcglmm-1.html#cb128-6" aria-hidden="true"></a><span class="kw">plot</span>(<span class="kw">c</span>(<span class="fl">0.95</span>, <span class="fl">1.05</span>)<span class="op">~</span>h2.sex[,<span class="dv">1</span>], <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.8</span>),<span class="dt">ylim=</span><span class="kw">c</span>(<span class="fl">0.5</span>,<span class="fl">1.5</span>),,<span class="dt">xlab=</span><span class="st">&quot;&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;&quot;</span>,<span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>),<span class="dt">pch=</span><span class="kw">c</span>(<span class="dv">16</span>,<span class="dv">17</span>),<span class="dt">cex=</span><span class="dv">2</span>,<span class="dt">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb128-7"><a href="mcmcglmm-1.html#cb128-7" aria-hidden="true"></a><span class="kw">arrows</span>(<span class="dt">y0=</span><span class="fl">0.95</span>,<span class="dt">x0=</span>h2.sex[<span class="dv">1</span>,<span class="dv">2</span>],<span class="dt">y1=</span><span class="fl">0.95</span>,<span class="dt">x1=</span>h2.sex[<span class="dv">1</span>,<span class="dv">3</span>],<span class="dt">code=</span><span class="dv">3</span>,<span class="dt">angle=</span><span class="dv">90</span>,<span class="dt">length=</span><span class="dv">0</span>,<span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;red&quot;</span>),<span class="dt">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb128-8"><a href="mcmcglmm-1.html#cb128-8" aria-hidden="true"></a><span class="kw">arrows</span>(<span class="dt">y0=</span><span class="fl">1.05</span>,<span class="dt">x0=</span>h2.sex[<span class="dv">2</span>,<span class="dv">2</span>],<span class="dt">y1=</span><span class="fl">1.05</span>,<span class="dt">x1=</span>h2.sex[<span class="dv">2</span>,<span class="dv">3</span>],<span class="dt">code=</span><span class="dv">3</span>,<span class="dt">angle=</span><span class="dv">90</span>,<span class="dt">length=</span><span class="dv">0</span>,<span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>),<span class="dt">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb128-9"><a href="mcmcglmm-1.html#cb128-9" aria-hidden="true"></a><span class="kw">mtext</span>(<span class="st">&quot;Narrow-sense heritability (±CI)&quot;</span>, <span class="dt">side=</span><span class="dv">1</span>, <span class="dt">las=</span><span class="dv">1</span>, <span class="dt">adj=</span><span class="fl">0.4</span>,<span class="dt">line=</span><span class="dv">3</span>, <span class="dt">cex=</span><span class="fl">1.6</span>)</span>
+<span id="cb128-10"><a href="mcmcglmm-1.html#cb128-10" aria-hidden="true"></a><span class="kw">axis</span>(<span class="dv">2</span>,<span class="dt">at=</span><span class="dv">1</span>,<span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;birth weight&quot;</span>),<span class="dt">las =</span> <span class="dv">3</span>,<span class="dt">cex.axis=</span><span class="fl">1.6</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-53"></span>
+<img src="wam_tuto_files/figure-html/unnamed-chunk-53-1.svg" alt="Female and male heritability of birth weight" width="672" />
+<p class="caption">
+Figure 2.6: Female and male heritability of birth weight
+</p>
 </div>
-<div id="modification-of-model-parameter-1" class="section level3" number="2.4.9">
-<h3><span class="header-section-number">2.4.9</span> Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm--></h3>
+</div>
+<div id="modification-of-model-parameter" class="section level3" number="2.4.9">
+<h3><span class="header-section-number">2.4.9</span> Modification of model parameter</h3>
+<p>to do ?</p>
 </div>
 <div id="covariance-between-two-random-effects-1" class="section level3" number="2.4.10">
 <h3><span class="header-section-number">2.4.10</span> Covariance between two random effects</h3>
+<p>to do ?</p>
 
 </div>
 </div>

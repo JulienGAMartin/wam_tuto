@@ -22,6 +22,7 @@
   <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
+<meta name="author" content="Matthieu Videlier" />
 
 
 
@@ -167,7 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
 <li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#further-partitioning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Further partitioning the variance</a></li>
-<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.2.7</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-the-varaince-matrix-parameters"><i class="fa fa-check"></i><b>2.2.7</b> Modification of the varaince matrix parameters</a></li>
 <li class="chapter" data-level="2.2.8" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-two-random-effects"><i class="fa fa-check"></i><b>2.2.8</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
@@ -181,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
-<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm--></a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
@@ -191,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.3" data-path="brms-1.html"><a href="brms-1.html#adding-random-effects-2"><i class="fa fa-check"></i><b>2.5.3</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.5.4" data-path="brms-1.html"><a href="brms-1.html#testing-significance-of-variance-components-1"><i class="fa fa-check"></i><b>2.5.4</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.5.5" data-path="brms-1.html"><a href="brms-1.html#further-partitioning-of-the-variance"><i class="fa fa-check"></i><b>2.5.5</b> Further partitioning of the variance</a></li>
-<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-2"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.5.7" data-path="brms-1.html"><a href="brms-1.html#covariance-between-two-random-effects-2"><i class="fa fa-check"></i><b>2.5.7</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>2.6</b> stan</a></li>
@@ -296,7 +297,7 @@ Additional information and guide can be find in the Asreml-R manual: (<a href="h
 </div>
 <div id="gremlin" class="section level4" number="1.2.1.2">
 <h4><span class="header-section-number">1.2.1.2</span> gremlin</h4>
-<p><code>gremlin</code> is a little monster appearing <!--C1 water just multiply them (if you wet a mugwai and--> if you feed a mugwai after midnight. It is also a great and promising software to fit mixed models using a frequentist approach.</p>
+<p><code>gremlin</code> is a little monster appearing if you feed a mugwai after midnight. It is also a great and promising software written by Matt Wolak to fit mixed models using a frequentist approach .</p>
 </div>
 <div id="mcmcglmm" class="section level4" number="1.2.1.3">
 <h4><span class="header-section-number">1.2.1.3</span> MCMCglmm</h4>
@@ -307,7 +308,8 @@ Most importantly, this applies to some of the simplest ways of determining the p
 This tutorial is not a substitute for working through the MCMCglmm course notes, which is available from CRAN (the Comprehensive R ArchiveNetwork, <a href="http://cran.r-project.org/" class="uri">http://cran.r-project.org/</a>, or can be accessed in R using the command vignette(“CourseNotes”,“MCMCglmm”)).
 These tutorials do not introduce one of the main advantages of using MCMCglmm for analyses of data from natural populations -the ability to properly model non-normal responses.
 These capabilities are introduced in the documentation that is distributed with MCMCglmm, and available from CRAN.
-<!-- C3 i think we have to also cite Pierre de Villemereuil, he wrote a guide for estimating heritability with MCMCglmmm http://devillemereuil.legtux.org/wp-content/uploads/2012/12/tuto_en.pdf --></p>
+<!-- C3 i think we need to add or cite Pierre de Villemereuil, he update his guide for estimating heritability with MCMCglmmm in 2021 ! https://devillemereuil.legtux.org/wp-content/uploads/2021/09/tuto_en.pdf 
+But we provide more software and also more futher partition of the variance compare to his guide more focuse on no-gaussian variable--></p>
 </div>
 <div id="brms" class="section level4" number="1.2.1.4">
 <h4><span class="header-section-number">1.2.1.4</span> brms</h4>

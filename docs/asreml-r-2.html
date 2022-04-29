@@ -22,6 +22,7 @@
   <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
+<meta name="author" content="Matthieu Videlier" />
 
 
 
@@ -167,7 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
 <li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#further-partitioning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Further partitioning the variance</a></li>
-<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.2.7</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-the-varaince-matrix-parameters"><i class="fa fa-check"></i><b>2.2.7</b> Modification of the varaince matrix parameters</a></li>
 <li class="chapter" data-level="2.2.8" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-two-random-effects"><i class="fa fa-check"></i><b>2.2.8</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
@@ -181,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
-<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm--></a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
@@ -191,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.3" data-path="brms-1.html"><a href="brms-1.html#adding-random-effects-2"><i class="fa fa-check"></i><b>2.5.3</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.5.4" data-path="brms-1.html"><a href="brms-1.html#testing-significance-of-variance-components-1"><i class="fa fa-check"></i><b>2.5.4</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.5.5" data-path="brms-1.html"><a href="brms-1.html#further-partitioning-of-the-variance"><i class="fa fa-check"></i><b>2.5.5</b> Further partitioning of the variance</a></li>
-<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-2"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.5.7" data-path="brms-1.html"><a href="brms-1.html#covariance-between-two-random-effects-2"><i class="fa fa-check"></i><b>2.5.7</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>2.6</b> stan</a></li>
@@ -290,66 +291,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">4.2.1</span> Estimating repeatability</h3>
 <p>With repeated measures on individuals it is often of interest to see how repeatable a trait is.
 We can estimate the repeatability of a trait as the proportion of phenotypic variance <span class="math inline">\(V_P\)</span> explained by individual variance <span class="math inline">\(V_{ind}\)</span>; <span class="math inline">\(R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)\)</span>.</p>
-<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="asreml-r-2.html#cb357-1" aria-hidden="true"></a>modelv &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
-<span id="cb357-2"><a href="asreml-r-2.html#cb357-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
-<span id="cb357-3"><a href="asreml-r-2.html#cb357-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal,</span>
-<span id="cb357-4"><a href="asreml-r-2.html#cb357-4" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
-<span id="cb357-5"><a href="asreml-r-2.html#cb357-5" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb357-6"><a href="asreml-r-2.html#cb357-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
-<span id="cb357-7"><a href="asreml-r-2.html#cb357-7" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="asreml-r-2.html#cb379-1" aria-hidden="true"></a>modelv &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
+<span id="cb379-2"><a href="asreml-r-2.html#cb379-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
+<span id="cb379-3"><a href="asreml-r-2.html#cb379-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal,</span>
+<span id="cb379-4"><a href="asreml-r-2.html#cb379-4" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
+<span id="cb379-5"><a href="asreml-r-2.html#cb379-5" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb379-6"><a href="asreml-r-2.html#cb379-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
+<span id="cb379-7"><a href="asreml-r-2.html#cb379-7" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 22:10:02 2021
+## ASReml 4.1.0 Wed Mar 23 10:34:12 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -10182.83           1.0   1606 22:10:02    0.0
-##  2      -8266.10           1.0   1606 22:10:02    0.0
-##  3      -6145.01           1.0   1606 22:10:02    0.0
-##  4      -4651.57           1.0   1606 22:10:02    0.0
-##  5      -3819.31           1.0   1606 22:10:02    0.0
-##  6      -3554.22           1.0   1606 22:10:02    0.0
-##  7      -3501.56           1.0   1606 22:10:02    0.0
-##  8      -3497.58           1.0   1606 22:10:02    0.0
-##  9      -3497.54           1.0   1606 22:10:02    0.0
-## 10      -3497.54           1.0   1606 22:10:02    0.0</code></pre>
-<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="asreml-r-2.html#cb359-1" aria-hidden="true"></a><span class="kw">plot</span>(modelv)</span></code></pre></div>
-<p><img src="wam_tuto_files/figure-html/unnamed-chunk-114-1.svg" width="672" />
+##  1     -10182.83           1.0   1606 10:34:12    0.0
+##  2      -8266.10           1.0   1606 10:34:12    0.0
+##  3      -6145.01           1.0   1606 10:34:12    0.0
+##  4      -4651.57           1.0   1606 10:34:12    0.0
+##  5      -3819.31           1.0   1606 10:34:12    0.0
+##  6      -3554.22           1.0   1606 10:34:12    0.0
+##  7      -3501.56           1.0   1606 10:34:12    0.0
+##  8      -3497.58           1.0   1606 10:34:12    0.0
+##  9      -3497.54           1.0   1606 10:34:12    0.0
+## 10      -3497.54           1.0   1606 10:34:12    0.0</code></pre>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="asreml-r-2.html#cb381-1" aria-hidden="true"></a><span class="kw">plot</span>(modelv)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-122-1.svg" width="672" />
 The model assumption seems correct, so we can look at the different estimates.
 Note that since we want to estimate the amount of variance explained by individual identity (rather than by additive genetic effects), we fit <code>animal</code> as a normal random effect and we don’t associate it with the pedigree.
 Here, we also ask the model to remove any <code>NA</code> in <code>laydate</code>.</p>
 <p>This model partitions the phenotypic variance in <code>laydate</code> as follows:</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="asreml-r-2.html#cb360-1" aria-hidden="true"></a><span class="kw">summary</span>(modelv)<span class="op">$</span>varcomp</span></code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="asreml-r-2.html#cb382-1" aria-hidden="true"></a><span class="kw">summary</span>(modelv)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##             component std.error   z.ratio bound %ch
 ## animal       11.08634 1.1794319  9.399728     P   0
 ## units!units  21.29643 0.8896196 23.938798     P   0
 ## units!R       1.00000        NA        NA     F   0</code></pre>
 <p>Between-individual (or among-individual) variance is given by the <code>animal</code> component, while the residual component (<code>units!units</code>) represents within-individual variance. Here then the repeatability of the trait can be determined by hand as 0.34 (<em>i.e.</em>, as 11.086/(11.086 + 21.296)).</p>
 <p>Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding <code>age</code> into the model as a fixed effect.</p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="asreml-r-2.html#cb362-1" aria-hidden="true"></a>modelw &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
-<span id="cb362-2"><a href="asreml-r-2.html#cb362-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</span>
-<span id="cb362-3"><a href="asreml-r-2.html#cb362-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal,</span>
-<span id="cb362-4"><a href="asreml-r-2.html#cb362-4" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
-<span id="cb362-5"><a href="asreml-r-2.html#cb362-5" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb362-6"><a href="asreml-r-2.html#cb362-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
-<span id="cb362-7"><a href="asreml-r-2.html#cb362-7" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="asreml-r-2.html#cb384-1" aria-hidden="true"></a>modelw &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
+<span id="cb384-2"><a href="asreml-r-2.html#cb384-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</span>
+<span id="cb384-3"><a href="asreml-r-2.html#cb384-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal,</span>
+<span id="cb384-4"><a href="asreml-r-2.html#cb384-4" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
+<span id="cb384-5"><a href="asreml-r-2.html#cb384-5" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb384-6"><a href="asreml-r-2.html#cb384-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
+<span id="cb384-7"><a href="asreml-r-2.html#cb384-7" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 22:10:03 2021
+## ASReml 4.1.0 Wed Mar 23 10:34:13 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -8402.968           1.0   1602 22:10:03    0.0
-##  2     -6912.361           1.0   1602 22:10:03    0.0
-##  3     -5274.379           1.0   1602 22:10:03    0.0
-##  4     -4143.634           1.0   1602 22:10:03    0.0
-##  5     -3541.895           1.0   1602 22:10:03    0.0
-##  6     -3372.909           1.0   1602 22:10:03    0.0
-##  7     -3347.670           1.0   1602 22:10:03    0.0
-##  8     -3346.655           1.0   1602 22:10:03    0.0
-##  9     -3346.652           1.0   1602 22:10:03    0.0</code></pre>
-<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="asreml-r-2.html#cb364-1" aria-hidden="true"></a><span class="kw">summary</span>(modelw)<span class="op">$</span>varcomp</span></code></pre></div>
+##  1     -8402.968           1.0   1602 10:34:13    0.0
+##  2     -6912.361           1.0   1602 10:34:13    0.0
+##  3     -5274.379           1.0   1602 10:34:13    0.0
+##  4     -4143.634           1.0   1602 10:34:13    0.0
+##  5     -3541.895           1.0   1602 10:34:13    0.0
+##  6     -3372.909           1.0   1602 10:34:13    0.0
+##  7     -3347.670           1.0   1602 10:34:13    0.0
+##  8     -3346.655           1.0   1602 10:34:13    0.0
+##  9     -3346.652           1.0   1602 10:34:13    0.0</code></pre>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="asreml-r-2.html#cb386-1" aria-hidden="true"></a><span class="kw">summary</span>(modelw)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##             component std.error  z.ratio bound %ch
 ## animal       12.28982  1.156115 10.63027     P   0
 ## units!units  16.37989  0.686619 23.85586     P   0
 ## units!R       1.00000        NA       NA     F   0</code></pre>
 <p>The repeatability of lay date, after accounting for age effects, is now estimated as 0.43 (<em>i.e.</em>, as 12.29/(12.29 + 16.38)).
 So, just as we saw when estimating <span class="math inline">\(h^2\)</span> in Tutorial 1, the inclusion of fixed effects will alter the estimated effect size <!-- effect size or just the variance estimate --> if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.</p>
-<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="asreml-r-2.html#cb366-1" aria-hidden="true"></a><span class="kw">summary</span>(modelw, <span class="dt">coef =</span> <span class="ot">TRUE</span>)<span class="op">$</span>coef.fixed</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="asreml-r-2.html#cb388-1" aria-hidden="true"></a><span class="kw">summary</span>(modelw, <span class="dt">coef =</span> <span class="ot">TRUE</span>)<span class="op">$</span>coef.fixed</span></code></pre></div>
 <pre><code>##              solution std error   z.ratio
 ## age_2        0.000000        NA        NA
 ## age_3        2.577777 0.3355253  7.682811
@@ -357,13 +358,13 @@ So, just as we saw when estimating <span class="math inline">\(h^2\)</span> in T
 ## age_5        6.094490 0.3375537 18.054872
 ## age_6        3.132675 0.3371074  9.292811
 ## (Intercept) 20.305073 0.2899515 70.029214</code></pre>
-<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="asreml-r-2.html#cb368-1" aria-hidden="true"></a><span class="kw">wald.asreml</span>(modelw, <span class="dt">ssType =</span> <span class="st">&quot;conditional&quot;</span>, <span class="dt">denDF =</span> <span class="st">&quot;numeric&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="asreml-r-2.html#cb390-1" aria-hidden="true"></a><span class="kw">wald.asreml</span>(modelw, <span class="dt">ssType =</span> <span class="st">&quot;conditional&quot;</span>, <span class="dt">denDF =</span> <span class="st">&quot;numeric&quot;</span>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 22:10:03 2021
+## ASReml 4.1.0 Wed Mar 23 10:34:13 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -3346.652           1.0   1602 22:10:03    0.0
-##  2     -3346.652           1.0   1602 22:10:03    0.0
-##  3     -3346.652           1.0   1602 22:10:03    0.0</code></pre>
+##  1     -3346.652           1.0   1602 10:34:13    0.0
+##  2     -3346.652           1.0   1602 10:34:13    0.0
+##  3     -3346.652           1.0   1602 10:34:13    0.0</code></pre>
 <pre><code>## $Wald
 ## [0;34m
 ## Wald tests for fixed effects.[0m
@@ -381,84 +382,6 @@ So, just as we saw when estimating <span class="math inline">\(h^2\)</span> in T
 In addition, using <code>age</code> as continuous variable can help in saving some degree of freedom in the analysis.</p>
 <!-- C1 I dont know why the quadratic fixed effect dont work, need to remember how to do this 
 
-```r
-gryphonRM$age_c <- as.numeric(gryphonRM$age)
-
-modelw2 <- asreml(
-  fixed = laydate ~ age_c+ I(age_c^2),
-  random = ~animal,
-  residual = ~ idv(units),
-  data = gryphonRM,
-  na.action = na.method(x = "omit", y = "omit")
-)
-```
-
-```
-## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 22:10:03 2021
-##           LogLik        Sigma2     DF     wall    cpu
-##  1     -8585.167           1.0   1604 22:10:03    0.0
-##  2     -7051.124           1.0   1604 22:10:03    0.0
-##  3     -5364.007           1.0   1604 22:10:03    0.0
-##  4     -4196.614           1.0   1604 22:10:03    0.0
-##  5     -3571.977           1.0   1604 22:10:03    0.0
-##  6     -3393.937           1.0   1604 22:10:03    0.0
-##  7     -3366.445           1.0   1604 22:10:03    0.0
-##  8     -3365.254           1.0   1604 22:10:03    0.0
-##  9     -3365.250           1.0   1604 22:10:03    0.0
-```
-
-```r
-summary(modelw2)$varcomp
-```
-
-```
-##             component std.error  z.ratio bound %ch
-## animal       12.24893 1.1632443 10.52997     P   0
-## units!units  16.84257 0.7053618 23.87792     P   0
-## units!R       1.00000        NA       NA     F   0
-```
-
-```r
-summary(modelw2, coef = TRUE)$coef.fixed
-```
-
-```
-##              solution  std error   z.ratio
-## I(age_c^2)  -0.775843 0.06319909 -12.27617
-## age_c        5.633628 0.38816674  14.51342
-## (Intercept) 15.131595 0.54015523  28.01342
-```
-
-```r
-wald.asreml(modelw2, ssType = "conditional", denDF = "numeric")
-```
-
-```
-## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 22:10:03 2021
-##           LogLik        Sigma2     DF     wall    cpu
-##  1     -3365.250           1.0   1604 22:10:03    0.0
-##  2     -3365.250           1.0   1604 22:10:03    0.0
-##  3     -3365.250           1.0   1604 22:10:03    0.0
-```
-
-```
-## $Wald
-## [0;34m
-## Wald tests for fixed effects.[0m
-## [0;34mResponse: laydate[0m
-## 
-##             Df  denDF   F.inc F.con Margin         Pr
-## (Intercept)  1 1484.1 14800.0 784.7        0.0000e+00
-## age_c        1 1219.0   158.7 210.6      A 0.0000e+00
-## I(age_c^2)   1 1218.3   150.7 150.7      A 9.5943e-33
-## 
-## $stratumVariances
-##                    df Variance   animal units!units
-## animal       463.7496 56.85384 3.266512           1
-## units!units 1140.2504 16.84257 0.000000           1
-```
 -->
 </div>
 <div id="partitioning-additive-and-permanent-environment-effects" class="section level3" number="4.2.2">
@@ -466,97 +389,97 @@ wald.asreml(modelw2, ssType = "conditional", denDF = "numeric")
 <p>Generally we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals.
 Non-additive contributions to fixed among-individual differences are normally referred to as <em>permanent environment effects</em>. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in <span class="math inline">\(V_A\)</span>.</p>
 <p>To illustrate it, we first fit the animal model:</p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="asreml-r-2.html#cb371-1" aria-hidden="true"></a>ainv &lt;-<span class="st"> </span><span class="kw">ainverse</span>(gryphonped)</span>
-<span id="cb371-2"><a href="asreml-r-2.html#cb371-2" aria-hidden="true"></a></span>
-<span id="cb371-3"><a href="asreml-r-2.html#cb371-3" aria-hidden="true"></a>modelx &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
-<span id="cb371-4"><a href="asreml-r-2.html#cb371-4" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</span>
-<span id="cb371-5"><a href="asreml-r-2.html#cb371-5" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv),</span>
-<span id="cb371-6"><a href="asreml-r-2.html#cb371-6" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
-<span id="cb371-7"><a href="asreml-r-2.html#cb371-7" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb371-8"><a href="asreml-r-2.html#cb371-8" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
-<span id="cb371-9"><a href="asreml-r-2.html#cb371-9" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="asreml-r-2.html#cb393-1" aria-hidden="true"></a>ainv &lt;-<span class="st"> </span><span class="kw">ainverse</span>(gryphonped)</span>
+<span id="cb393-2"><a href="asreml-r-2.html#cb393-2" aria-hidden="true"></a></span>
+<span id="cb393-3"><a href="asreml-r-2.html#cb393-3" aria-hidden="true"></a>modelx &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
+<span id="cb393-4"><a href="asreml-r-2.html#cb393-4" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</span>
+<span id="cb393-5"><a href="asreml-r-2.html#cb393-5" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv),</span>
+<span id="cb393-6"><a href="asreml-r-2.html#cb393-6" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
+<span id="cb393-7"><a href="asreml-r-2.html#cb393-7" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb393-8"><a href="asreml-r-2.html#cb393-8" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
+<span id="cb393-9"><a href="asreml-r-2.html#cb393-9" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 22:10:04 2021
+## ASReml 4.1.0 Wed Mar 23 10:34:13 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -8751.390           1.0   1602 22:10:04    0.0
-##  2     -7169.205           1.0   1602 22:10:04    0.0
-##  3     -5427.604           1.0   1602 22:10:04    0.0
-##  4     -4219.598           1.0   1602 22:10:04    0.0
-##  5     -3569.815           1.0   1602 22:10:04    0.0
-##  6     -3382.341           1.0   1602 22:10:04    0.0
-##  7     -3352.867           1.0   1602 22:10:04    0.0
-##  8     -3351.565           1.0   1602 22:10:04    0.0
-##  9     -3351.560           1.0   1602 22:10:04    0.0</code></pre>
+##  1     -8751.390           1.0   1602 10:34:13    0.0
+##  2     -7169.205           1.0   1602 10:34:13    0.0
+##  3     -5427.604           1.0   1602 10:34:13    0.0
+##  4     -4219.598           1.0   1602 10:34:13    0.0
+##  5     -3569.815           1.0   1602 10:34:13    0.0
+##  6     -3382.341           1.0   1602 10:34:13    0.0
+##  7     -3352.867           1.0   1602 10:34:13    0.0
+##  8     -3351.565           1.0   1602 10:34:13    0.0
+##  9     -3351.560           1.0   1602 10:34:13    0.0</code></pre>
 <p>Variance components are almost unchanged if we compare the previous model:</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="asreml-r-2.html#cb373-1" aria-hidden="true"></a><span class="kw">summary</span>(modelx)<span class="op">$</span>varcomp</span></code></pre></div>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="asreml-r-2.html#cb395-1" aria-hidden="true"></a><span class="kw">summary</span>(modelx)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error   z.ratio bound %ch
 ## vm(animal, ainv)  13.91784  1.443968  9.638607     P   0
 ## units!units       16.84008  0.707365 23.806768     P   0
 ## units!R            1.00000        NA        NA     F   0</code></pre>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="asreml-r-2.html#cb375-1" aria-hidden="true"></a><span class="kw">summary</span>(modelw)<span class="op">$</span>varcomp</span></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="asreml-r-2.html#cb397-1" aria-hidden="true"></a><span class="kw">summary</span>(modelw)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##             component std.error  z.ratio bound %ch
 ## animal       12.28982  1.156115 10.63027     P   0
 ## units!units  16.37989  0.686619 23.85586     P   0
 ## units!R       1.00000        NA       NA     F   0</code></pre>
 <p>This suggests that most of the among-individual variance is – rightly or wrongly – being partitioned as <span class="math inline">\(V_A\)</span> here. To instead to obtain an unbiased estimate of <span class="math inline">\(V_A\)</span>, we need to partition for both additive genetic <em>and</em> non-genetic sources of individual variation. We do it by fitting <code>animal</code> twice, once with a pedigree, and once without a pedigree (using <code>ide()</code>).
 Here, the command <code>ide</code> allow to create a second effect using a similar variable.</p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="asreml-r-2.html#cb377-1" aria-hidden="true"></a>modely &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
-<span id="cb377-2"><a href="asreml-r-2.html#cb377-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</span>
-<span id="cb377-3"><a href="asreml-r-2.html#cb377-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv) <span class="op">+</span><span class="st"> </span><span class="kw">ide</span>(animal),</span>
-<span id="cb377-4"><a href="asreml-r-2.html#cb377-4" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
-<span id="cb377-5"><a href="asreml-r-2.html#cb377-5" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb377-6"><a href="asreml-r-2.html#cb377-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
-<span id="cb377-7"><a href="asreml-r-2.html#cb377-7" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="asreml-r-2.html#cb399-1" aria-hidden="true"></a>modely &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
+<span id="cb399-2"><a href="asreml-r-2.html#cb399-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</span>
+<span id="cb399-3"><a href="asreml-r-2.html#cb399-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv) <span class="op">+</span><span class="st"> </span><span class="kw">ide</span>(animal),</span>
+<span id="cb399-4"><a href="asreml-r-2.html#cb399-4" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
+<span id="cb399-5"><a href="asreml-r-2.html#cb399-5" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb399-6"><a href="asreml-r-2.html#cb399-6" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
+<span id="cb399-7"><a href="asreml-r-2.html#cb399-7" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 22:10:04 2021
+## ASReml 4.1.0 Wed Mar 23 10:34:13 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -7731.394           1.0   1602 22:10:04    0.0
-##  2     -6426.548           1.0   1602 22:10:04    0.0
-##  3     -4997.252           1.0   1602 22:10:04    0.0
-##  4     -4018.486           1.0   1602 22:10:04    0.0
-##  5     -3504.988           1.0   1602 22:10:04    0.0
-##  6     -3363.160           1.0   1602 22:10:04    0.0
-##  7     -3341.611           1.0   1602 22:10:04    0.0
-##  8     -3340.682           1.0   1602 22:10:04    0.0
-##  9     -3340.679           1.0   1602 22:10:04    0.0</code></pre>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="asreml-r-2.html#cb379-1" aria-hidden="true"></a><span class="kw">summary</span>(modely)<span class="op">$</span>varcomp</span></code></pre></div>
+##  1     -7731.394           1.0   1602 10:34:14    0.0
+##  2     -6426.548           1.0   1602 10:34:14    0.0
+##  3     -4997.252           1.0   1602 10:34:14    0.0
+##  4     -4018.486           1.0   1602 10:34:14    0.0
+##  5     -3504.988           1.0   1602 10:34:14    0.0
+##  6     -3363.160           1.0   1602 10:34:14    0.0
+##  7     -3341.611           1.0   1602 10:34:14    0.0
+##  8     -3340.682           1.0   1602 10:34:14    0.0
+##  9     -3340.679           1.0   1602 10:34:14    0.0</code></pre>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="asreml-r-2.html#cb401-1" aria-hidden="true"></a><span class="kw">summary</span>(modely)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error   z.ratio bound %ch
 ## vm(animal, ainv)  4.876101 1.8087709  2.695809     P   0
 ## ide(animal)       7.400983 1.7280113  4.282948     P   0
 ## units!units      16.380188 0.6866189 23.856300     P   0
 ## units!R           1.000000        NA        NA     F   0</code></pre>
 <p>The estimate of <span class="math inline">\(V_A\)</span> is now much lower since the additive and permanent environment effects are being properly separated. We can estimate <span class="math inline">\(h^2\)</span> and the repeatability from this model:</p>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="asreml-r-2.html#cb381-1" aria-hidden="true"></a><span class="kw">vpredict</span>(modely, h2 <span class="op">~</span><span class="st"> </span>V1 <span class="op">/</span><span class="st"> </span>(V1 <span class="op">+</span><span class="st"> </span>V2 <span class="op">+</span><span class="st"> </span>V3))</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="asreml-r-2.html#cb403-1" aria-hidden="true"></a><span class="kw">vpredict</span>(modely, h2 <span class="op">~</span><span class="st"> </span>V1 <span class="op">/</span><span class="st"> </span>(V1 <span class="op">+</span><span class="st"> </span>V2 <span class="op">+</span><span class="st"> </span>V3))</span></code></pre></div>
 <pre><code>##     Estimate         SE
 ## h2 0.1701523 0.06073974</code></pre>
-<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="asreml-r-2.html#cb383-1" aria-hidden="true"></a><span class="kw">vpredict</span>(modely, repeatability <span class="op">~</span><span class="st"> </span>(V1 <span class="op">+</span><span class="st"> </span>V2) <span class="op">/</span><span class="st"> </span>(V1 <span class="op">+</span><span class="st"> </span>V2 <span class="op">+</span><span class="st"> </span>V3))</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="asreml-r-2.html#cb405-1" aria-hidden="true"></a><span class="kw">vpredict</span>(modely, repeatability <span class="op">~</span><span class="st"> </span>(V1 <span class="op">+</span><span class="st"> </span>V2) <span class="op">/</span><span class="st"> </span>(V1 <span class="op">+</span><span class="st"> </span>V2 <span class="op">+</span><span class="st"> </span>V3))</span></code></pre></div>
 <pre><code>##                Estimate         SE
 ## repeatability 0.4284108 0.02741602</code></pre>
 </div>
 <div id="adding-additional-effects-and-testing-significance" class="section level3" number="4.2.3">
 <h3><span class="header-section-number">4.2.3</span> Adding additional effects and testing significance</h3>
 <p>Models of repeated measures can be extended to include other fixed or random effects. For example try including year of measurement (<code>year</code>) and birth year (<code>byear</code>) as random effects.</p>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="asreml-r-2.html#cb385-1" aria-hidden="true"></a>modelz &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
-<span id="cb385-2"><a href="asreml-r-2.html#cb385-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</span>
-<span id="cb385-3"><a href="asreml-r-2.html#cb385-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv) <span class="op">+</span><span class="st"> </span><span class="kw">ide</span>(animal) <span class="op">+</span></span>
-<span id="cb385-4"><a href="asreml-r-2.html#cb385-4" aria-hidden="true"></a><span class="st">    </span>year <span class="op">+</span><span class="st"> </span>byear,</span>
-<span id="cb385-5"><a href="asreml-r-2.html#cb385-5" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
-<span id="cb385-6"><a href="asreml-r-2.html#cb385-6" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb385-7"><a href="asreml-r-2.html#cb385-7" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
-<span id="cb385-8"><a href="asreml-r-2.html#cb385-8" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="asreml-r-2.html#cb407-1" aria-hidden="true"></a>modelz &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
+<span id="cb407-2"><a href="asreml-r-2.html#cb407-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</span>
+<span id="cb407-3"><a href="asreml-r-2.html#cb407-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv) <span class="op">+</span><span class="st"> </span><span class="kw">ide</span>(animal) <span class="op">+</span></span>
+<span id="cb407-4"><a href="asreml-r-2.html#cb407-4" aria-hidden="true"></a><span class="st">    </span>year <span class="op">+</span><span class="st"> </span>byear,</span>
+<span id="cb407-5"><a href="asreml-r-2.html#cb407-5" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
+<span id="cb407-6"><a href="asreml-r-2.html#cb407-6" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb407-7"><a href="asreml-r-2.html#cb407-7" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
+<span id="cb407-8"><a href="asreml-r-2.html#cb407-8" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 22:10:04 2021
+## ASReml 4.1.0 Wed Mar 23 10:34:14 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4650.748           1.0   1602 22:10:04    0.0
-##  2     -4088.264           1.0   1602 22:10:04    0.0
-##  3     -3494.147           1.0   1602 22:10:04    0.0
-##  4     -3127.161           1.0   1602 22:10:04    0.0 (1 restrained)
-##  5     -2976.449           1.0   1602 22:10:04    0.0 (1 restrained)
-##  6     -2955.785           1.0   1602 22:10:04    0.0 (1 restrained)
-##  7     -2955.097           1.0   1602 22:10:04    0.0 (1 restrained)
-##  8     -2955.095           1.0   1602 22:10:04    0.0 (1 restrained)
-##  9     -2955.095           1.0   1602 22:10:04    0.0</code></pre>
-<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="asreml-r-2.html#cb387-1" aria-hidden="true"></a><span class="kw">summary</span>(modelz)<span class="op">$</span>varcomp</span></code></pre></div>
+##  1     -4650.748           1.0   1602 10:34:14    0.0
+##  2     -4088.264           1.0   1602 10:34:14    0.0
+##  3     -3494.147           1.0   1602 10:34:14    0.0
+##  4     -3127.161           1.0   1602 10:34:14    0.0 (1 restrained)
+##  5     -2976.449           1.0   1602 10:34:14    0.0 (1 restrained)
+##  6     -2955.785           1.0   1602 10:34:14    0.0 (1 restrained)
+##  7     -2955.097           1.0   1602 10:34:14    0.0 (1 restrained)
+##  8     -2955.095           1.0   1602 10:34:14    0.0 (1 restrained)
+##  9     -2955.095           1.0   1602 10:34:14    0.0</code></pre>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="asreml-r-2.html#cb409-1" aria-hidden="true"></a><span class="kw">summary</span>(modelz)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                     component std.error   z.ratio bound %ch
 ## byear            1.650876e-07        NA        NA     B   0
 ## year             7.938576e+00 1.9344619  4.103765     P   0
@@ -565,73 +488,81 @@ Here, the command <code>ide</code> allow to create a second effect using a simil
 ## units!units      7.795560e+00 0.3324411 23.449443     P   0
 ## units!R          1.000000e+00        NA        NA     F   0</code></pre>
 <p>This model will return additional variance components corresponding to variation in lay dates between years of measurement and between birth cohorts of females. <span class="math inline">\(V_{byear}\)</span> is very low and <code>B</code> appeared which tell us that the model had fixed the variance as a boundary. If you compare this model to a reduced model with byear excluded the log-likelihood remains unchanged.</p>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="asreml-r-2.html#cb389-1" aria-hidden="true"></a>modelz_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
-<span id="cb389-2"><a href="asreml-r-2.html#cb389-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</span>
-<span id="cb389-3"><a href="asreml-r-2.html#cb389-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv) <span class="op">+</span><span class="st"> </span><span class="kw">ide</span>(animal) <span class="op">+</span></span>
-<span id="cb389-4"><a href="asreml-r-2.html#cb389-4" aria-hidden="true"></a><span class="st">    </span>year,</span>
-<span id="cb389-5"><a href="asreml-r-2.html#cb389-5" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
-<span id="cb389-6"><a href="asreml-r-2.html#cb389-6" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb389-7"><a href="asreml-r-2.html#cb389-7" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
-<span id="cb389-8"><a href="asreml-r-2.html#cb389-8" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="asreml-r-2.html#cb411-1" aria-hidden="true"></a>modelz_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
+<span id="cb411-2"><a href="asreml-r-2.html#cb411-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age,</span>
+<span id="cb411-3"><a href="asreml-r-2.html#cb411-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv) <span class="op">+</span><span class="st"> </span><span class="kw">ide</span>(animal) <span class="op">+</span></span>
+<span id="cb411-4"><a href="asreml-r-2.html#cb411-4" aria-hidden="true"></a><span class="st">    </span>year,</span>
+<span id="cb411-5"><a href="asreml-r-2.html#cb411-5" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
+<span id="cb411-6"><a href="asreml-r-2.html#cb411-6" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb411-7"><a href="asreml-r-2.html#cb411-7" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
+<span id="cb411-8"><a href="asreml-r-2.html#cb411-8" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 22:10:04 2021
+## ASReml 4.1.0 Wed Mar 23 10:34:14 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4665.606           1.0   1602 22:10:04    0.0
-##  2     -4097.928           1.0   1602 22:10:04    0.0
-##  3     -3498.611           1.0   1602 22:10:04    0.0
-##  4     -3128.789           1.0   1602 22:10:04    0.0
-##  5     -2976.883           1.0   1602 22:10:04    0.0
-##  6     -2955.806           1.0   1602 22:10:04    0.0
-##  7     -2955.096           1.0   1602 22:10:05    0.0
-##  8     -2955.095           1.0   1602 22:10:05    0.0</code></pre>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="asreml-r-2.html#cb391-1" aria-hidden="true"></a><span class="kw">summary</span>(modelz_<span class="dv">2</span>)<span class="op">$</span>varcomp</span></code></pre></div>
+##  1     -4665.606           1.0   1602 10:34:14    0.0
+##  2     -4097.928           1.0   1602 10:34:14    0.0
+##  3     -3498.611           1.0   1602 10:34:14    0.0
+##  4     -3128.789           1.0   1602 10:34:14    0.0
+##  5     -2976.883           1.0   1602 10:34:14    0.0
+##  6     -2955.806           1.0   1602 10:34:14    0.0
+##  7     -2955.096           1.0   1602 10:34:14    0.0
+##  8     -2955.095           1.0   1602 10:34:14    0.0</code></pre>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="asreml-r-2.html#cb413-1" aria-hidden="true"></a><span class="kw">summary</span>(modelz_<span class="dv">2</span>)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error   z.ratio bound %ch
 ## year              7.938576 1.9344829  4.103720     P   0
 ## vm(animal, ainv)  4.815137 1.6682366  2.886364     P   0
 ## ide(animal)       8.433324 1.5495828  5.442319     P   0
 ## units!units       7.795560 0.3324384 23.449637     P   0
 ## units!R           1.000000        NA        NA     F   0</code></pre>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="asreml-r-2.html#cb393-1" aria-hidden="true"></a>modelz<span class="op">$</span>loglik</span></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="asreml-r-2.html#cb415-1" aria-hidden="true"></a>modelz<span class="op">$</span>loglik</span></code></pre></div>
 <pre><code>## [1] -2955.095</code></pre>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="asreml-r-2.html#cb395-1" aria-hidden="true"></a>modelz_<span class="dv">2</span><span class="op">$</span>loglik</span></code></pre></div>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="asreml-r-2.html#cb417-1" aria-hidden="true"></a>modelz_<span class="dv">2</span><span class="op">$</span>loglik</span></code></pre></div>
 <pre><code>## [1] -2955.095</code></pre>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="asreml-r-2.html#cb397-1" aria-hidden="true"></a><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pchisq</span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(modelz_<span class="dv">2</span><span class="op">$</span>loglik <span class="op">-</span><span class="st"> </span>modelz<span class="op">$</span>loglik), <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="asreml-r-2.html#cb419-1" aria-hidden="true"></a><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pchisq</span>(<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(modelz_<span class="dv">2</span><span class="op">$</span>loglik <span class="op">-</span><span class="st"> </span>modelz<span class="op">$</span>loglik), <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 0.9990425</code></pre>
 <p><code>year</code> effects could alternatively be included as fixed effects (try it!). This will reduce <span class="math inline">\(V_R\)</span> and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="asreml-r-2.html#cb399-1" aria-hidden="true"></a>modelz_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
-<span id="cb399-2"><a href="asreml-r-2.html#cb399-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age<span class="op">+</span>byear,</span>
-<span id="cb399-3"><a href="asreml-r-2.html#cb399-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv) <span class="op">+</span><span class="st"> </span><span class="kw">ide</span>(animal) <span class="op">+</span></span>
-<span id="cb399-4"><a href="asreml-r-2.html#cb399-4" aria-hidden="true"></a><span class="st">    </span>year,</span>
-<span id="cb399-5"><a href="asreml-r-2.html#cb399-5" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
-<span id="cb399-6"><a href="asreml-r-2.html#cb399-6" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb399-7"><a href="asreml-r-2.html#cb399-7" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
-<span id="cb399-8"><a href="asreml-r-2.html#cb399-8" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="asreml-r-2.html#cb421-1" aria-hidden="true"></a>modelz_<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">asreml</span>(</span>
+<span id="cb421-2"><a href="asreml-r-2.html#cb421-2" aria-hidden="true"></a>  <span class="dt">fixed =</span> laydate <span class="op">~</span><span class="st"> </span>age<span class="op">+</span>byear,</span>
+<span id="cb421-3"><a href="asreml-r-2.html#cb421-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="kw">vm</span>(animal, ainv) <span class="op">+</span><span class="st"> </span><span class="kw">ide</span>(animal) <span class="op">+</span></span>
+<span id="cb421-4"><a href="asreml-r-2.html#cb421-4" aria-hidden="true"></a><span class="st">    </span>year,</span>
+<span id="cb421-5"><a href="asreml-r-2.html#cb421-5" aria-hidden="true"></a>  <span class="dt">residual =</span> <span class="op">~</span><span class="st"> </span><span class="kw">idv</span>(units),</span>
+<span id="cb421-6"><a href="asreml-r-2.html#cb421-6" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb421-7"><a href="asreml-r-2.html#cb421-7" aria-hidden="true"></a>  <span class="dt">na.action =</span> <span class="kw">na.method</span>(<span class="dt">x =</span> <span class="st">&quot;omit&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;omit&quot;</span>)</span>
+<span id="cb421-8"><a href="asreml-r-2.html#cb421-8" aria-hidden="true"></a>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.
-## ASReml 4.1.0 Tue Nov 23 22:10:05 2021
+## ASReml 4.1.0 Wed Mar 23 10:34:14 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -4623.985           1.0   1569 22:10:05    0.0
-##  2     -4063.535           1.0   1569 22:10:05    0.0
-##  3     -3471.618           1.0   1569 22:10:05    0.0
-##  4     -3105.972           1.0   1569 22:10:05    0.0
-##  5     -2955.436           1.0   1569 22:10:05    0.0
-##  6     -2934.435           1.0   1569 22:10:05    0.0
-##  7     -2933.721           1.0   1569 22:10:05    0.0
-##  8     -2933.720           1.0   1569 22:10:05    0.0</code></pre>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="asreml-r-2.html#cb401-1" aria-hidden="true"></a><span class="kw">summary</span>(modelz_<span class="dv">3</span>)<span class="op">$</span>varcomp</span></code></pre></div>
+##  1     -4623.985           1.0   1569 10:34:14    0.0
+##  2     -4063.535           1.0   1569 10:34:14    0.0
+##  3     -3471.618           1.0   1569 10:34:14    0.0
+##  4     -3105.972           1.0   1569 10:34:14    0.0
+##  5     -2955.436           1.0   1569 10:34:14    0.0
+##  6     -2934.435           1.0   1569 10:34:14    0.0
+##  7     -2933.721           1.0   1569 10:34:14    0.0
+##  8     -2933.720           1.0   1569 10:34:14    0.0</code></pre>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="asreml-r-2.html#cb423-1" aria-hidden="true"></a><span class="kw">summary</span>(modelz_<span class="dv">3</span>)<span class="op">$</span>varcomp</span></code></pre></div>
 <pre><code>##                  component std.error   z.ratio bound %ch
 ## year              8.029139 1.9920127  4.030666     P   0
 ## vm(animal, ainv)  5.060775 1.7855255  2.834334     P   0
 ## ide(animal)       8.412539 1.6494894  5.100087     P   0
 ## units!units       7.805139 0.3331474 23.428484     P   0
 ## units!R           1.000000        NA        NA     F   0</code></pre>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="asreml-r-2.html#cb403-1" aria-hidden="true"></a><span class="kw">wald.asreml</span>(modelz_<span class="dv">3</span>, <span class="dt">ssType =</span> <span class="st">&quot;conditional&quot;</span>, <span class="dt">denDF =</span> <span class="st">&quot;numeric&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="asreml-r-2.html#cb425-1" aria-hidden="true"></a><span class="kw">summary</span>(modelw, <span class="dt">coef =</span> <span class="ot">TRUE</span>)<span class="op">$</span>coef.fixed</span></code></pre></div>
+<pre><code>##              solution std error   z.ratio
+## age_2        0.000000        NA        NA
+## age_3        2.577777 0.3355253  7.682811
+## age_4        4.247276 0.3309028 12.835418
+## age_5        6.094490 0.3375537 18.054872
+## age_6        3.132675 0.3371074  9.292811
+## (Intercept) 20.305073 0.2899515 70.029214</code></pre>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="asreml-r-2.html#cb427-1" aria-hidden="true"></a><span class="kw">wald.asreml</span>(modelz_<span class="dv">3</span>, <span class="dt">ssType =</span> <span class="st">&quot;conditional&quot;</span>, <span class="dt">denDF =</span> <span class="st">&quot;numeric&quot;</span>)</span></code></pre></div>
 <pre><code>## Model fitted using the sigma parameterization.</code></pre>
 <pre><code>## Warning in asreml(fixed = laydate ~ age + byear, random = ~vm(animal, ainv) + :
 ## Algebraic derivatives for denominator df not available.</code></pre>
-<pre><code>## ASReml 4.1.0 Tue Nov 23 22:10:05 2021
+<pre><code>## ASReml 4.1.0 Wed Mar 23 10:34:14 2022
 ##           LogLik        Sigma2     DF     wall    cpu
-##  1     -2933.720           1.0   1569 22:10:05    0.0
-##  2     -2933.720           1.0   1569 22:10:05    0.0
+##  1     -2933.720           1.0   1569 10:34:14    0.0
+##  2     -2933.720           1.0   1569 10:34:14    0.0
 ## Calculating denominator DF</code></pre>
 <pre><code>## $Wald
 ## [0;34m
