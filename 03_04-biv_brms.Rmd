@@ -71,67 +71,54 @@ plot(cor_res)
 
 Here we can plot the genetic correlation by extraction the breeding values or BLUP.
 ```{r}
-# post <- posterior_samples(brms_m2.1, add_chain = T)
-## blup.bwt<-post["sd_animal__bwt_Intercept"]
-# blup.tarsus<-post["sd_animal__tarsus_Intercept"]#
-# res.bwt<-post["sigma_bwt"]
-# res.tarsus<-post["sigma_tarsus"]
-# BLUP<-cbind(blup.bwt,blup.tarsus,res.bwt,res.tarsus)
-# plot(sd_animal__bwt_Intercept~sd_animal__tarsus_Intercept, BLUP)
-# plot(sigma_bwt~sigma_tarsus, BLUP)
-
-########################
-BLUPS <- as_draws_df(brms_m2.1, variable = c("r_animal"), regex = TRUE)
-BLUPS <- BLUPS[c(-1)]
-# head(BLUPS)
-BLUPS_r <- as.data.frame(t(BLUPS))
-BLUPS_r$mean <- apply(BLUPS_r[c(1:1000)], 1, FUN = mean, na.rm = T)
-BLUPS_r$CI <- apply(BLUPS_r[c(1:1000)], 1, FUN = sd, na.rm = T)
-BLUPS_r <- cbind(rownames(BLUPS_r), BLUPS_r)
-#
-DvsS <- data.frame(
-  Trait = rownames(BLUPS_r),
-  BLUP = BLUPS_r$mean,
-  CI = BLUPS_r$CI
-)
-DvsS$ID <- as.numeric(gsub(".*?([0-9]+).*", "\\1", DvsS$Trait))
-DvsS$TRAIT <- substr(DvsS$Trait, 11, 13)
-DvsS <- DvsS[!is.na(DvsS$ID), ]
-#
-DvsS$Trait <- NULL
-colnames(DvsS)[1] <- "BLUP"
-BLUPS <- reshape(DvsS, v.names = c("BLUP", "CI"), idvar = "ID", timevar = "TRAIT", direction = "wide")
-nrow(BLUPS)
-rownames(BLUPS) <- c()
-colnames(BLUPS) <- c("ID", "BLUP.btw", "CI.btw", "BLUP.tarsus", "CI.tarsus")
-summary(BLUPS)
+bls_m2.1 <- ranef(brms_m2.1)$animal
+bl_m2.1 <- as.data.frame(abind::abind(lapply(1:dim(bls_m2.1)[[3]], function(x) bls_m2.1[, c(1, 3, 4), x])))
+colnames(bl_m2.1) <- paste0(rep(dimnames(bls_m2.1)[[3]], each = 3), c("", "_lo", "_up"))
+bl_m2.1$id <- rownames(bl_m2.1)
 ```
 
 
 Here, some simple code to plot the genetic correlation.
 ```{r}
-plot(BLUP.tarsus ~ BLUP.btw, BLUPS, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
-arrows(x0 = BLUPS$BLUP.btw, y0 = BLUPS$BLUP.tarsus - BLUPS$CI.tarsus, x1 = BLUPS$BLUP.btw, y1 = BLUPS$BLUP.tarsus + BLUPS$CI.tarsus, col = "black", code = 3, angle = 90, length = 0)
-arrows(x0 = BLUPS$BLUP.btw - BLUPS$CI.btw, y0 = BLUPS$BLUP.tarsus, x1 = BLUPS$BLUP.btw + BLUPS$CI.btw, y1 = BLUPS$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
-points(BLUP.tarsus ~ BLUP.btw, BLUPS, pch = 16, col = "red", cex = 1.5)
-points(BLUP.tarsus ~ BLUP.btw, BLUPS, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
+plot(tarsus_Intercept ~ bwt_Intercept, bl_m2.1,
+  xlab = "", ylab = "",
+  xlim = c(min(bl_m2.1$bwt_Intercept_lo), max(bl_m2.1$bwt_Intercept_up)),
+  ylim = c(min(bl_m2.1$tarsus_Intercept_lo), max(bl_m2.1$tarsus_Intercept_up)),
+  las = 1.2, type = "n"
+)
+with(
+  bl_m2.1,
+  segments(
+    x0 = bwt_Intercept, y0 = tarsus_Intercept_lo,
+    x1 = bwt_Intercept, y1 = tarsus_Intercept_up,
+    col = "black"
+  )
+)
+with(bl_m2.1, segments(
+  x0 = bwt_Intercept_lo, y0 = tarsus_Intercept,
+  x1 = bwt_Intercept_up, y1 = tarsus_Intercept,
+  col = "black"
+))
+points(tarsus_Intercept ~ bwt_Intercept, bl_m2.1, pch = 16, col = "red", cex = 1.5)
+points(tarsus_Intercept ~ bwt_Intercept, bl_m2.1, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
 mtext("btw (BV±CI)", side = 1, line = 2.4)
 mtext("tarsus (BV±CI)", side = 2, line = 2, las = 3)
 ```
 
+<!--
 Here the code to plot the resiudal correlation.
 #```{r}
 res.model <- as.data.frame(residuals(brms_m2.1))
 
 plot(Estimate.tarsus ~ Estimate.bwt, res.model, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
-arrows(x0 = res.model$Estimate.bwt, y0 = res.model$Q2.5.tarsus, x1 = res.model$Estimate.bwt, y1 = res.model$Q97.5.tarsus, col = "black", code = 3, angle = 90, length = 0)
-arrows(x0 = res.model$Q2.5.bwt, y0 = res.model$Estimate.tarsus, x1 = res.model$Q97.5.bwt, y1 = res.model$Estimate.tarsus, col = "black", code = 3, angle = 90, length = 0)
+segments(x0 = res.model$Estimate.bwt, y0 = res.model$Q2.5.tarsus, x1 = res.model$Estimate.bwt, y1 = res.model$Q97.5.tarsus, col = "black")
+segments(x0 = res.model$Q2.5.bwt, y0 = res.model$Estimate.tarsus, x1 = res.model$Q97.5.bwt, y1 = res.model$Estimate.tarsus, col = "black")
 points(Estimate.tarsus ~ Estimate.bwt, res.model, pch = 16, col = "red", cex = 1.5)
 points(Estimate.tarsus ~ Estimate.bwt, res.model, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
 mtext("btw (residual±CI)", side = 1, line = 2.4)
 mtext("tarsus (residual±CI)", side = 2, line = 2, las = 3)
 #```
-
+-->
 
 ### Adding fixed and random effects
 Fixed and random effects can be added just as for the univariate case.
@@ -190,10 +177,10 @@ cor.est <- rbind(
 
 
 plot(c(1, 2, 3, 4) ~ cor.est[, 1], xlim = c(-1, 1), ylim = c(0, 5), xlab = "", ylab = "", cex = 2, yaxt = "n")
-arrows(y0 = 1, x0 = cor.est[1, 1] - cor.est[1, 2], y1 = 1, x1 = cor.est[1, 1] + cor.est[1, 2], code = 3, angle = 90, length = 0, lwd = 2)
-arrows(y0 = 2, x0 = cor.est[2, 1] - cor.est[2, 2], y1 = 2, x1 = cor.est[2, 1] + cor.est[2, 2], code = 3, angle = 90, length = 0, lwd = 2)
-arrows(y0 = 3, x0 = cor.est[3, 1] - cor.est[3, 2], y1 = 3, x1 = cor.est[3, 1] + cor.est[3, 2], code = 3, angle = 90, length = 0, lwd = 2)
-arrows(y0 = 4, x0 = cor.est[4, 1] - cor.est[4, 2], y1 = 4, x1 = cor.est[4, 1] + cor.est[4, 2], code = 3, angle = 90, length = 0, lwd = 2)
+segments(y0 = 1, x0 = cor.est[1, 1] - cor.est[1, 2], y1 = 1, x1 = cor.est[1, 1] + cor.est[1, 2], lwd = 2)
+segments(y0 = 2, x0 = cor.est[2, 1] - cor.est[2, 2], y1 = 2, x1 = cor.est[2, 1] + cor.est[2, 2], lwd = 2)
+segments(y0 = 3, x0 = cor.est[3, 1] - cor.est[3, 2], y1 = 3, x1 = cor.est[3, 1] + cor.est[3, 2], lwd = 2)
+segments(y0 = 4, x0 = cor.est[4, 1] - cor.est[4, 2], y1 = 4, x1 = cor.est[4, 1] + cor.est[4, 2], lwd = 2)
 mtext("Correlation (±CI)", side = 1, las = 1, adj = 0.4, line = 3, cex = 1.6)
 axis(2, at = 1, labels = c("genetic"), las = 2, cex.axis = 1)
 axis(2, at = 2, labels = c("mother"), las = 2, cex.axis = 1)
@@ -300,8 +287,8 @@ cor.est <- rbind(
 
 
 plot(c(1, 2) ~ cor.est[, 1], xlim = c(0, 1.5), ylim = c(0, 2.5), xlab = "", ylab = "", col = c("red", "blue"), pch = c(16, 17), cex = 2, yaxt = "n")
-arrows(y0 = 1, x0 = cor.est[1, 2], y1 = 1, x1 = cor.est[1, 3], code = 3, angle = 90, length = 0, col = c("red"), lwd = 2)
-arrows(y0 = 2, x0 = cor.est[2, 2], y1 = 2, x1 = cor.est[2, 3], code = 3, angle = 90, length = 0, col = c("blue"), lwd = 2)
+segments(y0 = 1, x0 = cor.est[1, 2], y1 = 1, x1 = cor.est[1, 3], col = c("red"), lwd = 2)
+segments(y0 = 2, x0 = cor.est[2, 2], y1 = 2, x1 = cor.est[2, 3], col = c("blue"), lwd = 2)
 mtext("Covariance (±CI)", side = 1, las = 1, adj = 0.4, line = 3, cex = 1.6)
 axis(2, at = 1, labels = c("female"), las = 3, cex.axis = 1.6)
 axis(2, at = 2, labels = c("male"), las = 3, cex.axis = 1.6)
@@ -311,58 +298,57 @@ axis(2, at = 2, labels = c("male"), las = 3, cex.axis = 1.6)
 
 Here a simple plot of the sex-specific genetic correlation using the BLUPs
 ```{r}
-BLUPS <- as_draws_df(brms_m2.4, variable = c("r_animal"), regex = TRUE)
-BLUPS <- BLUPS[c(-1)]
-BLUPS <- BLUPS[c(-1)]
-#
-BLUPS_r <- as.data.frame(t(BLUPS))
-BLUPS_r$mean <- apply(BLUPS_r[c(1:1000)], 1, FUN = mean, na.rm = T)
-BLUPS_r$CI <- apply(BLUPS_r[c(1:1000)], 1, FUN = sd, na.rm = T)
-BLUPS_r <- cbind(rownames(BLUPS_r), BLUPS_r)
-#
-DvsS <- data.frame(
-  Trait = rownames(BLUPS_r),
-  BLUP = BLUPS_r$mean,
-  CI = BLUPS_r$CI
-)
-DvsS$ID <- as.numeric(gsub(".*?([0-9]+).*", "\\1", DvsS$Trait))
-DvsS$TRAIT <- substr(DvsS$Trait, 11, 13)
-DvsS <- DvsS[!is.na(DvsS$ID), ]
-#
-DvsS$SEX <- 1
-mal <- gryphon[gryphon$sex == "2", ]$animal
-for (i in unique(mal)) {
-  DvsS$SEX[which(DvsS$ID == i)] <- 2
-}
-#
-DvsS$Trait <- NULL
-colnames(DvsS)[1] <- "BLUP"
-BLUPS <- reshape(DvsS, v.names = c("BLUP", "CI"), idvar = c("ID", "SEX"), timevar = "TRAIT", direction = "wide")
-nrow(BLUPS)
-rownames(BLUPS) <- c()
-colnames(BLUPS) <- c("ID", "SEX", "BLUP.btw", "CI.btw", "BLUP.tarsus", "CI.tarsus")
-summary(BLUPS)
+
+bls_m2.4 <- ranef(brms_m2.4)$animal
+bl_m2.4 <- as.data.frame(abind::abind(lapply(1:dim(bls_m2.4)[3], function(x) bls_m2.4[, c(1, 3, 4), x])))
+colnames(bl_m2.4) <- paste0(rep(dimnames(bls_m2.4)[[3]], each = 3), c("", "_lo", "_up"))
+bl_m2.4$id <- rownames(bl_m2.4)
+bl_m2.4$sex <- attr(dimnames(bls_m2.4)[[1]], "by")
+FEM <- subset(bl_m2.4, sex == "1")
+MAL <- subset(bl_m2.4, sex == "2")
 ```
 
 ```{r}
-FEM <- subset(BLUPS, SEX == "1")
-MAL <- subset(BLUPS, SEX == "2")
+
 #
 par(mfrow = c(1, 2))
-#
-plot(BLUP.tarsus ~ BLUP.btw, FEM, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
-arrows(x0 = FEM$BLUP.btw, y0 = FEM$BLUP.tarsus - FEM$CI.tarsus, x1 = FEM$BLUP.btw, y1 = FEM$BLUP.tarsus + FEM$CI.tarsus, col = "black", code = 3, angle = 90, length = 0)
-arrows(x0 = FEM$BLUP.btw - FEM$CI.btw, y0 = FEM$BLUP.tarsus, x1 = FEM$BLUP.btw + FEM$CI.btw, y1 = FEM$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
-points(BLUP.tarsus ~ BLUP.btw, FEM, pch = 16, col = "red", cex = 1.5)
-points(BLUP.tarsus ~ BLUP.btw, FEM, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
+plot(tarsus_Intercept ~ bwt_Intercept, FEM,
+  xlab = "", ylab = "",
+  xlim = c(min(FEM$bwt_Intercept_lo), max(FEM$bwt_Intercept_up)),
+  ylim = c(min(FEM$tarsus_Intercept_lo), max(FEM$tarsus_Intercept_up)),
+  las = 1.2, type = "n"
+)
+segments(
+  x0 = FEM$bwt_Intercept, y0 = FEM$tarsus_Intercept_lo,
+  x1 = FEM$bwt_Intercept, y1 = FEM$tarsus_Intercept_up,
+  col = "black"
+)
+segments(
+  x0 = FEM$bwt_Intercept_lo, y0 = FEM$tarsus_Intercept,
+  x1 = FEM$bwt_Intercept_up, y1 = FEM$tarsus_Intercept,
+  col = "black"
+)
+points(tarsus_Intercept ~ bwt_Intercept, FEM, pch = 16, col = "red", cex = 1.5)
+points(tarsus_Intercept ~ bwt_Intercept, FEM, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
 mtext("btw (BV±CI)", side = 1, line = 2.4)
 mtext("tarsus (BV±CI)", side = 2, line = 2, las = 3)
 #
-plot(BLUP.tarsus ~ BLUP.btw, MAL, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
-arrows(x0 = MAL$BLUP.btw, y0 = MAL$BLUP.tarsus - MAL$CI.tarsus, x1 = MAL$BLUP.btw, y1 = MAL$BLUP.tarsus + MAL$CI.tarsus, col = "black", code = 3, angle = 90, length = 0)
-arrows(x0 = MAL$BLUP.btw - MAL$CI.btw, y0 = MAL$BLUP.tarsus, x1 = MAL$BLUP.btw + MAL$CI.btw, y1 = MAL$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
-points(BLUP.tarsus ~ BLUP.btw, MAL, pch = 17, col = "blue", cex = 1.5)
-points(BLUP.tarsus ~ BLUP.btw, MAL, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
+plot(tarsus_Intercept ~ bwt_Intercept, MAL,
+  xlab = "", ylab = "",
+  xlim = c(min(MAL$bwt_Intercept_lo), max(MAL$bwt_Intercept_up)),
+  ylim = c(min(MAL$tarsus_Intercept_lo), max(MAL$tarsus_Intercept_up)),
+  las = 1.2, type = "n"
+)
+segments(
+  x0 = MAL$bwt_Intercept, y0 = MAL$tarsus_Intercept_lo,
+  x1 = MAL$bwt_Intercept, y1 = MAL$tarsus_Intercept_up, col = "black"
+)
+segments(
+  x0 = MAL$bwt_Intercept_lo, y0 = MAL$tarsus_Intercept,
+  x1 = MAL$bwt_Intercept_up, y1 = MAL$tarsus_Intercept, col = "black"
+)
+points(tarsus_Intercept ~ bwt_Intercept, MAL, pch = 17, col = "blue", cex = 1.5)
+points(tarsus_Intercept ~ bwt_Intercept, MAL, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
 mtext("btw (BV±CI)", side = 1, line = 2.4)
 mtext("tarsus (BV±CI)", side = 2, line = 2, las = 3)
 ```
@@ -439,8 +425,8 @@ plot(bwt_sex2 ~ bwt_sex1, bl_m2.5,
   xlim = c(min(bl_m2.5$bwt_sex1_lo), max(bl_m2.5$bwt_sex1_up)),
   ylim = c(min(bl_m2.5$bwt_sex2_lo), max(bl_m2.5$bwt_sex2_up))
 )
-with(bl_m2.5, arrows(x0 = bwt_sex1, y0 = bwt_sex2_lo, x1 = bwt_sex1, y1 = bwt_sex2_up, col = "black", code = 3, angle = 90, length = 0))
-with(bl_m2.5, arrows(x0 = bwt_sex1_lo, y0 = bwt_sex2, x1 = bwt_sex1_up, y1 = bwt_sex2, col = "black", code = 3, angle = 90, length = 0))
+with(bl_m2.5, segments(x0 = bwt_sex1, y0 = bwt_sex2_lo, x1 = bwt_sex1, y1 = bwt_sex2_up, col = "black"))
+with(bl_m2.5, segments(x0 = bwt_sex1_lo, y0 = bwt_sex2, x1 = bwt_sex1_up, y1 = bwt_sex2, col = "black"))
 points(bwt_sex2 ~ bwt_sex1, bl_m2.5, pch = 16, col = "red", cex = 1.5)
 points(bwt_sex2 ~ bwt_sex1, bl_m2.5, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
 mtext("bwt male (BV±CI)", side = 1, line = 2.4)
@@ -451,8 +437,8 @@ plot(tarsus_sex2 ~ tarsus_sex1, bl_m2.5,
   xlim = c(min(bl_m2.5$tarsus_sex1_lo), max(bl_m2.5$tarsus_sex1_up)),
   ylim = c(min(bl_m2.5$tarsus_sex2_lo), max(bl_m2.5$tarsus_sex2_up))
 )
-with(bl_m2.5, arrows(x0 = tarsus_sex1, y0 = tarsus_sex2_lo, x1 = tarsus_sex1, y1 = tarsus_sex2_up, col = "black", code = 3, angle = 90, length = 0))
-with(bl_m2.5, arrows(x0 = tarsus_sex1_lo, y0 = tarsus_sex2, x1 = tarsus_sex1_up, y1 = tarsus_sex2, col = "black", code = 3, angle = 90, length = 0))
+with(bl_m2.5, segments(x0 = tarsus_sex1, y0 = tarsus_sex2_lo, x1 = tarsus_sex1, y1 = tarsus_sex2_up, col = "black"))
+with(bl_m2.5, segments(x0 = tarsus_sex1_lo, y0 = tarsus_sex2, x1 = tarsus_sex1_up, y1 = tarsus_sex2, col = "black"))
 points(tarsus_sex2 ~ tarsus_sex1, bl_m2.5, pch = 16, col = "red", cex = 1.5)
 points(tarsus_sex2 ~ tarsus_sex1, bl_m2.5, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
 mtext("tarsus male (BV±CI)", side = 1, line = 2.4)
