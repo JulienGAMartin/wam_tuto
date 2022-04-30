@@ -421,64 +421,44 @@ summary(cross_sex.cor.tarsus)
 plot(cross_sex.cor.btw)
 plot(cross_sex.cor.tarsus)
 ```
+
 Here, some simple code to extract the BLUP.
 ```{r}
-BLUPS <- as_draws_df(brms_m2.5, variable = c("r_animal"), regex = TRUE)
-BLUPS <- BLUPS[c(-(1:6))]
-#
-BLUPS_r <- as.data.frame(t(BLUPS))
-BLUPS_r$mean <- apply(BLUPS_r[c(1:1000)], 1, FUN = mean, na.rm = T)
-BLUPS_r$CI <- apply(BLUPS_r[c(1:1000)], 1, FUN = sd, na.rm = T)
-BLUPS_r <- cbind(rownames(BLUPS_r), BLUPS_r)
-#
-DvsS <- data.frame(
-  Trait = rownames(BLUPS_r),
-  BLUP = BLUPS_r$mean,
-  CI = BLUPS_r$CI
-)
-DvsS$TRAIT <- substr(DvsS$Trait, 11, 13)
-DvsS$CLUE <- substr(DvsS$Trait, 13, 21)
-DvsS$ID <- as.numeric(gsub(".*?([0-9]+).*", "\\1", DvsS$CLUE))
-DvsS <- DvsS[!is.na(DvsS$ID), ]
-DvsS$CLUE <- NA
-DvsS[DvsS$TRAIT == "bwt", ]$CLUE <- substr(DvsS[DvsS$TRAIT == "bwt", ]$Trait, 19, 27)
-DvsS[DvsS$TRAIT == "tar", ]$CLUE <- substr(DvsS[DvsS$TRAIT == "tar", ]$Trait, 23, 27)
-DvsS$sex <- as.numeric(gsub(".*?([0-9]+).*", "\\1", DvsS$CLUE))
-DvsS$TRAIT <- factor(paste(DvsS$TRAIT, DvsS$sex, sep = "_"))
-DvsS$CLUE <- NULL
-DvsS$sex <- NULL
-head(DvsS)
-tail(DvsS)
-#
-DvsS$Trait <- NULL
-colnames(DvsS)[1] <- "BLUP"
-BLUPS <- reshape(DvsS, v.names = c("BLUP", "CI"), idvar = c("ID"), timevar = "TRAIT", direction = "wide")
-nrow(BLUPS)
-rownames(BLUPS) <- c()
-summary(BLUPS)
+bls_m2.5 <- ranef(brms_m2.5)$animal
+bl_m2.5 <- as.data.frame(abind::abind(lapply(1:4, function(x) bls_m2.5[, c(1, 3, 4), x])))
+colnames(bl_m2.5) <- paste0(rep(dimnames(bls_m2.5)[[3]], each = 3), c("", "_lo", "_up"))
+bl_m2.5$id <- rownames(bl_m2.5)
 ```
 
-
 Here, some simple code to plot the cross-sex genetic correlation.
+
 ```{r}
 par(mfrow = c(1, 2))
-#
-plot(BLUP.bwt_1 ~ BLUP.bwt_2, BLUPS, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
-arrows(x0 = BLUPS$BLUP.bwt_1, y0 = BLUPS$BLUP.bwt_2 - BLUPS$CI.bwt_2, x1 = BLUPS$BLUP.bwt_1, y1 = BLUPS$BLUP.bwt_2 + BLUPS$CI.bwt_2, col = "black", code = 3, angle = 90, length = 0)
-arrows(x0 = BLUPS$BLUP.bwt_1 - BLUPS$CI.bwt_1, y0 = BLUPS$BLUP.bwt_2, x1 = BLUPS$BLUP.tarsus.1 + BLUPS$CI.bwt_1, y1 = BLUPS$BLUP.bwt_2, col = "black", code = 3, angle = 90, length = 0)
-points(BLUP.bwt_2 ~ BLUP.bwt_1, BLUPS, pch = 16, col = "red", cex = 1.5)
-points(BLUP.bwt_2 ~ BLUP.bwt_1, BLUPS, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
+plot(bwt_sex2 ~ bwt_sex1, bl_m2.5,
+  xlab = "", ylab = "", las = 1.2, type = "n",
+  xlim = c(min(bl_m2.5$bwt_sex1_lo), max(bl_m2.5$bwt_sex1_up)),
+  ylim = c(min(bl_m2.5$bwt_sex2_lo), max(bl_m2.5$bwt_sex2_up))
+)
+with(bl_m2.5, arrows(x0 = bwt_sex1, y0 = bwt_sex2_lo, x1 = bwt_sex1, y1 = bwt_sex2_up, col = "black", code = 3, angle = 90, length = 0))
+with(bl_m2.5, arrows(x0 = bwt_sex1_lo, y0 = bwt_sex2, x1 = bwt_sex1_up, y1 = bwt_sex2, col = "black", code = 3, angle = 90, length = 0))
+points(bwt_sex2 ~ bwt_sex1, bl_m2.5, pch = 16, col = "red", cex = 1.5)
+points(bwt_sex2 ~ bwt_sex1, bl_m2.5, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
 mtext("bwt male (BV±CI)", side = 1, line = 2.4)
 mtext("bwt female (BV±CI)", side = 2, line = 2, las = 3)
-#
-plot(BLUP.tar_1 ~ BLUP.tar_2, BLUPS, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
-arrows(x0 = BLUPS$BLUP.tar_1, y0 = BLUPS$BLUP.tar_2 - BLUPS$CI.tar_2, x1 = BLUPS$BLUP.tar_1, y1 = BLUPS$BLUP.tar_2 + BLUPS$CI.tar_2, col = "black", code = 3, angle = 90, length = 0)
-arrows(x0 = BLUPS$BLUP.tar_1 - BLUPS$CI.tar_1, y0 = BLUPS$BLUP.tar_2, x1 = BLUPS$BLUP.tar_1 + BLUPS$CI.tar_1, y1 = BLUPS$BLUP.tar_2, col = "black", code = 3, angle = 90, length = 0)
-points(BLUP.tar_2 ~ BLUP.tar_1, BLUPS, pch = 16, col = "red", cex = 1.5)
-points(BLUP.tar_2 ~ BLUP.tar_1, BLUPS, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
+
+plot(tarsus_sex2 ~ tarsus_sex1, bl_m2.5,
+  xlab = "", ylab = "", las = 1.2, type = "n",
+  xlim = c(min(bl_m2.5$tarsus_sex1_lo), max(bl_m2.5$tarsus_sex1_up)),
+  ylim = c(min(bl_m2.5$tarsus_sex2_lo), max(bl_m2.5$tarsus_sex2_up))
+)
+with(bl_m2.5, arrows(x0 = tarsus_sex1, y0 = tarsus_sex2_lo, x1 = tarsus_sex1, y1 = tarsus_sex2_up, col = "black", code = 3, angle = 90, length = 0))
+with(bl_m2.5, arrows(x0 = tarsus_sex1_lo, y0 = tarsus_sex2, x1 = tarsus_sex1_up, y1 = tarsus_sex2, col = "black", code = 3, angle = 90, length = 0))
+points(tarsus_sex2 ~ tarsus_sex1, bl_m2.5, pch = 16, col = "red", cex = 1.5)
+points(tarsus_sex2 ~ tarsus_sex1, bl_m2.5, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
 mtext("tarsus male (BV±CI)", side = 1, line = 2.4)
 mtext("tarsus female (BV±CI)", side = 2, line = 2, las = 3)
 ```
+
 Within this model, we also have acces to the rest of the B-matrix. Note, the cross-sex genetic correlation is just the diagonal of the B matrix. For now on, you can explore this matrix and estimate the cross-sex-cross-trait genetic correlation. 
 
 
