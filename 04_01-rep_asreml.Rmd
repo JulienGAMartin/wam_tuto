@@ -71,7 +71,7 @@ In addition, using `age` as continuous variable can help in saving some degree o
 gryphonRM$age_c <- as.numeric(gryphonRM$age)
 
 modelw2 <- asreml(
-  fixed = laydate ~ age_c+ I(age_c^2),
+  fixed = laydate ~ age_c + I(age_c^2),
   random = ~animal,
   residual = ~ idv(units),
   data = gryphonRM,
@@ -81,7 +81,6 @@ modelw2 <- asreml(
 summary(modelw2)$varcomp
 summary(modelw2, coef = TRUE)$coef.fixed
 wald.asreml(modelw2, ssType = "conditional", denDF = "numeric")
-
 ```
 
 
@@ -165,7 +164,6 @@ summary(modelz_2)$varcomp
 modelz$loglik
 modelz_2$loglik
 1 - pchisq(2 * (modelz_2$loglik - modelz$loglik), 1)
-
 ```
 
 `year` effects could alternatively be included as fixed effects (try it!). This will reduce $V_R$ and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.
@@ -173,7 +171,7 @@ modelz_2$loglik
 
 ```{r}
 modelz_3 <- asreml(
-  fixed = laydate ~ age+byear,
+  fixed = laydate ~ age + byear,
   random = ~ vm(animal, ainv) + ide(animal) +
     year,
   residual = ~ idv(units),

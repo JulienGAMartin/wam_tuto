@@ -231,7 +231,7 @@ G_MOD[1, 2] <- 0.99999
 G_MOD[1, 3] <- "F"
 modele.red <- asreml(
   fixed = cbind(bwt, tarsus) ~ trait + at(trait):sex,
-  random = ~ corgh(trait,init = c(0.1, 1, 1)):vm(animal, ainv) +
+  random = ~ corgh(trait, init = c(0.1, 1, 1)):vm(animal, ainv) +
     us(trait, init = c(1, 0.1, 1)):byear +
     us(trait, init = c(1, 0.1, 1)):mother,
   residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
@@ -253,8 +253,8 @@ Thanks to mixed model, each breeding values is stored within the model and can b
 To simplify the following code, we rename the variable T1 and T2.
 
 ```{r}
-gryphon$T1<-gryphon$bwt
-gryphon$T2<-gryphon$tarsus
+gryphon$T1 <- gryphon$bwt
+gryphon$T2 <- gryphon$tarsus
 ############
 modele <- asreml(
   fixed = cbind(T1, T2) ~ trait + at(trait):sex,
@@ -269,28 +269,30 @@ modele <- asreml(
 modele <- update(modele)
 summary(modele)$varcomp
 ############
-DvsS<-data.frame(Trait = rownames(modele$coefficients$random),
-                 BLUP = modele$coefficients$random,
-                 SE = sqrt(modele$vcoeff$random*modele$sigma2))
-DvsS$ID<-substr(DvsS$Trait, 27,30)
-DvsS$TRAIT<-substr(DvsS$Trait, 7,8)
-DvsS<-DvsS[927:3544,] #keep only row associated to animal 
+DvsS <- data.frame(
+  Trait = rownames(modele$coefficients$random),
+  BLUP = modele$coefficients$random,
+  SE = sqrt(modele$vcoeff$random * modele$sigma2)
+)
+DvsS$ID <- substr(DvsS$Trait, 27, 30)
+DvsS$TRAIT <- substr(DvsS$Trait, 7, 8)
+DvsS <- DvsS[927:3544, ] # keep only row associated to animal
 summary(factor(DvsS$TRAIT)) # 1309 each
 #
-DvsS$Trait<-NULL
-colnames(DvsS)[1]<-"BLUP"
-BLUPS<-reshape(DvsS, v.names = c("BLUP","SE"), idvar = "ID",timevar = "TRAIT", direction = "wide")
+DvsS$Trait <- NULL
+colnames(DvsS)[1] <- "BLUP"
+BLUPS <- reshape(DvsS, v.names = c("BLUP", "SE"), idvar = "ID", timevar = "TRAIT", direction = "wide")
 nrow(BLUPS)
 rownames(BLUPS) <- c()
-colnames(BLUPS) <- c("ID","BLUP.btw","SE.btw","BLUP.tarsus","SE.tarsus")
+colnames(BLUPS) <- c("ID", "BLUP.btw", "SE.btw", "BLUP.tarsus", "SE.tarsus")
 summary(BLUPS)
-#write.csv(BLUPS,file="BLUPS_6x6.csv",row.names=F)
+# write.csv(BLUPS,file="BLUPS_6x6.csv",row.names=F)
 ############
-par(mfrow=c(2,2))
-  hist(BLUPS$BLUP.btw)
+par(mfrow = c(2, 2))
+hist(BLUPS$BLUP.btw)
 qqnorm(BLUPS$BLUP.btw)
 qqline(BLUPS$BLUP.btw)
-  hist(BLUPS$BLUP.tarsus)
+hist(BLUPS$BLUP.tarsus)
 qqnorm(BLUPS$BLUP.tarsus)
 qqline(BLUPS$BLUP.tarsus)
 #
@@ -299,14 +301,14 @@ qqline(BLUPS$BLUP.tarsus)
 
 Here, some simple code to plot the genetic correlation.
 ```{r}
-plot(BLUP.tarsus~BLUP.btw,BLUPS,xlab="",ylab="", las=1.2, bty="o", col="white")
-arrows(x0=BLUPS$BLUP.btw,y0=BLUPS$BLUP.tarsus-BLUPS$SE.tarsus,x1=BLUPS$BLUP.btw,y1=BLUPS$BLUP.tarsus+BLUPS$SE.tarsus,col="black",code=3,angle=90,length=0)
-arrows(x0=BLUPS$BLUP.btw-BLUPS$SE.btw,y0=BLUPS$BLUP.tarsus,x1=BLUPS$BLUP.btw+BLUPS$SE.btw,y1=BLUPS$BLUP.tarsus,col="black",code=3,angle=90,length=0)
-points(BLUP.tarsus~BLUP.btw,BLUPS,pch=16,col="red", cex=1.5)
-points(BLUP.tarsus~BLUP.btw,BLUPS,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
-mtext("btw (BV±SE)",  side=1, line=2.4)
-mtext("tarsus (BV±SE)",  side=2, line=2,las=3)
-mtext(expression(paste(italic(r)[A]," = 0.7353065 ±  0.1094838")),side=1,line=-1,adj=0.95,cex=0.9)
+plot(BLUP.tarsus ~ BLUP.btw, BLUPS, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
+arrows(x0 = BLUPS$BLUP.btw, y0 = BLUPS$BLUP.tarsus - BLUPS$SE.tarsus, x1 = BLUPS$BLUP.btw, y1 = BLUPS$BLUP.tarsus + BLUPS$SE.tarsus, col = "black", code = 3, angle = 90, length = 0)
+arrows(x0 = BLUPS$BLUP.btw - BLUPS$SE.btw, y0 = BLUPS$BLUP.tarsus, x1 = BLUPS$BLUP.btw + BLUPS$SE.btw, y1 = BLUPS$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
+points(BLUP.tarsus ~ BLUP.btw, BLUPS, pch = 16, col = "red", cex = 1.5)
+points(BLUP.tarsus ~ BLUP.btw, BLUPS, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
+mtext("btw (BV±SE)", side = 1, line = 2.4)
+mtext("tarsus (BV±SE)", side = 2, line = 2, las = 3)
+mtext(expression(paste(italic(r)[A], " = 0.7353065 ±  0.1094838")), side = 1, line = -1, adj = 0.95, cex = 0.9)
 ```
 
 ### Partitionning (co)variance between groups 
@@ -371,10 +373,10 @@ wa
 To assess the significant of the covariance, a LTR test can be done with a reduced model where a specific covariance can be fixed to 0 (for example the female covariance, following code). 
 
 ```{r}
-model_modif<-update.asreml(model_sex,start.values=T)
-G<-model_modif$vparameters[(1:12),]
-G$Constraint[(2)]<-"F"
-G$Value[(2)]<-0
+model_modif <- update.asreml(model_sex, start.values = T)
+G <- model_modif$vparameters[(1:12), ]
+G$Constraint[(2)] <- "F"
+G$Value[(2)] <- 0
 #
 reduc.model_sex <- asreml(
   fixed = cbind(bwt, tarsus) ~ trait + at(trait):sex,
@@ -385,12 +387,13 @@ reduc.model_sex <- asreml(
   data = gryphon,
   na.action = na.method(x = "include", y = "include"),
   maxit = 20,
-  G.param=G)
+  G.param = G
+)
 reduc.model_sex <- update(reduc.model_sex)
 summary(reduc.model_sex)$varcomp
 
-2*(model_sex$loglik-reduc.model_sex$loglik)
-1-pchisq(2*(model_sex$loglik-reduc.model_sex$loglik),df=1)
+2 * (model_sex$loglik - reduc.model_sex$loglik)
+1 - pchisq(2 * (model_sex$loglik - reduc.model_sex$loglik), df = 1)
 ```
 
 
@@ -400,15 +403,16 @@ In addition, it is also possible to test if sexes has significant differences wi
 
 ```{r, eval = FALSE}
 # code provided as an example for the moment since the model cannot run on this data
-model_modif<-update.asreml(model_sex,start.values=T)
-G<-model_modif$vparameters[(1:12),]
+model_modif <- update.asreml(model_sex, start.values = T)
+G <- model_modif$vparameters[(1:12), ]
 G$fac <- factor(c(
-1,2,3,4,2,6,			#Additive genetic matrix  2 =5
-7,8,9,					#byear  matrix  
-10,11,12))				#mother matrix 
-Modif <- vcm.lm(~fac, data=G)
-attr(Modif,'assign') <- NULL
-attr(Modif,'contrasts') <- NULL
+  1, 2, 3, 4, 2, 6, # Additive genetic matrix  2 =5
+  7, 8, 9, # byear  matrix
+  10, 11, 12
+)) # mother matrix
+Modif <- vcm.lm(~fac, data = G)
+attr(Modif, "assign") <- NULL
+attr(Modif, "contrasts") <- NULL
 #
 reduc.model_sex_2 <- asreml(
   fixed = cbind(bwt, tarsus) ~ trait + at(trait):sex,
@@ -419,15 +423,15 @@ reduc.model_sex_2 <- asreml(
   data = gryphon,
   na.action = na.method(x = "include", y = "include"),
   maxit = 20,
-  G.param=G,vcm=Modif)
+  G.param = G, vcm = Modif
+)
 reduc.model_sex_2 <- update(reduc.model_sex_2)
 summary(reduc.model_sex_2)$varcomp
 
 
 
-2*(model_sex$loglik-reduc.model_sex_2$loglik)
-1-pchisq(2*(model_sex$loglik-reduc.model_sex_2$loglik),df=2)
-
+2 * (model_sex$loglik - reduc.model_sex_2$loglik)
+1 - pchisq(2 * (model_sex$loglik - reduc.model_sex_2$loglik), df = 2)
 ```
 
 
@@ -435,29 +439,28 @@ summary(reduc.model_sex_2)$varcomp
 Here a plot to visualize the overlaps of covariances.
 
 ```{r}
-genetic.correlation.F<-vpredict(model_sex, r_A.1 ~ V8 / sqrt(V7 * V9))
-genetic.correlation.M<-vpredict(model_sex, r_A.2 ~ V11 / sqrt(V10 * V12))
-residual.correlation.F<-vpredict(model_sex, r_res.1 ~ V15 / sqrt(V14 * V16))
-residual.correlation.M<-vpredict(model_sex, r_res.2 ~ V19 / sqrt(V18 * V20))
-cor.est<-rbind(genetic.correlation.F,genetic.correlation.M,residual.correlation.F,residual.correlation.M)
+genetic.correlation.F <- vpredict(model_sex, r_A.1 ~ V8 / sqrt(V7 * V9))
+genetic.correlation.M <- vpredict(model_sex, r_A.2 ~ V11 / sqrt(V10 * V12))
+residual.correlation.F <- vpredict(model_sex, r_res.1 ~ V15 / sqrt(V14 * V16))
+residual.correlation.M <- vpredict(model_sex, r_res.2 ~ V19 / sqrt(V18 * V20))
+cor.est <- rbind(genetic.correlation.F, genetic.correlation.M, residual.correlation.F, residual.correlation.M)
 
-plot(c(0.95, 1.05,1.95, 2.05)~cor.est[,1],xlim=c(0,1.5),ylim=c(0.5,2.5) ,xlab="",ylab="",col=c("red","blue"),pch=c(16,17),cex=2,yaxt="n")
-arrows(y0=0.95,x0=cor.est[1,1]-cor.est[1,2],y1=0.95,x1=cor.est[1,1]+cor.est[1,2],code=3,angle=90,length=0,col=c("red"),lwd=2)
-arrows(y0=1.05,x0=cor.est[2,1]-cor.est[2,2],y1=1.05,x1=cor.est[2,1]+cor.est[2,2],code=3,angle=90,length=0,col=c("blue"),lwd=2)
-arrows(y0=1.95,x0=cor.est[3,1]-cor.est[3,2],y1=1.95,x1=cor.est[3,1]+cor.est[3,2],code=3,angle=90,length=0,col=c("red"),lwd=2)
-arrows(y0=2.05,x0=cor.est[4,1]-cor.est[4,2],y1=2.05,x1=cor.est[4,1]+cor.est[4,2],code=3,angle=90,length=0,col=c("blue"),lwd=2)
-mtext("Correlation (±CI)", side=1, las=1, adj=0.4,line=3, cex=1.6)
-axis(2,at=1,labels=c("genetic"),las = 3,cex.axis=1.6)
-axis(2,at=2,labels=c("residual"),las = 3,cex.axis=1.6)
-
+plot(c(0.95, 1.05, 1.95, 2.05) ~ cor.est[, 1], xlim = c(0, 1.5), ylim = c(0.5, 2.5), xlab = "", ylab = "", col = c("red", "blue"), pch = c(16, 17), cex = 2, yaxt = "n")
+arrows(y0 = 0.95, x0 = cor.est[1, 1] - cor.est[1, 2], y1 = 0.95, x1 = cor.est[1, 1] + cor.est[1, 2], code = 3, angle = 90, length = 0, col = c("red"), lwd = 2)
+arrows(y0 = 1.05, x0 = cor.est[2, 1] - cor.est[2, 2], y1 = 1.05, x1 = cor.est[2, 1] + cor.est[2, 2], code = 3, angle = 90, length = 0, col = c("blue"), lwd = 2)
+arrows(y0 = 1.95, x0 = cor.est[3, 1] - cor.est[3, 2], y1 = 1.95, x1 = cor.est[3, 1] + cor.est[3, 2], code = 3, angle = 90, length = 0, col = c("red"), lwd = 2)
+arrows(y0 = 2.05, x0 = cor.est[4, 1] - cor.est[4, 2], y1 = 2.05, x1 = cor.est[4, 1] + cor.est[4, 2], code = 3, angle = 90, length = 0, col = c("blue"), lwd = 2)
+mtext("Correlation (±CI)", side = 1, las = 1, adj = 0.4, line = 3, cex = 1.6)
+axis(2, at = 1, labels = c("genetic"), las = 3, cex.axis = 1.6)
+axis(2, at = 2, labels = c("residual"), las = 3, cex.axis = 1.6)
 ```
 
 
 
 By using `corgh`, we can extract the BLUPs and plot the sex-specific correlation.
 ```{r}
-gryphon$T1<-gryphon$bwt
-gryphon$T2<-gryphon$tarsus
+gryphon$T1 <- gryphon$bwt
+gryphon$T2 <- gryphon$tarsus
 ###
 model_sex <- asreml(
   fixed = cbind(T1, T2) ~ trait + at(trait):sex,
@@ -472,57 +475,58 @@ model_sex <- asreml(
 model_sex <- update(model_sex)
 
 
-DvsS<-data.frame(Trait = rownames(model_sex$coefficients$random),
-                 BLUP = model_sex$coefficients$random,
-                 SE = sqrt(model_sex$vcoeff$random*model_sex$sigma2))
-DvsS$ID<-substr(DvsS$Trait, 38,40)
-DvsS$TRAIT<-substr(DvsS$Trait, 18,19)
-DvsS$SEX<-substr(DvsS$Trait, 9,9)
-DvsS<-DvsS[927:6162,] #keep only row associated to animal 
+DvsS <- data.frame(
+  Trait = rownames(model_sex$coefficients$random),
+  BLUP = model_sex$coefficients$random,
+  SE = sqrt(model_sex$vcoeff$random * model_sex$sigma2)
+)
+DvsS$ID <- substr(DvsS$Trait, 38, 40)
+DvsS$TRAIT <- substr(DvsS$Trait, 18, 19)
+DvsS$SEX <- substr(DvsS$Trait, 9, 9)
+DvsS <- DvsS[927:6162, ] # keep only row associated to animal
 summary(factor(DvsS$TRAIT)) # 1309 each
 #
-DvsS$Trait<-NULL
-colnames(DvsS)[1]<-"BLUP"
-BLUPS<-reshape(DvsS, v.names = c("BLUP","SE"), idvar = c("ID","SEX"),timevar = "TRAIT", direction = "wide")
+DvsS$Trait <- NULL
+colnames(DvsS)[1] <- "BLUP"
+BLUPS <- reshape(DvsS, v.names = c("BLUP", "SE"), idvar = c("ID", "SEX"), timevar = "TRAIT", direction = "wide")
 row(BLUPS)
 rownames(BLUPS) <- c()
-colnames(BLUPS) <- c("ID","SEX","BLUP.btw","SE.btw","BLUP.tarsus","SE.tarsus")
+colnames(BLUPS) <- c("ID", "SEX", "BLUP.btw", "SE.btw", "BLUP.tarsus", "SE.tarsus")
 summary(BLUPS)
-#write.csv(BLUPS,file="BLUPS_6x6_SEX.csv",row.names=F)
+# write.csv(BLUPS,file="BLUPS_6x6_SEX.csv",row.names=F)
 ############
-par(mfrow=c(2,2))
-  hist(BLUPS$BLUP.btw)
+par(mfrow = c(2, 2))
+hist(BLUPS$BLUP.btw)
 qqnorm(BLUPS$BLUP.btw)
 qqline(BLUPS$BLUP.btw)
-  hist(BLUPS$BLUP.tarsus)
+hist(BLUPS$BLUP.tarsus)
 qqnorm(BLUPS$BLUP.tarsus)
 qqline(BLUPS$BLUP.tarsus)
-
 ```
 
 
 Here, some simple codes to plot the genetic correlation.
 ```{r}
-FEM<-subset(BLUPS, SEX=="1")
-MAL<-subset(BLUPS, SEX=="2")
+FEM <- subset(BLUPS, SEX == "1")
+MAL <- subset(BLUPS, SEX == "2")
 #
-par(mfrow=c(1,2))
+par(mfrow = c(1, 2))
 #
-plot(BLUP.tarsus~BLUP.btw,FEM,xlab="",ylab="", las=1.2, bty="o", col="white")
-arrows(x0=FEM$BLUP.btw,y0=FEM$BLUP.tarsus-FEM$SE.tarsus,x1=FEM$BLUP.btw,y1=FEM$BLUP.tarsus+FEM$SE.tarsus,col="black",code=3,angle=90,length=0)
-arrows(x0=FEM$BLUP.btw-FEM$SE.btw,y0=FEM$BLUP.tarsus,x1=FEM$BLUP.btw+FEM$SE.btw,y1=FEM$BLUP.tarsus,col="black",code=3,angle=90,length=0)
-points(BLUP.tarsus~BLUP.btw,FEM,pch=16,col="red", cex=1.5)
-points(BLUP.tarsus~BLUP.btw,FEM,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
-mtext("btw (BV±SE)",  side=1, line=2.4)
-mtext("tarsus (BV±SE)",  side=2, line=2,las=3)
+plot(BLUP.tarsus ~ BLUP.btw, FEM, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
+arrows(x0 = FEM$BLUP.btw, y0 = FEM$BLUP.tarsus - FEM$SE.tarsus, x1 = FEM$BLUP.btw, y1 = FEM$BLUP.tarsus + FEM$SE.tarsus, col = "black", code = 3, angle = 90, length = 0)
+arrows(x0 = FEM$BLUP.btw - FEM$SE.btw, y0 = FEM$BLUP.tarsus, x1 = FEM$BLUP.btw + FEM$SE.btw, y1 = FEM$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
+points(BLUP.tarsus ~ BLUP.btw, FEM, pch = 16, col = "red", cex = 1.5)
+points(BLUP.tarsus ~ BLUP.btw, FEM, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
+mtext("btw (BV±SE)", side = 1, line = 2.4)
+mtext("tarsus (BV±SE)", side = 2, line = 2, las = 3)
 #
-plot(BLUP.tarsus~BLUP.btw,MAL,xlab="",ylab="", las=1.2, bty="o", col="white")
-arrows(x0=MAL$BLUP.btw,y0=MAL$BLUP.tarsus-MAL$SE.tarsus,x1=MAL$BLUP.btw,y1=MAL$BLUP.tarsus+MAL$SE.tarsus,col="black",code=3,angle=90,length=0)
-arrows(x0=MAL$BLUP.btw-MAL$SE.btw,y0=MAL$BLUP.tarsus,x1=MAL$BLUP.btw+MAL$SE.btw,y1=MAL$BLUP.tarsus,col="black",code=3,angle=90,length=0)
-points(BLUP.tarsus~BLUP.btw,MAL,pch=16,col="blue", cex=1.5)
-points(BLUP.tarsus~BLUP.btw,MAL,pch=1, col=rgb(0,0,0,0.3), cex=c(1.5))
-mtext("btw (BV±SE)",  side=1, line=2.4)
-mtext("tarsus (BV±SE)",  side=2, line=2,las=3)
+plot(BLUP.tarsus ~ BLUP.btw, MAL, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
+arrows(x0 = MAL$BLUP.btw, y0 = MAL$BLUP.tarsus - MAL$SE.tarsus, x1 = MAL$BLUP.btw, y1 = MAL$BLUP.tarsus + MAL$SE.tarsus, col = "black", code = 3, angle = 90, length = 0)
+arrows(x0 = MAL$BLUP.btw - MAL$SE.btw, y0 = MAL$BLUP.tarsus, x1 = MAL$BLUP.btw + MAL$SE.btw, y1 = MAL$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
+points(BLUP.tarsus ~ BLUP.btw, MAL, pch = 16, col = "blue", cex = 1.5)
+points(BLUP.tarsus ~ BLUP.btw, MAL, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
+mtext("btw (BV±SE)", side = 1, line = 2.4)
+mtext("tarsus (BV±SE)", side = 2, line = 2, las = 3)
 ```
 
 
@@ -537,46 +541,47 @@ First, we need to dissociate the trait values for females and males into distinc
 The coding is a bit complain but pretty straightforward. It is important to modify the covariance matrix at the residual level to avoid the calculation of a cross-sex residual covariance (no individual switched sex during the experiment).
 
 ```{r}
-gryphon$bwt.1<-NA
-gryphon$tarsus.1<-NA
-animal<-gryphon[gryphon$sex=="1",] $animal
-for (i in unique(animal)){
-gryphon$bwt.1[which(gryphon$animal==i)] <-gryphon$bwt[which(gryphon$animal==i)]
-gryphon$tarsus.1[which(gryphon$animal==i)] <-gryphon$tarsus[which(gryphon$animal==i)]
+gryphon$bwt.1 <- NA
+gryphon$tarsus.1 <- NA
+animal <- gryphon[gryphon$sex == "1", ]$animal
+for (i in unique(animal)) {
+  gryphon$bwt.1[which(gryphon$animal == i)] <- gryphon$bwt[which(gryphon$animal == i)]
+  gryphon$tarsus.1[which(gryphon$animal == i)] <- gryphon$tarsus[which(gryphon$animal == i)]
 }
 #
-gryphon$bwt.2<-NA
-gryphon$tarsus.2<-NA
-animal<-gryphon[gryphon$sex=="2",] $animal
-for (i in unique(animal)){
-gryphon$bwt.2[which(gryphon$animal==i)] <-gryphon$bwt[which(gryphon$animal==i)]
-gryphon$tarsus.2[which(gryphon$animal==i)] <-gryphon$tarsus[which(gryphon$animal==i)]
+gryphon$bwt.2 <- NA
+gryphon$tarsus.2 <- NA
+animal <- gryphon[gryphon$sex == "2", ]$animal
+for (i in unique(animal)) {
+  gryphon$bwt.2[which(gryphon$animal == i)] <- gryphon$bwt[which(gryphon$animal == i)]
+  gryphon$tarsus.2[which(gryphon$animal == i)] <- gryphon$tarsus[which(gryphon$animal == i)]
 }
 
 ###########
-temp<-asreml(cbind(tarsus.1,tarsus.2)~trait,
-          random=~us(trait):vm(animal,ainv)+
-		  diag(trait):byear +	diag(trait):mother,
-		  residual = ~units:us(trait),
-		  data=gryphon,na.action=na.method(y="include",x="include"),maxiter=20,
-          start.values=T)
-G<-temp$vparameters[(1:7),]
-R<-temp$vparameters[-(1:7),]
+temp <- asreml(cbind(tarsus.1, tarsus.2) ~ trait,
+  random = ~ us(trait):vm(animal, ainv) +
+    diag(trait):byear + diag(trait):mother,
+  residual = ~ units:us(trait),
+  data = gryphon, na.action = na.method(y = "include", x = "include"), maxiter = 20,
+  start.values = T
+)
+G <- temp$vparameters[(1:7), ]
+R <- temp$vparameters[-(1:7), ]
 #
-G$Constraint<-"U"
-R$Value[3]<-0
-R$Constraint[3]<-"F"
+G$Constraint <- "U"
+R$Value[3] <- 0
+R$Constraint[3] <- "F"
 #
-model.BiV_Sex<-asreml(cbind(tarsus.1,tarsus.2)~trait,
-          random=~us(trait):vm(animal,ainv)+
-		  diag(trait):byear +	diag(trait):mother,
-		  residual = ~units:us(trait),
-		  data=gryphon,na.action=na.method(y="include",x="include"),maxiter=20,
-		  G.param=G,R.param=R)
-model.BiV_Sex<-update.asreml(model.BiV_Sex)
+model.BiV_Sex <- asreml(cbind(tarsus.1, tarsus.2) ~ trait,
+  random = ~ us(trait):vm(animal, ainv) +
+    diag(trait):byear + diag(trait):mother,
+  residual = ~ units:us(trait),
+  data = gryphon, na.action = na.method(y = "include", x = "include"), maxiter = 20,
+  G.param = G, R.param = R
+)
+model.BiV_Sex <- update.asreml(model.BiV_Sex)
 #
 summary(model.BiV_Sex)$varcomp
-
 ```
 
 The cross-sex genetic correlation can estimate form the output of the model. 
@@ -585,98 +590,100 @@ For tarsus length at fledging, sexes shared a lot of genetic variance which is c
 ```{r}
 
 vpredict(model.BiV_Sex, r_fm ~ V6 / sqrt(V5 * V7))
-
 ```
 
 We can estimate directly the correlation and plot the cross-sex genetic correlation
 
 ```{r}
-temp<-asreml(cbind(tarsus.1,tarsus.2)~trait,
-          random=~corgh(trait):vm(animal,ainv)+
-		  diag(trait):byear +	diag(trait):mother,
-		  residual = ~units:corgh(trait),
-		  data=gryphon,na.action=na.method(y="include",x="include"),maxiter=20,
-          start.values=T)
-G<-temp$vparameters[(1:7),]
-R<-temp$vparameters[-(1:7),]
+temp <- asreml(cbind(tarsus.1, tarsus.2) ~ trait,
+  random = ~ corgh(trait):vm(animal, ainv) +
+    diag(trait):byear + diag(trait):mother,
+  residual = ~ units:corgh(trait),
+  data = gryphon, na.action = na.method(y = "include", x = "include"), maxiter = 20,
+  start.values = T
+)
+G <- temp$vparameters[(1:7), ]
+R <- temp$vparameters[-(1:7), ]
 #
-G$Constraint<-"U"
-R$Value[2]<-0
-R$Constraint[2]<-"F"
+G$Constraint <- "U"
+R$Value[2] <- 0
+R$Constraint[2] <- "F"
 #
-model.BiV_Sex<-asreml(cbind(tarsus.1,tarsus.2)~trait,
-          random=~corgh(trait):vm(animal,ainv)+
-		  diag(trait):byear +	diag(trait):mother,
-		  residual = ~units:corgh(trait),
-		  data=gryphon,na.action=na.method(y="include",x="include"),maxiter=20,
-		  G.param=G,R.param=R)
-model.BiV_Sex<-update.asreml(model.BiV_Sex)
+model.BiV_Sex <- asreml(cbind(tarsus.1, tarsus.2) ~ trait,
+  random = ~ corgh(trait):vm(animal, ainv) +
+    diag(trait):byear + diag(trait):mother,
+  residual = ~ units:corgh(trait),
+  data = gryphon, na.action = na.method(y = "include", x = "include"), maxiter = 20,
+  G.param = G, R.param = R
+)
+model.BiV_Sex <- update.asreml(model.BiV_Sex)
 #
 summary(model.BiV_Sex)$varcomp
 
 ###########
-DvsS<-data.frame(Trait = rownames(model.BiV_Sex$coefficients$random),
-                 BLUP = model.BiV_Sex$coefficients$random,
-                 SE = sqrt(model.BiV_Sex$vcoeff$random*model.BiV_Sex$sigma2))
-DvsS$ID<-substr(DvsS$Trait, 33,35)
-DvsS$TRAIT<-substr(DvsS$Trait, 7,14)
-DvsS<-DvsS[927:3544,] #keep only row associated to animal 
+DvsS <- data.frame(
+  Trait = rownames(model.BiV_Sex$coefficients$random),
+  BLUP = model.BiV_Sex$coefficients$random,
+  SE = sqrt(model.BiV_Sex$vcoeff$random * model.BiV_Sex$sigma2)
+)
+DvsS$ID <- substr(DvsS$Trait, 33, 35)
+DvsS$TRAIT <- substr(DvsS$Trait, 7, 14)
+DvsS <- DvsS[927:3544, ] # keep only row associated to animal
 summary(factor(DvsS$TRAIT))
 #
-DvsS$Trait<-NULL
-colnames(DvsS)[1]<-"BLUP"
-BLUPS<-reshape(DvsS, v.names = c("BLUP","SE"), idvar = "ID",timevar = "TRAIT", direction = "wide")
+DvsS$Trait <- NULL
+colnames(DvsS)[1] <- "BLUP"
+BLUPS <- reshape(DvsS, v.names = c("BLUP", "SE"), idvar = "ID", timevar = "TRAIT", direction = "wide")
 nrow(BLUPS)
 rownames(BLUPS) <- c()
-colnames(BLUPS) <- c("ID","BLUP.1","SE.1","BLUP.2","SE.2")
+colnames(BLUPS) <- c("ID", "BLUP.1", "SE.1", "BLUP.2", "SE.2")
 summary(BLUPS)
 
 
 ###########
-Y<-BLUPS$BLUP.1
-X<-BLUPS$BLUP.2
-se.Y<-BLUPS$SE.1
-se.X<-BLUPS$SE.2
+Y <- BLUPS$BLUP.1
+X <- BLUPS$BLUP.2
+se.Y <- BLUPS$SE.1
+se.X <- BLUPS$SE.2
 
-plot(X,Y,xlab="",ylab="",las=1.2, bty="o", col="white")
-arrows(x0=X,y0=Y-se.Y,x1=X,y1=Y+se.Y,col=rgb(0,0,0,0.2),code=3,angle=90,length=0)
-arrows(x0=X-se.X,y0=Y,x1=X+se.X,y1=Y,col=rgb(0,0,0,0.2),code=3,angle=90,length=0)
-points(X,Y,pch=1,col=rgb(1,0,1,0.2), cex=1.5)
-points(X,Y,pch=16,col=rgb(1,0,1,0.2), cex=1.5)
-#abline(v=0,lty=3);abline(h=0,lty=3)
-mtext("Male tarsus (BV±SE)",  side=2, line=2,las=3)
-mtext("Female tarsus (BV±SE)",  side=1, line=2.2)
-
+plot(X, Y, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
+arrows(x0 = X, y0 = Y - se.Y, x1 = X, y1 = Y + se.Y, col = rgb(0, 0, 0, 0.2), code = 3, angle = 90, length = 0)
+arrows(x0 = X - se.X, y0 = Y, x1 = X + se.X, y1 = Y, col = rgb(0, 0, 0, 0.2), code = 3, angle = 90, length = 0)
+points(X, Y, pch = 1, col = rgb(1, 0, 1, 0.2), cex = 1.5)
+points(X, Y, pch = 16, col = rgb(1, 0, 1, 0.2), cex = 1.5)
+# abline(v=0,lty=3);abline(h=0,lty=3)
+mtext("Male tarsus (BV±SE)", side = 2, line = 2, las = 3)
+mtext("Female tarsus (BV±SE)", side = 1, line = 2.2)
 ```
 
 
 The B matrix used the same code but in a multivariate animal model framework. Here some example code, however due to the nature of the dataset, the cross-sex genetic covariance for birth weight is hard to estimate making difficulty to fit this multivariate animal model.
 
 ```{r}
-temp<-asreml(cbind(tarsus.1,bwt.1,tarsus.2,bwt.2)~trait,
-          random=~us(trait):vm(animal,ainv)+
-		  diag(trait):byear +	diag(trait):mother,
-		  residual = ~units:us(trait),
-		  data=gryphon,na.action=na.method(y="include",x="include"),maxiter=20,
-          start.values=T)
-G<-temp$vparameters[(1:18),]
-R<-temp$vparameters[-(1:18),]
+temp <- asreml(cbind(tarsus.1, bwt.1, tarsus.2, bwt.2) ~ trait,
+  random = ~ us(trait):vm(animal, ainv) +
+    diag(trait):byear + diag(trait):mother,
+  residual = ~ units:us(trait),
+  data = gryphon, na.action = na.method(y = "include", x = "include"), maxiter = 20,
+  start.values = T
+)
+G <- temp$vparameters[(1:18), ]
+R <- temp$vparameters[-(1:18), ]
 #
-G$Constraint<-"U"
-R$Value[5:6]<-0
-R$Constraint[5:6]<-"F"
-R$Value[8:9]<-0
-R$Constraint[8:9]<-"F"
+G$Constraint <- "U"
+R$Value[5:6] <- 0
+R$Constraint[5:6] <- "F"
+R$Value[8:9] <- 0
+R$Constraint[8:9] <- "F"
 #
-#model.MultV_Sex<-asreml(cbind(tarsus.1,bwt.1,tarsus.2,bwt.2)~trait,
+# model.MultV_Sex<-asreml(cbind(tarsus.1,bwt.1,tarsus.2,bwt.2)~trait,
 #          random=~us(trait):vm(animal,ainv)+
-#		  diag(trait):byear +	diag(trait):mother,
-#		  residual = ~units:us(trait),
-#		  data=gryphon,na.action=na.method(y="include",x="include"),maxiter=20,
+# 		  diag(trait):byear +	diag(trait):mother,
+# 		  residual = ~units:us(trait),
+# 		  data=gryphon,na.action=na.method(y="include",x="include"),maxiter=20,
 #     G.param=G,R.param=R)
-#model.MultV_Sex<-update.asreml(model.MultV_Sex)
+# model.MultV_Sex<-update.asreml(model.MultV_Sex)
 #
-#summary(model.MultV_Sex)$varcomp
-
+# summary(model.MultV_Sex)$varcomp
 ```
 
