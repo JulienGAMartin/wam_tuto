@@ -319,7 +319,7 @@ us(sex):str(mother+grandmother) is possible)
 -->
 
 <!--
-```{r cache=TRUE}
+```{r, eval = FALSE, cache=TRUE}
 prior1.5 <- list(
   G = list(G1 = list(V =  diag(2), nu = 0.002)),
   R = list(V = 1, nu = 0.002))

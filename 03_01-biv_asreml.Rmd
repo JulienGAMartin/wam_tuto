@@ -8,16 +8,14 @@ First we need to load the `asreml` library:
 library(asreml)
 ```
 
-For running multivariate analyses in ASReml-R, the code is slightly more complex than for the univariate case. This is because ASReml-R allows us to make different assumptions about the way in which traits might be related. So we need to explicitly code a model of the (co)variance structure we want to fit by specified some starting values. These are can be very approximate _guestimates_, but having reasonable starting values can aid convergence. Finally, we have increased the default maximum number of iterations (`maxiter`) which can help to achieve convergence for more complicated models. Another way to increase the number of iteration will be to use the `update` function. Notes that if the `LogLik` is not stabilized after several iterations, it is good indication of the model require more iteration.
+For running multivariate analyses in ASReml-R, the code is slightly more complex than for the univariate case. This is because ASReml-R allows us to make different assumptions about the way in which traits might be related. We need to explicitly specify a covariance structure with difference covariance functions `us()`, `idh()` or `corgh()` which for example would estimate an unconstrained (co)variance matrix, an identity matrix and a variance and correlation matrix repestively. We can also specify some starting values for the variance matrices. These can be very approximate _guestimates_ or not at all, but having reasonable starting values can help convergence. It is also possible to let the model running without specifying starting values. Finally, we have increased the default maximum number of iterations (`maxiter`) which can help to achieve convergence for more complicated models. Another way to increase the number of iteration will be to use the `update` function. Notes that if the `LogLik` is not stabilized after several iterations, it is good indication of the model require more iteration.
 
-
-It is also possible to let the model running without any specify starting values but usually univariate model will allow to get some _guestimates_ in the additive genetic variances. 
 
 ```{r}
 ainv <- ainverse(gryphonped)
 modela <- asreml(
   fixed = cbind(bwt, tarsus) ~ trait,
-  random = ~ us(trait):vm(animal, ainv), init = c(1, 0.1, 1),
+  random = ~ us(trait, init = c(1, 0.1, 1)):vm(animal, ainv),
   residual = ~ id(units):us(trait, init = c(1, 0.1, 1)),
   data = gryphon,
   na.action = na.method(x = "include", y = "include"),
@@ -400,7 +398,8 @@ In addition, it is also possible to test if sexes has significant differences wi
 
 <!-- Issue with this model!!!  my code should be ok !-->
 
-```{r}
+```{r, eval = FALSE}
+# code provided as an example for the moment since the model cannot run on this data
 model_modif<-update.asreml(model_sex,start.values=T)
 G<-model_modif$vparameters[(1:12),]
 G$fac <- factor(c(
