@@ -18,7 +18,7 @@ cover-image: "images/missing.png"
 params:
   echo_sol: true
   fit_all: false
-  html_pdf: FALSE
+  html_pdf: false
 ---
 
 # Preface {-}
