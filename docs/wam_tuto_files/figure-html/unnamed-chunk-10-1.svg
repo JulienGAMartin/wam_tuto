@@ -9,6 +9,9 @@
       stroke-linejoin: round;
       stroke-miterlimit: 10.00;
     }
+    .svglite text {
+      white-space: pre;
+    }
   ]]></style>
 </defs>
 <rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
@@ -69,10 +72,10 @@
 <rect x='230.13' y='145.68' width='6.43' height='2.02' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: square; stroke-linejoin: miter; fill: #0072B2;' />
 </g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MC4wMHwzNjAuMDA=)'>
-<text x='22.42' y='149.82' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>0</text>
-<text x='22.42' y='109.38' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='7.37px' lengthAdjust='spacingAndGlyphs'>20</text>
-<text x='22.42' y='68.95' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='7.37px' lengthAdjust='spacingAndGlyphs'>40</text>
-<text x='22.42' y='28.52' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='7.37px' lengthAdjust='spacingAndGlyphs'>60</text>
+<text x='22.42' y='149.82' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='22.42' y='109.38' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='7.37px' lengthAdjust='spacingAndGlyphs'>20</text>
+<text x='22.42' y='68.95' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='7.37px' lengthAdjust='spacingAndGlyphs'>40</text>
+<text x='22.42' y='28.52' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='7.37px' lengthAdjust='spacingAndGlyphs'>60</text>
 <polyline points='24.61,147.71 27.35,147.71 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='24.61,107.27 27.35,107.27 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='24.61,66.84 27.35,66.84 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
@@ -80,11 +83,11 @@
 <polyline points='80.55,157.22 80.55,154.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='136.93,157.22 136.93,154.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='193.32,157.22 193.32,154.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<text x='80.55' y='163.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='11.30px' lengthAdjust='spacingAndGlyphs'>-2.5</text>
-<text x='136.93' y='163.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>0.0</text>
-<text x='193.32' y='163.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>2.5</text>
-<text x='136.93' y='172.98' text-anchor='middle' style='font-size: 7.26px; font-family: Liberation Sans;' textLength='34.41px' lengthAdjust='spacingAndGlyphs'>Residuals</text>
-<text transform='translate(10.76,79.98) rotate(-90)' text-anchor='middle' style='font-size: 7.26px; font-family: Liberation Sans;' textLength='21.53px' lengthAdjust='spacingAndGlyphs'>Count</text>
+<text x='80.55' y='163.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='11.30px' lengthAdjust='spacingAndGlyphs'>-2.5</text>
+<text x='136.93' y='163.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>0.0</text>
+<text x='193.32' y='163.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>2.5</text>
+<text x='136.93' y='172.98' text-anchor='middle' style='font-size: 7.26px; font-family: "Liberation Sans";' textLength='34.41px' lengthAdjust='spacingAndGlyphs'>Residuals</text>
+<text transform='translate(10.76,79.98) rotate(-90)' text-anchor='middle' style='font-size: 7.26px; font-family: "Liberation Sans";' textLength='21.53px' lengthAdjust='spacingAndGlyphs'>Count</text>
 </g>
 <defs>
   <clipPath id='cpMC4wMHwyNTIuMDB8MTgwLjAwfDM2MC4wMA=='>
@@ -965,20 +968,20 @@
 <line x1='136.14' y1='334.48' x2='136.14' y2='185.48' style='stroke-width: 1.07; stroke: #FFFFFF; stroke-linecap: butt;' />
 </g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MC4wMHwzNjAuMDA=)'>
-<text x='20.82' y='305.79' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='5.77px' lengthAdjust='spacingAndGlyphs'>-4</text>
-<text x='20.82' y='262.55' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>0</text>
-<text x='20.82' y='219.31' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>4</text>
+<text x='20.82' y='305.79' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='5.77px' lengthAdjust='spacingAndGlyphs'>-4</text>
+<text x='20.82' y='262.55' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='20.82' y='219.31' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>4</text>
 <polyline points='23.01,303.67 25.75,303.67 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='23.01,260.44 25.75,260.44 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='23.01,217.20 25.75,217.20 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='74.30,337.22 74.30,334.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='136.14,337.22 136.14,334.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='197.97,337.22 197.97,334.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<text x='74.30' y='343.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='5.77px' lengthAdjust='spacingAndGlyphs'>-2</text>
-<text x='136.14' y='343.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>0</text>
-<text x='197.97' y='343.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>2</text>
-<text x='136.14' y='352.98' text-anchor='middle' style='font-size: 7.26px; font-family: Liberation Sans;' textLength='40.51px' lengthAdjust='spacingAndGlyphs'>Theoretical</text>
-<text transform='translate(10.76,259.98) rotate(-90)' text-anchor='middle' style='font-size: 7.26px; font-family: Liberation Sans;' textLength='27.19px' lengthAdjust='spacingAndGlyphs'>Sample</text>
+<text x='74.30' y='343.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='5.77px' lengthAdjust='spacingAndGlyphs'>-2</text>
+<text x='136.14' y='343.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='197.97' y='343.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>2</text>
+<text x='136.14' y='352.98' text-anchor='middle' style='font-size: 7.26px; font-family: "Liberation Sans";' textLength='40.51px' lengthAdjust='spacingAndGlyphs'>Theoretical</text>
+<text transform='translate(10.76,259.98) rotate(-90)' text-anchor='middle' style='font-size: 7.26px; font-family: "Liberation Sans";' textLength='27.19px' lengthAdjust='spacingAndGlyphs'>Sample</text>
 </g>
 <defs>
   <clipPath id='cpMjUyLjAwfDUwNC4wMHwwLjAwfDE4MC4wMA=='>
@@ -1868,20 +1871,20 @@
 <line x1='283.28' y1='78.54' x2='498.52' y2='78.54' style='stroke-width: 1.07; stroke: #7F7F7F; stroke-linecap: butt;' />
 </g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MC4wMHwzNjAuMDA=)'>
-<text x='278.35' y='120.27' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='11.30px' lengthAdjust='spacingAndGlyphs'>-2.5</text>
-<text x='278.35' y='80.65' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>0.0</text>
-<text x='278.35' y='41.04' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>2.5</text>
+<text x='278.35' y='120.27' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='11.30px' lengthAdjust='spacingAndGlyphs'>-2.5</text>
+<text x='278.35' y='80.65' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>0.0</text>
+<text x='278.35' y='41.04' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>2.5</text>
 <polyline points='280.54,118.15 283.28,118.15 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='280.54,78.54 283.28,78.54 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='280.54,38.93 283.28,38.93 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='334.60,157.22 334.60,154.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='392.53,157.22 392.53,154.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='450.46,157.22 450.46,154.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<text x='334.60' y='163.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>5.0</text>
-<text x='392.53' y='163.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>7.5</text>
-<text x='450.46' y='163.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='12.90px' lengthAdjust='spacingAndGlyphs'>10.0</text>
-<text x='390.90' y='172.98' text-anchor='middle' style='font-size: 7.26px; font-family: Liberation Sans;' textLength='20.41px' lengthAdjust='spacingAndGlyphs'>Fitted</text>
-<text transform='translate(262.76,79.98) rotate(-90)' text-anchor='middle' style='font-size: 7.26px; font-family: Liberation Sans;' textLength='34.41px' lengthAdjust='spacingAndGlyphs'>Residuals</text>
+<text x='334.60' y='163.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>5.0</text>
+<text x='392.53' y='163.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>7.5</text>
+<text x='450.46' y='163.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='12.90px' lengthAdjust='spacingAndGlyphs'>10.0</text>
+<text x='390.90' y='172.98' text-anchor='middle' style='font-size: 7.26px; font-family: "Liberation Sans";' textLength='20.41px' lengthAdjust='spacingAndGlyphs'>Fitted</text>
+<text transform='translate(262.76,79.98) rotate(-90)' text-anchor='middle' style='font-size: 7.26px; font-family: "Liberation Sans";' textLength='34.41px' lengthAdjust='spacingAndGlyphs'>Residuals</text>
 </g>
 <defs>
   <clipPath id='cpMjUyLjAwfDUwNC4wMHwxODAuMDB8MzYwLjAw'>
@@ -2772,9 +2775,9 @@
 <line x1='283.28' y1='258.54' x2='498.52' y2='258.54' style='stroke-width: 1.07; stroke: #7F7F7F; stroke-linecap: butt;' />
 </g>
 <g clip-path='url(#cpMC4wMHw1MDQuMDB8MC4wMHwzNjAuMDA=)'>
-<text x='278.35' y='300.27' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='11.30px' lengthAdjust='spacingAndGlyphs'>-2.5</text>
-<text x='278.35' y='260.65' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>0.0</text>
-<text x='278.35' y='221.04' text-anchor='end' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>2.5</text>
+<text x='278.35' y='300.27' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='11.30px' lengthAdjust='spacingAndGlyphs'>-2.5</text>
+<text x='278.35' y='260.65' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>0.0</text>
+<text x='278.35' y='221.04' text-anchor='end' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='9.22px' lengthAdjust='spacingAndGlyphs'>2.5</text>
 <polyline points='280.54,298.15 283.28,298.15 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='280.54,258.54 283.28,258.54 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='280.54,218.93 283.28,218.93 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
@@ -2782,11 +2785,11 @@
 <polyline points='350.18,337.22 350.18,334.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='407.53,337.22 407.53,334.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='464.88,337.22 464.88,334.48 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<text x='292.83' y='343.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>0</text>
-<text x='350.18' y='343.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='11.06px' lengthAdjust='spacingAndGlyphs'>250</text>
-<text x='407.53' y='343.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='11.06px' lengthAdjust='spacingAndGlyphs'>500</text>
-<text x='464.88' y='343.64' text-anchor='middle' style='font-size: 5.81px; fill: #4D4D4D; font-family: Liberation Sans;' textLength='11.06px' lengthAdjust='spacingAndGlyphs'>750</text>
-<text x='390.90' y='352.98' text-anchor='middle' style='font-size: 7.26px; font-family: Liberation Sans;' textLength='18.54px' lengthAdjust='spacingAndGlyphs'>Units</text>
-<text transform='translate(262.76,259.98) rotate(-90)' text-anchor='middle' style='font-size: 7.26px; font-family: Liberation Sans;' textLength='34.41px' lengthAdjust='spacingAndGlyphs'>Residuals</text>
+<text x='292.83' y='343.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='3.69px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='350.18' y='343.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='11.06px' lengthAdjust='spacingAndGlyphs'>250</text>
+<text x='407.53' y='343.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='11.06px' lengthAdjust='spacingAndGlyphs'>500</text>
+<text x='464.88' y='343.64' text-anchor='middle' style='font-size: 5.81px;fill: #4D4D4D; font-family: "Liberation Sans";' textLength='11.06px' lengthAdjust='spacingAndGlyphs'>750</text>
+<text x='390.90' y='352.98' text-anchor='middle' style='font-size: 7.26px; font-family: "Liberation Sans";' textLength='18.54px' lengthAdjust='spacingAndGlyphs'>Units</text>
+<text transform='translate(262.76,259.98) rotate(-90)' text-anchor='middle' style='font-size: 7.26px; font-family: "Liberation Sans";' textLength='34.41px' lengthAdjust='spacingAndGlyphs'>Residuals</text>
 </g>
 </svg>

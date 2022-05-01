@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2.5 brms | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2.5 brms | How to fit an animal model" />
   <meta property="og:type" content="book" />
-  
   <meta property="og:image" content="/images/missing.png" />
   <meta property="og:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="mcmcglmm-1.html"/>
 <link rel="next" href="stan.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,8 +50,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -212,6 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.4" data-path="asreml-biv.html"><a href="asreml-biv.html#estimate-directly-the-genetic-correlation-within-the-model"><i class="fa fa-check"></i><b>3.2.4</b> Estimate directly the genetic correlation within the model</a></li>
 <li class="chapter" data-level="3.2.5" data-path="asreml-biv.html"><a href="asreml-biv.html#visualisation-of-the-correlation-aka-blup-extraction"><i class="fa fa-check"></i><b>3.2.5</b> Visualisation of the correlation (aka BLUP extraction)</a></li>
 <li class="chapter" data-level="3.2.6" data-path="asreml-biv.html"><a href="asreml-biv.html#partitionning-covariance-between-groups"><i class="fa fa-check"></i><b>3.2.6</b> Partitionning (co)variance between groups</a></li>
+<li class="chapter" data-level="3.2.7" data-path="asreml-biv.html"><a href="asreml-biv.html#between-groups-covariances-and-the-b-matrix"><i class="fa fa-check"></i><b>3.2.7</b> Between groups (co)variances and the B-matrix</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="gremlin-2.html"><a href="gremlin-2.html"><i class="fa fa-check"></i><b>3.3</b> gremlin</a></li>
 <li class="chapter" data-level="3.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html"><i class="fa fa-check"></i><b>3.4</b> MCMCglmm</a>
@@ -220,8 +220,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.2" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#adding-fixed-and-random-effects-1"><i class="fa fa-check"></i><b>3.4.2</b> Adding fixed and random effects</a></li>
 <li class="chapter" data-level="3.4.3" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#direct-estimate-of-the-correlation-instead-of-the-covariance."><i class="fa fa-check"></i><b>3.4.3</b> Direct estimate of the correlation instead of the covariance.</a></li>
 <li class="chapter" data-level="3.4.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#partitioning-covariances"><i class="fa fa-check"></i><b>3.4.4</b> Partitioning (co)variances</a></li>
+<li class="chapter" data-level="3.4.5" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#between-groups-covariances-and-the-b-matrix-1"><i class="fa fa-check"></i><b>3.4.5</b> Between groups (co)variances and the B-matrix</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a></li>
+<li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="brms-2.html"><a href="brms-2.html#fitting-the-model-1"><i class="fa fa-check"></i><b>3.5.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.5.2" data-path="brms-2.html"><a href="brms-2.html#adding-fixed-and-random-effects-2"><i class="fa fa-check"></i><b>3.5.2</b> Adding fixed and random effects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="brms-2.html"><a href="brms-2.html#partitioning-covariances-1"><i class="fa fa-check"></i><b>3.5.3</b> Partitioning (co)variances</a></li>
+<li class="chapter" data-level="3.5.4" data-path="brms-2.html"><a href="brms-2.html#between-groups-covariances-and-the-b-matrix-2"><i class="fa fa-check"></i><b>3.5.4</b> Between groups (co)variances and the B-matrix</a></li>
+</ul></li>
 <li class="chapter" data-level="3.6" data-path="stan-1.html"><a href="stan-1.html"><i class="fa fa-check"></i><b>3.6</b> stan</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="rep_measures.html"><a href="rep_measures.html"><i class="fa fa-check"></i><b>4</b> A repeated measures animal model</a>
@@ -234,15 +241,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="asreml-r-2.html"><a href="asreml-r-2.html"><i class="fa fa-check"></i><b>4.2</b> Asreml-R</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="asreml-r-2.html"><a href="asreml-r-2.html#estimating-repeatability"><i class="fa fa-check"></i><b>4.2.1</b> Estimating repeatability</a></li>
-<li class="chapter" data-level="4.2.2" data-path="asreml-r-2.html"><a href="asreml-r-2.html#partitioning-additive-and-permanent-environment-effects"><i class="fa fa-check"></i><b>4.2.2</b> Partitioning additive and permanent environment effects</a></li>
-<li class="chapter" data-level="4.2.3" data-path="asreml-r-2.html"><a href="asreml-r-2.html#adding-additional-effects-and-testing-significance"><i class="fa fa-check"></i><b>4.2.3</b> Adding additional effects and testing significance</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="gremlin-3.html"><a href="gremlin-3.html"><i class="fa fa-check"></i><b>4.3</b> gremlin</a></li>
 <li class="chapter" data-level="4.4" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html"><i class="fa fa-check"></i><b>4.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="4.4.1" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#estimating-repeatability-1"><i class="fa fa-check"></i><b>4.4.1</b> Estimating repeatability</a></li>
-<li class="chapter" data-level="4.4.2" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#partitioning-additive-and-permanent-environment-effects-1"><i class="fa fa-check"></i><b>4.4.2</b> Partitioning additive and permanent environment effects</a></li>
-<li class="chapter" data-level="4.4.3" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#adding-additional-effects-and-testing-significance-1"><i class="fa fa-check"></i><b>4.4.3</b> Adding additional effects and testing significance</a></li>
+<li class="chapter" data-level="4.4.2" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#partitioning-additive-and-permanent-environment-effects"><i class="fa fa-check"></i><b>4.4.2</b> Partitioning additive and permanent environment effects</a></li>
+<li class="chapter" data-level="4.4.3" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#adding-additional-effects-and-testing-significance"><i class="fa fa-check"></i><b>4.4.3</b> Adding additional effects and testing significance</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="brms-3.html"><a href="brms-3.html"><i class="fa fa-check"></i><b>4.5</b> brms</a></li>
 <li class="chapter" data-level="4.6" data-path="stan-2.html"><a href="stan-2.html"><i class="fa fa-check"></i><b>4.6</b> stan</a></li>
@@ -285,47 +290,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="brms-1" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> brms</h2>
-<div id="running-the-model-2" class="section level3" number="2.5.1">
-<h3><span class="header-section-number">2.5.1</span> Running the model</h3>
+<div id="brms-1" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> brms<a href="brms-1.html#brms-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="running-the-model-2" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Running the model<a href="brms-1.html#running-the-model-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>First we need to load the <code>brms</code> library:</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="brms-1.html#cb129-1" aria-hidden="true"></a><span class="kw">library</span>(brms)</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="brms-1.html#cb128-1" aria-hidden="true"></a><span class="kw">library</span>(brms)</span></code></pre></div>
 <p>To be able to fit an animal model, <code>brms</code> needs the relativeness (relationship) matrix of the pedigree and not its inverse (as in other softwares).
-This can be estimated using the <code>nadiv</code> package created by Matthew Wolak (<a href="https://cran.r-project.org/web/packages/nadiv/index.html" class="uri">https://cran.r-project.org/web/packages/nadiv/index.html</a>).</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="brms-1.html#cb130-1" aria-hidden="true"></a>Amat &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(nadiv<span class="op">::</span><span class="kw">makeA</span>(gryphonped))</span></code></pre></div>
+This can be estimated using the <code>nadiv</code> package created by Pr. Matthew Wolak (<a href="https://cran.r-project.org/web/packages/nadiv/index.html" class="uri">https://cran.r-project.org/web/packages/nadiv/index.html</a>).</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="brms-1.html#cb129-1" aria-hidden="true"></a>Amat &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(nadiv<span class="op">::</span><span class="kw">makeA</span>(gryphonped))</span></code></pre></div>
 <p>We are now ready to specify our first model:
 The structure of a <code>bmrs</code> model is similar to <code>lme4</code>, thus the random effect is added to the model with the term <code>(1 | gr(animal, cov = Amat)</code> which associate the id animal to the matrix of relativeness.
 In addition to the synthase of <code>lme4</code>, we includes other features or parameters within the models such as <code>chain</code> which represent the number of Markov chains (defaults to 4), <code>core</code> which represents the number of cores to use when executing the chains in parallel and <code>iter</code> which represents the number of total iterations per chain. For more parameters such as <code>thin</code> or <code>warmup/burnin</code>, you can read the Cran R page of the package (<a href="https://cran.r-project.org/web/packages/brms/brms.pdf" class="uri">https://cran.r-project.org/web/packages/brms/brms.pdf</a>)</p>
-<!-- C8 : we did not fit a prior to the model, is it normal? !-->
-<p>Given that <code>bmrs</code> fit the model using a Bayesian approach via the software <code>stan</code>, we need to specify priors for the model.
+<p><code>bmrs</code> is a Bayesian Multilevel Models using Stan, doing so we can apply a prior to the model to better shape the distribution of the different variances estimated by the model.
+Given that <code>bmrs</code> fit the model using a Bayesian approach via the software <code>stan</code>, we need to specify priors for the model.
 Default priors in <code>brms</code> work relatively well, however we strongly suggest to carefully select an adequate prior for your analysis.
 In this tutorial we will use the default priors.
 To get the prior used by default, we can use the <code>get_prior()</code> function.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="brms-1.html#cb131-1" aria-hidden="true"></a>priors_m1<span class="fl">.1</span>&lt;-<span class="kw">get_prior</span>( bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)),</span>
-<span id="cb131-2"><a href="brms-1.html#cb131-2" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
-<span id="cb131-3"><a href="brms-1.html#cb131-3" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
-<span id="cb131-4"><a href="brms-1.html#cb131-4" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>())  </span>
-<span id="cb131-5"><a href="brms-1.html#cb131-5" aria-hidden="true"></a>  </span>
-<span id="cb131-6"><a href="brms-1.html#cb131-6" aria-hidden="true"></a>brms_m1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</span>
-<span id="cb131-7"><a href="brms-1.html#cb131-7" aria-hidden="true"></a>  bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)),</span>
-<span id="cb131-8"><a href="brms-1.html#cb131-8" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
-<span id="cb131-9"><a href="brms-1.html#cb131-9" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
-<span id="cb131-10"><a href="brms-1.html#cb131-10" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(),</span>
-<span id="cb131-11"><a href="brms-1.html#cb131-11" aria-hidden="true"></a>  <span class="dt">prior =</span> priors_m1<span class="fl">.1</span>,</span>
-<span id="cb131-12"><a href="brms-1.html#cb131-12" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">1</span>, <span class="dt">cores =</span> <span class="dv">1</span>, <span class="dt">iter =</span> <span class="dv">100</span></span>
-<span id="cb131-13"><a href="brms-1.html#cb131-13" aria-hidden="true"></a>)</span>
-<span id="cb131-14"><a href="brms-1.html#cb131-14" aria-hidden="true"></a></span>
-<span id="cb131-15"><a href="brms-1.html#cb131-15" aria-hidden="true"></a><span class="kw">save</span>(brms_m1<span class="fl">.1</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m1_1.rda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="brms-1.html#cb130-1" aria-hidden="true"></a>brms_m1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</span>
+<span id="cb130-2"><a href="brms-1.html#cb130-2" aria-hidden="true"></a>  bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)),</span>
+<span id="cb130-3"><a href="brms-1.html#cb130-3" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
+<span id="cb130-4"><a href="brms-1.html#cb130-4" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
+<span id="cb130-5"><a href="brms-1.html#cb130-5" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(),</span>
+<span id="cb130-6"><a href="brms-1.html#cb130-6" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">1</span>, <span class="dt">cores =</span> <span class="dv">1</span>, <span class="dt">iter =</span> <span class="dv">100</span></span>
+<span id="cb130-7"><a href="brms-1.html#cb130-7" aria-hidden="true"></a>)</span>
+<span id="cb130-8"><a href="brms-1.html#cb130-8" aria-hidden="true"></a></span>
+<span id="cb130-9"><a href="brms-1.html#cb130-9" aria-hidden="true"></a><span class="kw">save</span>(brms_m1<span class="fl">.1</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m1_1.rda&quot;</span>)</span></code></pre></div>
 <p>The result of the long model calculation is save in a spare file <code>brms_m1_1.rda"</code>. To help readers, we can directly reloading it.
 Two distinct plot can be produce to produce some diagnostics graphs <code>mcmc_plot</code>.Note, that <code>sigma</code> represents the residual standard deviation.</p>
 <p>Next,we examine (or directly using the model) the variance estimate and their distributions (via <code>summary</code> or plot).</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="brms-1.html#cb132-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_1.rda&quot;</span>)</span>
-<span id="cb132-2"><a href="brms-1.html#cb132-2" aria-hidden="true"></a><span class="kw">plot</span>(brms_m1<span class="fl">.1</span>)</span></code></pre></div>
-<p><img src="wam_tuto_files/figure-html/unnamed-chunk-57-1.svg" width="672" /></p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="brms-1.html#cb133-1" aria-hidden="true"></a><span class="kw">mcmc_plot</span>(brms_m1<span class="fl">.1</span>, <span class="dt">type =</span> <span class="st">&quot;acf&quot;</span>)</span></code></pre></div>
-<p><img src="wam_tuto_files/figure-html/unnamed-chunk-57-2.svg" width="672" /></p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="brms-1.html#cb134-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="brms-1.html#cb131-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_1.rda&quot;</span>)</span>
+<span id="cb131-2"><a href="brms-1.html#cb131-2" aria-hidden="true"></a><span class="kw">plot</span>(brms_m1<span class="fl">.1</span>)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-58-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="brms-1.html#cb132-1" aria-hidden="true"></a><span class="kw">mcmc_plot</span>(brms_m1<span class="fl">.1</span>, <span class="dt">type =</span> <span class="st">&quot;acf&quot;</span>)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-58-2.svg" width="672" /></p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="brms-1.html#cb133-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.1</span>)</span></code></pre></div>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: bwt ~ 1 + (1 | gr(animal, cov = Amat)) 
@@ -355,10 +354,10 @@ The <code>summary</code> exposes the mean (Estimate) of each variance or fixed e
 <code>ESS</code> represents the Effective sample values as the number of independent samples from the posterior distribution.
 However, for the purpose of this guide, the Rhat values are acceptable.</p>
 <p>It is also possible to calculate the heritability using the function ‘as.mcmc’</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="brms-1.html#cb136-1" aria-hidden="true"></a>v_animal &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.1</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>animal<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb136-2"><a href="brms-1.html#cb136-2" aria-hidden="true"></a>v_r &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.1</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>residual<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb136-3"><a href="brms-1.html#cb136-3" aria-hidden="true"></a>h.bwt<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">as.mcmc</span>(v_animal <span class="op">/</span><span class="st"> </span>(v_animal <span class="op">+</span><span class="st"> </span>v_r))</span>
-<span id="cb136-4"><a href="brms-1.html#cb136-4" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="brms-1.html#cb135-1" aria-hidden="true"></a>v_animal &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.1</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>animal<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb135-2"><a href="brms-1.html#cb135-2" aria-hidden="true"></a>v_r &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.1</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>residual<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb135-3"><a href="brms-1.html#cb135-3" aria-hidden="true"></a>h.bwt<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">as.mcmc</span>(v_animal <span class="op">/</span><span class="st"> </span>(v_animal <span class="op">+</span><span class="st"> </span>v_r))</span>
+<span id="cb135-4"><a href="brms-1.html#cb135-4" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.1</span>)</span></code></pre></div>
 <pre><code>## 
 ## Iterations = 1:1000
 ## Thinning interval = 1 
@@ -375,31 +374,47 @@ However, for the purpose of this guide, the Rhat values are acceptable.</p>
 ## 
 ##   2.5%    25%    50%    75%  97.5% 
 ## 0.3433 0.4338 0.4841 0.5350 0.6369</code></pre>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="brms-1.html#cb138-1" aria-hidden="true"></a><span class="kw">plot</span>(h.bwt<span class="fl">.1</span>)</span></code></pre></div>
-<p><img src="wam_tuto_files/figure-html/unnamed-chunk-58-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="brms-1.html#cb137-1" aria-hidden="true"></a><span class="kw">plot</span>(h.bwt<span class="fl">.1</span>)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-59-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="brms-1.html#cb138-1" aria-hidden="true"></a><span class="co"># or</span></span>
+<span id="cb138-2"><a href="brms-1.html#cb138-2" aria-hidden="true"></a>Var.table &lt;-<span class="st"> </span><span class="kw">as_draws_df</span>(brms_m1<span class="fl">.1</span>)</span>
+<span id="cb138-3"><a href="brms-1.html#cb138-3" aria-hidden="true"></a>Var.table<span class="op">$</span>h.bwt<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">as.mcmc</span>((Var.table<span class="op">$</span>sd_animal__Intercept)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>((Var.table<span class="op">$</span>sd_animal__Intercept)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(Var.table<span class="op">$</span>sigma)<span class="op">^</span><span class="dv">2</span>))</span>
+<span id="cb138-4"><a href="brms-1.html#cb138-4" aria-hidden="true"></a><span class="kw">summary</span>(Var.table<span class="op">$</span>h.bwt<span class="fl">.1</span>)</span></code></pre></div>
+<pre><code>## 
+## Iterations = 1:1000
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 1000 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##           Mean             SD       Naive SE Time-series SE 
+##       0.484221       0.074533       0.002357       0.009275 
+## 
+## 2. Quantiles for each variable:
+## 
+##   2.5%    25%    50%    75%  97.5% 
+## 0.3433 0.4338 0.4841 0.5350 0.6369</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="brms-1.html#cb140-1" aria-hidden="true"></a><span class="kw">plot</span>(Var.table<span class="op">$</span>h.bwt<span class="fl">.1</span>)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-59-2.svg" width="672" /></p>
 </div>
-<div id="adding-fixed-effects-2" class="section level3" number="2.5.2">
-<h3><span class="header-section-number">2.5.2</span> Adding fixed effects</h3>
+<div id="adding-fixed-effects-2" class="section level3 hasAnchor" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Adding fixed effects<a href="brms-1.html#adding-fixed-effects-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To add effects to a univariate model, we simply modify the priors and the fixed effect portion of the model specification:</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="brms-1.html#cb139-1" aria-hidden="true"></a>priors_m1<span class="fl">.2</span>&lt;-<span class="kw">get_prior</span>( bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)),</span>
-<span id="cb139-2"><a href="brms-1.html#cb139-2" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
-<span id="cb139-3"><a href="brms-1.html#cb139-3" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
-<span id="cb139-4"><a href="brms-1.html#cb139-4" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>())  </span>
-<span id="cb139-5"><a href="brms-1.html#cb139-5" aria-hidden="true"></a>  </span>
-<span id="cb139-6"><a href="brms-1.html#cb139-6" aria-hidden="true"></a>brms_m1<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</span>
-<span id="cb139-7"><a href="brms-1.html#cb139-7" aria-hidden="true"></a>  bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)),</span>
-<span id="cb139-8"><a href="brms-1.html#cb139-8" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
-<span id="cb139-9"><a href="brms-1.html#cb139-9" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
-<span id="cb139-10"><a href="brms-1.html#cb139-10" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(),</span>
-<span id="cb139-11"><a href="brms-1.html#cb139-11" aria-hidden="true"></a>  <span class="dt">prior =</span> priors_m1<span class="fl">.2</span>,</span>
-<span id="cb139-12"><a href="brms-1.html#cb139-12" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>, <span class="dt">iter =</span> <span class="dv">1000</span></span>
-<span id="cb139-13"><a href="brms-1.html#cb139-13" aria-hidden="true"></a>)</span>
-<span id="cb139-14"><a href="brms-1.html#cb139-14" aria-hidden="true"></a></span>
-<span id="cb139-15"><a href="brms-1.html#cb139-15" aria-hidden="true"></a><span class="kw">save</span>(brms_m1<span class="fl">.2</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m1_2.rda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="brms-1.html#cb141-1" aria-hidden="true"></a>brms_m1<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</span>
+<span id="cb141-2"><a href="brms-1.html#cb141-2" aria-hidden="true"></a>  bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)),</span>
+<span id="cb141-3"><a href="brms-1.html#cb141-3" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
+<span id="cb141-4"><a href="brms-1.html#cb141-4" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
+<span id="cb141-5"><a href="brms-1.html#cb141-5" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(),</span>
+<span id="cb141-6"><a href="brms-1.html#cb141-6" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>, <span class="dt">iter =</span> <span class="dv">1000</span></span>
+<span id="cb141-7"><a href="brms-1.html#cb141-7" aria-hidden="true"></a>)</span>
+<span id="cb141-8"><a href="brms-1.html#cb141-8" aria-hidden="true"></a></span>
+<span id="cb141-9"><a href="brms-1.html#cb141-9" aria-hidden="true"></a><span class="kw">save</span>(brms_m1<span class="fl">.2</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m1_2.rda&quot;</span>)</span></code></pre></div>
 <p>To save time, the results of the calculation is stored in the spare file <code>brms_m1_2.rda"</code>.
 We can assess the significance of <code>sex</code> as a fixed effect by examining its posterior distribution.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="brms-1.html#cb140-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_2.rda&quot;</span>)</span>
-<span id="cb140-2"><a href="brms-1.html#cb140-2" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="brms-1.html#cb142-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_2.rda&quot;</span>)</span>
+<span id="cb142-2"><a href="brms-1.html#cb142-2" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)</span></code></pre></div>
 <pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
 ## careful when analysing the results! We recommend running more iterations and/or
 ## setting stronger priors.</code></pre>
@@ -427,18 +442,18 @@ We can assess the significance of <code>sex</code> as a fixed effect by examinin
 ## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="brms-1.html#cb143-1" aria-hidden="true"></a><span class="kw">plot</span>(brms_m1<span class="fl">.2</span>)</span></code></pre></div>
-<p><img src="wam_tuto_files/figure-html/unnamed-chunk-60-1.svg" width="672" /></p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="brms-1.html#cb144-1" aria-hidden="true"></a><span class="kw">mcmc_plot</span>(brms_m1<span class="fl">.2</span>, <span class="dt">type =</span> <span class="st">&quot;pairs&quot;</span>)</span></code></pre></div>
-<p><img src="wam_tuto_files/figure-html/unnamed-chunk-60-2.svg" width="672" /></p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="brms-1.html#cb145-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>fixed</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="brms-1.html#cb145-1" aria-hidden="true"></a><span class="kw">plot</span>(brms_m1<span class="fl">.2</span>)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-61-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="brms-1.html#cb146-1" aria-hidden="true"></a><span class="kw">mcmc_plot</span>(brms_m1<span class="fl">.2</span>, <span class="dt">type =</span> <span class="st">&quot;pairs&quot;</span>)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-61-2.svg" width="672" /></p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="brms-1.html#cb147-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>fixed</span></code></pre></div>
 <pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
 ## careful when analysing the results! We recommend running more iterations and/or
 ## setting stronger priors.</code></pre>
 <pre><code>##           Estimate Est.Error l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
 ## Intercept 6.064853 0.1726459 5.735170 6.410117 1.002990 357.5666 574.2620
 ## sex2      2.210675 0.1574542 1.898645 2.520026 1.002313 722.8016 657.2121</code></pre>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="brms-1.html#cb148-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>random</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="brms-1.html#cb150-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>random</span></code></pre></div>
 <pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
 ## careful when analysing the results! We recommend running more iterations and/or
 ## setting stronger priors.</code></pre>
@@ -446,7 +461,7 @@ We can assess the significance of <code>sex</code> as a fixed effect by examinin
 ##               Estimate Est.Error l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
 ## sd(Intercept) 1.747083 0.1632548 1.419377 2.050884 1.126639 13.10221 113.2445</code></pre>
 <p>The posterior distribution of the <code>sex2</code> term does not overlap zero. Thus, we can infer that sex has an effect on birth weight (presence of a sexual dimorphism) in this model and is a useful addition to the model, for most purposes. It is also worth noting that the variance components have changed slightly:</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="brms-1.html#cb151-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>random</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="brms-1.html#cb153-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>random</span></code></pre></div>
 <pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
 ## careful when analysing the results! We recommend running more iterations and/or
 ## setting stronger priors.</code></pre>
@@ -454,11 +469,11 @@ We can assess the significance of <code>sex</code> as a fixed effect by examinin
 ##               Estimate Est.Error l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
 ## sd(Intercept) 1.747083 0.1632548 1.419377 2.050884 1.126639 13.10221 113.2445</code></pre>
 <p>In fact since sex effects were previously contributing to the residual variance of the model our estimate of <span class="math inline">\(V_R\)</span> (denoted ’units’ in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate <span class="math inline">\(V_P\)</span> as <span class="math inline">\(V_A +V_R\)</span> then as we include fixed effects we will soak up more residual variance driving <span class="math inline">\(V_P\)</span> . Assuming that <span class="math inline">\(V_A\)</span> is more or less unaffected by the fixed effects fitted then as <span class="math inline">\(V_P\)</span> goes down we expect our estimate of <span class="math inline">\(h^2\)</span> will go up.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="brms-1.html#cb154-1" aria-hidden="true"></a>v_animal &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.2</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>animal<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb154-2"><a href="brms-1.html#cb154-2" aria-hidden="true"></a>v_r &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.2</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>residual<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb154-3"><a href="brms-1.html#cb154-3" aria-hidden="true"></a>h.bwt<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">as.mcmc</span>(v_animal <span class="op">/</span><span class="st"> </span>(v_animal <span class="op">+</span><span class="st"> </span>v_r))</span>
-<span id="cb154-4"><a href="brms-1.html#cb154-4" aria-hidden="true"></a></span>
-<span id="cb154-5"><a href="brms-1.html#cb154-5" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="brms-1.html#cb156-1" aria-hidden="true"></a>v_animal &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.2</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>animal<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb156-2"><a href="brms-1.html#cb156-2" aria-hidden="true"></a>v_r &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.2</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>residual<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb156-3"><a href="brms-1.html#cb156-3" aria-hidden="true"></a>h.bwt<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">as.mcmc</span>(v_animal <span class="op">/</span><span class="st"> </span>(v_animal <span class="op">+</span><span class="st"> </span>v_r))</span>
+<span id="cb156-4"><a href="brms-1.html#cb156-4" aria-hidden="true"></a></span>
+<span id="cb156-5"><a href="brms-1.html#cb156-5" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.2</span>)</span></code></pre></div>
 <pre><code>## 
 ## Iterations = 1:1000
 ## Thinning interval = 1 
@@ -475,7 +490,7 @@ We can assess the significance of <code>sex</code> as a fixed effect by examinin
 ## 
 ##   2.5%    25%    50%    75%  97.5% 
 ## 0.3427 0.4549 0.5107 0.5675 0.6576</code></pre>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="brms-1.html#cb156-1" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="brms-1.html#cb158-1" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.1</span>)</span></code></pre></div>
 <pre><code>## 
 ## Iterations = 1:1000
 ## Thinning interval = 1 
@@ -496,45 +511,46 @@ We can assess the significance of <code>sex</code> as a fixed effect by examinin
 It depends on what your question is. The first is an estimate of the proportion of variance in birth weight explained by additive effects, the latter is an estimate of the proportion of variance in birth weight after conditioning on sex that is explained by additive effects.
 An important piece of advice, each researcher should be consistent in how they name their estimates and always correctly describe which estimates they are using conditional or not (to avoid any confusion).</p>
 </div>
-<div id="adding-random-effects-2" class="section level3" number="2.5.3">
-<h3><span class="header-section-number">2.5.3</span> Adding random effects</h3>
+<div id="adding-random-effects-2" class="section level3 hasAnchor" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> Adding random effects<a href="brms-1.html#adding-random-effects-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>This is done by simply modifying the model statement in the same way, but requires addition of a prior for the new random effect. For instance, we can fit an effect of birth year:</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="brms-1.html#cb158-1" aria-hidden="true"></a>priors_m1<span class="fl">.3</span>&lt;-<span class="kw">get_prior</span>( bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat))<span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>byear) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>mother),</span>
-<span id="cb158-2"><a href="brms-1.html#cb158-2" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
-<span id="cb158-3"><a href="brms-1.html#cb158-3" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
-<span id="cb158-4"><a href="brms-1.html#cb158-4" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>())  </span>
-<span id="cb158-5"><a href="brms-1.html#cb158-5" aria-hidden="true"></a>  </span>
-<span id="cb158-6"><a href="brms-1.html#cb158-6" aria-hidden="true"></a>brms_m1<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</span>
-<span id="cb158-7"><a href="brms-1.html#cb158-7" aria-hidden="true"></a>  bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>byear) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>mother),</span>
-<span id="cb158-8"><a href="brms-1.html#cb158-8" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
-<span id="cb158-9"><a href="brms-1.html#cb158-9" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
-<span id="cb158-10"><a href="brms-1.html#cb158-10" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(),</span>
-<span id="cb158-11"><a href="brms-1.html#cb158-11" aria-hidden="true"></a>  <span class="dt">prior =</span> priors_m1<span class="fl">.3</span>,</span>
-<span id="cb158-12"><a href="brms-1.html#cb158-12" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>, <span class="dt">iter =</span> <span class="dv">1000</span></span>
-<span id="cb158-13"><a href="brms-1.html#cb158-13" aria-hidden="true"></a>)</span>
-<span id="cb158-14"><a href="brms-1.html#cb158-14" aria-hidden="true"></a></span>
-<span id="cb158-15"><a href="brms-1.html#cb158-15" aria-hidden="true"></a><span class="kw">save</span>(brms_m1<span class="fl">.3</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m1_3.rda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="brms-1.html#cb160-1" aria-hidden="true"></a>brms_m1<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</span>
+<span id="cb160-2"><a href="brms-1.html#cb160-2" aria-hidden="true"></a>  bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>byear) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>mother),</span>
+<span id="cb160-3"><a href="brms-1.html#cb160-3" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
+<span id="cb160-4"><a href="brms-1.html#cb160-4" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
+<span id="cb160-5"><a href="brms-1.html#cb160-5" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(),</span>
+<span id="cb160-6"><a href="brms-1.html#cb160-6" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>, <span class="dt">iter =</span> <span class="dv">1000</span></span>
+<span id="cb160-7"><a href="brms-1.html#cb160-7" aria-hidden="true"></a>)</span>
+<span id="cb160-8"><a href="brms-1.html#cb160-8" aria-hidden="true"></a></span>
+<span id="cb160-9"><a href="brms-1.html#cb160-9" aria-hidden="true"></a><span class="kw">save</span>(brms_m1<span class="fl">.3</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m1_3.rda&quot;</span>)</span></code></pre></div>
 <p>To save time, the results of the calculation is stored in the spare file <code>brms_m1_3.rda"</code>.
 We can assess the significance of <code>sex</code> as a fixed effect by examining its posterior distribution.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="brms-1.html#cb159-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_3.rda&quot;</span>)</span>
-<span id="cb159-2"><a href="brms-1.html#cb159-2" aria-hidden="true"></a></span>
-<span id="cb159-3"><a href="brms-1.html#cb159-3" aria-hidden="true"></a><span class="kw">plot</span>(brms_m1<span class="fl">.3</span>, <span class="dt">ask =</span> <span class="ot">FALSE</span>, <span class="dt">N =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="wam_tuto_files/figure-html/unnamed-chunk-64-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-64-2.svg" width="672" /></p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="brms-1.html#cb160-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.2</span>)<span class="op">$</span>random</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="brms-1.html#cb161-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_3.rda&quot;</span>)</span>
+<span id="cb161-2"><a href="brms-1.html#cb161-2" aria-hidden="true"></a></span>
+<span id="cb161-3"><a href="brms-1.html#cb161-3" aria-hidden="true"></a><span class="kw">plot</span>(brms_m1<span class="fl">.3</span>, <span class="dt">ask =</span> <span class="ot">FALSE</span>, <span class="dt">N =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-65-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-65-2.svg" width="672" /></p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="brms-1.html#cb162-1" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.3</span>)<span class="op">$</span>random</span></code></pre></div>
 <pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
 ## careful when analysing the results! We recommend running more iterations and/or
 ## setting stronger priors.</code></pre>
 <pre><code>## $animal
 ##               Estimate Est.Error l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
-## sd(Intercept) 1.747083 0.1632548 1.419377 2.050884 1.126639 13.10221 113.2445</code></pre>
+## sd(Intercept) 1.496464 0.1708587 1.105797 1.782062 1.163193 9.153202 50.78299
+## 
+## $byear
+##                Estimate Est.Error  l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
+## sd(Intercept) 0.9642702  0.144174 0.7147103 1.280642 1.002215 399.5806 642.4663
+## 
+## $mother
+##               Estimate Est.Error  l-95% CI u-95% CI     Rhat Bulk_ESS Tail_ESS
+## sd(Intercept) 1.050225 0.1057319 0.8292744 1.258439 1.011062 192.6606 379.2063</code></pre>
 <p>Here partitioning of significant birth year and maternal variance has resulted in a further decrease in <span class="math inline">\(V_R\)</span> but also a decrease in <span class="math inline">\(V_A\)</span>. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like an additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in <span class="math inline">\(V_A\)</span> and so <span class="math inline">\(h^2\)</span>. Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="brms-1.html#cb163-1" aria-hidden="true"></a>v_animal &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.3</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>animal<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb163-2"><a href="brms-1.html#cb163-2" aria-hidden="true"></a>v_byear &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.3</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>byear<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb163-3"><a href="brms-1.html#cb163-3" aria-hidden="true"></a>v_mother &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.3</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>mother<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb163-4"><a href="brms-1.html#cb163-4" aria-hidden="true"></a>v_r &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.3</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>residual<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb163-5"><a href="brms-1.html#cb163-5" aria-hidden="true"></a>h.bwt<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">as.mcmc</span>(v_animal <span class="op">/</span><span class="st"> </span>(v_animal <span class="op">+</span><span class="st"> </span>v_byear <span class="op">+</span><span class="st"> </span>v_mother <span class="op">+</span><span class="st"> </span>v_r))</span>
-<span id="cb163-6"><a href="brms-1.html#cb163-6" aria-hidden="true"></a></span>
-<span id="cb163-7"><a href="brms-1.html#cb163-7" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="brms-1.html#cb165-1" aria-hidden="true"></a>v_animal &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.3</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>animal<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb165-2"><a href="brms-1.html#cb165-2" aria-hidden="true"></a>v_byear &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.3</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>byear<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb165-3"><a href="brms-1.html#cb165-3" aria-hidden="true"></a>v_mother &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.3</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>mother<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb165-4"><a href="brms-1.html#cb165-4" aria-hidden="true"></a>v_r &lt;-<span class="st"> </span>(<span class="kw">VarCorr</span>(brms_m1<span class="fl">.3</span>, <span class="dt">summary =</span> <span class="ot">FALSE</span>)<span class="op">$</span>residual<span class="op">$</span>sd)<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb165-5"><a href="brms-1.html#cb165-5" aria-hidden="true"></a>h.bwt<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">as.mcmc</span>(v_animal <span class="op">/</span><span class="st"> </span>(v_animal <span class="op">+</span><span class="st"> </span>v_byear <span class="op">+</span><span class="st"> </span>v_mother <span class="op">+</span><span class="st"> </span>v_r))</span>
+<span id="cb165-6"><a href="brms-1.html#cb165-6" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.3</span>)</span></code></pre></div>
 <pre><code>## 
 ## Iterations = 1:1000
 ## Thinning interval = 1 
@@ -551,7 +567,24 @@ We can assess the significance of <code>sex</code> as a fixed effect by examinin
 ## 
 ##   2.5%    25%    50%    75%  97.5% 
 ## 0.2140 0.3240 0.3764 0.4322 0.5182</code></pre>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="brms-1.html#cb165-1" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="brms-1.html#cb167-1" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.2</span>)</span></code></pre></div>
+<pre><code>## 
+## Iterations = 1:1000
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 1000 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##           Mean             SD       Naive SE Time-series SE 
+##       0.508677       0.080357       0.002541       0.011998 
+## 
+## 2. Quantiles for each variable:
+## 
+##   2.5%    25%    50%    75%  97.5% 
+## 0.3427 0.4549 0.5107 0.5675 0.6576</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="brms-1.html#cb169-1" aria-hidden="true"></a><span class="kw">summary</span>(h.bwt<span class="fl">.1</span>)</span></code></pre></div>
 <pre><code>## 
 ## Iterations = 1:1000
 ## Thinning interval = 1 
@@ -568,82 +601,223 @@ We can assess the significance of <code>sex</code> as a fixed effect by examinin
 ## 
 ##   2.5%    25%    50%    75%  97.5% 
 ## 0.3433 0.4338 0.4841 0.5350 0.6369</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="brms-1.html#cb171-1" aria-hidden="true"></a><span class="co"># or</span></span>
+<span id="cb171-2"><a href="brms-1.html#cb171-2" aria-hidden="true"></a>Var.table &lt;-<span class="st"> </span><span class="kw">as_draws_df</span>(brms_m1<span class="fl">.3</span>)</span>
+<span id="cb171-3"><a href="brms-1.html#cb171-3" aria-hidden="true"></a>Var.table<span class="op">$</span>h.bwt<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">as.mcmc</span>((Var.table<span class="op">$</span>sd_animal__Intercept)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>((Var.table<span class="op">$</span>sd_animal__Intercept)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(Var.table<span class="op">$</span>sd_byear__Intercept)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(Var.table<span class="op">$</span>sd_mother__Intercept)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(Var.table<span class="op">$</span>sigma)<span class="op">^</span><span class="dv">2</span>))</span>
+<span id="cb171-4"><a href="brms-1.html#cb171-4" aria-hidden="true"></a><span class="kw">summary</span>(Var.table<span class="op">$</span>h.bwt<span class="fl">.3</span>)</span></code></pre></div>
+<pre><code>## 
+## Iterations = 1:1000
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 1000 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##           Mean             SD       Naive SE Time-series SE 
+##       0.375509       0.078767       0.002491       0.012711 
+## 
+## 2. Quantiles for each variable:
+## 
+##   2.5%    25%    50%    75%  97.5% 
+## 0.2140 0.3240 0.3764 0.4322 0.5182</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="brms-1.html#cb173-1" aria-hidden="true"></a><span class="kw">plot</span>(Var.table<span class="op">$</span>h.bwt<span class="fl">.3</span>)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-66-1.svg" width="672" /></p>
 </div>
-<div id="testing-significance-of-variance-components-1" class="section level3" number="2.5.4">
-<h3><span class="header-section-number">2.5.4</span> Testing significance of variance components</h3>
-<!--C10 how to compare models?  -->
+<div id="testing-significance-of-variance-components-1" class="section level3 hasAnchor" number="2.5.4">
+<h3><span class="header-section-number">2.5.4</span> Testing significance of variance components<a href="brms-1.html#testing-significance-of-variance-components-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>While testing the significance of fixed effects by evaluating whether or not their posterior distributions overlap zero was simple and valid, this approach does not work for variance components.
 Variance components are bounded to be positive (given a proper prior), and thus even when a random effect is not meaningful, its posterior distribution will never overlap zero.</p>
 <p>Model comparisons can be performed using the function <code>loo_compare</code> using <code>waic</code> or weighted AIC.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="brms-1.html#cb167-1" aria-hidden="true"></a>brms_m1<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(brms_m1<span class="fl">.3</span>, <span class="st">&quot;waic&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="brms-1.html#cb174-1" aria-hidden="true"></a>brms_m1<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(brms_m1<span class="fl">.3</span>, <span class="st">&quot;waic&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: 
 ## 311 (36.4%) p_waic estimates greater than 0.4. We recommend trying loo instead.</code></pre>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="brms-1.html#cb169-1" aria-hidden="true"></a>brms_m1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(brms_m1<span class="fl">.1</span>, <span class="st">&quot;waic&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="brms-1.html#cb176-1" aria-hidden="true"></a>brms_m1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">add_criterion</span>(brms_m1<span class="fl">.1</span>, <span class="st">&quot;waic&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: 
 ## 236 (27.6%) p_waic estimates greater than 0.4. We recommend trying loo instead.</code></pre>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="brms-1.html#cb171-1" aria-hidden="true"></a><span class="kw">loo_compare</span>(brms_m1<span class="fl">.3</span>,brms_m1<span class="fl">.1</span>, <span class="dt">criterion =</span> <span class="st">&quot;waic&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="brms-1.html#cb178-1" aria-hidden="true"></a><span class="kw">loo_compare</span>(brms_m1<span class="fl">.3</span>, brms_m1<span class="fl">.1</span>, <span class="dt">criterion =</span> <span class="st">&quot;waic&quot;</span>)</span></code></pre></div>
 <pre><code>##           elpd_diff se_diff
 ## brms_m1.3    0.0       0.0 
 ## brms_m1.1 -282.7      14.0</code></pre>
 </div>
-<div id="further-partitioning-of-the-variance" class="section level3" number="2.5.5">
-<h3><span class="header-section-number">2.5.5</span> Further partitioning of the variance</h3>
+<div id="further-partitioning-of-the-variance" class="section level3 hasAnchor" number="2.5.5">
+<h3><span class="header-section-number">2.5.5</span> Further partitioning of the variance<a href="brms-1.html#further-partitioning-of-the-variance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Depending of the research question and the presence of different group within the dataset, <code>brms</code> allowed to partition the variance at different groups.
-For the example, we can partition the additive genetic and residual variance between sex (male and female) to estimate the sex-specific heritability</p>
-<p><!-- C6 need to check the code  I never partition a random effect with lme4 + need to apply it to the residual level too, more too do here --></p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="brms-1.html#cb173-1" aria-hidden="true"></a>brms_m1<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</span>
-<span id="cb173-2"><a href="brms-1.html#cb173-2" aria-hidden="true"></a>  bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>byear) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>mother),</span>
-<span id="cb173-3"><a href="brms-1.html#cb173-3" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
-<span id="cb173-4"><a href="brms-1.html#cb173-4" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
-<span id="cb173-5"><a href="brms-1.html#cb173-5" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(),</span>
-<span id="cb173-6"><a href="brms-1.html#cb173-6" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>, <span class="dt">iter =</span> <span class="dv">1000</span></span>
-<span id="cb173-7"><a href="brms-1.html#cb173-7" aria-hidden="true"></a>)</span>
-<span id="cb173-8"><a href="brms-1.html#cb173-8" aria-hidden="true"></a><span class="kw">save</span>(brms_m1<span class="fl">.4</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m1_4.rda&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="brms-1.html#cb174-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_4.rda&quot;</span>)</span>
-<span id="cb174-2"><a href="brms-1.html#cb174-2" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.4</span>)</span></code></pre></div>
+Two distinct approch can be done to partition the different random effect: using an extra argument <code>by=sex</code> or by adding <code>(0+sex|)</code> before the <code>|</code>. Notes, here we used <code>||</code> which not estimate a possible covariance between groups (female and male) for the random effect.</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="brms-1.html#cb180-1" aria-hidden="true"></a>brms_m1<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</span>
+<span id="cb180-2"><a href="brms-1.html#cb180-2" aria-hidden="true"></a>  <span class="co">#  bwt ~ 1 +  sex + (1 | gr(animal, cov = Amat, by = sex))+ (1 | gr(byear, by = sex)) + (1 | gr(mother, by = sex)),</span></span>
+<span id="cb180-3"><a href="brms-1.html#cb180-3" aria-hidden="true"></a>  bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>(<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">||</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)) <span class="op">+</span><span class="st"> </span>(<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">||</span><span class="st"> </span>byear) <span class="op">+</span><span class="st"> </span>(<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">||</span><span class="st"> </span>mother),</span>
+<span id="cb180-4"><a href="brms-1.html#cb180-4" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
+<span id="cb180-5"><a href="brms-1.html#cb180-5" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
+<span id="cb180-6"><a href="brms-1.html#cb180-6" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(),</span>
+<span id="cb180-7"><a href="brms-1.html#cb180-7" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>, <span class="dt">iter =</span> <span class="dv">1000</span></span>
+<span id="cb180-8"><a href="brms-1.html#cb180-8" aria-hidden="true"></a>)</span>
+<span id="cb180-9"><a href="brms-1.html#cb180-9" aria-hidden="true"></a></span>
+<span id="cb180-10"><a href="brms-1.html#cb180-10" aria-hidden="true"></a><span class="kw">save</span>(brms_m1<span class="fl">.4</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m1_4.rda&quot;</span>)</span></code></pre></div>
+<p>To save time, the results of the calculation is stored in the spare file <code>brms_m1_4.rda"</code>.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="brms-1.html#cb181-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_4.rda&quot;</span>)</span>
+<span id="cb181-2"><a href="brms-1.html#cb181-2" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.4</span>)</span></code></pre></div>
 <pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
 ## careful when analysing the results! We recommend running more iterations and/or
 ## setting stronger priors.</code></pre>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
-## Formula: bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)) + (1 | byear) + (1 | mother) 
+## Formula: bwt ~ 1 + sex + (0 + sex || gr(animal, cov = Amat)) + (0 + sex || byear) + (0 + sex || mother) 
 ##    Data: gryphon (Number of observations: 854) 
 ##   Draws: 2 chains, each with iter = 1000; warmup = 500; thin = 1;
 ##          total post-warmup draws = 1000
 ## 
 ## Group-Level Effects: 
 ## ~animal (Number of levels: 854) 
-##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)     1.52      0.16     1.21     1.82 1.09       22      103
+##          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(sex1)     1.39      0.22     0.88     1.77 1.02       56      116
+## sd(sex2)     1.06      0.31     0.35     1.57 1.06       29       63
 ## 
 ## ~byear (Number of levels: 34) 
-##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)     0.98      0.15     0.73     1.32 1.00      538      677
+##          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(sex1)     0.91      0.18     0.61     1.29 1.02      381      542
+## sd(sex2)     1.09      0.20     0.77     1.56 1.01      310      626
 ## 
 ## ~mother (Number of levels: 394) 
-##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)     1.05      0.11     0.83     1.28 1.00      219      428
+##          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(sex1)     0.90      0.21     0.47     1.29 1.01      143      219
+## sd(sex2)     1.34      0.16     1.00     1.65 1.01      143      396
 ## 
 ## Population-Level Effects: 
 ##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept     6.38      0.24     5.91     6.86 1.00      516      579
-## sex2          1.97      0.15     1.68     2.28 1.00     1044      766
+## Intercept     6.29      0.24     5.85     6.78 1.01      435      444
+## sex2          2.03      0.35     1.31     2.69 1.00      568      679
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma     1.27      0.13     1.01     1.50 1.11       16       48
+## sigma     1.45      0.16     1.09     1.72 1.05       27       35
 ## 
 ## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 ## and Tail_ESS are effective sample size measures, and Rhat is the potential
 ## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="brms-1.html#cb177-1" aria-hidden="true"></a><span class="kw">plot</span>(brms_m1<span class="fl">.4</span>, <span class="dt">ask =</span> <span class="ot">FALSE</span>, <span class="dt">N =</span> <span class="dv">3</span>)</span></code></pre></div>
-<p><img src="wam_tuto_files/figure-html/unnamed-chunk-68-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-68-2.svg" width="672" /></p>
+<p>We can see the model estimate variance for both sexes. However, the residual level or sigma is not splitted by sexes. A futher and more complex code need to be performed, thus we can estimate the sex-specific heritability.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="brms-1.html#cb184-1" aria-hidden="true"></a>bf_m1<span class="fl">.5</span> &lt;-<span class="st"> </span><span class="kw">bf</span>(</span>
+<span id="cb184-2"><a href="brms-1.html#cb184-2" aria-hidden="true"></a>  bwt <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">+</span><span class="st"> </span>(<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">||</span><span class="st"> </span><span class="kw">gr</span>(animal, <span class="dt">cov =</span> Amat)) <span class="op">+</span><span class="st"> </span>(<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">||</span><span class="st"> </span>mother) <span class="op">+</span><span class="st"> </span>(<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>sex <span class="op">||</span><span class="st"> </span>byear),</span>
+<span id="cb184-3"><a href="brms-1.html#cb184-3" aria-hidden="true"></a>  sigma <span class="op">~</span><span class="st"> </span>sex <span class="op">-</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb184-4"><a href="brms-1.html#cb184-4" aria-hidden="true"></a>)</span>
+<span id="cb184-5"><a href="brms-1.html#cb184-5" aria-hidden="true"></a></span>
+<span id="cb184-6"><a href="brms-1.html#cb184-6" aria-hidden="true"></a>brms_m1<span class="fl">.5</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(bf_m1<span class="fl">.5</span>,</span>
+<span id="cb184-7"><a href="brms-1.html#cb184-7" aria-hidden="true"></a>  <span class="dt">data =</span> gryphon,</span>
+<span id="cb184-8"><a href="brms-1.html#cb184-8" aria-hidden="true"></a>  <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
+<span id="cb184-9"><a href="brms-1.html#cb184-9" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(),</span>
+<span id="cb184-10"><a href="brms-1.html#cb184-10" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">1</span>, <span class="dt">cores =</span> <span class="dv">1</span>, <span class="dt">iter =</span> <span class="dv">1000</span></span>
+<span id="cb184-11"><a href="brms-1.html#cb184-11" aria-hidden="true"></a>)</span>
+<span id="cb184-12"><a href="brms-1.html#cb184-12" aria-hidden="true"></a></span>
+<span id="cb184-13"><a href="brms-1.html#cb184-13" aria-hidden="true"></a><span class="kw">save</span>(brms_m1<span class="fl">.5</span>, <span class="dt">file =</span> <span class="st">&quot;data/brms_m1_5.rda&quot;</span>)</span></code></pre></div>
+<p>To save time, the results of the calculation is stored in the spare file <code>brms_m1_4.rda"</code>.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="brms-1.html#cb185-1" aria-hidden="true"></a><span class="kw">load</span>(<span class="st">&quot;data/brms_m1_5.rda&quot;</span>)</span>
+<span id="cb185-2"><a href="brms-1.html#cb185-2" aria-hidden="true"></a><span class="kw">summary</span>(brms_m1<span class="fl">.5</span>)</span></code></pre></div>
+<pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
+## careful when analysing the results! We recommend running more iterations and/or
+## setting stronger priors.</code></pre>
+<pre><code>##  Family: gaussian 
+##   Links: mu = identity; sigma = log 
+## Formula: bwt ~ 1 + sex + (0 + sex || gr(animal, cov = Amat)) + (0 + sex || mother) + (0 + sex || byear) 
+##          sigma ~ sex - 1
+##    Data: gryphon (Number of observations: 854) 
+##   Draws: 1 chains, each with iter = 1000; warmup = 500; thin = 1;
+##          total post-warmup draws = 500
+## 
+## Group-Level Effects: 
+## ~animal (Number of levels: 854) 
+##          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(sex1)     1.56      0.29     1.02     2.09 1.17        4       30
+## sd(sex2)     1.61      0.41     0.52     2.08 1.36        2       21
+## 
+## ~byear (Number of levels: 34) 
+##          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(sex1)     0.91      0.18     0.59     1.36 1.01      153      229
+## sd(sex2)     1.06      0.20     0.75     1.49 1.00      170      143
+## 
+## ~mother (Number of levels: 394) 
+##          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## sd(sex1)     0.88      0.21     0.41     1.25 1.01       73      134
+## sd(sex2)     1.27      0.18     0.88     1.59 1.01       31       64
+## 
+## Population-Level Effects: 
+##            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+## Intercept      6.29      0.23     5.88     6.75 1.00      209      313
+## sex2           2.02      0.31     1.49     2.66 1.00      127      296
+## sigma_sex1     0.22      0.21    -0.25     0.54 1.15        5       12
+## sigma_sex2    -0.20      0.40    -0.82     0.54 1.59        2       15
+## 
+## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+## and Tail_ESS are effective sample size measures, and Rhat is the potential
+## scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="brms-1.html#cb188-1" aria-hidden="true"></a><span class="co">#</span></span>
+<span id="cb188-2"><a href="brms-1.html#cb188-2" aria-hidden="true"></a>Var.table &lt;-<span class="st"> </span><span class="kw">as_draws_df</span>(brms_m1<span class="fl">.5</span>)</span>
+<span id="cb188-3"><a href="brms-1.html#cb188-3" aria-hidden="true"></a>Var.table<span class="op">$</span>h.bwt.f &lt;-<span class="st"> </span><span class="kw">as.mcmc</span>((Var.table<span class="op">$</span>sd_animal__sex1)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>((Var.table<span class="op">$</span>sd_animal__sex1)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(Var.table<span class="op">$</span><span class="st"> </span>sd_byear__sex1)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(Var.table<span class="op">$</span>sd_mother__sex1)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(Var.table<span class="op">$</span>b_sigma_sex1)<span class="op">^</span><span class="dv">2</span>))</span>
+<span id="cb188-4"><a href="brms-1.html#cb188-4" aria-hidden="true"></a>Var.table<span class="op">$</span>h.bwt.m &lt;-<span class="st"> </span><span class="kw">as.mcmc</span>((Var.table<span class="op">$</span>sd_animal__sex2)<span class="op">^</span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>((Var.table<span class="op">$</span>sd_animal__sex2)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(Var.table<span class="op">$</span><span class="st"> </span>sd_byear__sex2)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(Var.table<span class="op">$</span>sd_mother__sex2)<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(Var.table<span class="op">$</span>b_sigma_sex2)<span class="op">^</span><span class="dv">2</span>))</span>
+<span id="cb188-5"><a href="brms-1.html#cb188-5" aria-hidden="true"></a><span class="kw">summary</span>(Var.table<span class="op">$</span>h.bwt.f)</span></code></pre></div>
+<pre><code>## 
+## Iterations = 1:500
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 500 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##           Mean             SD       Naive SE Time-series SE 
+##       0.575443       0.126621       0.005663       0.031251 
+## 
+## 2. Quantiles for each variable:
+## 
+##   2.5%    25%    50%    75%  97.5% 
+## 0.3075 0.4863 0.5811 0.6741 0.7800</code></pre>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="brms-1.html#cb190-1" aria-hidden="true"></a><span class="kw">summary</span>(Var.table<span class="op">$</span>h.bwt.m)</span></code></pre></div>
+<pre><code>## 
+## Iterations = 1:500
+## Thinning interval = 1 
+## Number of chains = 1 
+## Sample size per chain = 500 
+## 
+## 1. Empirical mean and standard deviation for each variable,
+##    plus standard error of the mean:
+## 
+##           Mean             SD       Naive SE Time-series SE 
+##       0.463879       0.155395       0.006949       0.078323 
+## 
+## 2. Quantiles for each variable:
+## 
+##    2.5%     25%     50%     75%   97.5% 
+## 0.06693 0.43668 0.50150 0.55729 0.66016</code></pre>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="brms-1.html#cb192-1" aria-hidden="true"></a><span class="kw">plot</span>(Var.table<span class="op">$</span>h.bwt.f)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-71-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="brms-1.html#cb193-1" aria-hidden="true"></a><span class="kw">plot</span>(Var.table<span class="op">$</span>h.bwt.m)</span></code></pre></div>
+<p><img src="wam_tuto_files/figure-html/unnamed-chunk-71-2.svg" width="672" /></p>
+<p>Here, we can plot the point estimates of the <span class="math inline">\(h^2\)</span> which seems to differ between sexes, but their CI overlaps.</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="brms-1.html#cb194-1" aria-hidden="true"></a>h2.sex &lt;-<span class="st"> </span><span class="kw">rbind</span>(</span>
+<span id="cb194-2"><a href="brms-1.html#cb194-2" aria-hidden="true"></a>  <span class="kw">cbind</span>(<span class="kw">summary</span>(Var.table<span class="op">$</span>h.bwt.f)<span class="op">$</span>statistics[<span class="dv">1</span>], <span class="kw">summary</span>(Var.table<span class="op">$</span>h.bwt.f)<span class="op">$</span>quantiles[<span class="dv">1</span>], <span class="kw">summary</span>(Var.table<span class="op">$</span>h.bwt.f)<span class="op">$</span>quantiles[<span class="dv">5</span>]),</span>
+<span id="cb194-3"><a href="brms-1.html#cb194-3" aria-hidden="true"></a>  <span class="kw">cbind</span>(<span class="kw">summary</span>(Var.table<span class="op">$</span>h.bwt.m)<span class="op">$</span>statistics[<span class="dv">1</span>], <span class="kw">summary</span>(Var.table<span class="op">$</span>h.bwt.m)<span class="op">$</span>quantiles[<span class="dv">1</span>], <span class="kw">summary</span>(Var.table<span class="op">$</span>h.bwt.m)<span class="op">$</span>quantiles[<span class="dv">5</span>])</span>
+<span id="cb194-4"><a href="brms-1.html#cb194-4" aria-hidden="true"></a>)</span>
+<span id="cb194-5"><a href="brms-1.html#cb194-5" aria-hidden="true"></a></span>
+<span id="cb194-6"><a href="brms-1.html#cb194-6" aria-hidden="true"></a><span class="kw">plot</span>(<span class="kw">c</span>(<span class="fl">0.95</span>, <span class="fl">1.05</span>) <span class="op">~</span><span class="st"> </span>h2.sex[, <span class="dv">1</span>], <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.8</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>), , <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">16</span>, <span class="dv">17</span>), <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">yaxt =</span> <span class="st">&quot;n&quot;</span>)</span>
+<span id="cb194-7"><a href="brms-1.html#cb194-7" aria-hidden="true"></a><span class="kw">arrows</span>(<span class="dt">y0 =</span> <span class="fl">0.95</span>, <span class="dt">x0 =</span> h2.sex[<span class="dv">1</span>, <span class="dv">2</span>], <span class="dt">y1 =</span> <span class="fl">0.95</span>, <span class="dt">x1 =</span> h2.sex[<span class="dv">1</span>, <span class="dv">3</span>], <span class="dt">code =</span> <span class="dv">3</span>, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">length =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>), <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb194-8"><a href="brms-1.html#cb194-8" aria-hidden="true"></a><span class="kw">arrows</span>(<span class="dt">y0 =</span> <span class="fl">1.05</span>, <span class="dt">x0 =</span> h2.sex[<span class="dv">2</span>, <span class="dv">2</span>], <span class="dt">y1 =</span> <span class="fl">1.05</span>, <span class="dt">x1 =</span> h2.sex[<span class="dv">2</span>, <span class="dv">3</span>], <span class="dt">code =</span> <span class="dv">3</span>, <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">length =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;blue&quot;</span>), <span class="dt">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb194-9"><a href="brms-1.html#cb194-9" aria-hidden="true"></a><span class="kw">mtext</span>(<span class="st">&quot;Narrow-sense heritability (±CI)&quot;</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">adj =</span> <span class="fl">0.4</span>, <span class="dt">line =</span> <span class="dv">3</span>, <span class="dt">cex =</span> <span class="fl">1.6</span>)</span>
+<span id="cb194-10"><a href="brms-1.html#cb194-10" aria-hidden="true"></a><span class="kw">axis</span>(<span class="dv">2</span>, <span class="dt">at =</span> <span class="dv">1</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;birth weight&quot;</span>), <span class="dt">las =</span> <span class="dv">3</span>, <span class="dt">cex.axis =</span> <span class="fl">1.6</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-72"></span>
+<img src="wam_tuto_files/figure-html/unnamed-chunk-72-1.svg" alt="Female and male heritability of birth weight" width="672" />
+<p class="caption">
+Figure 2.7: Female and male heritability of birth weight
+</p>
 </div>
-<div id="modification-of-model-parameter-1" class="section level3" number="2.5.6">
-<h3><span class="header-section-number">2.5.6</span> Modification of model parameter</h3>
 </div>
-<div id="covariance-between-two-random-effects-2" class="section level3" number="2.5.7">
-<h3><span class="header-section-number">2.5.7</span> Covariance between two random effects</h3>
+<div id="modification-of-model-parameter-1" class="section level3 hasAnchor" number="2.5.6">
+<h3><span class="header-section-number">2.5.6</span> Modification of model parameter<a href="brms-1.html#modification-of-model-parameter-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Unfortunately (to our knowledge), it is not possible to alter the variance matrices and refit them within the model.</p>
+</div>
+<div id="covariance-between-two-random-effects-2" class="section level3 hasAnchor" number="2.5.7">
+<h3><span class="header-section-number">2.5.7</span> Covariance between two random effects<a href="brms-1.html#covariance-between-two-random-effects-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Some research questions require to estimate the covariance between two random effects within a univariate model.
+Unfortunately (to our knowledge), it is not possible to create a covariance between distinct random effects (<a href="https://github.com/paul-buerkner/brms/issues/502" class="uri">https://github.com/paul-buerkner/brms/issues/502</a>).
+However,a multi-membership model can be fit using the linking.function <code>mm</code>, thus forcing the variance of two variables to be equal and the covariance to 1.</p>
 
 </div>
 </div>
