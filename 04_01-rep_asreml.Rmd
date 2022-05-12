@@ -48,7 +48,9 @@ summary(modelw)$varcomp
 ```
 
 The repeatability of lay date, after accounting for age effects, is now estimated as `r round(summary(modelw)$varcomp[1,1]/(summary(modelw)$varcomp[1,1]+summary(modelw)$varcomp[2,1]), 2)` (_i.e._, as `r round(summary(modelw)$varcomp[1,1], 3)`/(`r round(summary(modelw)$varcomp[1,1], 3)` + `r round(summary(modelw)$varcomp[2,1], 3)`)). 
-So, just as we saw when estimating $h^2$ in Tutorial 1, the inclusion of fixed effects will alter the estimated effect size <!-- effect size or just the variance estimate --> if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
+So, just as we saw when estimating $h^2$ in Tutorial 1, the inclusion of fixed effects will alter the estimated effect size
+<!-- effect size or just the variance estimate -->
+if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
 
 ```{r, eval = htmlT_pdfF}
 summary(modelw, coef = TRUE)$coef.fixed
@@ -66,7 +68,7 @@ Here age is modeled as a 5-level factor (specified using the function `as.factor
 In addition, using `age` as continuous variable can help in saving some degree of freedom in the analysis.
 
 
-<!-- C1 I dont know why the quadratic fixed effect dont work, need to remember how to do this 
+<!-- C1 I dont know why the quadratic fixed effect dont work, need to remember how to do this -->
 ```{r, eval = FALSE, echo = FALSE}
 gryphonRM$age_c <- as.numeric(gryphonRM$age)
 

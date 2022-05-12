@@ -42,7 +42,9 @@ Note that the random effect structure has remained unchanged because we did not 
 The repeatability of `laydate`, after accounting for age effects, is now estimated as
 `r round(posterior.mode(model3.1$VCV)[1]/posterior.mode(model3.1$VCV)[1]+posterior.mode(model3.1$VCV)[2],2)`
 (_i.e._, as `r round(posterior.mode(model3.1$VCV)[1],3)`/(`r round(posterior.mode(model3.1$VCV)[1],3)` + `r round(posterior.mode(model3.1$VCV)[2], 3)`)).
-Just as we saw when estimating $h_2$ in tutorial 1, the inclusion of fixed effects will alter the estimated effect size <!-- C3 effect size or just the variance estimate -->if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
+Just as we saw when estimating $h_2$ in tutorial 1, the inclusion of fixed effects will alter the estimated effect size
+<!-- C3 effect size or just the variance estimate -->
+if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
 
 
 ```{r}
@@ -146,12 +148,12 @@ plot(model3.5$VCV)
 ```
 
 
-This model will return additional variance components corresponding to year of measurement effects and birth year (of the female effects) <!-- I dont understand the statement of female effect-->.
+This model will return additional variance components corresponding to year of measurement effects and birth year of the female effects.
 
 $V_{byear}$ is very low and its posterior distribution (via the function `HPDinterval` or `plot`) is very close to zero indicating its not significance. You have to remember bayesian model never estimate variable to 0 or passing zero, so you will never see a credible  interval `CI` crossing zero for a variance.
 If you compared the DIC of model3.5 to a reduced model without `byear`, it should be very similar. 
+
 ```{r, cache = TRUE}
-# p.var <- var(gryphonRM$laydate, na.rm = TRUE)
 prior3.5_2 <- list(
   G = list(G1 = list(V = 1, nu = 0.002), G2 = list(
     V = 1,
