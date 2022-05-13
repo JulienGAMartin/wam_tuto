@@ -397,7 +397,7 @@ summary(reduc.model_sex)$varcomp
 ```
 
 
-In addition, it is also possible to test if sexes has significant differences with another reduced model where both covariance are fixed to their average values.
+In addition, it is also possible to test the sexesif sexes has significant differences with another reduced model where both covariance are fixed to their average values.
 
 <!-- Issue with this model!!!  my code should be ok !-->
 
@@ -405,11 +405,13 @@ In addition, it is also possible to test if sexes has significant differences wi
 # code provided as an example for the moment since the model cannot run on this data
 model_modif <- update.asreml(model_sex, start.values = T)
 G <- model_modif$vparameters[(1:12), ]
-G$fac <- factor(c(
-  1, 2, 3, 4, 2, 6, # Additive genetic matrix  2 =5
-  7, 8, 9, # byear  matrix
-  10, 11, 12
-)) # mother matrix
+G$fac <- factor(
+  c(
+    1, 2, 3, 4, 2, 6, # Additive genetic matrix  2 =5
+    7, 8, 9, # byear  matrix
+    10, 11, 12 # mother matrix
+  )
+)
 Modif <- vcm.lm(~fac, data = G)
 attr(Modif, "assign") <- NULL
 attr(Modif, "contrasts") <- NULL
@@ -489,7 +491,7 @@ summary(factor(DvsS$TRAIT)) # 1309 each
 DvsS$Trait <- NULL
 colnames(DvsS)[1] <- "BLUP"
 BLUPS <- reshape(DvsS, v.names = c("BLUP", "SE"), idvar = c("ID", "SEX"), timevar = "TRAIT", direction = "wide")
-row(BLUPS)
+nrow(BLUPS)
 rownames(BLUPS) <- c()
 colnames(BLUPS) <- c("ID", "SEX", "BLUP.btw", "SE.btw", "BLUP.tarsus", "SE.tarsus")
 summary(BLUPS)
@@ -538,7 +540,7 @@ As an example, we estimate the cross-sex genetic correlation `r_{fm}`
 
 First, we need to dissociate the trait values for females and males into distinct variables. Then, we use a bivariate model (for one trait: `tarsus`) and a multivariate model (for various traits: `tarsus` and `bwt`). With a multivariate model, the cross-sex-cross trait covariance matrixis also named `B matrix`.
 
-The coding is a bit complain but pretty straightforward. It is important to modify the covariance matrix at the residual level to avoid the calculation of a cross-sex residual covariance (no individual switched sex during the experiment).
+The coding is a bit complex but pretty straightforward. It is important to modify the covariance matrix at the residual level to avoid the calculation of a cross-sex residual covariance (no individual switched sex during the experiment).
 
 ```{r}
 gryphon$bwt.1 <- NA
