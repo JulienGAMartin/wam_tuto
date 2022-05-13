@@ -241,13 +241,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="asreml-r-2.html"><a href="asreml-r-2.html"><i class="fa fa-check"></i><b>4.2</b> Asreml-R</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="asreml-r-2.html"><a href="asreml-r-2.html#estimating-repeatability"><i class="fa fa-check"></i><b>4.2.1</b> Estimating repeatability</a></li>
+<li class="chapter" data-level="4.2.2" data-path="asreml-r-2.html"><a href="asreml-r-2.html#partitioning-additive-and-permanent-environment-effects"><i class="fa fa-check"></i><b>4.2.2</b> Partitioning additive and permanent environment effects</a></li>
+<li class="chapter" data-level="4.2.3" data-path="asreml-r-2.html"><a href="asreml-r-2.html#adding-additional-effects-and-testing-significance"><i class="fa fa-check"></i><b>4.2.3</b> Adding additional effects and testing significance</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="gremlin-3.html"><a href="gremlin-3.html"><i class="fa fa-check"></i><b>4.3</b> gremlin</a></li>
 <li class="chapter" data-level="4.4" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html"><i class="fa fa-check"></i><b>4.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="4.4.1" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#estimating-repeatability-1"><i class="fa fa-check"></i><b>4.4.1</b> Estimating repeatability</a></li>
-<li class="chapter" data-level="4.4.2" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#partitioning-additive-and-permanent-environment-effects"><i class="fa fa-check"></i><b>4.4.2</b> Partitioning additive and permanent environment effects</a></li>
-<li class="chapter" data-level="4.4.3" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#adding-additional-effects-and-testing-significance"><i class="fa fa-check"></i><b>4.4.3</b> Adding additional effects and testing significance</a></li>
+<li class="chapter" data-level="4.4.2" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#partitioning-additive-and-permanent-environment-effects-1"><i class="fa fa-check"></i><b>4.4.2</b> Partitioning additive and permanent environment effects</a></li>
+<li class="chapter" data-level="4.4.3" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#adding-additional-effects-and-testing-significance-1"><i class="fa fa-check"></i><b>4.4.3</b> Adding additional effects and testing significance</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="brms-3.html"><a href="brms-3.html"><i class="fa fa-check"></i><b>4.5</b> brms</a></li>
 <li class="chapter" data-level="4.6" data-path="stan-2.html"><a href="stan-2.html"><i class="fa fa-check"></i><b>4.6</b> stan</a></li>
@@ -298,16 +300,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 We can estimate the repeatability of a trait as the proportion of phenotypic variance <span class="math inline">\(V_P\)</span> explained by individual variance <span class="math inline">\(V_{ind}\)</span>; <span class="math inline">\(R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)\)</span>.
 As you already know, bayesian modelisation requires prior. Here, we create a unformative prior with one estimate for the G matrix and one estimate for the Residual matrix, in addition
 <!-- C1 I dont know wht you calculate p.var if you dont use it in the prior --></p>
-<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="mcmcglmm-3.html#cb596-1" aria-hidden="true"></a><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
-<span id="cb596-2"><a href="mcmcglmm-3.html#cb596-2" aria-hidden="true"></a>prior3<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)), <span class="dt">R =</span> <span class="kw">list</span>(</span>
-<span id="cb596-3"><a href="mcmcglmm-3.html#cb596-3" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
-<span id="cb596-4"><a href="mcmcglmm-3.html#cb596-4" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
-<span id="cb596-5"><a href="mcmcglmm-3.html#cb596-5" aria-hidden="true"></a>))</span>
-<span id="cb596-6"><a href="mcmcglmm-3.html#cb596-6" aria-hidden="true"></a>model3<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
-<span id="cb596-7"><a href="mcmcglmm-3.html#cb596-7" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb596-8"><a href="mcmcglmm-3.html#cb596-8" aria-hidden="true"></a>  <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb596-9"><a href="mcmcglmm-3.html#cb596-9" aria-hidden="true"></a>)</span>
-<span id="cb596-10"><a href="mcmcglmm-3.html#cb596-10" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="mcmcglmm-3.html#cb634-1" aria-hidden="true"></a><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
+<span id="cb634-2"><a href="mcmcglmm-3.html#cb634-2" aria-hidden="true"></a>prior3<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)), <span class="dt">R =</span> <span class="kw">list</span>(</span>
+<span id="cb634-3"><a href="mcmcglmm-3.html#cb634-3" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
+<span id="cb634-4"><a href="mcmcglmm-3.html#cb634-4" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
+<span id="cb634-5"><a href="mcmcglmm-3.html#cb634-5" aria-hidden="true"></a>))</span>
+<span id="cb634-6"><a href="mcmcglmm-3.html#cb634-6" aria-hidden="true"></a>model3<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,</span>
+<span id="cb634-7"><a href="mcmcglmm-3.html#cb634-7" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb634-8"><a href="mcmcglmm-3.html#cb634-8" aria-hidden="true"></a>  <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb634-9"><a href="mcmcglmm-3.html#cb634-9" aria-hidden="true"></a>)</span>
+<span id="cb634-10"><a href="mcmcglmm-3.html#cb634-10" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.1</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
 ## 10.32109 21.70384</code></pre>
 <p>Note the use of the term <code>animal</code> as random allowed to partition the phenotypic variance <span class="math inline">\(V_P\)</span> into among individual variance <span class="math inline">\(V_{ind}\)</span> associated with <code>animal</code> and residual variance <span class="math inline">\(V_R\)</span> associated with <code>units</code>.</p>
@@ -315,15 +317,15 @@ As you already know, bayesian modelisation requires prior. Here, we create a unf
 22.7
 (<em>i.e.</em>, as 10.321/(10.321 + 21.704)). Just a friendly remember, we work with Monte Carlo chain with model iteration, so the point estimate can be different (but very similar) each time you run the model.</p>
 <p>Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding <code>age</code> into the model as a fixed effect.</p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="mcmcglmm-3.html#cb598-1" aria-hidden="true"></a>model3<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span>age,</span>
-<span id="cb598-2"><a href="mcmcglmm-3.html#cb598-2" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb598-3"><a href="mcmcglmm-3.html#cb598-3" aria-hidden="true"></a>  <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb598-4"><a href="mcmcglmm-3.html#cb598-4" aria-hidden="true"></a>)</span>
-<span id="cb598-5"><a href="mcmcglmm-3.html#cb598-5" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol)</span></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="mcmcglmm-3.html#cb636-1" aria-hidden="true"></a>model3<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span>age,</span>
+<span id="cb636-2"><a href="mcmcglmm-3.html#cb636-2" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb636-3"><a href="mcmcglmm-3.html#cb636-3" aria-hidden="true"></a>  <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb636-4"><a href="mcmcglmm-3.html#cb636-4" aria-hidden="true"></a>)</span>
+<span id="cb636-5"><a href="mcmcglmm-3.html#cb636-5" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-188-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-188-2.svg" width="672" /></p>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="mcmcglmm-3.html#cb599-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="mcmcglmm-3.html#cb637-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-188-3.svg" width="672" /></p>
-<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="mcmcglmm-3.html#cb600-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="mcmcglmm-3.html#cb638-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
 ## 12.00010 16.42399</code></pre>
 <p>The model assumption seems correct, so we can look at the different estimates.
@@ -331,13 +333,15 @@ Note that the random effect structure has remained unchanged because we did not 
 The repeatability of <code>laydate</code>, after accounting for age effects, is now estimated as
 22.7
 (<em>i.e.</em>, as 10.321/(10.321 + 21.704)).
-Just as we saw when estimating <span class="math inline">\(h_2\)</span> in tutorial 1, the inclusion of fixed effects will alter the estimated effect size <!-- C3 effect size or just the variance estimate -->if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.</p>
-<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="mcmcglmm-3.html#cb602-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol)</span></code></pre></div>
+Just as we saw when estimating <span class="math inline">\(h_2\)</span> in tutorial 1, the inclusion of fixed effects will alter the estimated effect size
+<!-- C3 effect size or just the variance estimate -->
+if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.</p>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="mcmcglmm-3.html#cb640-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-189-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-189-2.svg" width="672" /></p>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="mcmcglmm-3.html#cb603-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol)</span></code></pre></div>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="mcmcglmm-3.html#cb641-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol)</span></code></pre></div>
 <pre><code>## (Intercept)        age3        age4        age5        age6 
 ##   20.483451    2.443290    4.101637    6.189125    3.139582</code></pre>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="mcmcglmm-3.html#cb605-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol, <span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="mcmcglmm-3.html#cb643-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model3<span class="fl">.2</span><span class="op">$</span>Sol, <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>##                 lower     upper
 ## (Intercept) 19.736242 20.851573
 ## age3         2.009199  3.345267
@@ -348,23 +352,23 @@ Just as we saw when estimating <span class="math inline">\(h_2\)</span> in tutor
 ## [1] 0.95</code></pre>
 <p>Here age is modeled as a 5-level factor (specified using the function <code>as.factor()</code> at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.
 In addition, using <code>age</code> as continuous variable can help in saving some degree of freedom in the analysis.</p>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="mcmcglmm-3.html#cb607-1" aria-hidden="true"></a>gryphonRM<span class="op">$</span>age_c &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphonRM<span class="op">$</span>age)</span>
-<span id="cb607-2"><a href="mcmcglmm-3.html#cb607-2" aria-hidden="true"></a></span>
-<span id="cb607-3"><a href="mcmcglmm-3.html#cb607-3" aria-hidden="true"></a>model3<span class="fl">.2</span>_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span>age_c <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(age_c<span class="op">^</span><span class="dv">2</span>),</span>
-<span id="cb607-4"><a href="mcmcglmm-3.html#cb607-4" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb607-5"><a href="mcmcglmm-3.html#cb607-5" aria-hidden="true"></a>  <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb607-6"><a href="mcmcglmm-3.html#cb607-6" aria-hidden="true"></a>)</span>
-<span id="cb607-7"><a href="mcmcglmm-3.html#cb607-7" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>Sol)</span></code></pre></div>
+<div class="sourceCode" id="cb645"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb645-1"><a href="mcmcglmm-3.html#cb645-1" aria-hidden="true"></a>gryphonRM<span class="op">$</span>age_c &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphonRM<span class="op">$</span>age)</span>
+<span id="cb645-2"><a href="mcmcglmm-3.html#cb645-2" aria-hidden="true"></a></span>
+<span id="cb645-3"><a href="mcmcglmm-3.html#cb645-3" aria-hidden="true"></a>model3<span class="fl">.2</span>_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span>age_c <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(age_c<span class="op">^</span><span class="dv">2</span>),</span>
+<span id="cb645-4"><a href="mcmcglmm-3.html#cb645-4" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb645-5"><a href="mcmcglmm-3.html#cb645-5" aria-hidden="true"></a>  <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb645-6"><a href="mcmcglmm-3.html#cb645-6" aria-hidden="true"></a>)</span>
+<span id="cb645-7"><a href="mcmcglmm-3.html#cb645-7" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>Sol)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-190-1.svg" width="672" /></p>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="mcmcglmm-3.html#cb608-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="mcmcglmm-3.html#cb646-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>VCV)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-190-2.svg" width="672" /></p>
-<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="mcmcglmm-3.html#cb609-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="mcmcglmm-3.html#cb647-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
 ## 11.97676 16.96256</code></pre>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="mcmcglmm-3.html#cb611-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>Sol)</span></code></pre></div>
+<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="mcmcglmm-3.html#cb649-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>Sol)</span></code></pre></div>
 <pre><code>## (Intercept)       age_c  I(age_c^2) 
 ##   14.992383    5.559982   -0.789399</code></pre>
-<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="mcmcglmm-3.html#cb613-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>Sol, <span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="mcmcglmm-3.html#cb651-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model3<span class="fl">.2</span>_<span class="dv">2</span><span class="op">$</span>Sol, <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>##                  lower      upper
 ## (Intercept) 14.1124088 16.2195293
 ## age_c        4.7966190  6.3279435
@@ -372,71 +376,71 @@ In addition, using <code>age</code> as continuous variable can help in saving so
 ## attr(,&quot;Probability&quot;)
 ## [1] 0.95</code></pre>
 </div>
-<div id="partitioning-additive-and-permanent-environment-effects" class="section level3 hasAnchor" number="4.4.2">
-<h3><span class="header-section-number">4.4.2</span> Partitioning additive and permanent environment effects<a href="mcmcglmm-3.html#partitioning-additive-and-permanent-environment-effects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="partitioning-additive-and-permanent-environment-effects-1" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Partitioning additive and permanent environment effects<a href="mcmcglmm-3.html#partitioning-additive-and-permanent-environment-effects-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Generally we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals.
 Non-additive contributions to fixed among-individual differences are normally referred to as <em>permanent environment effects</em>. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in <span class="math inline">\(V_A\)</span>.</p>
 <p>To illustrate it, we first fit the animal model:</p>
-<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="mcmcglmm-3.html#cb615-1" aria-hidden="true"></a>Ainv &lt;-<span class="st"> </span><span class="kw">inverseA</span>(gryphonped)<span class="op">$</span>Ainv</span>
-<span id="cb615-2"><a href="mcmcglmm-3.html#cb615-2" aria-hidden="true"></a>model3<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
-<span id="cb615-3"><a href="mcmcglmm-3.html#cb615-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
-<span id="cb615-4"><a href="mcmcglmm-3.html#cb615-4" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb615-5"><a href="mcmcglmm-3.html#cb615-5" aria-hidden="true"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="mcmcglmm-3.html#cb653-1" aria-hidden="true"></a>Ainv &lt;-<span class="st"> </span><span class="kw">inverseA</span>(gryphonped)<span class="op">$</span>Ainv</span>
+<span id="cb653-2"><a href="mcmcglmm-3.html#cb653-2" aria-hidden="true"></a>model3<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
+<span id="cb653-3"><a href="mcmcglmm-3.html#cb653-3" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span>animal, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv),</span>
+<span id="cb653-4"><a href="mcmcglmm-3.html#cb653-4" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.1</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb653-5"><a href="mcmcglmm-3.html#cb653-5" aria-hidden="true"></a>)</span></code></pre></div>
 <p>Variance components are almost unchanged if we compare the previous model:</p>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="mcmcglmm-3.html#cb616-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.3</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="mcmcglmm-3.html#cb654-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.3</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
 ## 13.89832 16.82945</code></pre>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="mcmcglmm-3.html#cb618-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="mcmcglmm-3.html#cb656-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.2</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##   animal    units 
 ## 12.00010 16.42399</code></pre>
 <p>This suggests that most of the among-individual variance is – rightly or wrongly – being partitioned as <span class="math inline">\(V_A\)</span> here. In fact here the partition is wrong since the simulation included both additive genetic effects and additional fixed heterogeneity that was not associated with the pedigree structure (i.e. permanent environment effects).
 In order to o obtain an unbiased estimate of <span class="math inline">\(V_A\)</span>, we need to fit the individual identity twice in the model: once linked to the pedigree (genetic effect) and once not linked to the pedigree (permanent environment effect).To do so, we need to duplicate the variable containing the individual identity <code>animal</code> and give it a new name. In addition, the prior need to be modified to integrate a seconf random effect.An more appropriate estimate of <span class="math inline">\(V_A\)</span> is given by the model:</p>
-<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="mcmcglmm-3.html#cb620-1" aria-hidden="true"></a>gryphonRM<span class="op">$</span>animal_pe &lt;-<span class="st"> </span>gryphonRM<span class="op">$</span>animal</span>
-<span id="cb620-2"><a href="mcmcglmm-3.html#cb620-2" aria-hidden="true"></a><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
-<span id="cb620-3"><a href="mcmcglmm-3.html#cb620-3" aria-hidden="true"></a>prior3<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(</span>
-<span id="cb620-4"><a href="mcmcglmm-3.html#cb620-4" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
-<span id="cb620-5"><a href="mcmcglmm-3.html#cb620-5" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
-<span id="cb620-6"><a href="mcmcglmm-3.html#cb620-6" aria-hidden="true"></a>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</span>
-<span id="cb620-7"><a href="mcmcglmm-3.html#cb620-7" aria-hidden="true"></a>model3<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
-<span id="cb620-8"><a href="mcmcglmm-3.html#cb620-8" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>animal_pe,</span>
-<span id="cb620-9"><a href="mcmcglmm-3.html#cb620-9" aria-hidden="true"></a>  <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.4</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb620-10"><a href="mcmcglmm-3.html#cb620-10" aria-hidden="true"></a>)</span>
-<span id="cb620-11"><a href="mcmcglmm-3.html#cb620-11" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.4</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="mcmcglmm-3.html#cb658-1" aria-hidden="true"></a>gryphonRM<span class="op">$</span>animal_pe &lt;-<span class="st"> </span>gryphonRM<span class="op">$</span>animal</span>
+<span id="cb658-2"><a href="mcmcglmm-3.html#cb658-2" aria-hidden="true"></a><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
+<span id="cb658-3"><a href="mcmcglmm-3.html#cb658-3" aria-hidden="true"></a>prior3<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(</span>
+<span id="cb658-4"><a href="mcmcglmm-3.html#cb658-4" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
+<span id="cb658-5"><a href="mcmcglmm-3.html#cb658-5" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
+<span id="cb658-6"><a href="mcmcglmm-3.html#cb658-6" aria-hidden="true"></a>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</span>
+<span id="cb658-7"><a href="mcmcglmm-3.html#cb658-7" aria-hidden="true"></a>model3<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
+<span id="cb658-8"><a href="mcmcglmm-3.html#cb658-8" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>animal_pe,</span>
+<span id="cb658-9"><a href="mcmcglmm-3.html#cb658-9" aria-hidden="true"></a>  <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.4</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb658-10"><a href="mcmcglmm-3.html#cb658-10" aria-hidden="true"></a>)</span>
+<span id="cb658-11"><a href="mcmcglmm-3.html#cb658-11" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.4</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##    animal animal_pe     units 
 ##  4.324178  8.593354 16.300317</code></pre>
 <p>The estimate of<span class="math inline">\(V_A\)</span> is now much lower (reduced from 13.6735 to 5.1238) due to a proper separation in the additive and permanent environment effects.
 We can estimate <span class="math inline">\(h^2\)</span> and the repeatability from this model:</p>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="mcmcglmm-3.html#cb622-1" aria-hidden="true"></a>model3.<span class="fl">4.</span>VP &lt;-<span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal_pe&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>]</span>
-<span id="cb622-2"><a href="mcmcglmm-3.html#cb622-2" aria-hidden="true"></a>model3.<span class="fl">4.</span>PE_VA &lt;-<span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal_pe&quot;</span>]</span>
-<span id="cb622-3"><a href="mcmcglmm-3.html#cb622-3" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3.<span class="fl">4.</span>PE_VA <span class="op">/</span><span class="st"> </span>model3.<span class="fl">4.</span>VP)</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="mcmcglmm-3.html#cb660-1" aria-hidden="true"></a>model3.<span class="fl">4.</span>VP &lt;-<span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal_pe&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;units&quot;</span>]</span>
+<span id="cb660-2"><a href="mcmcglmm-3.html#cb660-2" aria-hidden="true"></a>model3.<span class="fl">4.</span>PE_VA &lt;-<span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">+</span><span class="st"> </span>model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal_pe&quot;</span>]</span>
+<span id="cb660-3"><a href="mcmcglmm-3.html#cb660-3" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3.<span class="fl">4.</span>PE_VA <span class="op">/</span><span class="st"> </span>model3.<span class="fl">4.</span>VP)</span></code></pre></div>
 <pre><code>##      var1 
 ## 0.4255835</code></pre>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="mcmcglmm-3.html#cb624-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span><span class="st"> </span>model3.<span class="fl">4.</span>VP)</span></code></pre></div>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="mcmcglmm-3.html#cb662-1" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.4</span><span class="op">$</span>VCV[, <span class="st">&quot;animal&quot;</span>] <span class="op">/</span><span class="st"> </span>model3.<span class="fl">4.</span>VP)</span></code></pre></div>
 <pre><code>##      var1 
 ## 0.1246707</code></pre>
 </div>
-<div id="adding-additional-effects-and-testing-significance" class="section level3 hasAnchor" number="4.4.3">
-<h3><span class="header-section-number">4.4.3</span> Adding additional effects and testing significance<a href="mcmcglmm-3.html#adding-additional-effects-and-testing-significance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="adding-additional-effects-and-testing-significance-1" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Adding additional effects and testing significance<a href="mcmcglmm-3.html#adding-additional-effects-and-testing-significance-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Models of repeated measures can be extended to include other fixed or random effects.
 For example we can try including year of measurement (<code>year</code>) and birth year (<code>byear</code>) as other random effects.</p>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="mcmcglmm-3.html#cb626-1" aria-hidden="true"></a><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
-<span id="cb626-2"><a href="mcmcglmm-3.html#cb626-2" aria-hidden="true"></a>prior3<span class="fl">.5</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(</span>
-<span id="cb626-3"><a href="mcmcglmm-3.html#cb626-3" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
-<span id="cb626-4"><a href="mcmcglmm-3.html#cb626-4" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
-<span id="cb626-5"><a href="mcmcglmm-3.html#cb626-5" aria-hidden="true"></a>), <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G4 =</span> <span class="kw">list</span>(</span>
-<span id="cb626-6"><a href="mcmcglmm-3.html#cb626-6" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
-<span id="cb626-7"><a href="mcmcglmm-3.html#cb626-7" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
-<span id="cb626-8"><a href="mcmcglmm-3.html#cb626-8" aria-hidden="true"></a>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</span>
-<span id="cb626-9"><a href="mcmcglmm-3.html#cb626-9" aria-hidden="true"></a></span>
-<span id="cb626-10"><a href="mcmcglmm-3.html#cb626-10" aria-hidden="true"></a>model3<span class="fl">.5</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
-<span id="cb626-11"><a href="mcmcglmm-3.html#cb626-11" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>animal_pe <span class="op">+</span></span>
-<span id="cb626-12"><a href="mcmcglmm-3.html#cb626-12" aria-hidden="true"></a><span class="st">    </span>year <span class="op">+</span><span class="st"> </span>byear, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.5</span>,</span>
-<span id="cb626-13"><a href="mcmcglmm-3.html#cb626-13" aria-hidden="true"></a>  <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb626-14"><a href="mcmcglmm-3.html#cb626-14" aria-hidden="true"></a>)</span>
-<span id="cb626-15"><a href="mcmcglmm-3.html#cb626-15" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.5</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="mcmcglmm-3.html#cb664-1" aria-hidden="true"></a><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
+<span id="cb664-2"><a href="mcmcglmm-3.html#cb664-2" aria-hidden="true"></a>prior3<span class="fl">.5</span> &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(</span>
+<span id="cb664-3"><a href="mcmcglmm-3.html#cb664-3" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
+<span id="cb664-4"><a href="mcmcglmm-3.html#cb664-4" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
+<span id="cb664-5"><a href="mcmcglmm-3.html#cb664-5" aria-hidden="true"></a>), <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G4 =</span> <span class="kw">list</span>(</span>
+<span id="cb664-6"><a href="mcmcglmm-3.html#cb664-6" aria-hidden="true"></a>  <span class="dt">V =</span> <span class="dv">1</span>,</span>
+<span id="cb664-7"><a href="mcmcglmm-3.html#cb664-7" aria-hidden="true"></a>  <span class="dt">nu =</span> <span class="fl">0.002</span></span>
+<span id="cb664-8"><a href="mcmcglmm-3.html#cb664-8" aria-hidden="true"></a>)), <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>))</span>
+<span id="cb664-9"><a href="mcmcglmm-3.html#cb664-9" aria-hidden="true"></a></span>
+<span id="cb664-10"><a href="mcmcglmm-3.html#cb664-10" aria-hidden="true"></a>model3<span class="fl">.5</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
+<span id="cb664-11"><a href="mcmcglmm-3.html#cb664-11" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>animal_pe <span class="op">+</span></span>
+<span id="cb664-12"><a href="mcmcglmm-3.html#cb664-12" aria-hidden="true"></a><span class="st">    </span>year <span class="op">+</span><span class="st"> </span>byear, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.5</span>,</span>
+<span id="cb664-13"><a href="mcmcglmm-3.html#cb664-13" aria-hidden="true"></a>  <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb664-14"><a href="mcmcglmm-3.html#cb664-14" aria-hidden="true"></a>)</span>
+<span id="cb664-15"><a href="mcmcglmm-3.html#cb664-15" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.5</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##      animal   animal_pe        year       byear       units 
 ## 4.304918863 9.077350871 7.920407219 0.002651831 7.738514960</code></pre>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="mcmcglmm-3.html#cb628-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model3<span class="fl">.5</span><span class="op">$</span>VCV, <span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="mcmcglmm-3.html#cb666-1" aria-hidden="true"></a><span class="kw">HPDinterval</span>(model3<span class="fl">.5</span><span class="op">$</span>VCV, <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>##                  lower     upper
 ## animal    1.8927446261  7.545075
 ## animal_pe 5.6707092000 11.689607
@@ -445,31 +449,30 @@ For example we can try including year of measurement (<code>year</code>) and bir
 ## units     7.1715856383  8.440370
 ## attr(,&quot;Probability&quot;)
 ## [1] 0.95</code></pre>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="mcmcglmm-3.html#cb630-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.5</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="mcmcglmm-3.html#cb668-1" aria-hidden="true"></a><span class="kw">plot</span>(model3<span class="fl">.5</span><span class="op">$</span>VCV)</span></code></pre></div>
 <p><img src="wam_tuto_files/figure-html/unnamed-chunk-195-1.svg" width="672" /><img src="wam_tuto_files/figure-html/unnamed-chunk-195-2.svg" width="672" /></p>
-<p>This model will return additional variance components corresponding to year of measurement effects and birth year (of the female effects) <!-- I dont understand the statement of female effect-->.</p>
+<p>This model will return additional variance components corresponding to year of measurement effects and birth year of the female effects.</p>
 <p><span class="math inline">\(V_{byear}\)</span> is very low and its posterior distribution (via the function <code>HPDinterval</code> or <code>plot</code>) is very close to zero indicating its not significance. You have to remember bayesian model never estimate variable to 0 or passing zero, so you will never see a credible interval <code>CI</code> crossing zero for a variance.
 If you compared the DIC of model3.5 to a reduced model without <code>byear</code>, it should be very similar.</p>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="mcmcglmm-3.html#cb631-1" aria-hidden="true"></a><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
-<span id="cb631-2"><a href="mcmcglmm-3.html#cb631-2" aria-hidden="true"></a>prior3<span class="fl">.5</span>_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
-<span id="cb631-3"><a href="mcmcglmm-3.html#cb631-3" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(</span>
-<span id="cb631-4"><a href="mcmcglmm-3.html#cb631-4" aria-hidden="true"></a>    <span class="dt">V =</span> <span class="dv">1</span>,</span>
-<span id="cb631-5"><a href="mcmcglmm-3.html#cb631-5" aria-hidden="true"></a>    <span class="dt">nu =</span> <span class="fl">0.002</span></span>
-<span id="cb631-6"><a href="mcmcglmm-3.html#cb631-6" aria-hidden="true"></a>  ), <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</span>
-<span id="cb631-7"><a href="mcmcglmm-3.html#cb631-7" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)</span>
-<span id="cb631-8"><a href="mcmcglmm-3.html#cb631-8" aria-hidden="true"></a>)</span>
-<span id="cb631-9"><a href="mcmcglmm-3.html#cb631-9" aria-hidden="true"></a></span>
-<span id="cb631-10"><a href="mcmcglmm-3.html#cb631-10" aria-hidden="true"></a>model3<span class="fl">.5</span>_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
-<span id="cb631-11"><a href="mcmcglmm-3.html#cb631-11" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>animal_pe <span class="op">+</span></span>
-<span id="cb631-12"><a href="mcmcglmm-3.html#cb631-12" aria-hidden="true"></a><span class="st">    </span>year, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.5</span>_<span class="dv">2</span>,</span>
-<span id="cb631-13"><a href="mcmcglmm-3.html#cb631-13" aria-hidden="true"></a>  <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
-<span id="cb631-14"><a href="mcmcglmm-3.html#cb631-14" aria-hidden="true"></a>)</span>
-<span id="cb631-15"><a href="mcmcglmm-3.html#cb631-15" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.5</span>_<span class="dv">2</span><span class="op">$</span>VCV)</span></code></pre></div>
+<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="mcmcglmm-3.html#cb669-1" aria-hidden="true"></a>prior3<span class="fl">.5</span>_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb669-2"><a href="mcmcglmm-3.html#cb669-2" aria-hidden="true"></a>  <span class="dt">G =</span> <span class="kw">list</span>(<span class="dt">G1 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>), <span class="dt">G2 =</span> <span class="kw">list</span>(</span>
+<span id="cb669-3"><a href="mcmcglmm-3.html#cb669-3" aria-hidden="true"></a>    <span class="dt">V =</span> <span class="dv">1</span>,</span>
+<span id="cb669-4"><a href="mcmcglmm-3.html#cb669-4" aria-hidden="true"></a>    <span class="dt">nu =</span> <span class="fl">0.002</span></span>
+<span id="cb669-5"><a href="mcmcglmm-3.html#cb669-5" aria-hidden="true"></a>  ), <span class="dt">G3 =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)),</span>
+<span id="cb669-6"><a href="mcmcglmm-3.html#cb669-6" aria-hidden="true"></a>  <span class="dt">R =</span> <span class="kw">list</span>(<span class="dt">V =</span> <span class="dv">1</span>, <span class="dt">nu =</span> <span class="fl">0.002</span>)</span>
+<span id="cb669-7"><a href="mcmcglmm-3.html#cb669-7" aria-hidden="true"></a>)</span>
+<span id="cb669-8"><a href="mcmcglmm-3.html#cb669-8" aria-hidden="true"></a></span>
+<span id="cb669-9"><a href="mcmcglmm-3.html#cb669-9" aria-hidden="true"></a>model3<span class="fl">.5</span>_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>age,</span>
+<span id="cb669-10"><a href="mcmcglmm-3.html#cb669-10" aria-hidden="true"></a>  <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span>animal <span class="op">+</span><span class="st"> </span>animal_pe <span class="op">+</span></span>
+<span id="cb669-11"><a href="mcmcglmm-3.html#cb669-11" aria-hidden="true"></a><span class="st">    </span>year, <span class="dt">ginv =</span> <span class="kw">list</span>(<span class="dt">animal =</span> Ainv), <span class="dt">data =</span> gryphonRM, <span class="dt">prior =</span> prior3<span class="fl">.5</span>_<span class="dv">2</span>,</span>
+<span id="cb669-12"><a href="mcmcglmm-3.html#cb669-12" aria-hidden="true"></a>  <span class="dt">verbose =</span> <span class="ot">FALSE</span></span>
+<span id="cb669-13"><a href="mcmcglmm-3.html#cb669-13" aria-hidden="true"></a>)</span>
+<span id="cb669-14"><a href="mcmcglmm-3.html#cb669-14" aria-hidden="true"></a><span class="kw">posterior.mode</span>(model3<span class="fl">.5</span>_<span class="dv">2</span><span class="op">$</span>VCV)</span></code></pre></div>
 <pre><code>##    animal animal_pe      year     units 
 ##  4.660487  7.797882  8.393778  7.872222</code></pre>
-<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="mcmcglmm-3.html#cb633-1" aria-hidden="true"></a>model3<span class="fl">.5</span><span class="op">$</span>DIC</span></code></pre></div>
+<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="mcmcglmm-3.html#cb671-1" aria-hidden="true"></a>model3<span class="fl">.5</span><span class="op">$</span>DIC</span></code></pre></div>
 <pre><code>## [1] 8290.222</code></pre>
-<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="mcmcglmm-3.html#cb635-1" aria-hidden="true"></a>model3<span class="fl">.5</span>_<span class="dv">2</span><span class="op">$</span>DIC</span></code></pre></div>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="mcmcglmm-3.html#cb673-1" aria-hidden="true"></a>model3<span class="fl">.5</span>_<span class="dv">2</span><span class="op">$</span>DIC</span></code></pre></div>
 <pre><code>## [1] 8290.116</code></pre>
 <p><code>year</code> effects could alternatively be included as fixed effects (try it!, you should be able to handle the new prior specification at this point). This will reduce <span class="math inline">\(V_R\)</span> and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.</p>
 <!-- CX  What to do more , may be extract BLUP also !-->

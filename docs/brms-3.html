@@ -241,13 +241,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="asreml-r-2.html"><a href="asreml-r-2.html"><i class="fa fa-check"></i><b>4.2</b> Asreml-R</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="asreml-r-2.html"><a href="asreml-r-2.html#estimating-repeatability"><i class="fa fa-check"></i><b>4.2.1</b> Estimating repeatability</a></li>
+<li class="chapter" data-level="4.2.2" data-path="asreml-r-2.html"><a href="asreml-r-2.html#partitioning-additive-and-permanent-environment-effects"><i class="fa fa-check"></i><b>4.2.2</b> Partitioning additive and permanent environment effects</a></li>
+<li class="chapter" data-level="4.2.3" data-path="asreml-r-2.html"><a href="asreml-r-2.html#adding-additional-effects-and-testing-significance"><i class="fa fa-check"></i><b>4.2.3</b> Adding additional effects and testing significance</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="gremlin-3.html"><a href="gremlin-3.html"><i class="fa fa-check"></i><b>4.3</b> gremlin</a></li>
 <li class="chapter" data-level="4.4" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html"><i class="fa fa-check"></i><b>4.4</b> MCMCglmm</a>
 <ul>
 <li class="chapter" data-level="4.4.1" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#estimating-repeatability-1"><i class="fa fa-check"></i><b>4.4.1</b> Estimating repeatability</a></li>
-<li class="chapter" data-level="4.4.2" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#partitioning-additive-and-permanent-environment-effects"><i class="fa fa-check"></i><b>4.4.2</b> Partitioning additive and permanent environment effects</a></li>
-<li class="chapter" data-level="4.4.3" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#adding-additional-effects-and-testing-significance"><i class="fa fa-check"></i><b>4.4.3</b> Adding additional effects and testing significance</a></li>
+<li class="chapter" data-level="4.4.2" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#partitioning-additive-and-permanent-environment-effects-1"><i class="fa fa-check"></i><b>4.4.2</b> Partitioning additive and permanent environment effects</a></li>
+<li class="chapter" data-level="4.4.3" data-path="mcmcglmm-3.html"><a href="mcmcglmm-3.html#adding-additional-effects-and-testing-significance-1"><i class="fa fa-check"></i><b>4.4.3</b> Adding additional effects and testing significance</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="brms-3.html"><a href="brms-3.html"><i class="fa fa-check"></i><b>4.5</b> brms</a></li>
 <li class="chapter" data-level="4.6" data-path="stan-2.html"><a href="stan-2.html"><i class="fa fa-check"></i><b>4.6</b> stan</a></li>
@@ -292,22 +294,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="brms-3" class="section level2 hasAnchor" number="4.5">
 <h2><span class="header-section-number">4.5</span> brms<a href="brms-3.html#brms-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="brms-3.html#cb637-1" aria-hidden="true"></a><span class="kw">library</span>(brms)</span>
-<span id="cb637-2"><a href="brms-3.html#cb637-2" aria-hidden="true"></a></span>
-<span id="cb637-3"><a href="brms-3.html#cb637-3" aria-hidden="true"></a>Amat &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(nadiv<span class="op">::</span><span class="kw">makeA</span>(gryphonped))</span>
-<span id="cb637-4"><a href="brms-3.html#cb637-4" aria-hidden="true"></a>gryphonRM<span class="op">$</span>animal_pe &lt;-<span class="st"> </span>gryphonRM<span class="op">$</span>animal</span>
-<span id="cb637-5"><a href="brms-3.html#cb637-5" aria-hidden="true"></a></span>
-<span id="cb637-6"><a href="brms-3.html#cb637-6" aria-hidden="true"></a></span>
-<span id="cb637-7"><a href="brms-3.html#cb637-7" aria-hidden="true"></a></span>
-<span id="cb637-8"><a href="brms-3.html#cb637-8" aria-hidden="true"></a>model_simple1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</span>
-<span id="cb637-9"><a href="brms-3.html#cb637-9" aria-hidden="true"></a>  laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>animal) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>animal_pe),</span>
-<span id="cb637-10"><a href="brms-3.html#cb637-10" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
-<span id="cb637-11"><a href="brms-3.html#cb637-11" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(), <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
-<span id="cb637-12"><a href="brms-3.html#cb637-12" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>, <span class="dt">iter =</span> <span class="dv">1000</span></span>
-<span id="cb637-13"><a href="brms-3.html#cb637-13" aria-hidden="true"></a>)</span>
-<span id="cb637-14"><a href="brms-3.html#cb637-14" aria-hidden="true"></a></span>
-<span id="cb637-15"><a href="brms-3.html#cb637-15" aria-hidden="true"></a><span class="kw">summary</span>(model_simple1<span class="fl">.1</span>)</span>
-<span id="cb637-16"><a href="brms-3.html#cb637-16" aria-hidden="true"></a><span class="kw">plot</span>(model_simple1<span class="fl">.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="brms-3.html#cb675-1" aria-hidden="true"></a><span class="kw">library</span>(brms)</span>
+<span id="cb675-2"><a href="brms-3.html#cb675-2" aria-hidden="true"></a></span>
+<span id="cb675-3"><a href="brms-3.html#cb675-3" aria-hidden="true"></a>Amat &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(nadiv<span class="op">::</span><span class="kw">makeA</span>(gryphonped))</span>
+<span id="cb675-4"><a href="brms-3.html#cb675-4" aria-hidden="true"></a>gryphonRM<span class="op">$</span>animal_pe &lt;-<span class="st"> </span>gryphonRM<span class="op">$</span>animal</span>
+<span id="cb675-5"><a href="brms-3.html#cb675-5" aria-hidden="true"></a></span>
+<span id="cb675-6"><a href="brms-3.html#cb675-6" aria-hidden="true"></a></span>
+<span id="cb675-7"><a href="brms-3.html#cb675-7" aria-hidden="true"></a></span>
+<span id="cb675-8"><a href="brms-3.html#cb675-8" aria-hidden="true"></a>model_simple1<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">brm</span>(</span>
+<span id="cb675-9"><a href="brms-3.html#cb675-9" aria-hidden="true"></a>  laydate <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>animal) <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">|</span><span class="st"> </span>animal_pe),</span>
+<span id="cb675-10"><a href="brms-3.html#cb675-10" aria-hidden="true"></a>  <span class="dt">data =</span> gryphonRM,</span>
+<span id="cb675-11"><a href="brms-3.html#cb675-11" aria-hidden="true"></a>  <span class="dt">family =</span> <span class="kw">gaussian</span>(), <span class="dt">data2 =</span> <span class="kw">list</span>(<span class="dt">Amat =</span> Amat),</span>
+<span id="cb675-12"><a href="brms-3.html#cb675-12" aria-hidden="true"></a>  <span class="dt">chains =</span> <span class="dv">2</span>, <span class="dt">cores =</span> <span class="dv">2</span>, <span class="dt">iter =</span> <span class="dv">1000</span></span>
+<span id="cb675-13"><a href="brms-3.html#cb675-13" aria-hidden="true"></a>)</span>
+<span id="cb675-14"><a href="brms-3.html#cb675-14" aria-hidden="true"></a></span>
+<span id="cb675-15"><a href="brms-3.html#cb675-15" aria-hidden="true"></a><span class="kw">summary</span>(model_simple1<span class="fl">.1</span>)</span>
+<span id="cb675-16"><a href="brms-3.html#cb675-16" aria-hidden="true"></a><span class="kw">plot</span>(model_simple1<span class="fl">.1</span>)</span></code></pre></div>
 <!-- I get some errors messages need to be check I thin -->
 <!-- need to create the stucture of the document too -->
 

@@ -84,11 +84,13 @@ scenario-2
 data-files-2
 asreml-r-2
 estimating-repeatability
+partitioning-additive-and-permanent-environment-effects
+adding-additional-effects-and-testing-significance
 gremlin-3
 mcmcglmm-3
 estimating-repeatability-1
-partitioning-additive-and-permanent-environment-effects
-adding-additional-effects-and-testing-significance
+partitioning-additive-and-permanent-environment-effects-1
+adding-additional-effects-and-testing-significance-1
 brms-3
 stan-2
 quick-comparison-of-codes
