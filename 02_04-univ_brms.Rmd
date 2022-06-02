@@ -63,9 +63,9 @@ v_r <- (VarCorr(brms_m1.1, summary = FALSE)$residual$sd)^2
 h.bwt.1 <- as.mcmc(v_animal / (v_animal + v_r))
 summary(h.bwt.1)
 plot(h.bwt.1)
-#or
-Var.table<-as_draws_df(brms_m1.1)
-Var.table$h.bwt.1<-as.mcmc((Var.table$sd_animal__Intercept)^2/ ((Var.table$sd_animal__Intercept)^2 + (Var.table$sigma)^2))
+# or
+Var.table <- as_draws_df(brms_m1.1)
+Var.table$h.bwt.1 <- as.mcmc((Var.table$sd_animal__Intercept)^2 / ((Var.table$sd_animal__Intercept)^2 + (Var.table$sigma)^2))
 summary(Var.table$h.bwt.1)
 plot(Var.table$h.bwt.1)
 ```
@@ -162,9 +162,9 @@ summary(h.bwt.3)
 summary(h.bwt.2)
 summary(h.bwt.1)
 
-#or
-Var.table<-as_draws_df(brms_m1.3)
-Var.table$h.bwt.3<-as.mcmc((Var.table$sd_animal__Intercept)^2/ ((Var.table$sd_animal__Intercept)^2 + (Var.table$sd_byear__Intercept)^2+ (Var.table$sd_mother__Intercept)^2+ (Var.table$sigma)^2))
+# or
+Var.table <- as_draws_df(brms_m1.3)
+Var.table$h.bwt.3 <- as.mcmc((Var.table$sd_animal__Intercept)^2 / ((Var.table$sd_animal__Intercept)^2 + (Var.table$sd_byear__Intercept)^2 + (Var.table$sd_mother__Intercept)^2 + (Var.table$sigma)^2))
 summary(Var.table$h.bwt.3)
 plot(Var.table$h.bwt.3)
 ```
@@ -181,7 +181,7 @@ Model comparisons can be performed using the function `loo_compare` using `waic`
 brms_m1.3 <- add_criterion(brms_m1.3, "waic")
 brms_m1.1 <- add_criterion(brms_m1.1, "waic")
 
-loo_compare(brms_m1.3,brms_m1.1, criterion = "waic")
+loo_compare(brms_m1.3, brms_m1.1, criterion = "waic")
 ```
 
 
@@ -192,8 +192,8 @@ Two distinct approch can be done to partition the different random effect: using
 
 ```{r eval = params$fit_all}
 brms_m1.4 <- brm(
-#  bwt ~ 1 +  sex + (1 | gr(animal, cov = Amat, by = sex))+ (1 | gr(byear, by = sex)) + (1 | gr(mother, by = sex)),
-  bwt ~ 1 +  sex + (0+sex || gr(animal, cov = Amat))+ (0+sex || byear) + (0+sex || mother),  
+  #  bwt ~ 1 +  sex + (1 | gr(animal, cov = Amat, by = sex))+ (1 | gr(byear, by = sex)) + (1 | gr(mother, by = sex)),
+  bwt ~ 1 + sex + (0 + sex || gr(animal, cov = Amat)) + (0 + sex || byear) + (0 + sex || mother),
   data = gryphon,
   data2 = list(Amat = Amat),
   family = gaussian(),
@@ -212,10 +212,12 @@ summary(brms_m1.4)
 We can see the model estimate variance for both sexes.  However, the residual level or sigma is not splitted by sexes. A futher and more complex code need to be performed, thus we can estimate the sex-specific heritability.
 
 ```{r eval = params$fit_all}
-bf_m1.5<-bf( bwt ~ 1 + sex+ (0 + sex|| gr(animal, cov = Amat))+(0 + sex||mother)+(0 + sex||byear),
-sigma ~ sex-1)
+bf_m1.5 <- bf(
+  bwt ~ 1 + sex + (0 + sex || gr(animal, cov = Amat)) + (0 + sex || mother) + (0 + sex || byear),
+  sigma ~ sex - 1
+)
 
-brms_m1.5<- brm(bf_m1.5,
+brms_m1.5 <- brm(bf_m1.5,
   data = gryphon,
   data2 = list(Amat = Amat),
   family = gaussian(),
@@ -231,9 +233,9 @@ To save time, the results of the calculation is stored in the spare file `brms_m
 load("data/brms_m1_5.rda")
 summary(brms_m1.5)
 #
-Var.table<-as_draws_df(brms_m1.5)
-Var.table$h.bwt.f<-as.mcmc((Var.table$sd_animal__sex1)^2/ ((Var.table$sd_animal__sex1)^2 + (Var.table$ sd_byear__sex1)^2+ (Var.table$sd_mother__sex1)^2+ (Var.table$b_sigma_sex1)^2))
-Var.table$h.bwt.m<-as.mcmc((Var.table$sd_animal__sex2)^2/ ((Var.table$sd_animal__sex2)^2 + (Var.table$ sd_byear__sex2)^2+ (Var.table$sd_mother__sex2)^2+ (Var.table$b_sigma_sex2)^2))
+Var.table <- as_draws_df(brms_m1.5)
+Var.table$h.bwt.f <- as.mcmc((Var.table$sd_animal__sex1)^2 / ((Var.table$sd_animal__sex1)^2 + (Var.table$ sd_byear__sex1)^2 + (Var.table$sd_mother__sex1)^2 + (Var.table$b_sigma_sex1)^2))
+Var.table$h.bwt.m <- as.mcmc((Var.table$sd_animal__sex2)^2 / ((Var.table$sd_animal__sex2)^2 + (Var.table$ sd_byear__sex2)^2 + (Var.table$sd_mother__sex2)^2 + (Var.table$b_sigma_sex2)^2))
 summary(Var.table$h.bwt.f)
 summary(Var.table$h.bwt.m)
 plot(Var.table$h.bwt.f)
@@ -243,15 +245,16 @@ plot(Var.table$h.bwt.m)
 Here, we can plot the point estimates of the $h^2$ which seems to differ between sexes, but their CI overlaps.
 
 ```{r, fig.cap = "Female and male heritability of birth weight"}
-h2.sex<-rbind(
-cbind(summary(Var.table$h.bwt.f)$statistics[1],summary(Var.table$h.bwt.f)$quantiles[1],summary(Var.table$h.bwt.f)$quantiles[5]),
-cbind(summary(Var.table$h.bwt.m)$statistics[1],summary(Var.table$h.bwt.m)$quantiles[1],summary(Var.table$h.bwt.m)$quantiles[5]))
+h2.sex <- rbind(
+  cbind(summary(Var.table$h.bwt.f)$statistics[1], summary(Var.table$h.bwt.f)$quantiles[1], summary(Var.table$h.bwt.f)$quantiles[5]),
+  cbind(summary(Var.table$h.bwt.m)$statistics[1], summary(Var.table$h.bwt.m)$quantiles[1], summary(Var.table$h.bwt.m)$quantiles[5])
+)
 
-plot(c(0.95, 1.05)~h2.sex[,1], xlim=c(0,0.8),ylim=c(0.5,1.5),,xlab="",ylab="",col=c("red","blue"),pch=c(16,17),cex=2,yaxt="n")
-arrows(y0=0.95,x0=h2.sex[1,2],y1=0.95,x1=h2.sex[1,3],code=3,angle=90,length=0,col=c("red"),lwd=2)
-arrows(y0=1.05,x0=h2.sex[2,2],y1=1.05,x1=h2.sex[2,3],code=3,angle=90,length=0,col=c("blue"),lwd=2)
-mtext("Narrow-sense heritability (±CI)", side=1, las=1, adj=0.4,line=3, cex=1.6)
-axis(2,at=1,labels=c("birth weight"),las = 3,cex.axis=1.6)
+plot(c(0.95, 1.05) ~ h2.sex[, 1], xlim = c(0, 0.8), ylim = c(0.5, 1.5), , xlab = "", ylab = "", col = c("red", "blue"), pch = c(16, 17), cex = 2, yaxt = "n")
+arrows(y0 = 0.95, x0 = h2.sex[1, 2], y1 = 0.95, x1 = h2.sex[1, 3], code = 3, angle = 90, length = 0, col = c("red"), lwd = 2)
+arrows(y0 = 1.05, x0 = h2.sex[2, 2], y1 = 1.05, x1 = h2.sex[2, 3], code = 3, angle = 90, length = 0, col = c("blue"), lwd = 2)
+mtext("Narrow-sense heritability (±CI)", side = 1, las = 1, adj = 0.4, line = 3, cex = 1.6)
+axis(2, at = 1, labels = c("birth weight"), las = 3, cex.axis = 1.6)
 ```
 
 

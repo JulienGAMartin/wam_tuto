@@ -1,4 +1,4 @@
-## Asreml-R
+`## Asreml-R
 
 ### Running the model
 
@@ -38,7 +38,7 @@ To see the estimates for the variance components, we run:
 summary(model1)$varcomp
 ```
 
-We fitted a single random effect so we partitioned the phenotypic variance into two components. The `vm(animal, ainv)` variance component is $V_A$ and is estimated as `r round(summary(model1)$varcomp[1,1], 2)`. Given that the ratio of $V_A$ to its standard error (`z.ratio`) is considerably larger than 2 (_i.e._ the parameter estimate is more than 2 SEs from zero), this looks likely to be significant. The `units!units` component refers to the residual variance $V_R$, and `units$R` should be ignored. If you don't include `residual=~idv(units)`in your model specification, `units$R` will provide you with the residual variance.
+We fitted a single random effect so we partitioned the phenotypic variance into two components. The `vm(animal, ainv)` variance component is $V_A$ and is estimated as `r round(summary(model1)$varcomp[1,1], 2)`. Given that the ratio of $V_A$ to its standard error (`z.ratio`) is considerably larger than 2 (_i.e._ the parameter estimate is more than 2 SEs from zero), this looks likely to be significant. The `units!units` component refers to the residual variance $V_R$, and `units$R` should be ignored. If you don't include `residual=~idv(units)` in your model specification, `units$R` will provide you with the residual variance.
 
 ### Estimating heritability
 
@@ -198,13 +198,13 @@ Here, we can see the point estimates of $h^2$ seems to differ between sexes (`r 
 LRT give more information and showed that partitioning the variance and the residual between sexes did not improved the fit of the model and so their variance are not significantly different. 
 
 ```{r, fig.cap = "Female and male heritability of birth weight"}
-h2.sex<-rbind(h2.F,h2.M)
+h2.sex <- rbind(h2.F, h2.M)
 
-plot(c(0.95, 1.05)~h2.sex[,1], xlim=c(0,0.8),ylim=c(0.5,1.5),,xlab="",ylab="",col=c("red","blue"),pch=c(16,17),cex=2,yaxt="n")
-arrows(y0=0.95,x0=h2.sex[1,1]-h2.sex[1,2],y1=0.95,x1=h2.sex[1,1]+h2.sex[1,2],code=3,angle=90,length=0,col=c("red"),lwd=2)
-arrows(y0=1.05,x0=h2.sex[2,1]-h2.sex[2,2],y1=1.05,x1=h2.sex[2,1]+h2.sex[2,2],code=3,angle=90,length=0,col=c("blue"),lwd=2)
-mtext("Narrow-sense heritability (±se)", side=1, las=1, adj=0.4,line=3, cex=1.6)
-axis(2,at=1,labels=c("birth weight"),las = 3,cex.axis=1.6)
+plot(c(0.95, 1.05) ~ h2.sex[, 1], xlim = c(0, 0.8), ylim = c(0.5, 1.5), , xlab = "", ylab = "", col = c("red", "blue"), pch = c(16, 17), cex = 2, yaxt = "n")
+arrows(y0 = 0.95, x0 = h2.sex[1, 1] - h2.sex[1, 2], y1 = 0.95, x1 = h2.sex[1, 1] + h2.sex[1, 2], code = 3, angle = 90, length = 0, col = c("red"), lwd = 2)
+arrows(y0 = 1.05, x0 = h2.sex[2, 1] - h2.sex[2, 2], y1 = 1.05, x1 = h2.sex[2, 1] + h2.sex[2, 2], code = 3, angle = 90, length = 0, col = c("blue"), lwd = 2)
+mtext("Narrow-sense heritability (±se)", side = 1, las = 1, adj = 0.4, line = 3, cex = 1.6)
+axis(2, at = 1, labels = c("birth weight"), las = 3, cex.axis = 1.6)
 ```
 
 ### Modification of the varaince matrix parameters

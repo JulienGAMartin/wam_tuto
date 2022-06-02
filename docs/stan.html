@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2.6 stan | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2.6 stan | How to fit an animal model" />
   <meta property="og:type" content="book" />
-  
   <meta property="og:image" content="/images/missing.png" />
   <meta property="og:description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
   <meta name="github-repo" content="JulienGAMartin/wam_tuto" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="brms-1.html"/>
 <link rel="next" href="multivariate-animal-model.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,8 +50,9 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -212,6 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.4" data-path="asreml-biv.html"><a href="asreml-biv.html#estimate-directly-the-genetic-correlation-within-the-model"><i class="fa fa-check"></i><b>3.2.4</b> Estimate directly the genetic correlation within the model</a></li>
 <li class="chapter" data-level="3.2.5" data-path="asreml-biv.html"><a href="asreml-biv.html#visualisation-of-the-correlation-aka-blup-extraction"><i class="fa fa-check"></i><b>3.2.5</b> Visualisation of the correlation (aka BLUP extraction)</a></li>
 <li class="chapter" data-level="3.2.6" data-path="asreml-biv.html"><a href="asreml-biv.html#partitionning-covariance-between-groups"><i class="fa fa-check"></i><b>3.2.6</b> Partitionning (co)variance between groups</a></li>
+<li class="chapter" data-level="3.2.7" data-path="asreml-biv.html"><a href="asreml-biv.html#between-groups-covariances-and-the-b-matrix"><i class="fa fa-check"></i><b>3.2.7</b> Between groups (co)variances and the B-matrix</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="gremlin-2.html"><a href="gremlin-2.html"><i class="fa fa-check"></i><b>3.3</b> gremlin</a></li>
 <li class="chapter" data-level="3.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html"><i class="fa fa-check"></i><b>3.4</b> MCMCglmm</a>
@@ -220,8 +220,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4.2" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#adding-fixed-and-random-effects-1"><i class="fa fa-check"></i><b>3.4.2</b> Adding fixed and random effects</a></li>
 <li class="chapter" data-level="3.4.3" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#direct-estimate-of-the-correlation-instead-of-the-covariance."><i class="fa fa-check"></i><b>3.4.3</b> Direct estimate of the correlation instead of the covariance.</a></li>
 <li class="chapter" data-level="3.4.4" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#partitioning-covariances"><i class="fa fa-check"></i><b>3.4.4</b> Partitioning (co)variances</a></li>
+<li class="chapter" data-level="3.4.5" data-path="mcmcglmm-2.html"><a href="mcmcglmm-2.html#between-groups-covariances-and-the-b-matrix-1"><i class="fa fa-check"></i><b>3.4.5</b> Between groups (co)variances and the B-matrix</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a></li>
+<li class="chapter" data-level="3.5" data-path="brms-2.html"><a href="brms-2.html"><i class="fa fa-check"></i><b>3.5</b> brms</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="brms-2.html"><a href="brms-2.html#fitting-the-model-1"><i class="fa fa-check"></i><b>3.5.1</b> Fitting the model</a></li>
+<li class="chapter" data-level="3.5.2" data-path="brms-2.html"><a href="brms-2.html#adding-fixed-and-random-effects-2"><i class="fa fa-check"></i><b>3.5.2</b> Adding fixed and random effects</a></li>
+<li class="chapter" data-level="3.5.3" data-path="brms-2.html"><a href="brms-2.html#partitioning-covariances-1"><i class="fa fa-check"></i><b>3.5.3</b> Partitioning (co)variances</a></li>
+<li class="chapter" data-level="3.5.4" data-path="brms-2.html"><a href="brms-2.html#between-groups-covariances-and-the-b-matrix-2"><i class="fa fa-check"></i><b>3.5.4</b> Between groups (co)variances and the B-matrix</a></li>
+</ul></li>
 <li class="chapter" data-level="3.6" data-path="stan-1.html"><a href="stan-1.html"><i class="fa fa-check"></i><b>3.6</b> stan</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="rep_measures.html"><a href="rep_measures.html"><i class="fa fa-check"></i><b>4</b> A repeated measures animal model</a>
@@ -285,8 +292,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="stan" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> stan</h2>
+<div id="stan" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> stan<a href="stan.html#stan" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>to do</p>
 
 </div>

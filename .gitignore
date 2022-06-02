@@ -11,3 +11,5 @@ docs/preview
 wamwiki-old
 brms-wam-master
 *.Rproj
+wam_tuto_cache/
+fort.19
