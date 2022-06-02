@@ -150,7 +150,7 @@ plot(model3.5$VCV)
 
 This model will return additional variance components corresponding to year of measurement effects and birth year (of the female effects) <!-- I dont understand the statement of female effect-->.
 
-$V_{byear}$ is very low and its posterior distribution (via the function `HPDinterval` or `plot`) is very close to zero indicating its not significance. You have to remember bayesien model never estimate variable to 0 or passing zero, so you will never see a credible  interval `CI` crossing zero for a variance.
+$V_{byear}$ is very low and its posterior distribution (via the function `HPDinterval` or `plot`) is very close to zero indicating its not significance. You have to remember bayesian model never estimate variable to 0 or passing zero, so you will never see a credible  interval `CI` crossing zero for a variance.
 If you compared the DIC of model3.5 to a reduced model without `byear`, it should be very similar. 
 ```{r, cache = TRUE}
 #p.var <- var(gryphonRM$laydate, na.rm = TRUE)

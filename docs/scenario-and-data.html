@@ -22,6 +22,7 @@
   <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
+<meta name="author" content="Matthieu Videlier" />
 
 
 
@@ -167,7 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
 <li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#further-partitioning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Further partitioning the variance</a></li>
-<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.2.7</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-the-varaince-matrix-parameters"><i class="fa fa-check"></i><b>2.2.7</b> Modification of the varaince matrix parameters</a></li>
 <li class="chapter" data-level="2.2.8" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-two-random-effects"><i class="fa fa-check"></i><b>2.2.8</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
@@ -181,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
-<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm--></a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
@@ -191,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.3" data-path="brms-1.html"><a href="brms-1.html#adding-random-effects-2"><i class="fa fa-check"></i><b>2.5.3</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.5.4" data-path="brms-1.html"><a href="brms-1.html#testing-significance-of-variance-components-1"><i class="fa fa-check"></i><b>2.5.4</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.5.5" data-path="brms-1.html"><a href="brms-1.html#further-partitioning-of-the-variance"><i class="fa fa-check"></i><b>2.5.5</b> Further partitioning of the variance</a></li>
-<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-2"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.5.7" data-path="brms-1.html"><a href="brms-1.html#covariance-between-two-random-effects-2"><i class="fa fa-check"></i><b>2.5.7</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>2.6</b> stan</a></li>
@@ -292,24 +293,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="data-files-1" class="section level3" number="2.1.2">
 <h3><span class="header-section-number">2.1.2</span> Data files</h3>
-<p>Open <code>gryphonped.csv</code> and <code>gryphon.csv</code> in your text editor. The structure and contents of these files is fairly self-explanatory. The pedigree file <code>gryphonped.csv</code> contains three columns containing unique IDs that correspond to each animal, its father, and its mother. Note that this is a multigenerational pedigree, with the earliest generation (for which parentage information is necessarily missing) at the beginning of the file. For later-born individuals maternal identities are all known but paternity information is incomplete (a common situation in real world applications).
-The phenotype data, as well as additional factors and covariates that we may wish to include in our model are contained in <code>gryphon.csv</code>. Columns correspond to individual identity (<code>animal</code>), maternal identity (<code>mother</code>), year of birth (<code>byear</code>), sex (<code>sex</code>, where <code>1</code> is female and <code>2</code> is male), birth weight (<code>bwt</code>), and tarsus length (<code>tarsus</code>). Each row of the data file contains a record for a different offspring individual. Note that all individuals included in the data file must be included as offspring in the pedigree file.</p>
-<p>We can read teh data file, using <code>read.csv()</code> which consider by default that <code>NA</code> is the symbol for missing values and that the first line of the file contains the column headers.</p>
+<p>Open <code>gryphonped.csv</code> and <code>gryphon.csv</code> in your text editor. The structure and contents of these files is fairly self-explanatory. The pedigree file <code>gryphonped.csv</code> contains three columns containing unique IDs that correspond to each animal, its father, and its mother. Note that this is a multigenerational pedigree, with the earliest generation (for which parentage information is necessarily missing) at the beginning of the file. For later-born individuals maternal identities are all known but paternity information is incomplete (a common situation in real world applications).</p>
+<p>The phenotype data, as well as additional factors and covariates that we may wish to include in our model are contained in <code>gryphon.csv</code>. Columns correspond to individual identity (<code>animal</code>), maternal identity (<code>mother</code>), year of birth (<code>byear</code>), sex (<code>sex</code>, where <code>1</code> is female and <code>2</code> is male), birth weight (<code>bwt</code>), and tarsus length (<code>tarsus</code>). Each row of the data file contains a record for a different offspring individual. Note that all individuals included in the data file must be included as offspring in the pedigree file.</p>
+<p>We can read the data file, using <code>read.csv()</code> which consider by default that <code>NA</code> is the symbol for missing values and that the first line of the file contains the column headers.</p>
 <p>It is a good idea to make sure that all variables are correctly assigned as numeric or factors:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="scenario-and-data.html#cb1-1" aria-hidden="true"></a>gryphon<span class="op">$</span>animal &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>animal)</span>
 <span id="cb1-2"><a href="scenario-and-data.html#cb1-2" aria-hidden="true"></a>gryphon<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>mother)</span>
 <span id="cb1-3"><a href="scenario-and-data.html#cb1-3" aria-hidden="true"></a>gryphon<span class="op">$</span>byear &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>byear)</span>
 <span id="cb1-4"><a href="scenario-and-data.html#cb1-4" aria-hidden="true"></a>gryphon<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>sex)</span>
 <span id="cb1-5"><a href="scenario-and-data.html#cb1-5" aria-hidden="true"></a>gryphon<span class="op">$</span>bwt &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>bwt)</span>
-<span id="cb1-6"><a href="scenario-and-data.html#cb1-6" aria-hidden="true"></a>gryphon<span class="op">$</span>tarsus &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>tarsus)</span></code></pre></div>
+<span id="cb1-6"><a href="scenario-and-data.html#cb1-6" aria-hidden="true"></a>gryphon<span class="op">$</span>tarsus &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>tarsus)</span>
+<span id="cb1-7"><a href="scenario-and-data.html#cb1-7" aria-hidden="true"></a><span class="kw">str</span>(gryphon)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1084 obs. of  6 variables:
+##  $ animal: Factor w/ 1084 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;5&quot;,..: 864 1076 549 989 1030 751 987 490 906 591 ...
+##  $ mother: Factor w/ 429 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;8&quot;,..: 362 268 216 375 396 289 328 255 347 240 ...
+##  $ byear : Factor w/ 34 levels &quot;968&quot;,&quot;970&quot;,&quot;971&quot;,..: 1 1 2 2 2 2 3 3 3 3 ...
+##  $ sex   : Factor w/ 2 levels &quot;1&quot;,&quot;2&quot;: 1 1 2 1 2 1 2 1 1 1 ...
+##  $ bwt   : num  10.77 9.3 3.98 5.39 12.12 ...
+##  $ tarsus: num  24.8 22.5 12.9 20.5 NA ...</code></pre>
 <p>Similarly we can read in the pedigree file, using <code>read.csv()</code> which consider by default that <code>NA</code> is the symbol for missing values and that the first line of the file contains the column headers.</p>
 <pre><code>## &#39;data.frame&#39;:    1309 obs. of  3 variables:
 ##  $ id    : int  1306 1304 1298 1293 1290 1288 1284 1283 1282 1278 ...
 ##  $ father: int  NA NA NA NA NA NA NA NA NA NA ...
 ##  $ mother: int  NA NA NA NA NA NA NA NA NA NA ...</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="scenario-and-data.html#cb3-1" aria-hidden="true"></a>gryphonped<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>id)</span>
-<span id="cb3-2"><a href="scenario-and-data.html#cb3-2" aria-hidden="true"></a>gryphonped<span class="op">$</span>father &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>father)</span>
-<span id="cb3-3"><a href="scenario-and-data.html#cb3-3" aria-hidden="true"></a>gryphonped<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>mother)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="scenario-and-data.html#cb4-1" aria-hidden="true"></a>gryphonped<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>id)</span>
+<span id="cb4-2"><a href="scenario-and-data.html#cb4-2" aria-hidden="true"></a>gryphonped<span class="op">$</span>father &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>father)</span>
+<span id="cb4-3"><a href="scenario-and-data.html#cb4-3" aria-hidden="true"></a>gryphonped<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>mother)</span>
+<span id="cb4-4"><a href="scenario-and-data.html#cb4-4" aria-hidden="true"></a><span class="kw">str</span>(gryphonped)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    1309 obs. of  3 variables:
+##  $ id    : Factor w/ 1309 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1306 1304 1298 1293 1290 1288 1284 1283 1282 1278 ...
+##  $ father: Factor w/ 158 levels &quot;4&quot;,&quot;13&quot;,&quot;18&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ mother: Factor w/ 429 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;8&quot;,..: NA NA NA NA NA NA NA NA NA NA ...</code></pre>
 <p>Now that we have imported the data and the pedigree file, we are ready to fit an animal model.</p>
 
 </div>

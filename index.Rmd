@@ -1,7 +1,9 @@
 ---
 title: "How to fit an animal model"
 subtitle: "An ecologist guide"
-author: "Julien Martin"
+author: 
+  - Julien Martin^[Univeristy of Ottawa, julien.martin@uottawa.ca]
+  - Matthieu Videlier^[UQAM, videlier.mathieu@courrier.uqam.ca]
 date: "`r format(Sys.Date(), '%d-%m-%Y')`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -33,9 +35,9 @@ Do not take anything in this manual as gospel.
 
 List of people who contributed to update and extend tutorials:
 
-- Eric Postma
-- Julien Martin
-- Mathieu Videlier
+- Eric Postma updated the previous tutorial from asreml-r 3 to asreml-r 4
+- Julien Martin developed and maintains the site
+- Mathieu Videlier added (and continues to add) more details in the document
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
@@ -50,4 +52,15 @@ files_rda <- list.files("data/", pattern = ".rda")
 
 htmlT_pdfF <- ifelse(params$html_pdf == TRUE, TRUE, FALSE)
 htmlF_pdfT <- ifelse(params$html_pdf == TRUE, FALSE, TRUE)
+
+library(lme4)
+library(rptR)
+library(visreg)
+library(asreml)
+library(MCMCglmm)
+library(brms)
+library(mvtnorm)
+library(ggplot2)
+library(gridExtra)
+library(nadiv)
 ```

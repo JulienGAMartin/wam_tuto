@@ -8,7 +8,9 @@ library(MCMCglmm)
 ```
 
 The first model we will fit is a simple animal model with no fixed effects, and only an ‘animal’ random effect relating individuals to their additive genetic values through the pedigree. 
-First we are going to define the priors.In a way we might want to avoid using priors, because we would like all of the information in our analysis to come from our data. By default MCMCglmm uses improper priors, but this can cause inferential and numerical problems. We will specify priors for the animal effect and the residual variance using the following code:
+
+First we are going to define the priors. In a way we might want to avoid using priors, because we would like all of the information in our analysis to come from our data.
+By default MCMCglmm uses improper priors, but this can cause inferential and numerical problems. We will specify priors for the animal effect and the residual variance using the following code:
 
 ```{r}
 prior1.1 <- list(
@@ -18,7 +20,7 @@ prior1.1 <- list(
 ```
 
 A prior allowed the model to fit different variance structures. With the unique random effect "animal", we partitioned the phenotypic variance into two distinct variances matrices `G` (additive genetic) and `R` (residual).
-This prior specification is the simplistic one and often used because it was believed to be relatively uninformative, and is equivalent to an inverse-gamma prior with shape and scale equal to 0.001. In many cases it is relatively uninformative but when the posterior distribution for the variances has support close to zero it can behave poorly. Parameter expanded priors (See Chapter 8 of the MCMCglmm CourseNotes, available from CRAN) are gaining in popularity due to their better behaviour but for the purposes of this tutorial we will stick with the inverse-gamma prior (thus uninformative). 
+This prior specification is the simplistic one and often used because it was believed to be relatively uninformative, and is equivalent to an inverse-gamma prior with shape and scale equal to 0.001. In many cases it is relatively uninformative but when the posterior distribution for the variances has support close to zero it can behave poorly. Parameter expanded priors (See Chapter 8 of the MCMCglmm CourseNotes, available from CRAN) are gaining in popularity due to their better behaviour but for the purposes of this tutorial we will stick with the inverse-gamma prior. 
 
 We have told MCMCglmm to pay little heed to our prior expectation (V) by specifying a small degree of belief parameter (nu) of 0.002. Since this is a univariate analysis, the priors are matrix of order 1 and thus nu>0 is the smallest degree of belief that provides what is known as a ‘proper’ prior, avoiding numerical problems. In fact, there is a lot of information in the data regarding the marginal distributions of the parameters, and MCMCglmm will run most of the models that we suggest in these tutorials without priors. However, this is poor practice, but we will therefore use this simple priors throughout these tutorials. We can now fit an animal model. The model to decompose variation in birth weight into genetic and residual effects is as follows:
 
@@ -183,7 +185,7 @@ model1.3 <- MCMCglmm(bwt ~ sex,
 posterior.mode(model1.3$VCV)
 ```
 
-Here the variance in birth weight explained by birth year is `r `round(posterior.mode(model1.3$VCV)[2],2)`. Note that although $V_A$ has changed somewhat, most of what is now partitioned as a `birth year` effect was previously partitioned as $V_R$ . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A /(V_A + V_{BY} + V_R )$). However, we get a somewhat different result if we also add a random effect of `mother` to test for maternal effects:
+Here the variance in birth weight explained by birth year is `r round(posterior.mode(model1.3$VCV)[2],2)`. Note that although $V_A$ has changed somewhat, most of what is now partitioned as a `birth year` effect was previously partitioned as $V_R$ . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A /(V_A + V_{BY} + V_R )$). However, we get a somewhat different result if we also add a random effect of `mother` to test for maternal effects:
 
 ```{r cache=TRUE}
 prior1.4 <- list(

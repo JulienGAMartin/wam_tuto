@@ -22,6 +22,7 @@
   <meta name="twitter:image" content="/images/missing.png" />
 
 <meta name="author" content="Julien Martin" />
+<meta name="author" content="Matthieu Videlier" />
 
 
 
@@ -167,7 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.4" data-path="asreml-r-1.html"><a href="asreml-r-1.html#adding-random-effects"><i class="fa fa-check"></i><b>2.2.4</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.2.5" data-path="asreml-r-1.html"><a href="asreml-r-1.html#testing-significance-of-random-effects"><i class="fa fa-check"></i><b>2.2.5</b> Testing significance of random effects</a></li>
 <li class="chapter" data-level="2.2.6" data-path="asreml-r-1.html"><a href="asreml-r-1.html#further-partitioning-the-variance"><i class="fa fa-check"></i><b>2.2.6</b> Further partitioning the variance</a></li>
-<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.2.7</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.2.7" data-path="asreml-r-1.html"><a href="asreml-r-1.html#modification-of-the-varaince-matrix-parameters"><i class="fa fa-check"></i><b>2.2.7</b> Modification of the varaince matrix parameters</a></li>
 <li class="chapter" data-level="2.2.8" data-path="asreml-r-1.html"><a href="asreml-r-1.html#covariance-between-two-random-effects"><i class="fa fa-check"></i><b>2.2.8</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="gremlin-1.html"><a href="gremlin-1.html"><i class="fa fa-check"></i><b>2.3</b> gremlin</a></li>
@@ -181,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.6" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#adding-random-effects-1"><i class="fa fa-check"></i><b>2.4.6</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.4.7" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#testing-significance-of-variance-components"><i class="fa fa-check"></i><b>2.4.7</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.4.8" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#further-partitioning-variance"><i class="fa fa-check"></i><b>2.4.8</b> Further partitioning variance</a></li>
-<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter <!-- C3 I dont think we can play with this in MCMCglmmm--></a></li>
+<li class="chapter" data-level="2.4.9" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#modification-of-model-parameter"><i class="fa fa-check"></i><b>2.4.9</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.4.10" data-path="mcmcglmm-1.html"><a href="mcmcglmm-1.html#covariance-between-two-random-effects-1"><i class="fa fa-check"></i><b>2.4.10</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="brms-1.html"><a href="brms-1.html"><i class="fa fa-check"></i><b>2.5</b> brms</a>
@@ -191,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.3" data-path="brms-1.html"><a href="brms-1.html#adding-random-effects-2"><i class="fa fa-check"></i><b>2.5.3</b> Adding random effects</a></li>
 <li class="chapter" data-level="2.5.4" data-path="brms-1.html"><a href="brms-1.html#testing-significance-of-variance-components-1"><i class="fa fa-check"></i><b>2.5.4</b> Testing significance of variance components</a></li>
 <li class="chapter" data-level="2.5.5" data-path="brms-1.html"><a href="brms-1.html#further-partitioning-of-the-variance"><i class="fa fa-check"></i><b>2.5.5</b> Further partitioning of the variance</a></li>
-<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-2"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
+<li class="chapter" data-level="2.5.6" data-path="brms-1.html"><a href="brms-1.html#modification-of-model-parameter-1"><i class="fa fa-check"></i><b>2.5.6</b> Modification of model parameter</a></li>
 <li class="chapter" data-level="2.5.7" data-path="brms-1.html"><a href="brms-1.html#covariance-between-two-random-effects-2"><i class="fa fa-check"></i><b>2.5.7</b> Covariance between two random effects</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="stan.html"><a href="stan.html"><i class="fa fa-check"></i><b>2.6</b> stan</a></li>
@@ -295,18 +296,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.1.2</span> gryphon files</h3>
 <p>gryphonpedigree and phenotypic data files are the same as those used in tutorial 1 (<em>i.e</em>, <code>gryphonped.csv</code> and <code>gryphon.csv</code> respectively).</p>
 <p>Reading the data</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="scenario-and-data-1.html#cb159-1" aria-hidden="true"></a>gryphon &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gryphon.csv&quot;</span>)</span>
-<span id="cb159-2"><a href="scenario-and-data-1.html#cb159-2" aria-hidden="true"></a>gryphon<span class="op">$</span>animal &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>animal)</span>
-<span id="cb159-3"><a href="scenario-and-data-1.html#cb159-3" aria-hidden="true"></a>gryphon<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>mother)</span>
-<span id="cb159-4"><a href="scenario-and-data-1.html#cb159-4" aria-hidden="true"></a>gryphon<span class="op">$</span>byear &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>byear)</span>
-<span id="cb159-5"><a href="scenario-and-data-1.html#cb159-5" aria-hidden="true"></a>gryphon<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>sex)</span>
-<span id="cb159-6"><a href="scenario-and-data-1.html#cb159-6" aria-hidden="true"></a>gryphon<span class="op">$</span>bwt &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>bwt)</span>
-<span id="cb159-7"><a href="scenario-and-data-1.html#cb159-7" aria-hidden="true"></a>gryphon<span class="op">$</span>tarsus &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>tarsus)</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="scenario-and-data-1.html#cb178-1" aria-hidden="true"></a>gryphon &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gryphon.csv&quot;</span>)</span>
+<span id="cb178-2"><a href="scenario-and-data-1.html#cb178-2" aria-hidden="true"></a>gryphon<span class="op">$</span>animal &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>animal)</span>
+<span id="cb178-3"><a href="scenario-and-data-1.html#cb178-3" aria-hidden="true"></a>gryphon<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>mother)</span>
+<span id="cb178-4"><a href="scenario-and-data-1.html#cb178-4" aria-hidden="true"></a>gryphon<span class="op">$</span>byear &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>byear)</span>
+<span id="cb178-5"><a href="scenario-and-data-1.html#cb178-5" aria-hidden="true"></a>gryphon<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>sex)</span>
+<span id="cb178-6"><a href="scenario-and-data-1.html#cb178-6" aria-hidden="true"></a>gryphon<span class="op">$</span>bwt &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>bwt)</span>
+<span id="cb178-7"><a href="scenario-and-data-1.html#cb178-7" aria-hidden="true"></a>gryphon<span class="op">$</span>tarsus &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>tarsus)</span></code></pre></div>
 <p>Reading the pedigree</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="scenario-and-data-1.html#cb160-1" aria-hidden="true"></a>gryphonped &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gryphonped.csv&quot;</span>)</span>
-<span id="cb160-2"><a href="scenario-and-data-1.html#cb160-2" aria-hidden="true"></a>gryphonped<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>id)</span>
-<span id="cb160-3"><a href="scenario-and-data-1.html#cb160-3" aria-hidden="true"></a>gryphonped<span class="op">$</span>father &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>father)</span>
-<span id="cb160-4"><a href="scenario-and-data-1.html#cb160-4" aria-hidden="true"></a>gryphonped<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>mother)</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="scenario-and-data-1.html#cb179-1" aria-hidden="true"></a>gryphonped &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gryphonped.csv&quot;</span>)</span>
+<span id="cb179-2"><a href="scenario-and-data-1.html#cb179-2" aria-hidden="true"></a>gryphonped<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>id)</span>
+<span id="cb179-3"><a href="scenario-and-data-1.html#cb179-3" aria-hidden="true"></a>gryphonped<span class="op">$</span>father &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>father)</span>
+<span id="cb179-4"><a href="scenario-and-data-1.html#cb179-4" aria-hidden="true"></a>gryphonped<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>mother)</span></code></pre></div>
 
 </div>
 </div>
