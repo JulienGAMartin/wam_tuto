@@ -9,9 +9,10 @@ gryphonRM$animal_pe <- gryphonRM$animal
 
 
 model_simple1.1 <- brm(
-  laydate ~ 1 + (1 | animal) + (1 | animal_pe),
+  laydate ~ 1 + (1 | gr(animal, cov = Amat)) + (1 | animal_pe),
   data = gryphonRM,
-  family = gaussian(), data2 = list(Amat = Amat),
+  family = gaussian(),
+  data2 = list(Amat = Amat),
   chains = 2, cores = 2, iter = 1000
 )
 

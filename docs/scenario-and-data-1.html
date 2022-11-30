@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3.1 Scenario and data | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3.1 Scenario and data | How to fit an animal model" />
   <meta property="og:type" content="book" />
@@ -303,18 +303,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.1.2</span> gryphon files<a href="scenario-and-data-1.html#gryphon-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>gryphonpedigree and phenotypic data files are the same as those used in tutorial 1 (<em>i.e</em>, <code>gryphonped.csv</code> and <code>gryphon.csv</code> respectively).</p>
 <p>Reading the data</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="scenario-and-data-1.html#cb195-1" aria-hidden="true"></a>gryphon &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gryphon.csv&quot;</span>)</span>
-<span id="cb195-2"><a href="scenario-and-data-1.html#cb195-2" aria-hidden="true"></a>gryphon<span class="op">$</span>animal &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>animal)</span>
-<span id="cb195-3"><a href="scenario-and-data-1.html#cb195-3" aria-hidden="true"></a>gryphon<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>mother)</span>
-<span id="cb195-4"><a href="scenario-and-data-1.html#cb195-4" aria-hidden="true"></a>gryphon<span class="op">$</span>byear &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>byear)</span>
-<span id="cb195-5"><a href="scenario-and-data-1.html#cb195-5" aria-hidden="true"></a>gryphon<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>sex)</span>
-<span id="cb195-6"><a href="scenario-and-data-1.html#cb195-6" aria-hidden="true"></a>gryphon<span class="op">$</span>bwt &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>bwt)</span>
-<span id="cb195-7"><a href="scenario-and-data-1.html#cb195-7" aria-hidden="true"></a>gryphon<span class="op">$</span>tarsus &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>tarsus)</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="scenario-and-data-1.html#cb197-1" aria-hidden="true"></a>gryphon &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gryphon.csv&quot;</span>)</span>
+<span id="cb197-2"><a href="scenario-and-data-1.html#cb197-2" aria-hidden="true"></a>gryphon<span class="op">$</span>animal &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>animal)</span>
+<span id="cb197-3"><a href="scenario-and-data-1.html#cb197-3" aria-hidden="true"></a>gryphon<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>mother)</span>
+<span id="cb197-4"><a href="scenario-and-data-1.html#cb197-4" aria-hidden="true"></a>gryphon<span class="op">$</span>byear &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>byear)</span>
+<span id="cb197-5"><a href="scenario-and-data-1.html#cb197-5" aria-hidden="true"></a>gryphon<span class="op">$</span>sex &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphon<span class="op">$</span>sex)</span>
+<span id="cb197-6"><a href="scenario-and-data-1.html#cb197-6" aria-hidden="true"></a>gryphon<span class="op">$</span>bwt &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>bwt)</span>
+<span id="cb197-7"><a href="scenario-and-data-1.html#cb197-7" aria-hidden="true"></a>gryphon<span class="op">$</span>tarsus &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(gryphon<span class="op">$</span>tarsus)</span></code></pre></div>
 <p>Reading the pedigree</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="scenario-and-data-1.html#cb196-1" aria-hidden="true"></a>gryphonped &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gryphonped.csv&quot;</span>)</span>
-<span id="cb196-2"><a href="scenario-and-data-1.html#cb196-2" aria-hidden="true"></a>gryphonped<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>id)</span>
-<span id="cb196-3"><a href="scenario-and-data-1.html#cb196-3" aria-hidden="true"></a>gryphonped<span class="op">$</span>father &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>father)</span>
-<span id="cb196-4"><a href="scenario-and-data-1.html#cb196-4" aria-hidden="true"></a>gryphonped<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>mother)</span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="scenario-and-data-1.html#cb198-1" aria-hidden="true"></a>gryphonped &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/gryphonped.csv&quot;</span>)</span>
+<span id="cb198-2"><a href="scenario-and-data-1.html#cb198-2" aria-hidden="true"></a>gryphonped<span class="op">$</span>id &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>id)</span>
+<span id="cb198-3"><a href="scenario-and-data-1.html#cb198-3" aria-hidden="true"></a>gryphonped<span class="op">$</span>father &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>father)</span>
+<span id="cb198-4"><a href="scenario-and-data-1.html#cb198-4" aria-hidden="true"></a>gryphonped<span class="op">$</span>mother &lt;-<span class="st"> </span><span class="kw">as.factor</span>(gryphonped<span class="op">$</span>mother)</span></code></pre></div>
 
 </div>
 </div>
@@ -386,7 +386,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

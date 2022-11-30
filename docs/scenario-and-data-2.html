@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4.1 Scenario and data | How to fit an animal model</title>
   <meta name="description" content="Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010)" />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4.1 Scenario and data | How to fit an animal model" />
   <meta property="og:type" content="book" />
@@ -303,14 +303,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The pedigree file <code>gryphonped.csv</code> is that used in the preceding tutorials but we now use a new data file <code>gryphonRM.csv</code>. Columns correspond to individual identity (<code>animal</code>), birth year (<code>byear</code>), age in years (<code>age</code>), year of measurement (<code>year</code>) and lay date (<code>laydate</code>).
 <!-- year and byear are weirdly code -->
 Each row of the data file corresponds to a single phenotypic observation. Here the data is sorted by identity and then age so that the repeated observations on individuals are apparent. However this is not a requirement for analysis - data could equally be sorted by some other variable (<em>e.g.</em>, measurement year) or be in a random order.</p>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="scenario-and-data-2.html#cb576-1" aria-hidden="true"></a><span class="kw">str</span>(gryphonRM)</span></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="scenario-and-data-2.html#cb581-1" aria-hidden="true"></a><span class="kw">str</span>(gryphonRM)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    1607 obs. of  5 variables:
 ##  $ animal : Factor w/ 469 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;8&quot;,..: 1 1 1 1 1 2 2 2 3 3 ...
 ##  $ byear  : Factor w/ 34 levels &quot;968&quot;,&quot;970&quot;,&quot;971&quot;,..: 22 22 22 22 22 22 22 22 22 22 ...
 ##  $ age    : Factor w/ 5 levels &quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;5&quot;,..: 1 2 3 4 5 1 2 3 1 2 ...
 ##  $ year   : Factor w/ 39 levels &quot;970&quot;,&quot;971&quot;,&quot;972&quot;,..: 23 24 25 26 27 23 24 25 23 24 ...
 ##  $ laydate: num  19 23 24 23 29 21 17 21 20 20 ...</code></pre>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="scenario-and-data-2.html#cb578-1" aria-hidden="true"></a><span class="kw">summary</span>(gryphonRM)</span></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="scenario-and-data-2.html#cb583-1" aria-hidden="true"></a><span class="kw">summary</span>(gryphonRM)</span></code></pre></div>
 <pre><code>##      animal         byear      age          year         laydate     
 ##  1      :   5   1000   : 109   2:308   1004   :  79   Min.   : 0.00  
 ##  3      :   5   1001   :  98   3:322   1005   :  78   1st Qu.:20.00  
@@ -319,7 +319,7 @@ Each row of the data file corresponds to a single phenotypic observation. Here t
 ##  42     :   5   987    :  70   6:323   1002   :  60   3rd Qu.:27.00  
 ##  50     :   5   989    :  66           988    :  54   Max.   :41.00  
 ##  (Other):1577   (Other):1093           (Other):1203</code></pre>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="scenario-and-data-2.html#cb580-1" aria-hidden="true"></a><span class="kw">head</span>(gryphonRM)</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="scenario-and-data-2.html#cb585-1" aria-hidden="true"></a><span class="kw">head</span>(gryphonRM)</span></code></pre></div>
 <pre><code>##   animal byear age year laydate
 ## 1      1   990   2  992      19
 ## 2      1   990   3  993      23
@@ -399,7 +399,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
