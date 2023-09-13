@@ -47,7 +47,7 @@ v_animal <- (VarCorr(brms_m2.1, summary = FALSE)$animal$sd)^2
 v_r <- (VarCorr(brms_m2.1, summary = FALSE)$residual$sd)^2
 
 h.bwt.2 <- as.mcmc(v_animal[, 1] / (v_animal[, 1] + v_r[, 1]))
-h.tarsus.2 <- as.mcmc(v_animal[, 1] / (v_animal[, 1] + v_r[, 1]))
+h.tarsus.2 <- as.mcmc(v_animal[, 2] / (v_animal[, 2] + v_r[, 2]))
 
 summary(h.bwt.2)
 summary(h.tarsus.2)
