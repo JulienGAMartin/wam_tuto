@@ -9,6 +9,10 @@ Instead of just copy pasting the tutorial in a bookdown format, the tutorials ha
 Do not take anything in this manual as gospel.
 :::
 
+::: {.callout-note}
+The pdf is not available for the moment. We need to clean some plot code before making it available again
+:::
+
 ### Contributors {-}
 
 List of people who contributed to update and extend tutorials:
