@@ -17,4 +17,5 @@ fort.19
 *_files/
 *_freeze
 /.quarto/
-!docs/*_files/
+#!docs/*_files/
+/docs/
