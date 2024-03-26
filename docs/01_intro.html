@@ -5,9 +5,8 @@
 <meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
-<meta name="dcterms.date" content="2024-03-25">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
-<title>How to fit an animal model</title>
+<title>How to fit an animal model - 1&nbsp; Introduction</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,7 +48,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01_intro.html" rel="next">
+<link href="./02_00-univ.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -141,7 +141,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -151,13 +151,13 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
@@ -305,90 +305,84 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
    
   <ul>
 <li>
-<a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
+<a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data"><span class="header-section-number">1.1</span> Data</a>
   <ul class="collapse">
-<li><a href="#contributors" id="toc-contributors" class="nav-link" data-scroll-target="#contributors">Contributors</a></li>
+<li><a href="#data-files" id="toc-data-files" class="nav-link" data-scroll-target="#data-files"><span class="header-section-number">1.1.1</span> Data files</a></li>
+  <li><a href="#notes-on-data-and-pedigree" id="toc-notes-on-data-and-pedigree" class="nav-link" data-scroll-target="#notes-on-data-and-pedigree"><span class="header-section-number">1.1.2</span> Notes on data and pedigree</a></li>
   </ul>
 </li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  <li>
+<a href="#r" id="toc-r" class="nav-link" data-scroll-target="#r"><span class="header-section-number">1.2</span> R</a>
+  <ul class="collapse">
+<li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages"><span class="header-section-number">1.2.1</span> R packages</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/01_intro.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">How to fit an animal model</h1>
-<p class="subtitle lead">An ecologist guide</p>
+<h1 class="title"><span id="intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></h1>
 </div>
 
-<div>
-  <div class="description">
-    <p>Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>.</p>
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Authors</div>
-    <div class="quarto-title-meta-contents">
-             <p>Julien Martin </p>
-             <p>Matthieu Videlier </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">2024-03-25</p>
-    </div>
-  </div>
   
     
   </div>
   
 
 
-</header><section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1>
-<p>This book is a collection of tutorial from the excellent paper by <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>. Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.</p>
-<p><strong>However, this is still a work in progress.</strong></p>
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Do not take anything in this manual as gospel.</p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>The pdf is not available for the moment. We need to clean some plot code before making it available again</p>
-</div>
-</div>
-</div>
-<section id="contributors" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="contributors">Contributors</h3>
-<p>List of people who contributed to update and extend tutorials:</p>
+</header><p>The book is provides a series of tutorials (and accompanying data files) to fit animal model in <code>R</code> using different packages (<code>ASReml-R</code>, <code>gremlin</code>, <code>MCMCglmm</code> and <code>brms</code>/<code>stan</code>) . You will need to carefully follow the instructions below to first download the data files and second install the R packages. Before beginning the tutorial, we assume the reader has successfully installed the chosen R package on their computer and has saved the required data files to an appropriate directory from which they will be read. Full instructions for how to do this are provided with software distributions.</p>
+<p>To work though the different tutorial I would recommend to create a folder where you will save your different <code>R</code> scripts for the tutorials.</p>
+<p>In addition, the tutorial is here to help researchers in their coding and understanding of models and outputs, but it is required that you read and understand the literature in quantitative genetics and animal model.</p>
+<section id="data" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="data">
+<span class="header-section-number">1.1</span> Data</h2>
+<section id="data-files" class="level3" data-number="1.1.1"><h3 data-number="1.1.1" class="anchored" data-anchor-id="data-files">
+<span class="header-section-number">1.1.1</span> Data files</h3>
+<p>You will need to download 3 data files for the tutorial in <code>R</code>:</p>
 <ul>
-<li>Eric Postma updated the previous tutorial from asreml-r 3 to asreml-r 4</li>
-<li>Julien Martin<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> developed and maintains the site</li>
-<li>Matthieu Videlier<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> added (and continues to add) more details in the document</li>
+<li>gryphon.csv: data on gryphon birth weight and morphology</li>
+<li>gryphonRM.csv: data on gryphon repeated measurement of lay date.</li>
+<li>gryphonped.csv: data on the associated pedigree of the data gryphon</li>
 </ul>
+<p>In addition, some models presented in the tutorials can take a while to run (sometimes &gt; 1 hour), thus we are also providing the model outputs to allow you continue the tutorial without waiting for the model to run. (But you are free to run models)</p>
+<p>The files are available <a href="https://github.com/JulienGAMartin/wam_tuto/tree/master/data">here</a> I recommend to save the data and Rdata files in a subfolder <code>data</code> in the folder you will use as your working directory for R and where you will save your R scripts. It should be noted that the tutorial are using this structure to read or save data.</p>
+</section><section id="notes-on-data-and-pedigree" class="level3" data-number="1.1.2"><h3 data-number="1.1.2" class="anchored" data-anchor-id="notes-on-data-and-pedigree">
+<span class="header-section-number">1.1.2</span> Notes on data and pedigree</h3>
+<p>It is always important to take time to think carefully about the strengths and potential limitations of your pedigree information before embarking on quantitative genetic analyses. Pedigree Viewer, written by Brian Kinghorn, is an extremely useful application for visualizing pedigrees, and can be downloaded from: http://www-personal.une.edu.au/~bkinghor/pedigree.htm. <code>Pedantics</code> an R package written by Michael Morrissey and distributed through CRAN (http://cran.r-project.org/) can also be used for this and offers some nice additional features for visualizing pedigree structures and generating associated statistics. Before you begin running through the tutorials, we advise taking a moment to look at the pedigree files provided with them using Pedigree Viewer or Pedantics.</p>
+</section></section><section id="r" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="r">
+<span class="header-section-number">1.2</span> R</h2>
+<p>You should check that you have the most current version of R and R packages. You can check the number of the current version on CRAN. If you need to update (or install) R packages, use <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> and follow the prompted instructions.</p>
+<section id="r-packages" class="level3" data-number="1.2.1"><h3 data-number="1.2.1" class="anchored" data-anchor-id="r-packages">
+<span class="header-section-number">1.2.1</span> R packages</h3>
+<section id="asreml-r" class="level4" data-number="1.2.1.1"><h4 data-number="1.2.1.1" class="anchored" data-anchor-id="asreml-r">
+<span class="header-section-number">1.2.1.1</span> asreml-r</h4>
+<p>ASReml-R is commercial software published by VSN international (http://www.vsni.co.uk/software/asreml/). This package is not free and requires a key access. Additional information and guide can be find in the Asreml-R manual: (https://asreml.kb.vsni.co.uk/wp-content/uploads/sites/3/2018/02/ASReml-R-Reference-Manual-4.pdf)</p>
+</section><section id="gremlin" class="level4" data-number="1.2.1.2"><h4 data-number="1.2.1.2" class="anchored" data-anchor-id="gremlin">
+<span class="header-section-number">1.2.1.2</span> gremlin</h4>
+<p><code>gremlin</code> is a little monster appearing if you feed a mugwai after midnight. It is also a great and promising software written by Pr. Matthew E. Wolak to fit mixed models using a frequentist approach .</p>
+</section><section id="mcmcglmm" class="level4" data-number="1.2.1.3"><h4 data-number="1.2.1.3" class="anchored" data-anchor-id="mcmcglmm">
+<span class="header-section-number">1.2.1.3</span> MCMCglmm</h4>
+<p><code>MCMCglmm</code> is an R package for Bayesian mixed model analysis written by Pr. Jarrod Hadfield. It is a freeware distributed through CRAN (http://cran.r-project.org/). Information and guide about the package can be find in the user manual and vignettes (http://cran.r-project.org/web/packages/MCMCglmm/index.html). Reference: <span class="citation" data-cites="MCMCglmm2010">(<a href="98_references.html#ref-MCMCglmm2010" role="doc-biblioref">Hadfield 2010</a>)</span>.</p>
+<p>This module provides some information that applies to MCMCglmm-based analyses in general, but that will not be included in other tutorials. Most importantly, this applies to some of the simplest ways of determining the performance of a run using MCMCglmm, i.e., verification of the validity of of the posterior distribution. This tutorial is not a substitute for working through the MCMCglmm course notes, which is available from CRAN (the Comprehensive R ArchiveNetwork, http://cran.r-project.org/, or can be accessed in R using the command vignette(“CourseNotes”,“MCMCglmm”)). These tutorials do not introduce one of the main advantages of using MCMCglmm for analyses of data from natural populations -the ability to properly model non-normal responses. These capabilities are introduced in the documentation that is distributed with MCMCglmm, and available from CRAN. Another specific animal guide for MCMCglmm can be find (https://devillemereuil.legtux.org/wp-content/uploads/2021/09/tuto_en.pdf). Pr. Pierre de Villemereuil provide more information in Bayesian concept and focus more on non-gaussian variable.</p>
+</section><section id="brms" class="level4" data-number="1.2.1.4"><h4 data-number="1.2.1.4" class="anchored" data-anchor-id="brms">
+<span class="header-section-number">1.2.1.4</span> brms</h4>
+<p><code>brms</code> provides an interface to fit Bayesian generalized multivariate (non-)linear multilevel models using <code>Stan</code>, which is a C++ package for obtaining full Bayesian inference (see https://mc-stan.org/). The formula syntax is an extended version of the syntax applied in the ‘lme4’ package to provide a familiar and simple interface for performing regression analyses.</p>
+<p>It should be noted that if <code>brms</code> is able to fit animal model the parametrization used is not the most efficient and can take quite longer than using a different parametrization directly in <code>stan</code>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-MCMCglmm2010" class="csl-entry" role="listitem">
+Hadfield, J. D. 2010. <a href="https://www.jstatsoft.org/v33/i02/">MCMC methods for multi-response generalized linear mixed models: The <span>MCMCglmm</span> <span>R</span> package</a>. Journal of Statistical Software 33:1–22.
+</div>
 <div id="ref-wilson2010" class="csl-entry" role="listitem">
 Wilson, A. J., D. Réale, M. N. Clements, M. M. Morrissey, E. Postma, C. A. Walling, L. E. B. Kruuk, and D. H. Nussey. 2010. <a href="https://doi.org/10.1111/j.1365-2656.2009.01639.x">An ecologist’s guide to the animal model</a>. Journal of Animal Ecology 79:13–26.
 </div>
 </div>
-</section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
-<ol>
-<li id="fn1"><p>Univeristy of Ottawa, julien.martin@uottawa.ca<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>UQAM, videlier.mathieu@courrier.uqam.ca<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -919,10 +913,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01_intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./02_00-univ.html" class="pagination-link" aria-label="Univariate animal model">
+        <span class="nav-page-text">Univariate animal model</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -933,7 +930,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/01_intro.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

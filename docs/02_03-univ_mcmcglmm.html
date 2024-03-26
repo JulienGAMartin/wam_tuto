@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Julien Martin">
+<meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
+<title>How to fit an animal model - 4&nbsp; MCMCglmm</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02_04-univ_brms.html" rel="next">
+<link href="./02_02-univ_gremlin.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-LLHQEESR2L"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
+</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="css/style.css">
+</head>
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Wam tutorial</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-extra-resources" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Extra resources</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-extra-resources">
+<li>
+    <a class="dropdown-item" href="https://wildanimalmodels.org/">
+ <span class="dropdown-text">WamWiki</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://devillemereuil.legtux.org/downloads/">
+ <span class="dropdown-text">Tutorials by P de Vilemereuil</span></a>
+  </li>  
+    </ul>
+</li>
+</ul>
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools tools-wide">
+    <a href="https://github.com/juliengamartin/wam_tuto/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./How-to-fit-an-animal-model.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_00-univ.html">Univariate animal model</a></li><li class="breadcrumb-item"><a href="./02_03-univ_mcmcglmm.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./02_00-univ.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Univariate animal model</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_01-univ_asreml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_02-univ_gremlin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_03-univ_mcmcglmm.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_04-univ_brms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_05-univ_stan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./03_00-biv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multivariate animal model</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_01-biv_asreml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_02-biv_gremlin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_03-biv_mcmcglmm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_04-biv_brms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_05-biv_stan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./04_00-rep.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">A repeated measures animal model</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_01-rep_asreml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_02-rep_gremlin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_03-rep_mcmcglmm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_04-rep_brms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">brms</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_05-rep_stan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_code_cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./98_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#running-the-model" id="toc-running-the-model" class="nav-link active" data-scroll-target="#running-the-model"><span class="header-section-number">4.0.1</span> Running the model</a></li>
+  <li><a href="#change-in-iteration-and-sampling" id="toc-change-in-iteration-and-sampling" class="nav-link" data-scroll-target="#change-in-iteration-and-sampling"><span class="header-section-number">4.0.2</span> Change in iteration and sampling</a></li>
+  <li><a href="#change-priors-parameters" id="toc-change-priors-parameters" class="nav-link" data-scroll-target="#change-priors-parameters"><span class="header-section-number">4.0.3</span> Change priors parameters</a></li>
+  <li><a href="#estimating-heritability" id="toc-estimating-heritability" class="nav-link" data-scroll-target="#estimating-heritability"><span class="header-section-number">4.0.4</span> Estimating heritability</a></li>
+  <li><a href="#adding-fixed-effects" id="toc-adding-fixed-effects" class="nav-link" data-scroll-target="#adding-fixed-effects"><span class="header-section-number">4.0.5</span> Adding fixed effects</a></li>
+  <li><a href="#adding-random-effects" id="toc-adding-random-effects" class="nav-link" data-scroll-target="#adding-random-effects"><span class="header-section-number">4.0.6</span> Adding random effects</a></li>
+  <li><a href="#testing-significance-of-variance-components" id="toc-testing-significance-of-variance-components" class="nav-link" data-scroll-target="#testing-significance-of-variance-components"><span class="header-section-number">4.0.7</span> Testing significance of variance components</a></li>
+  <li><a href="#further-partitioning-variance" id="toc-further-partitioning-variance" class="nav-link" data-scroll-target="#further-partitioning-variance"><span class="header-section-number">4.0.8</span> Further partitioning variance</a></li>
+  <li><a href="#modification-of-model-parameter" id="toc-modification-of-model-parameter" class="nav-link" data-scroll-target="#modification-of-model-parameter"><span class="header-section-number">4.0.9</span> Modification of model parameter</a></li>
+  <li><a href="#covariance-between-two-random-effects" id="toc-covariance-between-two-random-effects" class="nav-link" data-scroll-target="#covariance-between-two-random-effects"><span class="header-section-number">4.0.10</span> Covariance between two random effects</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/02_03-univ_mcmcglmm.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_00-univ.html">Univariate animal model</a></li><li class="breadcrumb-item"><a href="./02_03-univ_mcmcglmm.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="running-the-model" class="level3" data-number="4.0.1"><h3 data-number="4.0.1" class="anchored" data-anchor-id="running-the-model">
+<span class="header-section-number">4.0.1</span> Running the model</h3>
+<p>First load MCMCglmm:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">MCMCglmm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: coda</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: ape</code></pre>
+</div>
+</div>
+<p>The first model we will fit is a simple animal model with no fixed effects, and only an ‘animal’ random effect relating individuals to their additive genetic values through the pedigree.</p>
+<p>First we are going to define the priors. In a way we might want to avoid using priors, because we would like all of the information in our analysis to come from our data. By default MCMCglmm uses improper priors, but this can cause inferential and numerical problems. We will specify priors for the animal effect and the residual variance using the following code:</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prior1.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  R <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A prior allowed the model to fit different variance structures. With the unique random effect “animal”, we partitioned the phenotypic variance into two distinct variances matrices <code>G</code> (additive genetic) and <code>R</code> (residual). This prior specification is the simplistic one and often used because it was believed to be relatively uninformative, and is equivalent to an inverse-gamma prior with shape and scale equal to 0.001. In many cases it is relatively uninformative but when the posterior distribution for the variances has support close to zero it can behave poorly. Parameter expanded priors (See Chapter 8 of the MCMCglmm CourseNotes, available from CRAN) are gaining in popularity due to their better behaviour but for the purposes of this tutorial we will stick with the inverse-gamma prior.</p>
+<p>We have told MCMCglmm to pay little heed to our prior expectation (V) by specifying a small degree of belief parameter (nu) of 0.002. Since this is a univariate analysis, the priors are matrix of order 1 and thus nu&gt;0 is the smallest degree of belief that provides what is known as a ‘proper’ prior, avoiding numerical problems. In fact, there is a lot of information in the data regarding the marginal distributions of the parameters, and MCMCglmm will run most of the models that we suggest in these tutorials without priors. However, this is poor practice, but we will therefore use this simple priors throughout these tutorials. We can now fit an animal model. The model to decompose variation in birth weight into genetic and residual effects is as follows:</p>
+<p>The lower case “animal” is a can be a <strong>special</strong> word for MCMCglmm. If a <code>pedigree</code> argument is provided then <code>MCMCglmm</code> will recognize the term <code>animal</code> as the term to use to estimate additive genetic variance. When the argument <code>pedigree</code> is not provided then the word <code>animal</code> is not different than any other variable. However, instead of providing a pedigree argument to the call to MCMCglmm function, it is much more flexible to use the <code>ginv</code> argument to specify the random effect that must be linked to the pedigree (with the inverse relatedness matrix). We thus first estimate the inverse relatedness matrix using <code><a href="https://rdrr.io/pkg/MCMCglmm/man/inverseA.html">inverseA()</a></code> then fit the animal model.</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Ainv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/inverseA.html">inverseA</a></span><span class="op">(</span><span class="va">gryphonped</span><span class="op">)</span><span class="op">$</span><span class="va">Ainv</span></span>
+<span><span class="va">model1.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/MCMCglmm.html">MCMCglmm</a></span><span class="op">(</span><span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span>,</span>
+<span>  random <span class="op">=</span> <span class="op">~</span><span class="va">animal</span>, ginv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="va">Ainv</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">gryphon</span>, prior <span class="op">=</span> <span class="va">prior1.1</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+                       MCMC iteration = 0
+
+                       MCMC iteration = 1000
+
+                       MCMC iteration = 2000
+
+                       MCMC iteration = 3000
+
+                       MCMC iteration = 4000
+
+                       MCMC iteration = 5000
+
+                       MCMC iteration = 6000
+
+                       MCMC iteration = 7000
+
+                       MCMC iteration = 8000
+
+                       MCMC iteration = 9000
+
+                       MCMC iteration = 10000
+
+                       MCMC iteration = 11000
+
+                       MCMC iteration = 12000
+
+                       MCMC iteration = 13000</code></pre>
+</div>
+</div>
+<p>After typing this code, MCMCglmm will run, taking about 20 seconds on a modern desktop computer. The progress of the run will be printed to the screen. Also, note the warning message will be printed at the end of the run. This is natural too. In order for the MCMC algorithm to work, MCMCglmm must keep track of effects associated with unmeasured individuals appearing in the pedigree. This will not affect the answers, but when many unmeasured individuals exist, it can hinder the ability of the algorithm to explore the parameter space (more on this, and a solution, later). Lets have a look at the MCMCglmm outputs. First we will evaluate how confident we can be that MCMCglmm found good answers. By entering</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">Sol</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="02_03-univ_mcmcglmm_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>The posterior distribution of the fixed effect (the intercept, or mean) in model 1.1</figcaption></figure>
+</div>
+</div>
+</div>
+<p>in the console, we get Figure 2.2. The plot on the left shows a time series of the values of 1000 samples of the posterior distribution of the the model intercept (mean birth weight). The plot on the right shows the same data as a distribution. Complicated statistical methods for estimating population means are of course of little interest; rather, we are examining these outputs to check that MCMCglmm’s algorithms worked well for our data and for this model. The important point here is that a consistent amount of variation around a largely unchanging mean value of the intercept was obtained (which give this fluctuating trace concentrated around the mean), and the posterior distribution of the intercept appears to be valid. More rigorous means of evaluation the independence of the samples in the posterior distribution (evaluating autocorrelation) are discussed in the MCMCglmm CourseNotes, available from CRAN. Note that your output for <code>model 1.1</code> may not be identical to this due to Monte Carlo (random number) error. So every times, you run the model, you will get similar but slightly different results.</p>
+<p>The posterior distributions of the the variance components are generally of more interest to animal model users. We can view plots of the posterior distribution for the variance components for model 1.1 by</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="02_03-univ_mcmcglmm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>The posterior distributions of the variance components of model 1.1, based on an analysis with the default values for nitt, burnin, and thin in MCMCglmm</figcaption></figure>
+</div>
+</div>
+</div>
+<p>which generates Figure 2.3. Here we see distributions of the estimates of the additive genetic (animal) and residual (units) effects. These samples contain some autocorrelation, i.e., trends are apparent in the left-hand plot. We can deal with this easily.</p>
+</section><section id="change-in-iteration-and-sampling" class="level3" data-number="4.0.2"><h3 data-number="4.0.2" class="anchored" data-anchor-id="change-in-iteration-and-sampling">
+<span class="header-section-number">4.0.2</span> Change in iteration and sampling</h3>
+<p>We will simply re-run the model for a longer number of iterations, and sample the chain less frequently. So far we have been running MCMCglmm with its default values. These defaults are a total run length of 13000 iterations, the first 3000 of which are discarded as a ‘burn-in’ period to make sure that the converges to the part of the parameter space where the maximum likelihood exists. The remaining 10000 iterations are sampled (estimates retained) every 10 iterations (the thinning interval). Because the values in the left-hand plots in figure 2.2 to appear to have different values at the beginning of the run, we might suspect that a longer burn-in period might be required. We can reduce the autocorrelation by lengthening the rest of the run and sampling the chain less frequently. The following code runs the same model 1.1, but is likely to produce better samples of the posterior distributions. This model should take about two minutes to analyze.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/MCMCglmm.html">MCMCglmm</a></span><span class="op">(</span><span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span>,</span>
+<span>  random <span class="op">=</span> <span class="op">~</span><span class="va">animal</span>, ginv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="va">Ainv</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">gryphon</span>, nitt <span class="op">=</span> <span class="fl">65000</span>, thin <span class="op">=</span> <span class="fl">50</span>, burnin <span class="op">=</span> <span class="fl">15000</span>,</span>
+<span>  prior <span class="op">=</span> <span class="va">prior1.1</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notes that we have now included the argument verbose=FALSE in the MCMCglmm call. We will continue this throughout the tutorial so that more complete screen outputs can be included in this document without using too much space.Note that the autocorrelation is much reduced. A more compact way to evaluate the validity of the posterior distributions is to calculate autocorrelation among samples, as follows:</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/autocorr.diag.html">autocorr.diag</a></span><span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                animal        units
+Lag 0     1.0000000000  1.000000000
+Lag 50    0.1723371074  0.136480466
+Lag 250  -0.0372623733 -0.040354498
+Lag 500   0.0008769229  0.022152642
+Lag 2500  0.0095595528 -0.004526327</code></pre>
+</div>
+</div>
+<p>We will consider these levels of autocorrelation acceptable, at least for the purposes of this tutorial. Ideally, all samples of the posterior distribution should be independent, and the autocorrelation for all lag values greater than zero should be near zero. However, in practice this will not strictly be achievable for all analytic scenarios. Certainly the levels of autocorrelation observed here should not be tolerated in any formal analysis. Note that the validity of posterior distributions of any analysis should always be checked; however, for brevity we will not continue to be so consistently diligent throughout the rest of these tutorials. We can now proceed with confidence to recover some more information from these samples. We can obtain estimates of the additive genetic and residual variance by calculating the modes of the posterior distributions:</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  animal    units 
+3.465095 3.626676 </code></pre>
+</div>
+</div>
+<p>We can obtain the Bayesian equivalent of confidence intervals by calculating the the values of the estimates that bound 95% (or any other proportion) of the posterior distributions:</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          lower    upper
+animal 2.252398 4.732031
+units  2.785786 4.803362
+attr(,"Probability")
+[1] 0.95</code></pre>
+</div>
+</div>
+</section><section id="change-priors-parameters" class="level3" data-number="4.0.3"><h3 data-number="4.0.3" class="anchored" data-anchor-id="change-priors-parameters">
+<span class="header-section-number">4.0.3</span> Change priors parameters</h3>
+<p>We specified weak priors in this analyses. Now we will check whether or not proper priors would have influenced the results that we obtained. The simplest way to do this is to re-run the model with different priors. In the previous model we specified a prior where the size of genetic and residual variance were similar. Here we construct priors with a larger degree of belief parameter (<code>nu</code>), and we will specify that a large proportion (95%) of the variation is under genetic control (<code>V</code>).Thus, the residual variance contains 05% of the phenotypic variance.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p.var</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">gryphon</span><span class="op">$</span><span class="va">bwt</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">prior1.1.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">p.var</span> <span class="op">*</span> <span class="fl">0.95</span><span class="op">)</span>, nu <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  R <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">p.var</span> <span class="op">*</span> <span class="fl">0.05</span><span class="op">)</span>, nu <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model1.1.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/MCMCglmm.html">MCMCglmm</a></span><span class="op">(</span><span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span>,</span>
+<span>  random <span class="op">=</span> <span class="op">~</span><span class="va">animal</span>, ginv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="va">Ainv</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">gryphon</span>, prior <span class="op">=</span> <span class="va">prior1.1.2</span>, nitt <span class="op">=</span> <span class="fl">65000</span>, thin <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  burnin <span class="op">=</span> <span class="fl">15000</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  animal    units 
+3.465095 3.626676 </code></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.1.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  animal    units 
+3.509940 3.855632 </code></pre>
+</div>
+</div>
+<p>and we can therefore conclude that the difference in the priors has little effect on the outcome of the analysis. This is typical for an analysis where lots of data are available relative to the complexity of the model, but is often not the case. In all cases, it is important to check the effect of priors on conclusions drawn from a model. In addition, you can also specify the prior with previous knowledge or expectation for the variance.</p>
+</section><section id="estimating-heritability" class="level3" data-number="4.0.4"><h3 data-number="4.0.4" class="anchored" data-anchor-id="estimating-heritability">
+<span class="header-section-number">4.0.4</span> Estimating heritability</h3>
+<p>A useful property of Bayesian posterior distributions is that we can apply almost any transformation to these distributions and they will remain valid. This applies to the calculation of heritability. We can obtain an estimate of the heritability by applying the basic formula <span class="math inline">\(h^2\)</span> =<span class="math inline">\(V_A /V_P\)</span> to each sample of the posterior distribution:</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">posterior.heritability1.1</span> <span class="op">&lt;-</span> <span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">/</span></span>
+<span>  <span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"units"</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     var1 
+0.4984591 </code></pre>
+</div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">posterior.heritability1.1</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         lower     upper
+var1 0.3163028 0.6134676
+attr(,"Probability")
+[1] 0.95</code></pre>
+</div>
+</div>
+<p>Generate a plot of the posterior distribution of this heritability estimate:</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">posterior.heritability1.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="02_03-univ_mcmcglmm_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>The posterior distributions the heritability from model 1.1</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="adding-fixed-effects" class="level3" data-number="4.0.5"><h3 data-number="4.0.5" class="anchored" data-anchor-id="adding-fixed-effects">
+<span class="header-section-number">4.0.5</span> Adding fixed effects</h3>
+<p>To add effects to a univariate model, we simply modify the fixed effect part of the model specification:</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/MCMCglmm.html">MCMCglmm</a></span><span class="op">(</span><span class="va">bwt</span> <span class="op">~</span> <span class="va">sex</span>,</span>
+<span>  random <span class="op">=</span> <span class="op">~</span><span class="va">animal</span>, ginv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="va">Ainv</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">gryphon</span>, prior <span class="op">=</span> <span class="va">prior1.1</span>,</span>
+<span>  nitt <span class="op">=</span> <span class="fl">65000</span>, thin <span class="op">=</span> <span class="fl">50</span>, burnin <span class="op">=</span> <span class="fl">15000</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model1.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Iterations = 15001:64951
+ Thinning interval  = 50
+ Sample size  = 1000 
+
+ DIC: 3714.956 
+
+ G-structure:  ~animal
+
+       post.mean l-95% CI u-95% CI eff.samp
+animal     3.087    1.993    4.039    802.6
+
+ R-structure:  ~units
+
+      post.mean l-95% CI u-95% CI eff.samp
+units     2.943    2.136    3.725    809.6
+
+ Location effects: bwt ~ sex 
+
+            post.mean l-95% CI u-95% CI eff.samp  pMCMC    
+(Intercept)     6.052    5.728    6.384     1000 &lt;0.001 ***
+sex2            2.208    1.886    2.532     1000 &lt;0.001 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>We can assess the significance of <code>sex</code> as a fixed effect by examining its posterior distribution. Important notes here, it is important to know how the model names their fixed effect level to call them properly.</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.2</span><span class="op">$</span><span class="va">Sol</span><span class="op">[</span>, <span class="st">"sex2"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    var1 
+2.225847 </code></pre>
+</div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">model1.2</span><span class="op">$</span><span class="va">Sol</span><span class="op">[</span>, <span class="st">"sex2"</span><span class="op">]</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        lower    upper
+var1 1.886235 2.531982
+attr(,"Probability")
+[1] 0.95</code></pre>
+</div>
+</div>
+<p>The posterior distribution of the <code>sex2</code> term does not overlap zero. Thus, we can infer that sex has an effect on birth weight (presence of a sexual dimorphism) in this model and is a useful addition to the model, for most purposes. It is also worth noting that the variance components have changed slightly:</p>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  animal    units 
+3.221192 3.033608 </code></pre>
+</div>
+</div>
+<p>In fact since sex effects were previously contributing to the residual variance of the model our estimate of <span class="math inline">\(V_R\)</span> (denoted ’units’ in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate <span class="math inline">\(V_P\)</span> as <span class="math inline">\(V_A +V_R\)</span> then as we include fixed effects we will soak up more residual variance driving <span class="math inline">\(V_P\)</span> . Assuming that <span class="math inline">\(V_A\)</span> is more or less unaffected by the fixed effects fitted then as <span class="math inline">\(V_P\)</span> goes down we expect our estimate of <span class="math inline">\(h^2\)</span> will go up.</p>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">posterior.heritability1.2</span> <span class="op">&lt;-</span> <span class="va">model1.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">/</span></span>
+<span>  <span class="op">(</span><span class="va">model1.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"units"</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     var1 
+0.5040383 </code></pre>
+</div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">posterior.heritability1.2</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         lower     upper
+var1 0.3774852 0.6609091
+attr(,"Probability")
+[1] 0.95</code></pre>
+</div>
+</div>
+<p>Here <span class="math inline">\(h^2\)</span> has increased slightly from 0.4829 to 0.5079 (again, your values may differ slightly due to Monte Carlo error). Which is the better estimate? It depends on what your question is. The first is an estimate of the proportion of variance in birth weight explained by additive effects, the latter is an estimate of the proportion of variance in birth weight after conditioning on sex that is explained by additive effects. An important piece of advice, each researcher should be consistent in how they name their estimates and always correctly describe which estimates they are using conditional or not (to avoid any confusion).</p>
+</section><section id="adding-random-effects" class="level3" data-number="4.0.6"><h3 data-number="4.0.6" class="anchored" data-anchor-id="adding-random-effects">
+<span class="header-section-number">4.0.6</span> Adding random effects</h3>
+<p>This is done by simply modifying the model statement in the same way, but requires addition of a prior for the new random effect. For instance, we can fit an effect of birth year:</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prior1.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span>, G2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  R <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model1.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/MCMCglmm.html">MCMCglmm</a></span><span class="op">(</span><span class="va">bwt</span> <span class="op">~</span> <span class="va">sex</span>,</span>
+<span>  random <span class="op">=</span> <span class="op">~</span> <span class="va">animal</span> <span class="op">+</span> <span class="va">byear</span>, ginv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="va">Ainv</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">gryphon</span>,</span>
+<span>  nitt <span class="op">=</span> <span class="fl">65000</span>, thin <span class="op">=</span> <span class="fl">50</span>, burnin <span class="op">=</span> <span class="fl">15000</span>,</span>
+<span>  prior <span class="op">=</span> <span class="va">prior1.3</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.3</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   animal     byear     units 
+2.6773832 0.8529618 2.2066583 </code></pre>
+</div>
+</div>
+<p>Here the variance in birth weight explained by birth year is 0.85. Note that although <span class="math inline">\(V_A\)</span> has changed somewhat, most of what is now partitioned as a <code>birth year</code> effect was previously partitioned as <span class="math inline">\(V_R\)</span> . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in <span class="math inline">\(h^2\)</span> (since now <span class="math inline">\(h^2 = V_A /(V_A + V_{BY} + V_R )\)</span>). However, we get a somewhat different result if we also add a random effect of <code>mother</code> to test for maternal effects:</p>
+<div class="cell">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prior1.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    G1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span>,</span>
+<span>    G2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span>,</span>
+<span>    G3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  R <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model1.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/MCMCglmm.html">MCMCglmm</a></span><span class="op">(</span><span class="va">bwt</span> <span class="op">~</span> <span class="va">sex</span>,</span>
+<span>  random <span class="op">=</span> <span class="op">~</span> <span class="va">animal</span> <span class="op">+</span> <span class="va">byear</span> <span class="op">+</span> <span class="va">mother</span>,</span>
+<span>  ginv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="va">Ainv</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">gryphon</span>,</span>
+<span>  nitt <span class="op">=</span> <span class="fl">65000</span>, thin <span class="op">=</span> <span class="fl">50</span>, burnin <span class="op">=</span> <span class="fl">15000</span>,</span>
+<span>  prior <span class="op">=</span> <span class="va">prior1.4</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   animal     byear    mother     units 
+2.3174927 0.8779722 1.0668757 1.6818388 </code></pre>
+</div>
+</div>
+<p>Here partitioning of significant maternal variance has resulted in a further decrease in <span class="math inline">\(V_R\)</span> but also a decrease in <span class="math inline">\(V_A\)</span>. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like an additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in <span class="math inline">\(V_A\)</span> and so <span class="math inline">\(h^2\)</span>. Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:</p>
+<div class="cell">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">posterior.heritability1.3</span> <span class="op">&lt;-</span> <span class="va">model1.3</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">/</span></span>
+<span>  <span class="op">(</span><span class="va">model1.3</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.3</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"byear"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.3</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"units"</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">posterior.heritability1.4</span> <span class="op">&lt;-</span> <span class="va">model1.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">/</span></span>
+<span>  <span class="op">(</span><span class="va">model1.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"byear"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"mother"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"units"</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     var1 
+0.5040383 </code></pre>
+</div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    var1 
+0.476195 </code></pre>
+</div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     var1 
+0.4095803 </code></pre>
+</div>
+</div>
+</section><section id="testing-significance-of-variance-components" class="level3" data-number="4.0.7"><h3 data-number="4.0.7" class="anchored" data-anchor-id="testing-significance-of-variance-components">
+<span class="header-section-number">4.0.7</span> Testing significance of variance components</h3>
+<p>While testing the significance of fixed effects by evaluating whether or not their posterior distributions overlap zero was simple and valid, this approach does not work for variance components. Variance components are bounded to be positive (given a proper prior), and thus even when a random effect is not meaningful, its posterior distribution will never overlap zero. Model comparisons can be performed using the deviance information criterion (<code>DIC</code>), although it should be noted that the properties of DIC are not well understood and that the <code>DIC</code> may be focused at the wrong level for most people’s intended level of inference - particularly with non-Gaussian responses. The implementation of <code>DIC</code> in MCMCglmm is further described in the reference manual. <code>DIC</code> values are calculated by MCMCglmm by default. Briefly, <code>DIC</code> like other information criteria balance model fit and model complexity simultaneously, and small values of DIC are preferred. We can compare <code>models 1.4</code> and <code>1.3</code>, i.e., models with and without the mother term:</p>
+<div class="cell">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1.3</span><span class="op">$</span><span class="va">DIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3547.695</code></pre>
+</div>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1.4</span><span class="op">$</span><span class="va">DIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3322.135</code></pre>
+</div>
+</div>
+<p><code>model 1.4</code> has a much lower DIC value. Since the maternal effect term is the only difference between the models, we can consider the inclusion of this term statistically justifiable. We should note however that DIC has a large sampling variance and should probably only be calculated based on much longer MCMC runs.</p>
+</section><section id="further-partitioning-variance" class="level3" data-number="4.0.8"><h3 data-number="4.0.8" class="anchored" data-anchor-id="further-partitioning-variance">
+<span class="header-section-number">4.0.8</span> Further partitioning variance</h3>
+<p>A population can be further fragmented into different groups or categories (such as females and males, juveniles and adults or treated and untreated). Some scientific questions require further and deeper analysis of the variance. To avoid multiple model (one for each group), we can directly partition the variance between groups in a unique model. In addition, by doing so, we can also test if the variance are different between groups.</p>
+<p>As example, we can partition the additive genetic variance and residual variance by sex. It is impossible to further partition the other variances but complexity an animal model requires sufficient sample size.</p>
+<div class="cell">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prior1.4.SEX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, nu <span class="op">=</span> <span class="fl">1.002</span><span class="op">)</span>, G2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span>, G3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  R <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, nu <span class="op">=</span> <span class="fl">1.002</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">model1.4.SEX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/MCMCglmm.html">MCMCglmm</a></span><span class="op">(</span><span class="va">bwt</span> <span class="op">~</span> <span class="va">sex</span>,</span>
+<span>  random <span class="op">=</span> <span class="op">~</span> <span class="fu">idh</span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">:</span><span class="va">animal</span> <span class="op">+</span> <span class="va">byear</span> <span class="op">+</span> <span class="va">mother</span>,</span>
+<span>  rcov <span class="op">=</span> <span class="op">~</span> <span class="fu">idh</span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">:</span><span class="va">units</span>,</span>
+<span>  ginv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="va">Ainv</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">gryphon</span>, nitt <span class="op">=</span> <span class="fl">65000</span>, thin <span class="op">=</span> <span class="fl">50</span>, burnin <span class="op">=</span> <span class="fl">15000</span>,</span>
+<span>  prior <span class="op">=</span> <span class="va">prior1.4.SEX</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>sex1.animal sex2.animal       byear      mother  sex1.units  sex2.units 
+  0.9321506   2.5795457   0.8189535   1.3158246   2.3144897   1.3666491 </code></pre>
+</div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">posterior.heritability1.4.FEM</span> <span class="op">&lt;-</span> <span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"sex1.animal"</span><span class="op">]</span> <span class="op">/</span></span>
+<span>  <span class="op">(</span><span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"sex1.animal"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"byear"</span><span class="op">]</span> <span class="op">+</span></span>
+<span>    <span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"mother"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"sex1.units"</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">posterior.heritability1.4.MAL</span> <span class="op">&lt;-</span> <span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"sex2.animal"</span><span class="op">]</span> <span class="op">/</span></span>
+<span>  <span class="op">(</span><span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"sex2.animal"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"byear"</span><span class="op">]</span> <span class="op">+</span></span>
+<span>    <span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"mother"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"sex2.units"</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.FEM</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     var1 
+0.2268393 </code></pre>
+</div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.FEM</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          lower     upper
+var1 0.06124262 0.4416593
+attr(,"Probability")
+[1] 0.95</code></pre>
+</div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.MAL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     var1 
+0.3847509 </code></pre>
+</div>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.MAL</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         lower     upper
+var1 0.0578405 0.6043648
+attr(,"Probability")
+[1] 0.95</code></pre>
+</div>
+</div>
+<p>Here, we can estimate the heritability for each sex. Both doesn’t overlap with zero, so we can conclude both sexes have significant heritability. However due to their overlaps CIs, we can not conclude the heritability is not significantly different between sexes. An important quote to remember is “A difference in significance is not a significant difference”</p>
+<div class="cell">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h2.sex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.FEM</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.FEM</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.MAL</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.MAL</span>, <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.95</span>, <span class="fl">1.05</span><span class="op">)</span> <span class="op">~</span> <span class="va">h2.sex</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.8</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1.5</span><span class="op">)</span>, , xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">16</span>, <span class="fl">17</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">2</span>, yaxt <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/arrows.html">arrows</a></span><span class="op">(</span>y0 <span class="op">=</span> <span class="fl">0.95</span>, x0 <span class="op">=</span> <span class="va">h2.sex</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span>, y1 <span class="op">=</span> <span class="fl">0.95</span>, x1 <span class="op">=</span> <span class="va">h2.sex</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">]</span>, code <span class="op">=</span> <span class="fl">3</span>, angle <span class="op">=</span> <span class="fl">90</span>, length <span class="op">=</span> <span class="fl">0</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/arrows.html">arrows</a></span><span class="op">(</span>y0 <span class="op">=</span> <span class="fl">1.05</span>, x0 <span class="op">=</span> <span class="va">h2.sex</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">]</span>, y1 <span class="op">=</span> <span class="fl">1.05</span>, x1 <span class="op">=</span> <span class="va">h2.sex</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">]</span>, code <span class="op">=</span> <span class="fl">3</span>, angle <span class="op">=</span> <span class="fl">90</span>, length <span class="op">=</span> <span class="fl">0</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Narrow-sense heritability (±CI)"</span>, side <span class="op">=</span> <span class="fl">1</span>, las <span class="op">=</span> <span class="fl">1</span>, adj <span class="op">=</span> <span class="fl">0.4</span>, line <span class="op">=</span> <span class="fl">3</span>, cex <span class="op">=</span> <span class="fl">1.6</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span>, at <span class="op">=</span> <span class="fl">1</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"birth weight"</span><span class="op">)</span>, las <span class="op">=</span> <span class="fl">3</span>, cex.axis <span class="op">=</span> <span class="fl">1.6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="02_03-univ_mcmcglmm_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption>Female and male heritability of birth weight</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="modification-of-model-parameter" class="level3" data-number="4.0.9"><h3 data-number="4.0.9" class="anchored" data-anchor-id="modification-of-model-parameter">
+<span class="header-section-number">4.0.9</span> Modification of model parameter</h3>
+<p>Unfortunately (to our knowledge), it is not possible to alter the variance matricesand refit them within the model.</p>
+</section><section id="covariance-between-two-random-effects" class="level3" data-number="4.0.10"><h3 data-number="4.0.10" class="anchored" data-anchor-id="covariance-between-two-random-effects">
+<span class="header-section-number">4.0.10</span> Covariance between two random effects</h3>
+<p>Some research questions require to estimate the covariance between two random effects within a univariate model.To do so, we can use the argument <code>str</code>. A similar argument or linking.function <code>mm</code> can be used but it will forced the variance of <code>animal</code> and <code>mother</code> to be equal and the covariance to 1. As an example, we fit a model which estimate the covariance between the additive genetic variance and the mother variance. Both variances require to operate on the same level, thus <code>animal</code> and <code>mother</code> require to be associated to the pedigree information.The ginverse list name has to correspond to the first term in the argument or linking.function</p>
+<!--
+I) The addition of a linking.function that links different random  
+effects together. For example imagine two random terms, mother and  
+grandmother, for which some mothers also appear as grandmothers.  
+Denoting the associated random effect for the mothers (m) and  
+grandomothers (g)  we could:
+a) fit the simple model ~mother+grandmother which estimates separate  
+variances (VAR(m) and VAR(g)) and sets the covariance to zero  
+(COV(m,g)=0)
+b) use the linking function "str" to fit the model  
+~str(mother+grandmother) which estimates separate variances (VAR(m)  
+and VAR(g)) but also estimates the covariance (COV(m,g))
+c) use the linking function "mm" to fit a multimembership model  
+~mm(mother+grandmother) which forces the variances to be equal  
+(VAR(m)= VAR(g)) and forces the correlation to be one  
+(COV(m,g)=VAR(m)= VAR(g)). Multi-membership models can still be fit  
+using idv(mult.memb(~mother+grandmother))
+Terms within mm or str can be linked to a ginverse if the ginverse  
+list name corresponds to the first term in the linking.function (i.e.  
+ginverse=list(mother=A) in the models above). They can also be  
+interacted with variance functions (i.e.  
+us(sex):str(mother+grandmother) is possible)
+-->
+<div class="cell">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prior1.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  R <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">model1.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/MCMCglmm.html">MCMCglmm</a></span><span class="op">(</span><span class="va">bwt</span> <span class="op">~</span> <span class="va">sex</span>,</span>
+<span>  random <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">animal</span> <span class="op">+</span> <span class="va">mother</span><span class="op">)</span>, ginv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="va">Ainv</span><span class="op">)</span>,</span>
+<span>  rcov <span class="op">=</span> <span class="op">~</span> <span class="fu">idh</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="va">units</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">gryphon</span>, nitt <span class="op">=</span> <span class="fl">65000</span>, thin <span class="op">=</span> <span class="fl">50</span>, burnin <span class="op">=</span> <span class="fl">15000</span>,</span>
+<span>  prior <span class="op">=</span> <span class="va">prior1.5</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.5</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!--
+  
+  Error in buildZ(rmodel.terms[r], data = data, nginverse = names(ginverse)) : 
+  terms involved in mm/str structures must have identical levels in the same order
+In addition: Warning message:
+In levels(data[, rterms[select.terms]]) != levels(data[, rterms[1]]) :
+  longer object length is not a multiple of shorter object length
+  
+  I think I can not link the pedigree info to mother or it dont work easily because it doesnt have the same number of level as animal!!!
+-->
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-wilson2010" class="csl-entry" role="listitem">
+Wilson, A. J., D. Réale, M. N. Clements, M. M. Morrissey, E. Postma, C. A. Walling, L. E. B. Kruuk, and D. H. Nussey. 2010. <a href="https://doi.org/10.1111/j.1365-2656.2009.01639.x">An ecologist’s guide to the animal model</a>. Journal of Animal Ecology 79:13–26.
+</div>
+</div>
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./02_02-univ_gremlin.html" class="pagination-link" aria-label="gremlin">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">gremlin</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02_04-univ_brms.html" class="pagination-link" aria-label="brms">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>By J Martin &amp; M Videlier</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/02_03-univ_mcmcglmm.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

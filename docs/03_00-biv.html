@@ -5,9 +5,8 @@
 <meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
-<meta name="dcterms.date" content="2024-03-25">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
-<title>How to fit an animal model</title>
+<title>How to fit an animal model - Multivariate animal model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +18,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -49,7 +82,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01_intro.html" rel="next">
+<link href="./03_01-biv_asreml.html" rel="next">
+<link href="./02_05-univ_stan.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -92,6 +126,31 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
+</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
 </script><link rel="stylesheet" href="css/style.css">
 </head>
 <body class="nav-sidebar floating nav-fixed">
@@ -141,7 +200,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -151,7 +210,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -204,7 +263,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./03_00-biv.html" class="sidebar-item-text sidebar-link">
+            <a href="./03_00-biv.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Multivariate animal model</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -305,78 +364,54 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
    
   <ul>
 <li>
-<a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
+<a href="#scenario-and-data" id="toc-scenario-and-data" class="nav-link active" data-scroll-target="#scenario-and-data">Scenario and data</a>
   <ul class="collapse">
-<li><a href="#contributors" id="toc-contributors" class="nav-link" data-scroll-target="#contributors">Contributors</a></li>
+<li><a href="#scenario" id="toc-scenario" class="nav-link" data-scroll-target="#scenario">Scenario</a></li>
+  <li><a href="#gryphon-files" id="toc-gryphon-files" class="nav-link" data-scroll-target="#gryphon-files">gryphon files</a></li>
   </ul>
 </li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/03_00-biv.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">How to fit an animal model</h1>
-<p class="subtitle lead">An ecologist guide</p>
+<h1 class="title">Multivariate animal model</h1>
 </div>
 
-<div>
-  <div class="description">
-    <p>Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>.</p>
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Authors</div>
-    <div class="quarto-title-meta-contents">
-             <p>Julien Martin </p>
-             <p>Matthieu Videlier </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">2024-03-25</p>
-    </div>
-  </div>
   
     
   </div>
   
 
 
-</header><section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1>
-<p>This book is a collection of tutorial from the excellent paper by <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>. Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.</p>
-<p><strong>However, this is still a work in progress.</strong></p>
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+</header><p>This tutorial will demonstrate how to run a multivariate animal model looking at birth weight and tarsus length of the phenomenal gryphons.</p>
+<section id="scenario-and-data" class="level2"><h2 class="anchored" data-anchor-id="scenario-and-data">Scenario and data</h2>
+<section id="scenario" class="level3"><h3 class="anchored" data-anchor-id="scenario">Scenario</h3>
+<p>Since natural selection rarely acts on single traits, to understand how birth weight might evolve in our population of gryphons, we may also want to think about possible covariance with other traits. If tarsus length at fledging is also under positive selection, what implications does it have for birth weight and vice versa? If the two traits are positively genetically correlated then this will facilitate evolution of larger size (since response of one trait will induce a positively correlated response in the other). If there is negative genetic covariance then this could act as an evolutionary constraint.</p>
+<p>Using multivariate models allows the estimation of parameters relating to each trait alone (<em>i.e.</em> <span class="math inline">\(V_A\)</span>, <span class="math inline">\(h^2\)</span>, etc), but also yields estimates of covariance components between traits. These include the (additive) genetic covariance <span class="math inline">\(COV_A\)</span> which is often rescaled to give the additive genetic correlation <span class="math inline">\(r_A\)</span>. However, covariance can also arise through other random effects (<em>e.g.</em> maternal covariance) and these sources can also be explicitly modeled in a bivariate analysis.</p>
+</section><section id="gryphon-files" class="level3"><h3 class="anchored" data-anchor-id="gryphon-files">gryphon files</h3>
+<p>gryphonpedigree and phenotypic data files are the same as those used in tutorial 1 (<em>i.e</em>, <code>gryphonped.csv</code> and <code>gryphon.csv</code> respectively).</p>
+<p>Reading the data</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gryphon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data/gryphon.csv"</span><span class="op">)</span></span>
+<span><span class="va">gryphon</span><span class="op">$</span><span class="va">animal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">gryphon</span><span class="op">$</span><span class="va">animal</span><span class="op">)</span></span>
+<span><span class="va">gryphon</span><span class="op">$</span><span class="va">mother</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">gryphon</span><span class="op">$</span><span class="va">mother</span><span class="op">)</span></span>
+<span><span class="va">gryphon</span><span class="op">$</span><span class="va">byear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">gryphon</span><span class="op">$</span><span class="va">byear</span><span class="op">)</span></span>
+<span><span class="va">gryphon</span><span class="op">$</span><span class="va">sex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">gryphon</span><span class="op">$</span><span class="va">sex</span><span class="op">)</span></span>
+<span><span class="va">gryphon</span><span class="op">$</span><span class="va">bwt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">gryphon</span><span class="op">$</span><span class="va">bwt</span><span class="op">)</span></span>
+<span><span class="va">gryphon</span><span class="op">$</span><span class="va">tarsus</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">gryphon</span><span class="op">$</span><span class="va">tarsus</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-body-container">
-<p>Do not take anything in this manual as gospel.</p>
+<p>Reading the pedigree</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gryphonped</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"data/gryphonped.csv"</span><span class="op">)</span></span>
+<span><span class="va">gryphonped</span><span class="op">$</span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">gryphonped</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
+<span><span class="va">gryphonped</span><span class="op">$</span><span class="va">father</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">gryphonped</span><span class="op">$</span><span class="va">father</span><span class="op">)</span></span>
+<span><span class="va">gryphonped</span><span class="op">$</span><span class="va">mother</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">gryphonped</span><span class="op">$</span><span class="va">mother</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>The pdf is not available for the moment. We need to clean some plot code before making it available again</p>
-</div>
-</div>
-</div>
-<section id="contributors" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="contributors">Contributors</h3>
-<p>List of people who contributed to update and extend tutorials:</p>
-<ul>
-<li>Eric Postma updated the previous tutorial from asreml-r 3 to asreml-r 4</li>
-<li>Julien Martin<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> developed and maintains the site</li>
-<li>Matthieu Videlier<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> added (and continues to add) more details in the document</li>
-</ul>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
@@ -384,11 +419,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 Wilson, A. J., D. Réale, M. N. Clements, M. M. Morrissey, E. Postma, C. A. Walling, L. E. B. Kruuk, and D. H. Nussey. 2010. <a href="https://doi.org/10.1111/j.1365-2656.2009.01639.x">An ecologist’s guide to the animal model</a>. Journal of Animal Ecology 79:13–26.
 </div>
 </div>
-</section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
-<ol>
-<li id="fn1"><p>Univeristy of Ottawa, julien.martin@uottawa.ca<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>UQAM, videlier.mathieu@courrier.uqam.ca<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -919,10 +950,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./02_05-univ_stan.html" class="pagination-link" aria-label="stan">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">stan</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01_intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03_01-biv_asreml.html" class="pagination-link" aria-label="Asreml-R">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -933,7 +967,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/03_00-biv.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

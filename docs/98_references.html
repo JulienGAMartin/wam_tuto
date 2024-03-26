@@ -5,9 +5,8 @@
 <meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
-<meta name="dcterms.date" content="2024-03-25">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
-<title>How to fit an animal model</title>
+<title>How to fit an animal model - References</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,7 +48,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01_intro.html" rel="next">
+<link href="./05_code_cheatsheet.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -141,7 +140,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./98_references.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -151,7 +150,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -292,7 +291,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./98_references.html" class="sidebar-item-text sidebar-link">
+  <a href="./98_references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -305,90 +304,247 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
    
   <ul>
 <li>
-<a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
+<a href="#r-packages" id="toc-r-packages" class="nav-link active" data-scroll-target="#r-packages">R packages</a>
   <ul class="collapse">
-<li><a href="#contributors" id="toc-contributors" class="nav-link" data-scroll-target="#contributors">Contributors</a></li>
+<li><a href="#bibliography" id="toc-bibliography" class="nav-link" data-scroll-target="#bibliography">Bibliography</a></li>
   </ul>
 </li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/98_references.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">How to fit an animal model</h1>
-<p class="subtitle lead">An ecologist guide</p>
+<h1 class="title">References</h1>
 </div>
 
-<div>
-  <div class="description">
-    <p>Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>.</p>
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Authors</div>
-    <div class="quarto-title-meta-contents">
-             <p>Julien Martin </p>
-             <p>Matthieu Videlier </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">2024-03-25</p>
-    </div>
-  </div>
   
     
   </div>
   
 
 
-</header><section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1>
-<p>This book is a collection of tutorial from the excellent paper by <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>. Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.</p>
-<p><strong>However, this is still a work in progress.</strong></p>
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+</header><section id="r-packages" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="r-packages">R packages</h2>
+<p>This book was produced using all the following R packages</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Package</th>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Citation</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">abind</td>
+<td style="text-align: left;">1.4.5</td>
+<td style="text-align: left;"><span class="citation" data-cites="abind">Plate and Heiberger (<a href="98_references.html#ref-abind" role="doc-biblioref">2016</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">asreml</td>
+<td style="text-align: left;">4.2.0.302</td>
+<td style="text-align: left;"><span class="citation" data-cites="asreml">The VSNi Team (<a href="98_references.html#ref-asreml" role="doc-biblioref">2023</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">base</td>
+<td style="text-align: left;">4.3.3</td>
+<td style="text-align: left;"><span class="citation" data-cites="base">R Core Team (<a href="98_references.html#ref-base" role="doc-biblioref">2024</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bookdown</td>
+<td style="text-align: left;">0.37</td>
+<td style="text-align: left;">
+<span class="citation" data-cites="bookdown2016">Xie (<a href="98_references.html#ref-bookdown2016" role="doc-biblioref">2016</a>)</span>; <span class="citation" data-cites="bookdown2023">Xie (<a href="98_references.html#ref-bookdown2023" role="doc-biblioref">2023a</a>)</span>
+</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">brms</td>
+<td style="text-align: left;">2.20.4</td>
+<td style="text-align: left;">
+<span class="citation" data-cites="brms2017">Bürkner (<a href="98_references.html#ref-brms2017" role="doc-biblioref">2017</a>)</span>; <span class="citation" data-cites="brms2018">Bürkner (<a href="98_references.html#ref-brms2018" role="doc-biblioref">2018</a>)</span>; <span class="citation" data-cites="brms2021">Bürkner (<a href="98_references.html#ref-brms2021" role="doc-biblioref">2021</a>)</span>
+</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gridExtra</td>
+<td style="text-align: left;">2.3</td>
+<td style="text-align: left;"><span class="citation" data-cites="gridExtra">Auguie (<a href="98_references.html#ref-gridExtra" role="doc-biblioref">2017</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">knitr</td>
+<td style="text-align: left;">1.45</td>
+<td style="text-align: left;">
+<span class="citation" data-cites="knitr2014">Xie (<a href="98_references.html#ref-knitr2014" role="doc-biblioref">2014</a>)</span>; <span class="citation" data-cites="knitr2015">Xie (<a href="98_references.html#ref-knitr2015" role="doc-biblioref">2015</a>)</span>; <span class="citation" data-cites="knitr2023">Xie (<a href="98_references.html#ref-knitr2023" role="doc-biblioref">2023b</a>)</span>
+</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lme4</td>
+<td style="text-align: left;">1.1.35.1</td>
+<td style="text-align: left;"><span class="citation" data-cites="lme4">Bates et al. (<a href="98_references.html#ref-lme4" role="doc-biblioref">2015</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MCMCglmm</td>
+<td style="text-align: left;">2.35</td>
+<td style="text-align: left;"><span class="citation" data-cites="MCMCglmm">Hadfield (<a href="98_references.html#ref-MCMCglmm" role="doc-biblioref">2010</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mvtnorm</td>
+<td style="text-align: left;">1.2.4</td>
+<td style="text-align: left;"><span class="citation" data-cites="mvtnorm">Genz and Bretz (<a href="98_references.html#ref-mvtnorm" role="doc-biblioref">2009</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">nadiv</td>
+<td style="text-align: left;">2.17.3</td>
+<td style="text-align: left;"><span class="citation" data-cites="nadiv">Wolak (<a href="98_references.html#ref-nadiv" role="doc-biblioref">2012</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">rmarkdown</td>
+<td style="text-align: left;">2.25</td>
+<td style="text-align: left;">
+<span class="citation" data-cites="rmarkdown2018">Xie et al. (<a href="98_references.html#ref-rmarkdown2018" role="doc-biblioref">2018</a>)</span>; <span class="citation" data-cites="rmarkdown2020">Xie et al. (<a href="98_references.html#ref-rmarkdown2020" role="doc-biblioref">2020</a>)</span>; <span class="citation" data-cites="rmarkdown2023">Allaire et al. (<a href="98_references.html#ref-rmarkdown2023" role="doc-biblioref">2023</a>)</span>
+</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rptR</td>
+<td style="text-align: left;">0.9.22</td>
+<td style="text-align: left;"><span class="citation" data-cites="rptR">Stoffel et al. (<a href="98_references.html#ref-rptR" role="doc-biblioref">2017</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tidyverse</td>
+<td style="text-align: left;">2.0.0</td>
+<td style="text-align: left;"><span class="citation" data-cites="tidyverse">Wickham et al. (<a href="98_references.html#ref-tidyverse" role="doc-biblioref">2019</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">visreg</td>
+<td style="text-align: left;">2.7.0</td>
+<td style="text-align: left;"><span class="citation" data-cites="visreg">Breheny and Burchett (<a href="98_references.html#ref-visreg" role="doc-biblioref">2017</a>)</span></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="callout-body-container">
-<p>Do not take anything in this manual as gospel.</p>
 </div>
+<section id="bibliography" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="bibliography">Bibliography</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-rmarkdown2023" class="csl-entry" role="listitem">
+Allaire, J., Y. Xie, C. Dervieux, J. McPherson, J. Luraschi, K. Ushey,
+A. Atkins, H. Wickham, J. Cheng, W. Chang, and R. Iannone. 2023. <a href="https://github.com/rstudio/rmarkdown"><span class="nocase">rmarkdown</span>: Dynamic documents for r</a>.
 </div>
+<div id="ref-gridExtra" class="csl-entry" role="listitem">
+Auguie, B. 2017. <a href="https://CRAN.R-project.org/package=gridExtra"><span class="nocase">gridExtra</span>: Miscellaneous functions for
+<span>“<span>Grid</span>”</span> graphics</a>.
 </div>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<div id="ref-lme4" class="csl-entry" role="listitem">
+Bates, D., M. Mächler, B. Bolker, and S. Walker. 2015. <a href="https://doi.org/10.18637/jss.v067.i01">Fitting linear
+mixed-effects models using <span class="nocase">lme4</span></a>. Journal
+of Statistical Software 67:1–48.
 </div>
-<div class="callout-body-container">
-<p>The pdf is not available for the moment. We need to clean some plot code before making it available again</p>
+<div id="ref-visreg" class="csl-entry" role="listitem">
+Breheny, P., and W. Burchett. 2017. Visualization of regression models
+using visreg. The R Journal 9:56–71.
 </div>
+<div id="ref-brms2017" class="csl-entry" role="listitem">
+Bürkner, P.-C. 2017. <a href="https://doi.org/10.18637/jss.v080.i01"><span class="nocase">brms</span>: An <span>R</span> package for
+<span>Bayesian</span> multilevel models using <span>Stan</span></a>.
+Journal of Statistical Software 80:1–28.
 </div>
+<div id="ref-brms2018" class="csl-entry" role="listitem">
+Bürkner, P.-C. 2018. <a href="https://doi.org/10.32614/RJ-2018-017">Advanced
+<span>Bayesian</span> multilevel modeling with the <span>R</span>
+package <span class="nocase">brms</span></a>. The R Journal 10:395–411.
 </div>
-<section id="contributors" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="contributors">Contributors</h3>
-<p>List of people who contributed to update and extend tutorials:</p>
-<ul>
-<li>Eric Postma updated the previous tutorial from asreml-r 3 to asreml-r 4</li>
-<li>Julien Martin<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> developed and maintains the site</li>
-<li>Matthieu Videlier<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> added (and continues to add) more details in the document</li>
-</ul>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-brms2021" class="csl-entry" role="listitem">
+Bürkner, P.-C. 2021. <a href="https://doi.org/10.18637/jss.v100.i05">Bayesian item response
+modeling in <span>R</span> with <span class="nocase">brms</span> and
+<span>Stan</span></a>. Journal of Statistical Software 100:1–54.
+</div>
+<div id="ref-mvtnorm" class="csl-entry" role="listitem">
+Genz, A., and F. Bretz. 2009. Computation of multivariate normal and t
+probabilities. Springer-Verlag, Heidelberg.
+</div>
+<div id="ref-MCMCglmm2010" class="csl-entry" role="listitem">
+Hadfield, J. D. 2010b. <a href="https://www.jstatsoft.org/v33/i02/">MCMC
+methods for multi-response generalized linear mixed models: The
+<span>MCMCglmm</span> <span>R</span> package</a>. Journal of Statistical
+Software 33:1–22.
+</div>
+<div id="ref-MCMCglmm" class="csl-entry" role="listitem">
+Hadfield, J. D. 2010a. <a href="https://www.jstatsoft.org/v33/i02/">MCMC
+methods for multi-response generalized linear mixed models: The
+<span>MCMCglmm</span> <span>R</span> package</a>. Journal of Statistical
+Software 33:1–22.
+</div>
+<div id="ref-abind" class="csl-entry" role="listitem">
+Plate, T., and R. Heiberger. 2016. <a href="https://CRAN.R-project.org/package=abind"><span class="nocase">abind</span>: Combine multidimensional arrays</a>.
+</div>
+<div id="ref-base" class="csl-entry" role="listitem">
+R Core Team. 2024. <a href="https://www.R-project.org/"><span>R</span>:
+A language and environment for statistical computing</a>. R Foundation
+for Statistical Computing, Vienna, Austria.
+</div>
+<div id="ref-rptR" class="csl-entry" role="listitem">
+Stoffel, M. A., S. Nakagawa, and H. Schielzeth. 2017. <a href="https://doi.org/10.1111/2041-210X.12797"><span class="nocase">rptR</span>: Repeatability estimation and variance
+decomposition by generalized linear mixed-effects models</a>. Methods in
+Ecology and Evolution 8:1639???1644.
+</div>
+<div id="ref-asreml" class="csl-entry" role="listitem">
+The VSNi Team. 2023. <a href="https://www.vsni.co.uk"><span class="nocase">asreml</span>: Fits linear mixed models using REML</a>.
+</div>
+<div id="ref-tidyverse" class="csl-entry" role="listitem">
+Wickham, H., M. Averick, J. Bryan, W. Chang, L. D. McGowan, R. François,
+G. Grolemund, A. Hayes, L. Henry, J. Hester, M. Kuhn, T. L. Pedersen, E.
+Miller, S. M. Bache, K. Müller, J. Ooms, D. Robinson, D. P. Seidel, V.
+Spinu, K. Takahashi, D. Vaughan, C. Wilke, K. Woo, and H. Yutani. 2019.
+<a href="https://doi.org/10.21105/joss.01686">Welcome to the <span class="nocase">tidyverse</span></a>. Journal of Open Source Software
+4:1686.
+</div>
 <div id="ref-wilson2010" class="csl-entry" role="listitem">
-Wilson, A. J., D. Réale, M. N. Clements, M. M. Morrissey, E. Postma, C. A. Walling, L. E. B. Kruuk, and D. H. Nussey. 2010. <a href="https://doi.org/10.1111/j.1365-2656.2009.01639.x">An ecologist’s guide to the animal model</a>. Journal of Animal Ecology 79:13–26.
+Wilson, A. J., D. Réale, M. N. Clements, M. M. Morrissey, E. Postma, C.
+A. Walling, L. E. B. Kruuk, and D. H. Nussey. 2010. <a href="https://doi.org/10.1111/j.1365-2656.2009.01639.x">An ecologist’s
+guide to the animal model</a>. Journal of Animal Ecology 79:13–26.
+</div>
+<div id="ref-nadiv" class="csl-entry" role="listitem">
+Wolak, M. E. 2012. <a href="<https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/j.2041-210X.2012.00213.x>"><span class="nocase">nadiv</span>: An <span>R</span> package to create
+relatedness matrices for estimating non-additive genetic variances in
+animal models</a>. Methods in Ecology and Evolution 3:792–796.
+</div>
+<div id="ref-knitr2014" class="csl-entry" role="listitem">
+Xie, Y. 2014. <span class="nocase">knitr</span>: A comprehensive tool
+for reproducible research in <span>R</span>. <em>in</em> V. Stodden, F.
+Leisch, and R. D. Peng, editors. Implementing reproducible computational
+research. Chapman; Hall/CRC.
+</div>
+<div id="ref-knitr2015" class="csl-entry" role="listitem">
+Xie, Y. 2015. <a href="https://yihui.org/knitr/">Dynamic documents with
+<span>R</span> and knitr</a>. 2nd edition. Chapman; Hall/CRC, Boca
+Raton, Florida.
+</div>
+<div id="ref-bookdown2016" class="csl-entry" role="listitem">
+Xie, Y. 2016. <a href="https://bookdown.org/yihui/bookdown"><span class="nocase">bookdown</span>: Authoring books and technical documents
+with <span>R</span> markdown</a>. Chapman; Hall/CRC, Boca Raton,
+Florida.
+</div>
+<div id="ref-bookdown2023" class="csl-entry" role="listitem">
+Xie, Y. 2023a. <a href="https://github.com/rstudio/bookdown"><span class="nocase">bookdown</span>: Authoring books and technical documents
+with r markdown</a>.
+</div>
+<div id="ref-knitr2023" class="csl-entry" role="listitem">
+Xie, Y. 2023b. <a href="https://yihui.org/knitr/"><span class="nocase">knitr</span>: A general-purpose package for dynamic
+report generation in r</a>.
+</div>
+<div id="ref-rmarkdown2018" class="csl-entry" role="listitem">
+Xie, Y., J. J. Allaire, and G. Grolemund. 2018. <a href="https://bookdown.org/yihui/rmarkdown">R markdown: The definitive
+guide</a>. Chapman; Hall/CRC, Boca Raton, Florida.
+</div>
+<div id="ref-rmarkdown2020" class="csl-entry" role="listitem">
+Xie, Y., C. Dervieux, and E. Riederer. 2020. <a href="https://bookdown.org/yihui/rmarkdown-cookbook">R markdown
+cookbook</a>. Chapman; Hall/CRC, Boca Raton, Florida.
 </div>
 </div>
-</section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
-<ol>
-<li id="fn1"><p>Univeristy of Ottawa, julien.martin@uottawa.ca<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>UQAM, videlier.mathieu@courrier.uqam.ca<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -919,11 +1075,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./05_code_cheatsheet.html" class="pagination-link" aria-label="Quick comparison of codes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01_intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -933,7 +1089,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/98_references.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

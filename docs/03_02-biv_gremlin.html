@@ -5,9 +5,8 @@
 <meta name="generator" content="quarto-1.4.550">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
-<meta name="dcterms.date" content="2024-03-25">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
-<title>How to fit an animal model</title>
+<title>How to fit an animal model - 8&nbsp; gremlin</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,7 +48,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01_intro.html" rel="next">
+<link href="./03_03-biv_mcmcglmm.html" rel="next">
+<link href="./03_01-biv_asreml.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -141,7 +141,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li><li class="breadcrumb-item"><a href="./03_02-biv_gremlin.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -151,7 +151,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
     <ul class="list-unstyled mt-1">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -219,7 +219,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_02-biv_gremlin.html" class="sidebar-item-text sidebar-link">
+  <a href="./03_02-biv_gremlin.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
   </div>
 </li>
@@ -301,82 +301,37 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-<li>
-<a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-<li><a href="#contributors" id="toc-contributors" class="nav-link" data-scroll-target="#contributors">Contributors</a></li>
-  </ul>
-</li>
-  </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+        
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">How to fit an animal model</h1>
-<p class="subtitle lead">An ecologist guide</p>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li><li class="breadcrumb-item"><a href="./03_02-biv_gremlin.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span>
+</h1>
 </div>
 
-<div>
-  <div class="description">
-    <p>Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>.</p>
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Authors</div>
-    <div class="quarto-title-meta-contents">
-             <p>Julien Martin </p>
-             <p>Matthieu Videlier </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">2024-03-25</p>
-    </div>
-  </div>
   
     
   </div>
   
 
 
-</header><section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1>
-<p>This book is a collection of tutorial from the excellent paper by <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>. Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.</p>
-<p><strong>However, this is still a work in progress.</strong></p>
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Do not take anything in this manual as gospel.</p>
+</header><p>No in the development plans</p>
+<!--  C1 if I remember correctly Wolak never develop his package to do Multivariate mixed model  -->
+<p>Meanwhile</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/Gizmo.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Keep it dry and do no feed after midnight.</figcaption></figure>
 </div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>The pdf is not available for the moment. We need to clean some plot code before making it available again</p>
-</div>
-</div>
-</div>
-<section id="contributors" class="level3 unnumbered"><h3 class="unnumbered anchored" data-anchor-id="contributors">Contributors</h3>
-<p>List of people who contributed to update and extend tutorials:</p>
-<ul>
-<li>Eric Postma updated the previous tutorial from asreml-r 3 to asreml-r 4</li>
-<li>Julien Martin<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> developed and maintains the site</li>
-<li>Matthieu Videlier<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> added (and continues to add) more details in the document</li>
-</ul>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
@@ -384,11 +339,8 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 Wilson, A. J., D. Réale, M. N. Clements, M. M. Morrissey, E. Postma, C. A. Walling, L. E. B. Kruuk, and D. H. Nussey. 2010. <a href="https://doi.org/10.1111/j.1365-2656.2009.01639.x">An ecologist’s guide to the animal model</a>. Journal of Animal Ecology 79:13–26.
 </div>
 </div>
-</section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
-<ol>
-<li id="fn1"><p>Univeristy of Ottawa, julien.martin@uottawa.ca<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>UQAM, videlier.mathieu@courrier.uqam.ca<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -919,10 +871,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./03_01-biv_asreml.html" class="pagination-link" aria-label="Asreml-R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01_intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03_03-biv_mcmcglmm.html" class="pagination-link" aria-label="MCMCglmm">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -933,7 +888,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/03_02-biv_gremlin.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
