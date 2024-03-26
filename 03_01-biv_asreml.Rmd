@@ -481,15 +481,20 @@ DvsS <- data.frame(
   Trait = rownames(model_sex$coefficients$random),
   BLUP = model_sex$coefficients$random,
   SE = sqrt(model_sex$vcoeff$random * model_sex$sigma2)
-)
-DvsS$ID <- substr(DvsS$Trait, 38, 40)
-DvsS$TRAIT <- substr(DvsS$Trait, 18, 19)
-DvsS$SEX <- substr(DvsS$Trait, 9, 9)
-DvsS <- DvsS[927:6162, ] # keep only row associated to animal
+) %>%
+  filter(grepl("at\\(sex", Trait)) %>%
+  mutate(
+    ID = substr(Trait, 40, 44),
+    TRAIT = substr(Trait, 20, 21),
+    SEX = substr(Trait, 10, 10)
+  ) %>%
+  rename(
+    BLUP = "effect"
+  ) %>%
+  select(BLUP:SEX)
 summary(factor(DvsS$TRAIT)) # 1309 each
 #
-DvsS$Trait <- NULL
-colnames(DvsS)[1] <- "BLUP"
+
 BLUPS <- reshape(DvsS, v.names = c("BLUP", "SE"), idvar = c("ID", "SEX"), timevar = "TRAIT", direction = "wide")
 nrow(BLUPS)
 rownames(BLUPS) <- c()
@@ -627,14 +632,20 @@ DvsS <- data.frame(
   Trait = rownames(model.BiV_Sex$coefficients$random),
   BLUP = model.BiV_Sex$coefficients$random,
   SE = sqrt(model.BiV_Sex$vcoeff$random * model.BiV_Sex$sigma2)
-)
-DvsS$ID <- substr(DvsS$Trait, 33, 35)
-DvsS$TRAIT <- substr(DvsS$Trait, 7, 14)
-DvsS <- DvsS[927:3544, ] # keep only row associated to animal
+) %>%
+  filter(grepl("vm\\(animal", Trait)) %>%
+  mutate(
+    ID = substr(Trait, 33, 36),
+    TRAIT = substr(Trait, 7, 14)
+  ) %>%
+  rename(
+    BLUP = "effect"
+  ) %>%
+  select(BLUP:TRAIT)
+
 summary(factor(DvsS$TRAIT))
 #
-DvsS$Trait <- NULL
-colnames(DvsS)[1] <- "BLUP"
+
 BLUPS <- reshape(DvsS, v.names = c("BLUP", "SE"), idvar = "ID", timevar = "TRAIT", direction = "wide")
 nrow(BLUPS)
 rownames(BLUPS) <- c()
