@@ -331,8 +331,8 @@ DvsS <- data.frame(
   Trait = colnames(model2.5$Sol),
   BLUP = posterior.mode(model2.5$Sol),
   CI = HPDinterval((model2.5$Sol))
-)
-DvsS <- DvsS[5:5240, ] # keep only rows associated with animal
+)   %>%
+  filter(grepl("animal", Trait)) 
 DvsS$ID <- substr(DvsS$Trait, 35, 38)
 DvsS$TRAIT <- substr(DvsS$Trait, 25, 26)
 DvsS$SEX <- substr(DvsS$Trait, 16, 16)
@@ -448,8 +448,9 @@ DvsS <- data.frame(
   Trait = colnames(model.BivSex$Sol),
   BLUP = posterior.mode(model.BivSex$Sol),
   CI = HPDinterval((model.BivSex$Sol))
-)
-DvsS <- DvsS[3:2619, ] # keep only rows associated with animal
+)  %>%
+  filter(grepl("animal", Trait))
+
 DvsS$ID <- substr(DvsS$Trait, 22, 26)
 DvsS$TRAIT <- substr(DvsS$Trait, 6, 13)
 summary(factor(DvsS$TRAIT))
