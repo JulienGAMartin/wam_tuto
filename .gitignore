@@ -16,5 +16,5 @@ fort.19
 *_cache/
 *_files/
 *_freeze
-site_libs/
 /.quarto/
+!docs/*_files/
