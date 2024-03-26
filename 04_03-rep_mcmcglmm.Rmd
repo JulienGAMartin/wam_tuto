@@ -1,5 +1,19 @@
 ## MCMCglmm
 
+```{r, echo=FALSE}
+gryphonRM <- read.csv("data/gryphonRM.csv")
+gryphonRM$animal <- as.factor(gryphonRM$animal)
+gryphonRM$byear <- as.factor(gryphonRM$byear)
+gryphonRM$age <- as.factor(gryphonRM$age)
+gryphonRM$year <- as.factor(gryphonRM$year)
+gryphonRM$laydate <- as.numeric(gryphonRM$laydate)
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+library(MCMCglmm)
+```
+
 ### Estimating repeatability
 
 With repeated measures on individuals it is often of interest to see how repeatable a trait is. 

@@ -4,28 +4,28 @@
 
 ### Asreml-R
 
-```{r eval = FALSE}
+```{r, eval = FALSE}
 
 
 ```
 
 ### gremlin
 
-```{r eval = FALSE}
+```{r, eval = FALSE}
 
 
 ```
 
 ### MCMCglmm
 
-```{r eval = FALSE}
+```{r, eval = FALSE}
 
 
 ```
 
 ### brms
 
-```{r eval = FALSE}
+```{r, eval = FALSE}
 
 
 ```
@@ -40,7 +40,7 @@
 ## bivariate model
 
 ### Asreml-R
-```{r eval = FALSE}
+```{r, eval = FALSE}
 
 
 ```
@@ -48,20 +48,20 @@
 ### gremlin
 
 
-```{r eval = FALSE}
+```{r, eval = FALSE}
 
 
 ```
 
 ### MCMCglmm
 
-```{r eval = FALSE}
+```{r, eval = FALSE}
 
 
 ```
 
 ### brms
 
-```{r eval = FALSE}
+```{r, eval = FALSE}
 
 ```

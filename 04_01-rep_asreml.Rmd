@@ -1,5 +1,17 @@
 ## Asreml-R
 
+```{r, echo=FALSE}
+gryphonRM <- read.csv("data/gryphonRM.csv")
+gryphonRM$animal <- as.factor(gryphonRM$animal)
+gryphonRM$byear <- as.factor(gryphonRM$byear)
+gryphonRM$age <- as.factor(gryphonRM$age)
+gryphonRM$year <- as.factor(gryphonRM$year)
+gryphonRM$laydate <- as.numeric(gryphonRM$laydate)
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+```
 
 First we need to load the `asreml` library:
 ```{r}
@@ -52,17 +64,22 @@ So, just as we saw when estimating $h^2$ in Tutorial 1, the inclusion of fixed e
 <!-- effect size or just the variance estimate -->
 if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
 
-```{r, eval = htmlT_pdfF}
+::: {.content-visible when-format="html"}
+```{r, eval = TRUE}
 summary(modelw, coef = TRUE)$coef.fixed
 wald.asreml(modelw, ssType = "conditional", denDF = "numeric")
 ```
+:::
 
-```{r, echo = FALSE, eval = htmlF_pdfT}
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = FALSE, eval = TRUE}
 summary(modelw, coef = TRUE)$coef.fixed
 wa <- wald.asreml(modelw, ssType = "conditional", denDF = "numeric")$Wald
 attr(wa, "heading") <- NULL
 wa
 ```
+:::
 
 Here age is modeled as a 5-level factor (specified using the function `as.factor()` at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.
 In addition, using `age` as continuous variable can help in saving some degree of freedom in the analysis.
@@ -183,16 +200,21 @@ modelz_3 <- asreml(
 summary(modelz_3)$varcomp
 ```
 
-```{r, eval = htmlT_pdfF}
+::: {.content-visible when-format="html"}
+```{r, eval = TRUE}
 summary(modelw, coef = TRUE)$coef.fixed
 wald.asreml(modelz_3, ssType = "conditional", denDF = "numeric")
 ```
+:::
 
-```{r, echo = FALSE, eval = htmlF_pdfT}
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = FALSE, eval = TRUE}
 summary(modelw, coef = TRUE)$coef.fixed
 wa <- wald.asreml(modelz_3, ssType = "conditional", denDF = "numeric")$Wald
 attr(wa, "heading") <- NULL
 wa
 ```
+:::
 
 <!-- C2  What to do more , may be extrac BLUP also !-->

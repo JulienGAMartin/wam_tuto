@@ -13,3 +13,8 @@ brms-wam-master
 *.Rproj
 wam_tuto_cache/
 fort.19
+*_cache/
+*_files/
+*_freeze
+site_libs/
+/.quarto/

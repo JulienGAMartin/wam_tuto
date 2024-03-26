@@ -49,7 +49,7 @@ Additional information and guide can be find in the Asreml-R manual: (https://as
 #### MCMCglmm
 
 `MCMCglmm` is an R package for Bayesian mixed model analysis written by Pr. Jarrod Hadfield. It is a freeware distributed through CRAN (http://cran.r-project.org/). Information and guide about the package can be find in the user manual and vignettes (http://cran.r-project.org/web/packages/MCMCglmm/index.html).
-Reference: [@MCMCglmm2010, @R-MCMCglmm].
+Reference: [@MCMCglmm2010].
 
 This module provides some information that applies to MCMCglmm-based analyses in general, but that will not be included in other tutorials.
 Most importantly, this applies to some of the simplest ways of determining the performance of a run using MCMCglmm, i.e., verification of the validity of of the posterior distribution.

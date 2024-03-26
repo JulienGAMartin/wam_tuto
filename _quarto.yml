@@ -1,0 +1,112 @@
+project:
+  type: book
+  output-dir: docs
+  resources:
+    - .nojekyll
+#  pre-render: assets/_refs.r
+
+execute: 
+  cache: true
+  freeze: auto
+
+book:
+  google-analytics: G-LLHQEESR2L
+  title: "How to fit an animal model"
+  subtitle: "An ecologist guide"
+  description: |
+    Tutorial on how to fit an animal model using multiple R packages.
+    Updated and extended tutorials from An ecologist guide to animal model [@wilson2010].
+  author: 
+    - Julien Martin
+    - Matthieu Videlier
+  date: today
+  date-format: iso 
+  reader-mode: true
+  search: true
+  page-footer:
+    left: |
+      By J Martin & M Videlier
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+#  cover-image: images/blue_dragon.jpg
+#  favicon: cover.jpg
+  site-url: https://juliengamartin.github.io/wam_tuto/
+  repo-url: https://github.com/juliengamartin/wam_tuto/
+  repo-actions: [edit, issue]
+  downloads: pdf #[pdf, epub]
+  navbar:
+    background: light
+#    logo: quarto.png
+#    logo-alt: "Quarto logo."
+    collapse-below: lg
+    title: "Wam tutorial"
+    left:
+      - text: Extra resources
+        menu:
+          - text: WamWiki
+            href: https://wildanimalmodels.org/
+          - text: Tutorials by P de Vilemereuil
+            href: https://devillemereuil.legtux.org/downloads/
+
+  chapters:
+    - index.qmd
+    - 01_intro.Rmd
+    - part: 02_00-univ.Rmd
+      chapters:
+        - 02_01-univ_asreml.Rmd  
+        - 02_02-univ_gremlin.Rmd 
+        - 02_03-univ_mcmcglmm.Rmd
+        - 02_04-univ_brms.Rmd    
+        - 02_05-univ_stan.Rmd    
+    - part: 03_00-biv.Rmd          
+      chapters:
+        - 03_01-biv_asreml.Rmd   
+        - 03_02-biv_gremlin.Rmd  
+        - 03_03-biv_mcmcglmm.Rmd 
+        - 03_04-biv_brms.Rmd     
+        - 03_05-biv_stan.Rmd     
+    - part : 04_00-rep.Rmd
+      chapters:          
+        - 04_01-rep_asreml.Rmd   
+        - 04_02-rep_gremlin.Rmd  
+        - 04_03-rep_mcmcglmm.Rmd 
+        - 04_04-rep_brms.Rmd     
+        - 04_05-rep_stan.Rmd     
+    - 05_code_cheatsheet.Rmd
+    - 98_references.qmd
+#  appendices:
+#    - 99_app_rep-lmer.Rmd
+
+
+bibliography: [biblio/book.bib, biblio/packages.bib, biblio/grateful-refs.bib]
+biblio-style: apalike
+csl: biblio/ecology.csl
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: [cosmo, css/theme-dark.scss]
+      #- r4ds.scss
+    css: css/style.css
+    code-link: true
+
+    author-meta: "Julien Martin"
+    callout-appearance: simple
+#    params:
+#      echo_sol: true
+#      fit_all: false
+
+#  pdf:
+#    documentclass: scrbook
+#    include-in-header: latex/preamble.tex
+#    include-before-body: latex/before_body.tex
+#    include-after-body: latex/after_body.tex
+#    toc-depth: 2
+
+#  epub:
+#    dev: svglite
+#    stylesheet: css/epub.css
+#    toc: true
+
+

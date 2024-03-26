@@ -1,5 +1,19 @@
 ## brms
 
+```{r, echo = FALSE}
+source("_params.r")
+gryphon <- read.csv("data/gryphon.csv")
+gryphon$animal <- as.factor(gryphon$animal)
+gryphon$mother <- as.factor(gryphon$mother)
+gryphon$byear <- as.factor(gryphon$byear)
+gryphon$sex <- as.factor(gryphon$sex)
+gryphon$bwt <- as.numeric(gryphon$bwt)
+gryphon$tarsus <- as.numeric(gryphon$tarsus)
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+```
 
 First load brms:
 
@@ -17,7 +31,7 @@ First, we need to create two models/objects with the function `bf` fitting the d
 Then, the two objects/models are added into a third model to quantify all the estimates in addition to their covariance. Contrary to MCMCglmm or asreml-R, brms directly estimate the covariance and the correlation in its outputs.
 Our most basic model can be specified as:
 
-```{r eval = params$fit_all}
+```{r, eval = params$fit_all}
 bf_bwt <- bf(bwt ~ 1 + (1 | a | gr(animal, cov = Amat)))
 bf_tarsus <- bf(tarsus ~ 1 + (1 | a | gr(animal, cov = Amat)))
 brms_m2.1 <- brm(
@@ -125,7 +139,7 @@ Fixed and random effects can be added just as for the univariate case.
 Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of byear and mother, we could specify a bivariate formulation of this using the following code (including a line to save the output):
 
 
-```{r eval = params$fit_all}
+```{r, eval = params$fit_all}
 bf_bwt_2 <- bf(bwt ~ 1 + sex + (1 | a | gr(animal, cov = Amat)) + (1 | b | byear) + (1 | c | mother))
 bf_tarsus_2 <- bf(tarsus ~ 1 + sex + (1 | a | gr(animal, cov = Amat)) + (1 | b | byear) + (1 | c | mother))
 
