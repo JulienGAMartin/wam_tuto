@@ -1,5 +1,19 @@
 ## MCMCglmm
 
+```{r, echo=FALSE}
+gryphon <- read.csv("data/gryphon.csv")
+gryphon$animal <- as.factor(gryphon$animal)
+gryphon$mother <- as.factor(gryphon$mother)
+gryphon$byear <- as.factor(gryphon$byear)
+gryphon$sex <- as.factor(gryphon$sex)
+gryphon$bwt <- as.numeric(gryphon$bwt)
+gryphon$tarsus <- as.numeric(gryphon$tarsus)
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+```
+
 ### Running the model
 
 First load MCMCglmm:
@@ -188,7 +202,7 @@ posterior.mode(model1.3$VCV)
 
 Here the variance in birth weight explained by birth year is `r round(posterior.mode(model1.3$VCV)[2],2)`. Note that although $V_A$ has changed somewhat, most of what is now partitioned as a `birth year` effect was previously partitioned as $V_R$ . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in $h^2$ (since now $h^2 = V_A /(V_A + V_{BY} + V_R )$). However, we get a somewhat different result if we also add a random effect of `mother` to test for maternal effects:
 
-```{r cache=TRUE}
+```{r, cache=TRUE}
 prior1.4 <- list(
   G = list(
     G1 = list(V = 1, nu = 0.002),
@@ -242,7 +256,7 @@ To avoid multiple model (one for each group), we can directly partition the vari
 As example, we can partition the additive genetic variance and residual variance by sex. It is impossible to further partition the other variances but complexity an animal model requires sufficient sample size.  
 
 
-```{r cache=TRUE}
+```{r, cache=TRUE}
 prior1.4.SEX <- list(
   G = list(G1 = list(V = diag(2), nu = 1.002), G2 = list(V = 1, nu = 0.002), G3 = list(V = 1, nu = 0.002)),
   R = list(V = diag(2), nu = 1.002)
@@ -321,7 +335,7 @@ interacted with variance functions (i.e.
 us(sex):str(mother+grandmother) is possible)
 -->
 
-<!--
+
 ```{r, eval = FALSE, cache=TRUE}
 prior1.5 <- list(
   G = list(G1 = list(V = diag(2), nu = 0.002)),
@@ -340,7 +354,9 @@ model1.5 <- MCMCglmm(bwt ~ sex,
 
 posterior.mode(model1.5$VCV)
 ```
-Error in buildZ(rmodel.terms[r], data = data, nginverse = names(ginverse)) : 
+<!--
+  
+  Error in buildZ(rmodel.terms[r], data = data, nginverse = names(ginverse)) : 
   terms involved in mm/str structures must have identical levels in the same order
 In addition: Warning message:
 In levels(data[, rterms[select.terms]]) != levels(data[, rterms[1]]) :

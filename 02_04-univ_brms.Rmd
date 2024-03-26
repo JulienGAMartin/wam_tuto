@@ -1,5 +1,20 @@
 ## brms
 
+```{r, echo=FALSE}
+source("_params.r")
+gryphon <- read.csv("data/gryphon.csv")
+gryphon$animal <- as.factor(gryphon$animal)
+gryphon$mother <- as.factor(gryphon$mother)
+gryphon$byear <- as.factor(gryphon$byear)
+gryphon$sex <- as.factor(gryphon$sex)
+gryphon$bwt <- as.numeric(gryphon$bwt)
+gryphon$tarsus <- as.numeric(gryphon$tarsus)
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+```
+
 ### Running the model
 
 First we need to load the `brms` library:
@@ -24,7 +39,7 @@ Default priors in `brms` work relatively well, however we strongly suggest to ca
 In this tutorial we will use the default priors. 
 To get the prior used by default, we can use the `get_prior()` function.
 
-```{r eval = params$fit_all}
+```{r, eval = params$fit_all}
 brms_m1.1 <- brm(
   bwt ~ 1 + (1 | gr(animal, cov = Amat)),
   data = gryphon,
@@ -75,7 +90,7 @@ plot(Var.table$h.bwt.1)
 
 To add effects to a univariate model, we simply modify the priors and the fixed effect portion of the model specification:
 
-```{r eval = params$fit_all}
+```{r, eval = params$fit_all}
 brms_m1.2 <- brm(
   bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)),
   data = gryphon,
@@ -178,10 +193,10 @@ Variance components are bounded to be positive (given a proper prior), and thus 
 Model comparisons can be performed using the function `loo_compare` using `waic` or weighted AIC.
 
 ```{r}
-brms_m1.3 <- add_criterion(brms_m1.3, "waic")
-brms_m1.1 <- add_criterion(brms_m1.1, "waic")
+brms_m1.3 <- add_criterion(brms_m1.3, "loo")
+brms_m1.1 <- add_criterion(brms_m1.1, "loo")
 
-loo_compare(brms_m1.3, brms_m1.1, criterion = "waic")
+loo_compare(brms_m1.3, brms_m1.1, criterion = "loo")
 ```
 
 
@@ -190,7 +205,7 @@ loo_compare(brms_m1.3, brms_m1.1, criterion = "waic")
 Depending of the research question and the presence of different group within the dataset, `brms` allowed to partition the variance at different groups. 
 Two distinct approch can be done to partition the different random effect: using an extra argument `by=sex` or by adding `(0+sex|)` before the `|`. Notes, here we used `||` which not estimate a possible covariance between groups (female and male) for the random effect.
 
-```{r eval = params$fit_all}
+```{r, eval = params$fit_all}
 brms_m1.4 <- brm(
   #  bwt ~ 1 +  sex + (1 | gr(animal, cov = Amat, by = sex))+ (1 | gr(byear, by = sex)) + (1 | gr(mother, by = sex)),
   bwt ~ 1 + sex + (0 + sex || gr(animal, cov = Amat)) + (0 + sex || byear) + (0 + sex || mother),
@@ -211,7 +226,7 @@ summary(brms_m1.4)
 
 We can see the model estimate variance for both sexes.  However, the residual level or sigma is not splitted by sexes. A futher and more complex code need to be performed, thus we can estimate the sex-specific heritability.
 
-```{r eval = params$fit_all}
+```{r, eval = params$fit_all}
 bf_m1.5 <- bf(
   bwt ~ 1 + sex + (0 + sex || gr(animal, cov = Amat)) + (0 + sex || mother) + (0 + sex || byear),
   sigma ~ sex - 1

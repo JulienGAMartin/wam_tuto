@@ -1,0 +1,67 @@
+# Quick comparison of codes
+
+## Univariate model with repeated measures
+
+### Asreml-R
+
+```{r, eval = FALSE}
+
+
+```
+
+### gremlin
+
+```{r, eval = FALSE}
+
+
+```
+
+### MCMCglmm
+
+```{r, eval = FALSE}
+
+
+```
+
+### brms
+
+```{r, eval = FALSE}
+
+
+```
+
+<!--
+################################################################################
+################################################################################
+################################################################################
+-->
+
+
+## bivariate model
+
+### Asreml-R
+```{r, eval = FALSE}
+
+
+```
+
+### gremlin
+
+
+```{r, eval = FALSE}
+
+
+```
+
+### MCMCglmm
+
+```{r, eval = FALSE}
+
+
+```
+
+### brms
+
+```{r, eval = FALSE}
+
+```
