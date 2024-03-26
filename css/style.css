@@ -1,0 +1,133 @@
+.rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning, .rmdcode {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  background: #f5f5f5 5px center/3em no-repeat;
+}
+.rmdcaution {
+  background-image: url("../images/caution.png");
+}
+.rmdimportant {
+  background-image: url("../images/important.png");
+}
+.rmdnote {
+  background-image: url("../images/note.png");
+}
+.rmdtip {
+  background-image: url("../images/tip.png");
+}
+.rmdwarning {
+  background-image: url("../images/warning.png");
+}
+.rmdcode {
+  background-image: url("../images/screen.png");
+}
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+p.flushright {
+  text-align: right;
+}
+blockquote > p:last-child {
+  text-align: right;
+}
+blockquote > p:first-child {
+  text-align: inherit;
+}
+.header-section-number {
+  padding-right: .2em;
+  font-weight: 500;
+}
+.level1 .header-section-number {
+  display: inline-block;
+  border-bottom: 3px solid;
+}
+.level1 h1 {
+  border-bottom: 1px solid;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+h1.title {
+  font-weight: 700;
+}
+.smallcaps {
+  font-variant: small-caps;
+}
+.book .book-body .page-wrapper .page-inner section.normal strong {
+  font-weight: 600;
+}
+
+/* Exercices */
+.solution-link {
+  width: 100%;
+  text-align: right;
+  font-size: 80%;
+  margin-top: -0.3em;
+  margin-bottom: 1.8em;
+}
+
+.solution-link a:before {
+  content: "Afficher ";
+}
+
+.solution-link.shown a:before {
+  content: "Masquer ";
+}
+
+.exer {
+  margin-top: 1.3em;
+  margin-bottom: 1.2em;
+  padding-left: 1em;
+  border-left: 6px solid #4183C4;
+  display: none;
+}
+
+.exer pre.sourceCode {
+  background-color: #f0f4fd;
+}
+
+.showopt {
+  /* background-color: #004c93;
+  color: #FFFFFF;
+  width: 100px;
+  height: 20px;
+  font-size: 80%
+  text-align: center;
+  vertical-align: middle !important;
+  float: right;
+  font-family: sans-serif;
+  border-radius: 8px; */
+  width: 100%;
+  text-align: right;
+  font-size: 75%;
+  margin-top: -0.3em;
+  /* margin-bottom: 1.8em; */
+}
+/*
+.showopt:hover {
+    background-color: #dfe4f2;
+    color: #004c93;
+} */
+
+pre.plot {
+  background-color: white !important;
+}
+
+.showopt a:before {
+  content: "Afficher ";
+}
+
+.showopt.shown a:before {
+  content: "Masquer ";
+}
