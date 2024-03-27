@@ -1,0 +1,220 @@
+## Asreml-R
+
+```{r, echo=FALSE}
+gryphonRM <- read.csv("data/gryphonRM.csv")
+gryphonRM$animal <- as.factor(gryphonRM$animal)
+gryphonRM$byear <- as.factor(gryphonRM$byear)
+gryphonRM$age <- as.factor(gryphonRM$age)
+gryphonRM$year <- as.factor(gryphonRM$year)
+gryphonRM$laydate <- as.numeric(gryphonRM$laydate)
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+```
+
+First we need to load the `asreml` library:
+```{r}
+library(asreml)
+```
+
+
+### Estimating repeatability
+
+With repeated measures on individuals it is often of interest to see how repeatable a trait is. 
+We can estimate the repeatability of a trait as the proportion of phenotypic variance $V_P$ explained by individual variance $V_{ind}$; $R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)$.
+
+```{r}
+modelv <- asreml(
+  fixed = laydate ~ 1,
+  random = ~animal,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+
+plot(modelv)
+```
+The model assumption seems correct, so we can look at the different estimates.
+Note that since we want to estimate the amount of variance explained by individual identity (rather than by additive genetic effects), we fit `animal` as a normal random effect and we don't associate it with the pedigree.
+Here, we also ask the model to remove any `NA` in `laydate`.
+
+This model partitions the phenotypic variance in `laydate` as follows:
+```{r}
+summary(modelv)$varcomp
+```
+
+Between-individual (or among-individual) variance is given by the `animal` component, while the residual component (`units!units`) represents within-individual variance. Here then the repeatability of the trait can be determined by hand as `r round(summary(modelv)$varcomp[1,1]/(summary(modelv)$varcomp[1,1]+summary(modelv)$varcomp[2,1]),2)` (_i.e._, as `r round(summary(modelv)$varcomp[1,1],3)`/(`r round(summary(modelv)$varcomp[1,1],3)` + `r round(summary(modelv)$varcomp[2,1], 3)`)).
+
+Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding `age` into the model as a fixed effect.
+```{r}
+modelw <- asreml(
+  fixed = laydate ~ age,
+  random = ~animal,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+
+summary(modelw)$varcomp
+```
+
+The repeatability of lay date, after accounting for age effects, is now estimated as `r round(summary(modelw)$varcomp[1,1]/(summary(modelw)$varcomp[1,1]+summary(modelw)$varcomp[2,1]), 2)` (_i.e._, as `r round(summary(modelw)$varcomp[1,1], 3)`/(`r round(summary(modelw)$varcomp[1,1], 3)` + `r round(summary(modelw)$varcomp[2,1], 3)`)). 
+So, just as we saw when estimating $h^2$ in Tutorial 1, the inclusion of fixed effects will alter the estimated effect size
+<!-- effect size or just the variance estimate -->
+if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
+
+::: {.content-visible when-format="html"}
+```{r, eval = TRUE}
+summary(modelw, coef = TRUE)$coef.fixed
+wald.asreml(modelw, ssType = "conditional", denDF = "numeric")
+```
+:::
+
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = FALSE, eval = TRUE}
+summary(modelw, coef = TRUE)$coef.fixed
+wa <- wald.asreml(modelw, ssType = "conditional", denDF = "numeric")$Wald
+attr(wa, "heading") <- NULL
+wa
+```
+:::
+
+Here age is modeled as a 5-level factor (specified using the function `as.factor()` at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.
+In addition, using `age` as continuous variable can help in saving some degree of freedom in the analysis.
+
+
+<!-- C1 I dont know why the quadratic fixed effect dont work, need to remember how to do this -->
+```{r, eval = FALSE, echo = FALSE}
+gryphonRM$age_c <- as.numeric(gryphonRM$age)
+
+modelw2 <- asreml(
+  fixed = laydate ~ age_c + I(age_c^2),
+  random = ~animal,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+
+summary(modelw2)$varcomp
+summary(modelw2, coef = TRUE)$coef.fixed
+wald.asreml(modelw2, ssType = "conditional", denDF = "numeric")
+```
+
+
+### Partitioning additive and permanent environment effects
+
+Generally we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals. 
+Non-additive contributions to fixed among-individual differences are normally referred to as _permanent environment effects_. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in $V_A$.
+
+To illustrate it, we first fit the animal model:
+```{r}
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+
+ainv <- ainverse(gryphonped)
+
+modelx <- asreml(
+  fixed = laydate ~ age,
+  random = ~ vm(animal, ainv),
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+```
+
+Variance components are almost unchanged if we compare the previous model:
+```{r}
+summary(modelx)$varcomp
+summary(modelw)$varcomp
+```
+
+This suggests that most of the among-individual variance is – rightly or wrongly – being partitioned as $V_A$ here. To instead to obtain an unbiased estimate of $V_A$, we need to partition for both additive genetic _and_ non-genetic sources of individual variation. We do it by fitting `animal` twice, once with a pedigree, and once without a pedigree (using `ide()`).
+Here, the command `ide` allow to create a second effect using a similar variable.
+
+```{r}
+modely <- asreml(
+  fixed = laydate ~ age,
+  random = ~ vm(animal, ainv) + ide(animal),
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+summary(modely)$varcomp
+```
+
+The estimate of $V_A$ is now much lower since the additive and permanent environment effects are being properly separated. We can estimate $h^2$ and the repeatability from this model:
+```{r}
+vpredict(modely, h2 ~ V1 / (V1 + V2 + V3))
+vpredict(modely, repeatability ~ (V1 + V2) / (V1 + V2 + V3))
+```
+
+### Adding additional effects and testing significance
+
+Models of repeated measures can be extended to include other fixed or random effects. For example try including year of measurement (`year`) and birth year (`byear`) as random effects.
+```{r}
+modelz <- asreml(
+  fixed = laydate ~ age,
+  random = ~ vm(animal, ainv) + ide(animal) +
+    year + byear,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+summary(modelz)$varcomp
+```
+
+This model will return additional variance components corresponding to variation in lay dates between years of measurement and between birth cohorts of females. $V_{byear}$ is very low and `B` appeared which tell us that the model had fixed the variance as a boundary. If you compare this model to a reduced model with byear excluded the log-likelihood remains unchanged.
+
+```{r}
+modelz_2 <- asreml(
+  fixed = laydate ~ age,
+  random = ~ vm(animal, ainv) + ide(animal) +
+    year,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+summary(modelz_2)$varcomp
+
+modelz$loglik
+modelz_2$loglik
+1 - pchisq(2 * (modelz_2$loglik - modelz$loglik), 1)
+```
+
+`year` effects could alternatively be included as fixed effects (try it!). This will reduce $V_R$ and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.
+
+
+```{r}
+modelz_3 <- asreml(
+  fixed = laydate ~ age + byear,
+  random = ~ vm(animal, ainv) + ide(animal) +
+    year,
+  residual = ~ idv(units),
+  data = gryphonRM,
+  na.action = na.method(x = "omit", y = "omit")
+)
+summary(modelz_3)$varcomp
+```
+
+::: {.content-visible when-format="html"}
+```{r, eval = TRUE}
+summary(modelw, coef = TRUE)$coef.fixed
+wald.asreml(modelz_3, ssType = "conditional", denDF = "numeric")
+```
+:::
+
+
+::: {.content-visible when-format="pdf"}
+```{r, echo = FALSE, eval = TRUE}
+summary(modelw, coef = TRUE)$coef.fixed
+wa <- wald.asreml(modelz_3, ssType = "conditional", denDF = "numeric")$Wald
+attr(wa, "heading") <- NULL
+wa
+```
+:::
+
+<!-- C2  What to do more , may be extrac BLUP also !-->

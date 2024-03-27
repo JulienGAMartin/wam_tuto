@@ -1,0 +1,67 @@
+# Introduction {#intro}
+
+The book is provides a series of tutorials (and accompanying data files) to fit animal model in `R` using different packages (`ASReml-R`, `gremlin`, `MCMCglmm` and `brms`/`stan`) .
+You will need to carefully follow the instructions below to first download the data files and second install the R packages.
+Before beginning the tutorial, we assume the reader has successfully installed the chosen R package on their computer and has saved the required data files to an appropriate directory from which they will be read.
+Full instructions for how to do this are provided with software distributions.
+
+To work though the different tutorial I would recommend to create a folder where you will save your different `R` scripts for the tutorials. 
+
+In addition, the tutorial is here to help researchers in their coding and understanding of models and outputs, but it is required that you read and understand the literature in quantitative genetics and animal model. 
+
+## Data
+
+### Data files
+
+ You will need to download 3 data files for the tutorial in `R`:
+
+- gryphon.csv: data on gryphon birth weight and morphology
+- gryphonRM.csv: data on gryphon repeated measurement of lay date.
+- gryphonped.csv: data on the associated pedigree of the data gryphon 
+
+In addition, some models presented in the tutorials can take a while to run (sometimes > 1 hour), thus we are also providing the model outputs to allow you continue the tutorial without waiting for the model to run. (But you are free to run  models)
+
+The files are available [here](https://github.com/JulienGAMartin/wam_tuto/tree/master/data)
+I recommend to save the data and Rdata files in a subfolder `data` in the folder you will use as your working directory for R and where you will save your R scripts. It should be noted that the tutorial are using this structure to read or save data.
+
+
+### Notes on data and pedigree
+
+It is always important to take time to think carefully about the strengths and potential limitations of your pedigree information before embarking on quantitative genetic analyses. Pedigree Viewer, written by Brian Kinghorn, is an extremely useful application for visualizing pedigrees, and can be downloaded from: http://www-personal.une.edu.au/~bkinghor/pedigree.htm. `Pedantics` an R package written by Michael Morrissey and distributed through CRAN (http://cran.r-project.org/) can also be used for this and offers some nice additional features for visualizing pedigree structures and generating associated statistics. Before you begin running through the tutorials, we advise taking a moment to look at the pedigree files provided with them using Pedigree Viewer or Pedantics.
+
+## R
+
+You should check that you have the most current version of R and R packages. You can check the number of the current version on CRAN. If you need to update (or install) R packages, use `install.packages()` and follow the prompted instructions.
+
+### R packages
+
+
+#### asreml-r
+
+ASReml-R is commercial software published by VSN international (http://www.vsni.co.uk/software/asreml/). This package is not free and requires a key access.
+Additional information and guide can be find in the Asreml-R manual: (https://asreml.kb.vsni.co.uk/wp-content/uploads/sites/3/2018/02/ASReml-R-Reference-Manual-4.pdf)
+
+#### gremlin
+
+`gremlin` is a little monster appearing if you feed a mugwai after midnight. It is also a great and promising software written by Pr. Matthew E. Wolak to fit mixed models using a frequentist approach .
+
+
+#### MCMCglmm
+
+`MCMCglmm` is an R package for Bayesian mixed model analysis written by Pr. Jarrod Hadfield. It is a freeware distributed through CRAN (http://cran.r-project.org/). Information and guide about the package can be find in the user manual and vignettes (http://cran.r-project.org/web/packages/MCMCglmm/index.html).
+Reference: [@MCMCglmm].
+
+This module provides some information that applies to MCMCglmm-based analyses in general, but that will not be included in other tutorials.
+Most importantly, this applies to some of the simplest ways of determining the performance of a run using MCMCglmm, i.e., verification of the validity of of the posterior distribution.
+This tutorial is not a substitute for working through the MCMCglmm course notes, which is available from CRAN (the Comprehensive R ArchiveNetwork, http://cran.r-project.org/, or can be accessed in R using the command vignette("CourseNotes","MCMCglmm")).
+These tutorials do not introduce one of the main advantages of using MCMCglmm for analyses of data from natural populations -the ability to properly model non-normal responses.
+These capabilities are introduced in the documentation that is distributed with MCMCglmm, and available from CRAN.
+Another specific animal guide for MCMCglmm can be find (https://devillemereuil.legtux.org/wp-content/uploads/2021/09/tuto_en.pdf). Pr. Pierre de Villemereuil provide more information in Bayesian concept and focus more on non-gaussian variable.
+
+
+#### brms
+
+`brms` provides an interface to fit Bayesian generalized multivariate (non-)linear multilevel models using `Stan`, which is a C++ package for obtaining full Bayesian inference (see https://mc-stan.org/).
+The formula syntax is an extended version of the syntax applied in the ‘lme4’ package to provide a familiar and simple interface for performing regression analyses.
+
+It should be noted that if `brms` is able to fit animal model the parametrization used is not the most efficient and can take quite longer than using a different parametrization directly in `stan`.

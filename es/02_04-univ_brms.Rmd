@@ -1,0 +1,285 @@
+## brms
+
+```{r, echo=FALSE}
+source("_params.r")
+gryphon <- read.csv("data/gryphon.csv")
+gryphon$animal <- as.factor(gryphon$animal)
+gryphon$mother <- as.factor(gryphon$mother)
+gryphon$byear <- as.factor(gryphon$byear)
+gryphon$sex <- as.factor(gryphon$sex)
+gryphon$bwt <- as.numeric(gryphon$bwt)
+gryphon$tarsus <- as.numeric(gryphon$tarsus)
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+```
+
+### Running the model
+
+First we need to load the `brms` library:
+```{r}
+library(brms)
+```
+To be able to fit an animal model, `brms` needs the relativeness (relationship) matrix of the pedigree and not its inverse (as in other softwares).
+This can be estimated using the `nadiv` package created by Pr. Matthew Wolak (https://cran.r-project.org/web/packages/nadiv/index.html).
+
+
+```{r}
+Amat <- as.matrix(nadiv::makeA(gryphonped))
+```
+
+We are now ready to specify our first model:
+The structure of a `bmrs` model is similar to `lme4`, thus the random effect is added to the model with the term `(1 | gr(animal, cov = Amat)` which associate the id animal to the matrix of relativeness. 
+In addition to the synthase of `lme4`, we includes other features or parameters within the models such as `chain` which represent the number of Markov chains (defaults to 4), `core` which represents the number of cores to use when executing the chains in parallel and `iter` which represents the number of total iterations per chain. For more parameters such as `thin` or `warmup/burnin`, you can read the Cran R page of the package (https://cran.r-project.org/web/packages/brms/brms.pdf)
+
+`bmrs` is a Bayesian Multilevel Models using Stan, doing so we can apply a prior to the model to better shape the distribution of the different variances estimated by the model. 
+Given that `bmrs` fit the model using a Bayesian approach via the software `stan`, we need to specify priors for the model.
+Default priors in `brms` work relatively well, however we strongly suggest to carefully select an adequate prior for your analysis.
+In this tutorial we will use the default priors. 
+To get the prior used by default, we can use the `get_prior()` function.
+
+```{r, eval = params$fit_all}
+brms_m1.1 <- brm(
+  bwt ~ 1 + (1 | gr(animal, cov = Amat)),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 1, cores = 1, iter = 100
+)
+
+save(brms_m1.1, file = "data/brms_m1_1.rda")
+```
+
+
+The result of the long model calculation is save in a spare file `brms_m1_1.rda"`. To help readers, we can directly  reloading it.
+Two distinct plot can be produce to produce some diagnostics graphs `mcmc_plot`.Note, that `sigma` represents the residual standard deviation.
+
+Next,we examine (or directly using the model) the variance estimate and their distributions (via `summary` or plot). 
+
+```{r}
+load("data/brms_m1_1.rda")
+plot(brms_m1.1)
+mcmc_plot(brms_m1.1, type = "acf")
+summary(brms_m1.1)
+```
+
+The `plot` of variance showed that the different variances have an normal distribution, the autocorrelation plot or 'acf' show that the autocorrelation is close to 0.
+The `summary` exposes the  mean (Estimate) of each variance or fixed effect (here just the intercept) associated to their posterior distribution with standard deviation (Est.Error) and two-sided 95% Credible intervals. 
+`Rhat` provides information on the estimate convergence. If it's greater than 1, the chains have not yet converged and it will be require to run more iterations and/or set stronger priors. 
+`ESS` represents the Effective sample values as the number of independent samples from the posterior distribution.
+However, for the purpose of this guide, the Rhat values are acceptable.
+
+It is also possible to calculate the heritability using the function 'as.mcmc'
+
+```{r}
+v_animal <- (VarCorr(brms_m1.1, summary = FALSE)$animal$sd)^2
+v_r <- (VarCorr(brms_m1.1, summary = FALSE)$residual$sd)^2
+h.bwt.1 <- as.mcmc(v_animal / (v_animal + v_r))
+summary(h.bwt.1)
+plot(h.bwt.1)
+# or
+Var.table <- as_draws_df(brms_m1.1)
+Var.table$h.bwt.1 <- as.mcmc((Var.table$sd_animal__Intercept)^2 / ((Var.table$sd_animal__Intercept)^2 + (Var.table$sigma)^2))
+summary(Var.table$h.bwt.1)
+plot(Var.table$h.bwt.1)
+```
+
+
+### Adding fixed effects
+
+To add effects to a univariate model, we simply modify the priors and the fixed effect portion of the model specification:
+
+```{r, eval = params$fit_all}
+brms_m1.2 <- brm(
+  bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+
+save(brms_m1.2, file = "data/brms_m1_2.rda")
+```
+
+To save time, the results of the calculation is stored in the spare file `brms_m1_2.rda"`. 
+We can assess the significance of `sex` as a fixed effect by examining its posterior distribution.
+
+```{r}
+load("data/brms_m1_2.rda")
+summary(brms_m1.2)
+plot(brms_m1.2)
+mcmc_plot(brms_m1.2, type = "pairs")
+
+summary(brms_m1.2)$fixed
+summary(brms_m1.2)$random
+```
+
+
+The posterior distribution of the `sex2` term does not overlap zero. Thus, we can infer that sex has an effect on birth weight (presence of a sexual dimorphism) in this model and is a useful addition to the model, for most purposes. It is also worth noting that the variance components have changed slightly:
+
+```{r}
+summary(brms_m1.2)$random
+```
+
+In fact since sex effects were previously contributing to the residual variance of the model our estimate of $V_R$ (denoted ’units’ in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate $V_P$ as $V_A +V_R$ then as we include fixed effects we will soak up more residual variance driving $V_P$ . Assuming that $V_A$ is more or less unaffected by the fixed effects fitted then as $V_P$ goes down we expect our estimate of $h^2$ will go up.
+
+```{r}
+v_animal <- (VarCorr(brms_m1.2, summary = FALSE)$animal$sd)^2
+v_r <- (VarCorr(brms_m1.2, summary = FALSE)$residual$sd)^2
+h.bwt.2 <- as.mcmc(v_animal / (v_animal + v_r))
+
+summary(h.bwt.2)
+summary(h.bwt.1)
+```
+
+Here $h^2$ has increased slightly from 0.5010 to 0.4192 (again, your values may differ slightly due to Monte Carlo error). Which is the better estimate? 
+It depends on what your question is. The first is an estimate of the proportion of variance in birth weight explained by additive effects, the latter is an estimate of the proportion of variance in birth weight after conditioning on sex that is explained by additive effects.
+An important piece of advice, each researcher should be consistent in how they name their estimates and always correctly describe which estimates they are using conditional or not (to avoid any confusion).
+
+
+### Adding random effects
+
+This is done by simply modifying the model statement in the same way, but requires addition of a prior for the new random effect. For instance, we can fit an effect of birth year:
+
+
+```{r, eval = params$fit_all}
+brms_m1.3 <- brm(
+  bwt ~ 1 + sex + (1 | gr(animal, cov = Amat)) + (1 | byear) + (1 | mother),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+
+save(brms_m1.3, file = "data/brms_m1_3.rda")
+```
+
+To save time, the results of the calculation is stored in the spare file `brms_m1_3.rda"`. 
+We can assess the significance of `sex` as a fixed effect by examining its posterior distribution.
+
+```{r}
+load("data/brms_m1_3.rda")
+
+plot(brms_m1.3, ask = FALSE, N = 3)
+summary(brms_m1.3)$random
+```
+
+Here partitioning of significant birth year and maternal variance has resulted in a further decrease in $V_R$ but also a decrease in $V_A$. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like an additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in $V_A$ and so $h^2$. Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:
+
+```{r}
+v_animal <- (VarCorr(brms_m1.3, summary = FALSE)$animal$sd)^2
+v_byear <- (VarCorr(brms_m1.3, summary = FALSE)$byear$sd)^2
+v_mother <- (VarCorr(brms_m1.3, summary = FALSE)$mother$sd)^2
+v_r <- (VarCorr(brms_m1.3, summary = FALSE)$residual$sd)^2
+h.bwt.3 <- as.mcmc(v_animal / (v_animal + v_byear + v_mother + v_r))
+summary(h.bwt.3)
+summary(h.bwt.2)
+summary(h.bwt.1)
+
+# or
+Var.table <- as_draws_df(brms_m1.3)
+Var.table$h.bwt.3 <- as.mcmc((Var.table$sd_animal__Intercept)^2 / ((Var.table$sd_animal__Intercept)^2 + (Var.table$sd_byear__Intercept)^2 + (Var.table$sd_mother__Intercept)^2 + (Var.table$sigma)^2))
+summary(Var.table$h.bwt.3)
+plot(Var.table$h.bwt.3)
+```
+
+
+### Testing significance of variance components
+
+While testing the significance of fixed effects by evaluating whether or not their posterior distributions overlap zero was simple and valid, this approach does not work for variance components. 
+Variance components are bounded to be positive (given a proper prior), and thus even when a random effect is not meaningful, its posterior distribution will never overlap zero. 
+
+Model comparisons can be performed using the function `loo_compare` using `waic` or weighted AIC.
+
+```{r}
+brms_m1.3 <- add_criterion(brms_m1.3, "loo")
+brms_m1.1 <- add_criterion(brms_m1.1, "loo")
+
+loo_compare(brms_m1.3, brms_m1.1, criterion = "loo")
+```
+
+
+### Further partitioning of the variance
+
+Depending of the research question and the presence of different group within the dataset, `brms` allowed to partition the variance at different groups. 
+Two distinct approch can be done to partition the different random effect: using an extra argument `by=sex` or by adding `(0+sex|)` before the `|`. Notes, here we used `||` which not estimate a possible covariance between groups (female and male) for the random effect.
+
+```{r, eval = params$fit_all}
+brms_m1.4 <- brm(
+  #  bwt ~ 1 +  sex + (1 | gr(animal, cov = Amat, by = sex))+ (1 | gr(byear, by = sex)) + (1 | gr(mother, by = sex)),
+  bwt ~ 1 + sex + (0 + sex || gr(animal, cov = Amat)) + (0 + sex || byear) + (0 + sex || mother),
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+
+save(brms_m1.4, file = "data/brms_m1_4.rda")
+```
+
+To save time, the results of the calculation is stored in the spare file `brms_m1_4.rda"`. 
+```{r}
+load("data/brms_m1_4.rda")
+summary(brms_m1.4)
+```
+
+We can see the model estimate variance for both sexes.  However, the residual level or sigma is not splitted by sexes. A futher and more complex code need to be performed, thus we can estimate the sex-specific heritability.
+
+```{r, eval = params$fit_all}
+bf_m1.5 <- bf(
+  bwt ~ 1 + sex + (0 + sex || gr(animal, cov = Amat)) + (0 + sex || mother) + (0 + sex || byear),
+  sigma ~ sex - 1
+)
+
+brms_m1.5 <- brm(bf_m1.5,
+  data = gryphon,
+  data2 = list(Amat = Amat),
+  family = gaussian(),
+  chains = 1, cores = 1, iter = 1000
+)
+
+save(brms_m1.5, file = "data/brms_m1_5.rda")
+```
+
+To save time, the results of the calculation is stored in the spare file `brms_m1_4.rda"`. 
+
+```{r}
+load("data/brms_m1_5.rda")
+summary(brms_m1.5)
+#
+Var.table <- as_draws_df(brms_m1.5)
+Var.table$h.bwt.f <- as.mcmc((Var.table$sd_animal__sex1)^2 / ((Var.table$sd_animal__sex1)^2 + (Var.table$ sd_byear__sex1)^2 + (Var.table$sd_mother__sex1)^2 + (Var.table$b_sigma_sex1)^2))
+Var.table$h.bwt.m <- as.mcmc((Var.table$sd_animal__sex2)^2 / ((Var.table$sd_animal__sex2)^2 + (Var.table$ sd_byear__sex2)^2 + (Var.table$sd_mother__sex2)^2 + (Var.table$b_sigma_sex2)^2))
+summary(Var.table$h.bwt.f)
+summary(Var.table$h.bwt.m)
+plot(Var.table$h.bwt.f)
+plot(Var.table$h.bwt.m)
+```
+
+Here, we can plot the point estimates of the $h^2$ which seems to differ between sexes, but their CI overlaps.
+
+```{r, fig.cap = "Female and male heritability of birth weight"}
+h2.sex <- rbind(
+  cbind(summary(Var.table$h.bwt.f)$statistics[1], summary(Var.table$h.bwt.f)$quantiles[1], summary(Var.table$h.bwt.f)$quantiles[5]),
+  cbind(summary(Var.table$h.bwt.m)$statistics[1], summary(Var.table$h.bwt.m)$quantiles[1], summary(Var.table$h.bwt.m)$quantiles[5])
+)
+
+plot(c(0.95, 1.05) ~ h2.sex[, 1], xlim = c(0, 0.8), ylim = c(0.5, 1.5), , xlab = "", ylab = "", col = c("red", "blue"), pch = c(16, 17), cex = 2, yaxt = "n")
+arrows(y0 = 0.95, x0 = h2.sex[1, 2], y1 = 0.95, x1 = h2.sex[1, 3], code = 3, angle = 90, length = 0, col = c("red"), lwd = 2)
+arrows(y0 = 1.05, x0 = h2.sex[2, 2], y1 = 1.05, x1 = h2.sex[2, 3], code = 3, angle = 90, length = 0, col = c("blue"), lwd = 2)
+mtext("Narrow-sense heritability (±CI)", side = 1, las = 1, adj = 0.4, line = 3, cex = 1.6)
+axis(2, at = 1, labels = c("birth weight"), las = 3, cex.axis = 1.6)
+```
+
+
+### Modification of model parameter
+Unfortunately (to our knowledge), it is not possible to alter the variance matrices and refit them within the model. 
+
+
+### Covariance between two random effects
+Some research questions require to estimate the covariance between two random effects within a univariate model.
+Unfortunately (to our knowledge), it is not possible to create a covariance between distinct random effects (https://github.com/paul-buerkner/brms/issues/502).
+However,a multi-membership model can be fit using the linking.function `mm`, thus forcing the variance of two variables to be equal and the covariance to 1. 
+
+

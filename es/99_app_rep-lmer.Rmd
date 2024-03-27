@@ -1,0 +1,106 @@
+## Repeatability with lmer
+
+```{r, echo=FALSE}
+gryphonRM <- read.csv("data/gryphonRM.csv")
+gryphonRM$animal <- as.factor(gryphonRM$animal)
+gryphonRM$byear <- as.factor(gryphonRM$byear)
+gryphonRM$age <- as.factor(gryphonRM$age)
+gryphonRM$year <- as.factor(gryphonRM$year)
+gryphonRM$laydate <- as.numeric(gryphonRM$laydate)
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+```
+
+<!-- work in progress not on website-->
+```{r}
+library(lme4)
+library(rptR)
+```
+### Estimating repeatability
+
+With repeated measures on individuals it is often of interest to see how repeatable a trait is. 
+We can estimate the repeatability of a trait as the proportion of phenotypic variance $V_P$ explained by individual variance $V_{ind}$; $R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)$.
+
+```{r}
+modelv <- lmer(laydate ~ 1 + (1 | animal),
+  data = gryphonRM
+)
+plot(modelv)
+plot(residuals(modelv))
+hist(residuals(modelv))
+```
+The model assumption seems correct, so we can look at the different estimates.
+Note that since we want to estimate the amount of variance explained by individual identity (rather than by additive genetic effects), we fit `animal` as a normal random effect and we don't associate it with the pedigree.
+This model partitions the phenotypic variance in `laydate` as follows:
+```{r}
+summary(modelv)
+```
+
+Within the random effect section, we can extract the different variance estimate between-individual (or among-individual) variance associated to `animal` and the within-individual variance associated to the `Residual`.
+Here then the repeatability of the trait `laydate` can be determined by hand as `r round(attr(VarCorr(modelv)$animal,'stddev')[1]^2/(attr(VarCorr(modelv)$animal,'stddev')[1]^2+attr(VarCorr(modelv),'sc')^2),3)` (_i.e._, as `r round(attr(VarCorr(modelv)$animal,'stddev')[1]^2, 3)`/(`r round(attr(VarCorr(modelv)$animal,'stddev')[1]^2, 3)` + `r round(attr(VarCorr(modelv),'sc')^2,3)`)).
+just a remember, here we calculate the unadjusted repeatability since the model is simple without fixed effect and other random effect.
+```{r}
+vc <- VarCorr(modelv)
+residual_var <- attr(VarCorr(modelv), "sc")^2
+intercept_var <- attr(VarCorr(modelv)$animal, "stddev")[1]^2
+(R <- intercept_var / (intercept_var + residual_var))
+```
+
+One of the limitation of the lme4 is the lack of uncertainty around the repetability estiamte. To estimate the significance and uncertainty of it, we can use the `RptR` package. Here an example of 1000 bootstrap to estimate the uncertainty of the repeatability. 
+```{r}
+Rept <- rpt(laydate ~ 1 + (1 | animal), grname = "animal", data = gryphonRM, nboot = 1000, npermut = 0)
+Rept
+```
+
+Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding `age` into the model as a fixed effect.
+```{r}
+modelw <- lmer(laydate ~ 1 + age + (1 | animal),
+  data = gryphonRM
+)
+summary(modelw)
+```
+
+The repeatability of lay date, after accounting for age effects, is now estimated as `r round(attr(VarCorr(modelw)$animal,'stddev')[1]^2/(attr(VarCorr(modelw)$animal,'stddev')[1]^2+attr(VarCorr(modelw),'sc')^2), 3)` (_i.e._, as `r round(attr(VarCorr(modelw)$animal,'stddev')[1]^2)`/(`r round(attr(VarCorr(modelw)$animal,'stddev')[1]^2, 3)` + `r round(attr(VarCorr(modelw),'sc')^2, 3)`)).
+So, just as we saw when estimating $h^2$ in Tutorial 1, the inclusion of fixed effects will alter the estimated effect size
+<!-- effect size or just the variance estimate -->
+if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
+The effect of age on `laydate` can be observed in the fixed effect section. By using the `anova` fonction we can estimate the F values and so the global difference between the different level of age. 
+
+```{r}
+summary(modelw)
+anova(modelw)
+# plot(laydate~age,gryphonRM)
+```
+
+Here age is modeled as a 5-level factor (specified using the function `as.factor()` at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.
+In addition, using `age` as continuous variable can help in saving some degree of freedom in the analysis.
+
+```{r}
+gryphonRM$age_c <- as.numeric(gryphonRM$age)
+modelw2 <- lmer(laydate ~ 1 + age_c + I(age_c^2) + (1 | animal),
+  data = gryphonRM
+)
+summary(modelw2)
+anova(modelw)
+```
+
+To help visualizing the quadratic partial regression of age on laydate, we can use the package `visreg`.
+```{r}
+library(visreg)
+visreg(modelw)
+```
+
+<!--   Not sure we can estimate the heritability with lme 4 !  so this tutorial might stop here !!! 
+### Partitioning additive and permanent environment effects
+
+Generally we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals. 
+Non-additive contributions to fixed among-individual differences are normally referred to as _permanent environment effects_. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in $V_A$.
+
+To illustrate it, we first fit the animal model:
+```{r}
+```
+-->
+
+

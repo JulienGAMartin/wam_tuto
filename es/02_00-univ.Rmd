@@ -1,0 +1,46 @@
+# Univariate animal model
+
+This tutorial will demonstrate how to run a univariate animal model to estimate genetic variance in birth weight in the mighty gryphons.
+
+## Scenario and data
+
+### Scenario
+In a population of gryphons there is strong positive selection on birth weight with heavier born individuals having, on average higher fitness. To find out whether increased birth weight will evolve in response to the selection, and if so how quickly, we want to estimate the heritability of birth weight.
+
+### Data files
+Open `gryphonped.csv` and `gryphon.csv` in your text editor. The structure and contents of these files is fairly self-explanatory. The pedigree file `gryphonped.csv` contains three columns containing unique IDs that correspond to each animal, its father, and its mother. Note that this is a multigenerational pedigree, with the earliest generation (for which parentage information is necessarily missing) at the beginning of the file. For later-born individuals maternal identities are all known but paternity information is incomplete (a common situation in real world applications).
+
+The phenotype data, as well as additional factors and covariates that we may wish to include in our model are contained in `gryphon.csv`. Columns correspond to individual identity (`animal`), maternal identity (`mother`), year of birth (`byear`), sex (`sex`, where `1` is female and `2` is male), birth weight (`bwt`), and tarsus length (`tarsus`). Each row of the data file contains a record for a different offspring individual. Note that all individuals included in the data file must be included as offspring in the pedigree file.
+
+We can read the data file, using `read.csv()` which consider by default that `NA` is the symbol for missing values and that the first line of the file contains the column headers.
+```{r, echo=FALSE}
+gryphon <- read.csv("data/gryphon.csv")
+```
+
+
+It is a good idea to make sure that all variables are correctly assigned as numeric or factors:
+```{r}
+gryphon$animal <- as.factor(gryphon$animal)
+gryphon$mother <- as.factor(gryphon$mother)
+gryphon$byear <- as.factor(gryphon$byear)
+gryphon$sex <- as.factor(gryphon$sex)
+gryphon$bwt <- as.numeric(gryphon$bwt)
+gryphon$tarsus <- as.numeric(gryphon$tarsus)
+str(gryphon)
+```
+
+Similarly we can read in the pedigree file, using `read.csv()` which consider by default that `NA` is the symbol for missing values and that the first line of the file contains the column headers.
+```{r, echo=FALSE}
+gryphonped <- read.csv("data/gryphonped.csv")
+str(gryphonped)
+```
+
+```{r}
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+str(gryphonped)
+```
+
+Now that we have imported the data and the pedigree file, we are ready to fit an animal model.
+

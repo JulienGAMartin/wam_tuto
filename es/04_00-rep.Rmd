@@ -1,0 +1,32 @@
+# A repeated measures animal model {#rep_measures}
+
+This tutorial will demonstrate how to run a univariate animal model for a trait with repeated observations using different R packages with an example data files provided.
+
+## Scenario and data
+
+### scenario
+
+Since gryphons are iteroparous, multiple observations of reproductive traits are available for some individuals. Here we have repeated measures of lay date (measured in days after January 1) for individual females varying in age from 2 (age of sexual maturation) up until age 6. Not all females lay every year so the number of observations per female is variable (between 1 to 5). We want to know how repeatable the trait is, and (assuming it is repeatable) how heritable it is.
+
+### Data files
+
+The pedigree file `gryphonped.csv` is that used in the preceding tutorials but we now use a new data file `gryphonRM.csv`. Columns correspond to individual identity (`animal`), birth year (`byear`), age in years (`age`), year of measurement (`year`) and lay date (`laydate`).
+<!-- year and byear are weirdly code --> 
+Each row of the data file corresponds to a single phenotypic observation. Here the data is sorted by identity and then age so that the repeated observations on individuals are apparent. However this is not a requirement for analysis - data could equally be sorted by some other variable (_e.g._, measurement year) or be in a random order.
+
+```{r, echo=FALSE}
+gryphonRM <- read.csv("data/gryphonRM.csv")
+gryphonRM$animal <- as.factor(gryphonRM$animal)
+gryphonRM$byear <- as.factor(gryphonRM$byear)
+gryphonRM$age <- as.factor(gryphonRM$age)
+gryphonRM$year <- as.factor(gryphonRM$year)
+gryphonRM$laydate <- as.numeric(gryphonRM$laydate)
+```
+
+```{r}
+str(gryphonRM)
+summary(gryphonRM)
+head(gryphonRM)
+```
+
+<!-- I don't think we need the pedigree anymore -->

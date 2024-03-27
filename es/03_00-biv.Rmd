@@ -1,0 +1,36 @@
+# Multivariate animal model
+
+This tutorial will demonstrate how to run a multivariate animal model looking at birth weight and tarsus length of the phenomenal gryphons.
+
+## Scenario and data
+
+### Scenario
+
+Since natural selection rarely acts on single traits, to understand how birth weight might evolve in our population of gryphons, we may also want to think about possible covariance with other traits. If tarsus length at fledging is also under positive selection, what implications does it have for birth weight and vice versa? If the two traits are positively genetically correlated then this will facilitate evolution of larger size (since response of one trait will induce a positively correlated response in the other). If there is negative genetic covariance then this could act as an evolutionary constraint.
+
+Using multivariate models allows the estimation of parameters relating to each trait alone (_i.e._ $V_A$, $h^2$, etc), but also yields estimates of covariance components between traits. These include the (additive) genetic covariance $COV_A$ which is often rescaled to give the additive genetic correlation $r_A$. However, covariance can also arise through other random effects (_e.g._ maternal covariance) and these sources can also be explicitly modeled in a bivariate analysis.
+
+### gryphon files
+
+gryphonpedigree and phenotypic data files are the same as those used in tutorial 1 (_i.e_, `gryphonped.csv` and `gryphon.csv` respectively).
+
+Reading the data
+
+```{r, eval = FALSE}
+gryphon <- read.csv("data/gryphon.csv")
+gryphon$animal <- as.factor(gryphon$animal)
+gryphon$mother <- as.factor(gryphon$mother)
+gryphon$byear <- as.factor(gryphon$byear)
+gryphon$sex <- as.factor(gryphon$sex)
+gryphon$bwt <- as.numeric(gryphon$bwt)
+gryphon$tarsus <- as.numeric(gryphon$tarsus)
+```
+
+Reading the pedigree
+
+```{r, eval = FALSE}
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+```

@@ -1,0 +1,37 @@
+## brms
+```{r, echo=FALSE}
+gryphonRM <- read.csv("data/gryphonRM.csv")
+gryphonRM$animal <- as.factor(gryphonRM$animal)
+gryphonRM$byear <- as.factor(gryphonRM$byear)
+gryphonRM$age <- as.factor(gryphonRM$age)
+gryphonRM$year <- as.factor(gryphonRM$year)
+gryphonRM$laydate <- as.numeric(gryphonRM$laydate)
+gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped$id <- as.factor(gryphonped$id)
+gryphonped$father <- as.factor(gryphonped$father)
+gryphonped$mother <- as.factor(gryphonped$mother)
+```
+
+```{r, cache=TRUE, eval = FALSE}
+library(brms)
+
+Amat <- as.matrix(nadiv::makeA(gryphonped))
+gryphonRM$animal_pe <- gryphonRM$animal
+
+
+
+model_simple1.1 <- brm(
+  laydate ~ 1 + (1 | gr(animal, cov = Amat)) + (1 | animal_pe),
+  data = gryphonRM,
+  family = gaussian(),
+  data2 = list(Amat = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+
+summary(model_simple1.1)
+plot(model_simple1.1)
+```
+
+<!-- I get some errors messages need to be check I thin -->
+
+<!-- need to create the stucture of the document too -->
