@@ -1,15 +1,15 @@
 ## brms
 
 ```{r, echo = FALSE}
-source("../_params.r")
-gryphon <- read.csv("../data/gryphon.csv")
+source("_params.r")
+gryphon <- read.csv("data/gryphon.csv")
 gryphon$animal <- as.factor(gryphon$animal)
 gryphon$mother <- as.factor(gryphon$mother)
 gryphon$byear <- as.factor(gryphon$byear)
 gryphon$sex <- as.factor(gryphon$sex)
 gryphon$bwt <- as.numeric(gryphon$bwt)
 gryphon$tarsus <- as.numeric(gryphon$tarsus)
-gryphonped <- read.csv("../data/gryphonped.csv")
+gryphonped <- read.csv("data/gryphonped.csv")
 gryphonped$id <- as.factor(gryphonped$id)
 gryphonped$father <- as.factor(gryphonped$father)
 gryphonped$mother <- as.factor(gryphonped$mother)
@@ -40,14 +40,14 @@ brms_m2.1 <- brm(
   data2 = list(Amat = Amat),
   chains = 2, cores = 2, iter = 1000
 )
-save(brms_m2.1, file = "../data/brms_m2_1.rda")
+save(brms_m2.1, file = "data/brms_m2_1.rda")
 ```
 
 
 Again we have provided the data from one such run. It can be accessed using the code:
 
 ```{r}
-load("../data/brms_m2_1.rda")
+load("data/brms_m2_1.rda")
 summary(brms_m2.1)
 plot(brms_m2.1, ask = FALSE)
 VarCorr(brms_m2.1)
@@ -150,12 +150,12 @@ brms_m2.2 <- brm(
   chains = 2, cores = 2, iter = 1000
 )
 
-save(brms_m2.2, file = "../data/brms_m2_2.rda")
+save(brms_m2.2, file = "data/brms_m2_2.rda")
 ```
 
 Again we have provided the data from one such run. It can be accessed using the code:
 ```{r}
-load("../data/brms_m2_2.rda")
+load("data/brms_m2_2.rda")
 summary(brms_m2.2)
 plot(brms_m2.2, ask = FALSE)
 VarCorr(brms_m2.2)
@@ -244,12 +244,12 @@ brms_m2.3 <- brm(
   chains = 2, cores = 2, iter = 1000
 )
 
-save(brms_m2.3, file = "../data/brms_m2_3.rda")
+save(brms_m2.3, file = "data/brms_m2_3.rda")
 ```
 
 Again we have provided the data from one such run. It can be accessed using the code:
 ```{r}
-load("../data/brms_m2_3.rda")
+load("data/brms_m2_3.rda")
 summary(brms_m2.3)
 plot(brms_m2.3, ask = FALSE)
 VarCorr(brms_m2.3)
@@ -267,12 +267,12 @@ brms_m2.4 <- brm(
   data2 = list(Amat = Amat),
   chains = 2, cores = 2, iter = 1000
 )
-save(brms_m2.4, file = "../data/brms_m2_4.rda")
+save(brms_m2.4, file = "data/brms_m2_4.rda")
 ```
 
 Again we have provided the data from one such run. It can be accessed using the code:
 ```{r}
-load("../data/brms_m2_4.rda")
+load("data/brms_m2_4.rda")
 summary(brms_m2.4)
 plot(brms_m2.4, ask = FALSE)
 VarCorr(brms_m2.4)
@@ -396,13 +396,13 @@ brms_m2.5 <- brm(
   data2 = list(Amat = Amat),
   chains = 2, cores = 2, iter = 1000
 )
-save(brms_m2.5, file = "../data/brms_m2_5.rda")
+save(brms_m2.5, file = "data/brms_m2_5.rda")
 ```
 
 
 Again we have provided the data from one such run. It can be accessed using the code:
 ```{r}
-load("../data/brms_m2_5.rda")
+load("data/brms_m2_5.rda")
 summary(brms_m2.5)
 plot(brms_m2.5, ask = FALSE)
 VarCorr(brms_m2.5)

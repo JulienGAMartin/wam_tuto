@@ -1,15 +1,15 @@
 ## brms
 
 ```{r, echo=FALSE}
-source("../_params.r")
-gryphon <- read.csv("../data/gryphon.csv")
+source("_params.r")
+gryphon <- read.csv("data/gryphon.csv")
 gryphon$animal <- as.factor(gryphon$animal)
 gryphon$mother <- as.factor(gryphon$mother)
 gryphon$byear <- as.factor(gryphon$byear)
 gryphon$sex <- as.factor(gryphon$sex)
 gryphon$bwt <- as.numeric(gryphon$bwt)
 gryphon$tarsus <- as.numeric(gryphon$tarsus)
-gryphonped <- read.csv("../data/gryphonped.csv")
+gryphonped <- read.csv("data/gryphonped.csv")
 gryphonped$id <- as.factor(gryphonped$id)
 gryphonped$father <- as.factor(gryphonped$father)
 gryphonped$mother <- as.factor(gryphonped$mother)
@@ -48,7 +48,7 @@ brms_m1.1 <- brm(
   chains = 1, cores = 1, iter = 100
 )
 
-save(brms_m1.1, file = "../data/brms_m1_1.rda")
+save(brms_m1.1, file = "data/brms_m1_1.rda")
 ```
 
 
@@ -58,7 +58,7 @@ Two distinct plot can be produce to produce some diagnostics graphs `mcmc_plot`.
 Next,we examine (or directly using the model) the variance estimate and their distributions (via `summary` or plot). 
 
 ```{r}
-load("../data/brms_m1_1.rda")
+load("data/brms_m1_1.rda")
 plot(brms_m1.1)
 mcmc_plot(brms_m1.1, type = "acf")
 summary(brms_m1.1)
@@ -99,14 +99,14 @@ brms_m1.2 <- brm(
   chains = 2, cores = 2, iter = 1000
 )
 
-save(brms_m1.2, file = "../data/brms_m1_2.rda")
+save(brms_m1.2, file = "data/brms_m1_2.rda")
 ```
 
 To save time, the results of the calculation is stored in the spare file `brms_m1_2.rda"`. 
 We can assess the significance of `sex` as a fixed effect by examining its posterior distribution.
 
 ```{r}
-load("../data/brms_m1_2.rda")
+load("data/brms_m1_2.rda")
 summary(brms_m1.2)
 plot(brms_m1.2)
 mcmc_plot(brms_m1.2, type = "pairs")
@@ -152,14 +152,14 @@ brms_m1.3 <- brm(
   chains = 2, cores = 2, iter = 1000
 )
 
-save(brms_m1.3, file = "../data/brms_m1_3.rda")
+save(brms_m1.3, file = "data/brms_m1_3.rda")
 ```
 
 To save time, the results of the calculation is stored in the spare file `brms_m1_3.rda"`. 
 We can assess the significance of `sex` as a fixed effect by examining its posterior distribution.
 
 ```{r}
-load("../data/brms_m1_3.rda")
+load("data/brms_m1_3.rda")
 
 plot(brms_m1.3, ask = FALSE, N = 3)
 summary(brms_m1.3)$random
@@ -215,12 +215,12 @@ brms_m1.4 <- brm(
   chains = 2, cores = 2, iter = 1000
 )
 
-save(brms_m1.4, file = "../data/brms_m1_4.rda")
+save(brms_m1.4, file = "data/brms_m1_4.rda")
 ```
 
 To save time, the results of the calculation is stored in the spare file `brms_m1_4.rda"`. 
 ```{r}
-load("../data/brms_m1_4.rda")
+load("data/brms_m1_4.rda")
 summary(brms_m1.4)
 ```
 
@@ -239,13 +239,13 @@ brms_m1.5 <- brm(bf_m1.5,
   chains = 1, cores = 1, iter = 1000
 )
 
-save(brms_m1.5, file = "../data/brms_m1_5.rda")
+save(brms_m1.5, file = "data/brms_m1_5.rda")
 ```
 
 To save time, the results of the calculation is stored in the spare file `brms_m1_4.rda"`. 
 
 ```{r}
-load("../data/brms_m1_5.rda")
+load("data/brms_m1_5.rda")
 summary(brms_m1.5)
 #
 Var.table <- as_draws_df(brms_m1.5)

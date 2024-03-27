@@ -1,0 +1,22 @@
+# Préface {-}
+ TEST
+This book is a collection of tutorial from the excellent paper by [@wilson2010].
+Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.
+
+**However, this is still a work in progress.**
+
+::: {.callout-warning}
+Do not take anything in this manual as gospel.
+:::
+
+::: {.callout-note}
+The pdf is not available for the moment. We need to clean some plot code before making it available again
+:::
+
+### Contributeurs {-}
+
+List of people who contributed to update and extend tutorials:
+
+- Eric Postma updated the previous tutorial from asreml-r 3 to asreml-r 4
+- Julien Martin^[Univeristy of Ottawa, julien.martin@uottawa.ca] developed and maintains the site
+- Matthieu Videlier^[UQAM, videlier.mathieu@courrier.uqam.ca] added (and continues to add) more details in the document
