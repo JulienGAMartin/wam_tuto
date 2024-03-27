@@ -2,7 +2,9 @@ project:
   type: book
   resources:
     - .nojekyll
-#  pre-render: assets/_refs.r
+#  pre-render: _move-files.r
+  post-render: 
+    - _remove-files.r
 
 profile:
   default: en-US

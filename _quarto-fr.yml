@@ -32,41 +32,41 @@ book:
     right:
       - icon: flag
         menu:
-        - href: ../
+        - href: ../en/
           text: English
         - href: ../es/
           text: Espanol
 
   chapters:
     - index.qmd
-    - fr/01_intro.Rmd
+    - 01_intro.Rmd
     - part: Univariate model
       chapters:
-        - fr/02_00-univ.Rmd
-        - fr/02_01-univ_asreml.Rmd  
-        - fr/02_02-univ_gremlin.Rmd 
-#        - fr/02_03-univ_mcmcglmm.Rmd
-#        - fr/02_04-univ_brms.Rmd    
-#        - fr/02_05-univ_stan.Rmd    
+        - 02_00-univ.Rmd
+        - 02_01-univ_asreml.Rmd  
+        - 02_02-univ_gremlin.Rmd 
+#        - 02_03-univ_mcmcglmm.Rmd
+#        - 02_04-univ_brms.Rmd    
+#        - 02_05-univ_stan.Rmd    
 #    - part: Bivariate model
 #      chapters:
-#        - fr/03_00-biv.Rmd
-#        - fr/03_01-biv_asreml.Rmd   
-#        - fr/03_02-biv_gremlin.Rmd  
-#        - fr/03_03-biv_mcmcglmm.Rmd 
-#        - fr/03_04-biv_brms.Rmd     
-#        - fr/03_05-biv_stan.Rmd     
+#        - 03_00-biv.Rmd
+#        - 03_01-biv_asreml.Rmd   
+#        - 03_02-biv_gremlin.Rmd  
+#        - 03_03-biv_mcmcglmm.Rmd 
+#        - 03_04-biv_brms.Rmd     
+#        - 03_05-biv_stan.Rmd     
 #    - part : Model with repeated measures
 #      chapters: 
-#        - fr/04_00-rep.Rmd         
-#        - fr/04_01-rep_asreml.Rmd   
-#        - fr/04_02-rep_gremlin.Rmd  
-#        - fr/04_03-rep_mcmcglmm.Rmd 
-#        - fr/04_04-rep_brms.Rmd     
-#        - fr/04_05-rep_stan.Rmd     
-#    - fr/05_code_cheatsheet.Rmd
-    - fr/98_references.qmd
+#        - 04_00-rep.Rmd         
+#        - 04_01-rep_asreml.Rmd   
+#        - 04_02-rep_gremlin.Rmd  
+#        - 04_03-rep_mcmcglmm.Rmd 
+#        - 04_04-rep_brms.Rmd     
+#        - 04_05-rep_stan.Rmd     
+#    - 05_code_cheatsheet.Rmd
+    - 98_references.qmd
 ##  appendices:
-##    - fr/99_app_rep-lmer.Rmd
+##    - 99_app_rep-lmer.Rmd
 
 
