@@ -1,0 +1,71 @@
+project:
+  output-dir: docs
+
+lang: en-US
+
+book:
+  title: "How to fit an animal model"
+  subtitle: "An ecologist guide"
+  description: |
+    Tutorial on how to fit an animal model using multiple R packages.
+    Updated and extended tutorials from An ecologist guide to animal model [@wilson2010].
+  author: 
+    - Julien Martin
+    - Matthieu Videlier
+  page-footer:
+    left: |
+      By J Martin & M Videlier
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+#  cover-image: images/blue_dragon.jpg
+  navbar:
+    background: light
+    collapse-below: lg
+    title: "How to fit an animal model?"
+    left:
+      - text: Extra resources
+        menu:
+          - text: WamWiki
+            href: https://wildanimalmodels.org/
+          - text: Tutorials by P de Vilemereuil
+            href: https://devillemereuil.legtux.org/downloads/
+    right:
+      - icon: flag
+        menu:
+        - href: fr/
+          text: Français
+        - href: es/
+          text: Espanol
+
+  chapters:
+    - index.qmd
+    - en/01_intro.Rmd
+    - part: Univariate model
+      chapters:
+        - en/02_00-univ.Rmd
+        - en/02_01-univ_asreml.Rmd  
+        - en/02_02-univ_gremlin.Rmd 
+        - en/02_03-univ_mcmcglmm.Rmd
+        - en/02_04-univ_brms.Rmd    
+        - en/02_05-univ_stan.Rmd    
+    - part: Bivariate model
+      chapters:
+        - en/03_00-biv.Rmd
+        - en/03_01-biv_asreml.Rmd   
+        - en/03_02-biv_gremlin.Rmd  
+        - en/03_03-biv_mcmcglmm.Rmd 
+        - en/03_04-biv_brms.Rmd     
+        - en/03_05-biv_stan.Rmd     
+    - part : Model with repeated measures
+      chapters: 
+        - en/04_00-rep.Rmd         
+        - en/04_01-rep_asreml.Rmd   
+        - en/04_02-rep_gremlin.Rmd  
+        - en/04_03-rep_mcmcglmm.Rmd 
+        - en/04_04-rep_brms.Rmd     
+        - en/04_05-rep_stan.Rmd     
+    - en/05_code_cheatsheet.Rmd
+    - en/98_references.qmd
+#  appendices:
+#    - en/99_app_rep-lmer.Rmd
+

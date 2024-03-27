@@ -15,7 +15,7 @@ The pedigree file `gryphonped.csv` is that used in the preceding tutorials but w
 Each row of the data file corresponds to a single phenotypic observation. Here the data is sorted by identity and then age so that the repeated observations on individuals are apparent. However this is not a requirement for analysis - data could equally be sorted by some other variable (_e.g._, measurement year) or be in a random order.
 
 ```{r, echo=FALSE}
-gryphonRM <- read.csv("data/gryphonRM.csv")
+gryphonRM <- read.csv("../data/gryphonRM.csv")
 gryphonRM$animal <- as.factor(gryphonRM$animal)
 gryphonRM$byear <- as.factor(gryphonRM$byear)
 gryphonRM$age <- as.factor(gryphonRM$age)

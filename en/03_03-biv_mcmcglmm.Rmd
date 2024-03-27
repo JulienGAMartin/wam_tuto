@@ -1,15 +1,15 @@
 ## MCMCglmm
 
 ```{r, echo = FALSE, message=FALSE}
-source("_params.r")
-gryphon <- read.csv("data/gryphon.csv")
+source("../_params.r")
+gryphon <- read.csv("../data/gryphon.csv")
 gryphon$animal <- as.factor(gryphon$animal)
 gryphon$mother <- as.factor(gryphon$mother)
 gryphon$byear <- as.factor(gryphon$byear)
 gryphon$sex <- as.factor(gryphon$sex)
 gryphon$bwt <- as.numeric(gryphon$bwt)
 gryphon$tarsus <- as.numeric(gryphon$tarsus)
-gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped <- read.csv("../data/gryphonped.csv")
 gryphonped$id <- as.factor(gryphonped$id)
 gryphonped$father <- as.factor(gryphonped$father)
 gryphonped$mother <- as.factor(gryphonped$mother)
@@ -69,13 +69,13 @@ model2.1 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1,
   nitt = 130000, thin = 100, burnin = 30000,
   prior = prior2.1, verbose = FALSE
 )
-save(model2.1, file = "data/MCMCglmm_model2_1_LongRun.rda")
+save(model2.1, file = "../data/MCMCglmm_model2_1_LongRun.rda")
 ```
 
 However, this run might take as long as an hour. For the purpose of this tutorial we have provided an output for such a run. It can be obtained and manipulated as follows, assuming that the file `MCMCglmm_model2_1_LongRun.rda` is available at the specified location:
 
 ```{r}
-load(file = "data/MCMCglmm_model2_1_LongRun.rda")
+load(file = "../data/MCMCglmm_model2_1_LongRun.rda")
 autocorr.diag(model2.1$VCV)[, "traittarsus:traittarsus.animal"][2]
 ```
 
@@ -114,13 +114,13 @@ model2.2 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1 + trait:sex,
   nitt = 130000, thin = 100, burnin = 30000,
   prior = prior2.2, verbose = FALSE
 )
-save(model2.2, file = "data/MCMCglmm_model2_2_LongRun.rda")
+save(model2.2, file = "../data/MCMCglmm_model2_2_LongRun.rda")
 ```
 
 Again we have provided the data from one such run. It can be accessed using the code:
 
 ```{r}
-load(file = "data/MCMCglmm_model2_2_LongRun.rda")
+load(file = "../data/MCMCglmm_model2_2_LongRun.rda")
 summary(model2.2)
 autocorr(model2.2$VCV)[, , "traittarsus:traittarsus.animal"][3, 4]
 ```
@@ -171,13 +171,13 @@ model2.3 <- MCMCglmm(cbind(T1, T2) ~ trait - 1 + trait:sex,
   prior = prior2.2, verbose = FALSE, pr = TRUE,
 )
 
-save(model2.3, file = "data/MCMCglmm_model2_3_LongRun.rda")
+save(model2.3, file = "../data/MCMCglmm_model2_3_LongRun.rda")
 ```
 
 Again we have provided the data from one such run. It can be accessed using the code:
 
 ```{r}
-load(file = "data/MCMCglmm_model2_3_LongRun.rda")
+load(file = "../data/MCMCglmm_model2_3_LongRun.rda")
 summary(model2.3)
 autocorr(model2.3$VCV)[, , "traitT2:traitT1.animal"][3, 4]
 ```
@@ -253,13 +253,13 @@ model2.4 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1 + trait:sex,
   nitt = 130000, thin = 100, burnin = 30000,
   prior = prior2.3, verbose = FALSE, pr = TRUE,
 )
-save(model2.4, file = "data/MCMCglmm_model2_4_LongRun.rda")
+save(model2.4, file = "../data/MCMCglmm_model2_4_LongRun.rda")
 ```
 
 Again we have provided the data from one such run. It can be accessed using the code:
 
 ```{r}
-load(file = "data/MCMCglmm_model2_4_LongRun.rda")
+load(file = "../data/MCMCglmm_model2_4_LongRun.rda")
 summary(model2.4)
 autocorr(model2.4$VCV)
 ```
@@ -328,7 +328,7 @@ model2.5 <- MCMCglmm(cbind(T1, T2) ~ trait - 1 + trait:sex,
   prior = prior2.3, verbose = FALSE, pr = TRUE,
 )
 
-save(model2.5, file = "data/MCMCglmm_model2_5_LongRun.rda")
+save(model2.5, file = "../data/MCMCglmm_model2_5_LongRun.rda")
 ```
 
 <!--Issue with corgh structure at the residual level, no idea why since the structure us works perfectly  -->
@@ -336,7 +336,7 @@ save(model2.5, file = "data/MCMCglmm_model2_5_LongRun.rda")
 Again we have provided the data from one such run. It can be accessed using the code:
 
 ```{r}
-load(file = "data/MCMCglmm_model2_5_LongRun.rda")
+load(file = "../data/MCMCglmm_model2_5_LongRun.rda")
 summary(model2.5)
 autocorr(model2.5$VCV)
 ```
@@ -432,14 +432,14 @@ model.BivSex <- MCMCglmm(cbind(tarsus.1, tarsus.2) ~ trait - 1,
   prior = prior2.4, verbose = FALSE, pr = TRUE
 )
 
-save(model.BivSex, file = "data/MCMCglmm_model_BivSex_LongRun.rda")
+save(model.BivSex, file = "../data/MCMCglmm_model_BivSex_LongRun.rda")
 ```
 
 
 Again we have provided the data from one such run. It can be accessed using the code:
 
 ```{r}
-load(file = "data/MCMCglmm_model_BivSex_LongRun.rda")
+load(file = "../data/MCMCglmm_model_BivSex_LongRun.rda")
 summary(model.BivSex)
 autocorr(model.BivSex$VCV)
 ```
@@ -512,14 +512,14 @@ model.MultivSex <- MCMCglmm(cbind(tarsus.1, bwt.1, tarsus.2, bwt.2) ~ trait - 1,
   nitt = 130000, thin = 100, burnin = 30000,
   prior = prior2.5, verbose = FALSE, pr = TRUE
 )
-save(model.MultivSex, file = "data/MCMCglmm_model_MultivSex_LongRun.rda")
+save(model.MultivSex, file = "../data/MCMCglmm_model_MultivSex_LongRun.rda")
 ```
 
 
 Again we have provided the data from one such run. It can be accessed using the code:
 
 ```{r}
-load(file = "data/MCMCglmm_model_MultivSex_LongRun.rda")
+load(file = "../data/MCMCglmm_model_MultivSex_LongRun.rda")
 summary(model.MultivSex)
 autocorr(model.MultivSex$VCV)
 ```

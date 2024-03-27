@@ -1,7 +1,7 @@
 ## Asreml-R {#asreml-biv}
 
 ```{r, echo = FALSE, message=FALSE}
-gryphon <- read.csv("data/gryphon.csv")
+gryphon <- read.csv("../data/gryphon.csv")
 gryphon$animal <- as.factor(gryphon$animal)
 gryphon$mother <- as.factor(gryphon$mother)
 gryphon$byear <- as.factor(gryphon$byear)
@@ -9,7 +9,7 @@ gryphon$sex <- as.factor(gryphon$sex)
 gryphon$bwt <- as.numeric(gryphon$bwt)
 gryphon$tarsus <- as.numeric(gryphon$tarsus)
 
-gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped <- read.csv("../data/gryphonped.csv")
 gryphonped$id <- as.factor(gryphonped$id)
 gryphonped$father <- as.factor(gryphonped$father)
 gryphonped$mother <- as.factor(gryphonped$mother)

@@ -17,7 +17,7 @@ gryphonpedigree and phenotypic data files are the same as those used in tutorial
 Reading the data
 
 ```{r, eval = FALSE}
-gryphon <- read.csv("data/gryphon.csv")
+gryphon <- read.csv("../data/gryphon.csv")
 gryphon$animal <- as.factor(gryphon$animal)
 gryphon$mother <- as.factor(gryphon$mother)
 gryphon$byear <- as.factor(gryphon$byear)
@@ -29,7 +29,7 @@ gryphon$tarsus <- as.numeric(gryphon$tarsus)
 Reading the pedigree
 
 ```{r, eval = FALSE}
-gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped <- read.csv("../data/gryphonped.csv")
 gryphonped$id <- as.factor(gryphonped$id)
 gryphonped$father <- as.factor(gryphonped$father)
 gryphonped$mother <- as.factor(gryphonped$mother)

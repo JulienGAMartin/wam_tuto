@@ -14,7 +14,7 @@ The phenotype data, as well as additional factors and covariates that we may wis
 
 We can read the data file, using `read.csv()` which consider by default that `NA` is the symbol for missing values and that the first line of the file contains the column headers.
 ```{r, echo=FALSE}
-gryphon <- read.csv("data/gryphon.csv")
+gryphon <- read.csv("../data/gryphon.csv")
 ```
 
 
@@ -31,7 +31,7 @@ str(gryphon)
 
 Similarly we can read in the pedigree file, using `read.csv()` which consider by default that `NA` is the symbol for missing values and that the first line of the file contains the column headers.
 ```{r, echo=FALSE}
-gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped <- read.csv("../data/gryphonped.csv")
 str(gryphonped)
 ```
 

@@ -1,13 +1,13 @@
 ## Asreml-R
 
 ```{r, echo=FALSE}
-gryphonRM <- read.csv("data/gryphonRM.csv")
+gryphonRM <- read.csv("../data/gryphonRM.csv")
 gryphonRM$animal <- as.factor(gryphonRM$animal)
 gryphonRM$byear <- as.factor(gryphonRM$byear)
 gryphonRM$age <- as.factor(gryphonRM$age)
 gryphonRM$year <- as.factor(gryphonRM$year)
 gryphonRM$laydate <- as.numeric(gryphonRM$laydate)
-gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped <- read.csv("../data/gryphonped.csv")
 gryphonped$id <- as.factor(gryphonped$id)
 gryphonped$father <- as.factor(gryphonped$father)
 gryphonped$mother <- as.factor(gryphonped$mother)
@@ -110,7 +110,7 @@ Non-additive contributions to fixed among-individual differences are normally re
 
 To illustrate it, we first fit the animal model:
 ```{r}
-gryphonped <- read.csv("data/gryphonped.csv")
+gryphonped <- read.csv("../data/gryphonped.csv")
 gryphonped$id <- as.factor(gryphonped$id)
 gryphonped$father <- as.factor(gryphonped$father)
 gryphonped$mother <- as.factor(gryphonped$mother)
