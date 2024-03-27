@@ -65,7 +65,7 @@ book:
 #        - fr/04_04-rep_brms.Rmd     
 #        - fr/04_05-rep_stan.Rmd     
 #    - fr/05_code_cheatsheet.Rmd
-#    - fr/98_references.qmd
+    - fr/98_references.qmd
 ##  appendices:
 ##    - fr/99_app_rep-lmer.Rmd
 
