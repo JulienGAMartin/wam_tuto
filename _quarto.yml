@@ -78,7 +78,7 @@ book:
 #    - 99_app_rep-lmer.Rmd
 
 
-bibliography: [biblio/book.bib, biblio/packages.bib, biblio/grateful-refs.bib]
+bibliography: [biblio/book.bib, biblio/grateful-refs.bib]
 biblio-style: apalike
 csl: biblio/ecology.csl
 

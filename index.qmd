@@ -21,7 +21,7 @@ List of people who contributed to update and extend tutorials:
 - Julien Martin^[Univeristy of Ottawa, julien.martin@uottawa.ca] developed and maintains the site
 - Matthieu Videlier^[UQAM, videlier.mathieu@courrier.uqam.ca] added (and continues to add) more details in the document
 
-```{r, include=FALSE}
+```{r, eval = FALSE, include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
   .packages(), "bookdown", "knitr", "rmarkdown", "MCMCglmm", "asreml",
