@@ -1,6 +1,6 @@
 ## MCMCglmm
 
-```{r, echo=FALSE}
+```{r, include=FALSE}
 gryphonRM <- read.csv("data/gryphonRM.csv")
 gryphonRM$animal <- as.factor(gryphonRM$animal)
 gryphonRM$byear <- as.factor(gryphonRM$byear)

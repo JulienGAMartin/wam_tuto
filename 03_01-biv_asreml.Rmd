@@ -1,6 +1,6 @@
 ## Asreml-R {#asreml-biv}
 
-```{r, echo = FALSE, message=FALSE}
+```{r, include = FALSE}
 gryphon <- read.csv("data/gryphon.csv")
 gryphon$animal <- as.factor(gryphon$animal)
 gryphon$mother <- as.factor(gryphon$mother)
@@ -13,7 +13,6 @@ gryphonped <- read.csv("data/gryphonped.csv")
 gryphonped$id <- as.factor(gryphonped$id)
 gryphonped$father <- as.factor(gryphonped$father)
 gryphonped$mother <- as.factor(gryphonped$mother)
-gryphonped
 
 library(tidyverse)
 ```

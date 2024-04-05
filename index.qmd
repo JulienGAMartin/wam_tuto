@@ -13,7 +13,7 @@ Do not take anything in this manual as gospel.
 The pdf is not available for the moment. We need to clean some plot code before making it available again
 :::
 
-### Contributors {-}
+## Contributors {-}
 
 List of people who contributed to update and extend tutorials:
 
@@ -47,4 +47,11 @@ library(ggplot2)
 library(gridExtra)
 library(nadiv)
 ```
+
+
+## Citation
+
+
+Julien Martin & Mathieu Videlier ({{< meta year >}}). How to fit an Animal model? A guide for evolutionary ecologist using multiple R packages. Version: {{< meta version >}} ({{< meta date >}}). <https://doi.org/10.5281/zenodo.10891227>
+
 

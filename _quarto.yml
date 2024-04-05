@@ -9,8 +9,12 @@ execute:
   cache: true
   freeze: auto
 
+version: 1.0.0
+year: 2024
+
 book:
   google-analytics: G-LLHQEESR2L
+  doi: 10.5281/zenodo.10891227
   title: "How to fit an animal model"
   subtitle: "An ecologist guide"
   description: |
