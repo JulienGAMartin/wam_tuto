@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.553">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
@@ -396,38 +396,47 @@ window.Quarto = {
 <p>First we need to load the <code>asreml</code> library:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">asreml</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: Matrix</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Online License checked out Tue Mar 26 23:46:30 2024</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading ASReml-R version 4.2</code></pre>
+</div>
 </div>
 <p>To be able to fit an animal model, Asreml-r needs (the inverse of) the relationship matrix using the ainverse function:</p>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ainv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/ainverse.html">ainverse</a></span><span class="op">(</span><span class="va">gryphonped</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ainv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/ainverse.html">ainverse</a></span><span class="op">(</span><span class="va">gryphonped</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We are now ready to specify our first model:</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
 <span>  fixed <span class="op">=</span> <span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fu">vm</span><span class="op">(</span><span class="va">animal</span>, <span class="va">ainv</span><span class="op">)</span>,</span>
 <span>  residual <span class="op">=</span> <span class="op">~</span> <span class="fu">idv</span><span class="op">(</span><span class="va">units</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">gryphon</span>,</span>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 14:12:38
+<pre><code>ASReml Version 4.2 26/03/2024 23:46:30
           LogLik        Sigma2     DF     wall
- 1     -4128.454           1.0    853   14:12:38
- 2     -3284.272           1.0    853   14:12:38
- 3     -2354.992           1.0    853   14:12:39
- 4     -1710.357           1.0    853   14:12:39
- 5     -1363.555           1.0    853   14:12:39
- 6     -1263.516           1.0    853   14:12:39
- 7     -1247.854           1.0    853   14:12:39
- 8     -1247.185           1.0    853   14:12:39
- 9     -1247.183           1.0    853   14:12:39</code></pre>
+ 1     -4128.454           1.0    853   23:46:30
+ 2     -3284.272           1.0    853   23:46:30
+ 3     -2354.992           1.0    853   23:46:30
+ 4     -1710.357           1.0    853   23:46:30
+ 5     -1363.555           1.0    853   23:46:30
+ 6     -1263.516           1.0    853   23:46:30
+ 7     -1247.854           1.0    853   23:46:30
+ 8     -1247.185           1.0    853   23:46:30
+ 9     -1247.183           1.0    853   23:46:30</code></pre>
 </div>
 </div>
 <p>In this model, <code>bwt</code> is the response variable and the only fixed effect is the intercept, denoted as <code>1</code>. The only random effect we have fitted is <code>animal</code>, which will provide an estimate of <span class="math inline">\(V_A\)</span>. Our random <code>animal</code> effect is connected to the inverse related matrix <code>ainv</code> which integrate the relativeness or pedigree information.<br><code>data=</code> specifies the name of the dataframe that contains our variables. Finally, we inform <code><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml()</a></code> what to when it encounters <code>NA</code>s in either the dependent or predictor variables (in this case we choose to remove the records). If you use the argument “include” instead of “omit”, model will keep the NA. With x=“include”, the model will exchange <code>NA</code> with 0. Be careful you need to standardize your trait so the mean will be equal to 0, if not estimates (including covariance in multivariate models) could be strongly biased due to the the missing values considered as 0. y=“include” will exchange <code>NA</code> with a factor labeled <code>mv</code> which will be included in the sparse equation. For more details see Asreml-R manual.</p>
 <p>A note of the specification of the structure of the residuals: This simple univariate model will run fine without <code>residual=~idv(units)</code>. However, if you are going to use <code><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict()</a></code> to calculate the heritability (see below), without specifying the residuals in this way will result in a standard error for the heritability that is incorrect.</p>
 <p>Any model has assumption which need to be checked. The model can be plot which help visualizing the distribution of the model residual and check the different assumptions.</p>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="02_01-univ_asreml_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
@@ -437,7 +446,7 @@ window.Quarto = {
 </div>
 <p>To see the estimates for the variance components, we run:</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model1</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 component std.error  z.ratio bound %ch
 vm(animal, ainv)  3.395398 0.6349915 5.347154     P   0
@@ -451,7 +460,7 @@ units!R           1.000000        NA       NA     F   0</code></pre>
 <p>We can calculate the <span class="math inline">\(h^2\)</span> of birth weight from the components above since <span class="math inline">\(h^2 = V_A/V_P = V_A/(V_A+V_R)\)</span>. Thus according to this model, <span class="math inline">\(h^2\)</span> = 3.4 / (3.4 + 3.83) = 0.47.</p>
 <p>Alternatively we can use the <code><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict()</a></code> function to calculate <span class="math inline">\(h^2\)</span> and its standard error. <code><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict()</a></code>function has two structures, first the model used (here <code>model1</code>) and then the estimate name with its associated equation. The equation used different <code>V</code> and their associated numbers depend of the order of the different random and residual effects included in the model.</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Estimate         SE
 h2.bwt 0.4700163 0.07650881</code></pre>
@@ -461,7 +470,7 @@ h2.bwt 0.4700163 0.07650881</code></pre>
 <span class="header-section-number">2.0.3</span> Adding fixed effects</h3>
 <p>To add fixed effects to a univariate model, we simply modify the model statement. For example, we might know (or suspect) that birth weight is a sexually dimorphic trait and therefore fit in the model.</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
 <span>  fixed <span class="op">=</span> <span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">sex</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span> <span class="fu">vm</span><span class="op">(</span><span class="va">animal</span>, <span class="va">ainv</span><span class="op">)</span>,</span>
 <span>  residual <span class="op">=</span> <span class="op">~</span> <span class="fu">idv</span><span class="op">(</span><span class="va">units</span><span class="op">)</span>,</span>
@@ -469,34 +478,34 @@ h2.bwt 0.4700163 0.07650881</code></pre>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 14:12:40
+<pre><code>ASReml Version 4.2 26/03/2024 23:46:31
           LogLik        Sigma2     DF     wall
- 1     -3364.126           1.0    852   14:12:40
- 2     -2702.117           1.0    852   14:12:40
- 3     -1978.916           1.0    852   14:12:40
- 4     -1487.834           1.0    852   14:12:40
- 5     -1236.350           1.0    852   14:12:40
- 6     -1172.771           1.0    852   14:12:40
- 7     -1165.270           1.0    852   14:12:40
- 8     -1165.093           1.0    852   14:12:40
- 9     -1165.093           1.0    852   14:12:40</code></pre>
+ 1     -3364.126           1.0    852   23:46:32
+ 2     -2702.117           1.0    852   23:46:32
+ 3     -1978.916           1.0    852   23:46:32
+ 4     -1487.834           1.0    852   23:46:32
+ 5     -1236.350           1.0    852   23:46:32
+ 6     -1172.771           1.0    852   23:46:32
+ 7     -1165.270           1.0    852   23:46:32
+ 8     -1165.093           1.0    852   23:46:32
+ 9     -1165.093           1.0    852   23:46:32</code></pre>
 </div>
 </div>
 <p>Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:</p>
 <div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model2</span>, coef <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">coef.fixed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model2</span>, coef <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">coef.fixed</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            solution std error  z.ratio
 (Intercept) 6.058669 0.1718244 35.26082
 sex_1       0.000000        NA       NA
 sex_2       2.206996 0.1619974 13.62365</code></pre>
 </div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/asreml/man/wald.asreml.html">wald.asreml</a></span><span class="op">(</span><span class="va">model2</span>, ssType <span class="op">=</span> <span class="st">"conditional"</span>, denDF <span class="op">=</span> <span class="st">"numeric"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/asreml/man/wald.asreml.html">wald.asreml</a></span><span class="op">(</span><span class="va">model2</span>, ssType <span class="op">=</span> <span class="st">"conditional"</span>, denDF <span class="op">=</span> <span class="st">"numeric"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 14:32:37
+<pre><code>ASReml Version 4.2 26/03/2024 23:46:32
           LogLik        Sigma2     DF     wall
- 1     -1165.093           1.0    852   14:32:37
- 2     -1165.093           1.0    852   14:32:37</code></pre>
+ 1     -1165.093           1.0    852   23:46:32
+ 2     -1165.093           1.0    852   23:46:32</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Wald
@@ -516,7 +525,7 @@ units!units       99.71524 2.938413        0.0000000           1</code></pre>
 </div>
 <p>The very small probability (<code>Pr</code>) in the Wald test above shows that <code>sex</code> is a highly significant fixed effect, and from the parameter estimates (<code>summary(model2,coef=T)$coef.fixed</code>) we can see that the average male (sex 2) is 2.2 kg (<span class="math inline">\(\pm\)</span> 0.16 SE) heavier than the average female (sex 1). However, when we look at the variance components in the model including <code>sex</code> as a fixed effect, we see that they have changed slightly from the previous model:</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model2</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model2</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 component std.error  z.ratio bound %ch
 vm(animal, ainv)  3.060441 0.5243571 5.836558     P   0
@@ -526,12 +535,12 @@ units!R           1.000000        NA       NA     F   0</code></pre>
 </div>
 <p>In fact since <code>sex</code> effects were previously contributing to the residual variance of the model, our estimate of <span class="math inline">\(V_R\)</span> (denoted <code>units!R</code> in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate <span class="math inline">\(V_P\)</span> as <span class="math inline">\(V_A\)</span>+<span class="math inline">\(V_R\)</span> then as we include fixed effects we will soak up more residual variance driving <span class="math inline">\(V_P\)</span>. Assuming that <span class="math inline">\(V_A\)</span> is more or less unaffected by the fixed effects fitted then as <span class="math inline">\(V_P\)</span> goes down we expect our estimate of <span class="math inline">\(h^2\)</span> will go up:</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model1</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Estimate         SE
 h2.bwt 0.4700163 0.07650881</code></pre>
 </div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model2</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model2</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Estimate         SE
 h2.bwt 0.510171 0.07432388</code></pre>
@@ -543,7 +552,7 @@ h2.bwt 0.510171 0.07432388</code></pre>
 <span class="header-section-number">2.0.4</span> Adding random effects</h3>
 <p>This is done by simply modifying the model statement in the same way. For instance fitting:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
 <span>  fixed <span class="op">=</span> <span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">sex</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span> <span class="fu">vm</span><span class="op">(</span><span class="va">animal</span>, <span class="va">ainv</span><span class="op">)</span> <span class="op">+</span> <span class="va">byear</span>,</span>
 <span>  residual <span class="op">=</span> <span class="op">~</span> <span class="fu">idv</span><span class="op">(</span><span class="va">units</span><span class="op">)</span>,</span>
@@ -551,19 +560,19 @@ h2.bwt 0.510171 0.07432388</code></pre>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 14:32:37
+<pre><code>ASReml Version 4.2 26/03/2024 23:46:32
           LogLik        Sigma2     DF     wall
- 1     -2742.658           1.0    852   14:32:38
- 2     -2237.268           1.0    852   14:32:38
- 3     -1690.453           1.0    852   14:32:38
- 4     -1328.910           1.0    852   14:32:38
- 5     -1154.597           1.0    852   14:32:38
- 6     -1116.992           1.0    852   14:32:38
- 7     -1113.809           1.0    852   14:32:38
- 8     -1113.772           1.0    852   14:32:38
- 9     -1113.772           1.0    852   14:32:38</code></pre>
+ 1     -2742.658           1.0    852   23:46:32
+ 2     -2237.268           1.0    852   23:46:32
+ 3     -1690.453           1.0    852   23:46:32
+ 4     -1328.910           1.0    852   23:46:32
+ 5     -1154.597           1.0    852   23:46:32
+ 6     -1116.992           1.0    852   23:46:32
+ 7     -1113.809           1.0    852   23:46:32
+ 8     -1113.772           1.0    852   23:46:32
+ 9     -1113.772           1.0    852   23:46:32</code></pre>
 </div>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model3</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model3</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 component std.error  z.ratio bound %ch
 byear            0.8862604 0.2695918 3.287416     P   0
@@ -571,7 +580,7 @@ vm(animal, ainv) 2.7068665 0.4422140 6.121169     P   0
 units!units      2.3092415 0.3451025 6.691466     P   0
 units!R          1.0000000        NA       NA     F   0</code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model3</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V2</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">+</span> <span class="va">V3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model3</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V2</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">+</span> <span class="va">V3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Estimate         SE
 h2.bwt 0.4586068 0.06740364</code></pre>
@@ -580,7 +589,7 @@ h2.bwt 0.4586068 0.06740364</code></pre>
 <p>Here the variance in <code>bwt</code> explained by <code>byear</code> is 0.89 and, based on the <code>z.ratio</code>, appears to be significant (&gt;2). Thus we would conclude that year-to-year variation (<em>e.g.</em>, in weather, resource abundance) contributes to <span class="math inline">\(V_P\)</span>. Note that although <span class="math inline">\(V_A\)</span> has changed somewhat, as most of what is now partitioned as a birth year effect was previously partitioned as <span class="math inline">\(V_R\)</span>. Thus what we have really done here is to partition environmental effects into those arising from year-to-year differences versus everything else, and we do not really expect much change in <span class="math inline">\(h^2\)</span> (since now <span class="math inline">\(h^2 = V_A/ (V_A+V_{BY}+V_R)\)</span>).</p>
 <p>However, we get a somewhat different result if we also add a random effect of <code>mother</code> to test for maternal effects:</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
 <span>  fixed <span class="op">=</span> <span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">sex</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span> <span class="fu">vm</span><span class="op">(</span><span class="va">animal</span>, <span class="va">ainv</span><span class="op">)</span> <span class="op">+</span> <span class="va">byear</span> <span class="op">+</span> <span class="va">mother</span>,</span>
 <span>  residual <span class="op">=</span> <span class="op">~</span> <span class="fu">idv</span><span class="op">(</span><span class="va">units</span><span class="op">)</span>,</span>
@@ -588,18 +597,18 @@ h2.bwt 0.4586068 0.06740364</code></pre>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 14:32:38
+<pre><code>ASReml Version 4.2 26/03/2024 23:46:32
           LogLik        Sigma2     DF     wall
- 1     -2033.178           1.0    852   14:32:38
- 2     -1723.734           1.0    852   14:32:38
- 3     -1396.354           1.0    852   14:32:38
- 4     -1193.012           1.0    852   14:32:38
- 5     -1107.946           1.0    852   14:32:38
- 6     -1095.327           1.0    852   14:32:38
- 7     -1094.816           1.0    852   14:32:38
- 8     -1094.815           1.0    852   14:32:38</code></pre>
+ 1     -2033.178           1.0    852   23:46:32
+ 2     -1723.734           1.0    852   23:46:32
+ 3     -1396.354           1.0    852   23:46:32
+ 4     -1193.012           1.0    852   23:46:32
+ 5     -1107.946           1.0    852   23:46:32
+ 6     -1095.327           1.0    852   23:46:32
+ 7     -1094.816           1.0    852   23:46:32
+ 8     -1094.815           1.0    852   23:46:32</code></pre>
 </div>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model4</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model4</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 component std.error  z.ratio bound %ch
 byear            0.8820313 0.2632455 3.350604     P   0
@@ -608,7 +617,7 @@ vm(animal, ainv) 2.2985320 0.4962496 4.631806     P   0
 units!units      1.6290034 0.3714154 4.385934     P   0
 units!R          1.0000000        NA       NA     F   0</code></pre>
 </div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model4</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">+</span> <span class="va">V3</span> <span class="op">+</span> <span class="va">V4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model4</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V1</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">+</span> <span class="va">V3</span> <span class="op">+</span> <span class="va">V4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Estimate         SE
 h2.bwt 0.1487898 0.03861552</code></pre>
@@ -620,14 +629,14 @@ h2.bwt 0.1487898 0.03861552</code></pre>
 <p>An important point to note in this tutorial is that while the <code>z.ratio</code> (<code>component</code>/<code>std.error</code>) reported is a good indicator of likely statistical significance (&gt;1.96?), the standard errors are approximate and are not recommended for formal hypothesis testing. A better approach is to use likelihood-ratio tests (LRT).</p>
 <p>For example, to test the significance of maternal effects we could compare models with and without the inclusion of maternal identity as a random effect and compare the final log-likelihoods of these models.</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model4</span><span class="op">$</span><span class="va">loglik</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model4</span><span class="op">$</span><span class="va">loglik</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1094.815</code></pre>
 </div>
 </div>
 <p>shows that the model including maternal identity has a log-likelihood of -1094.815, and</p>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3</span><span class="op">$</span><span class="va">loglik</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3</span><span class="op">$</span><span class="va">loglik</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1113.772</code></pre>
 </div>
@@ -635,7 +644,7 @@ h2.bwt 0.1487898 0.03861552</code></pre>
 <p>shows that the model excluding maternal identity has a log-likelihood of -1113.772.</p>
 <p>A test statistic equal to twice the absolute difference in these log-likelihoods is assumed to be distributed as Chi square with <code>one</code> degree of freedom (one term of difference between the two models). In this case we would conclude that the maternal effects are highly significant since: 2 <span class="math inline">\(\times\)</span> (-1094.8145793 - -1113.7719147) equals 37.9146708, and the p-value that comes with this is:</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="va">model4</span><span class="op">$</span><span class="va">loglik</span> <span class="op">-</span> <span class="va">model3</span><span class="op">$</span><span class="va">loglik</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="va">model4</span><span class="op">$</span><span class="va">loglik</span> <span class="op">-</span> <span class="va">model3</span><span class="op">$</span><span class="va">loglik</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.390738e-10</code></pre>
 </div>
@@ -647,11 +656,11 @@ h2.bwt 0.1487898 0.03861552</code></pre>
 <p>As example, we decide to take the model4 and partition its additive genetic variance and residual variance by sex. It is possible to further partition the other random effects but it will complexity the animal model and requires sufficient sample size.</p>
 <p>First, it required to order the dataset by group (here sex).</p>
 <div class="cell">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gryphon</span> <span class="op">&lt;-</span> <span class="va">gryphon</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">gryphon</span><span class="op">$</span><span class="va">sex</span><span class="op">)</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gryphon</span> <span class="op">&lt;-</span> <span class="va">gryphon</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">gryphon</span><span class="op">$</span><span class="va">sex</span><span class="op">)</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To partition variances between sex, two distinct functions are require <code>at()</code> for the random level, and <code>dsum()</code> for the residual level:</p>
 <div class="cell">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_SEX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_SEX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
 <span>  fixed <span class="op">=</span> <span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">sex</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span> <span class="fu">at</span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">:</span><span class="fu">vm</span><span class="op">(</span><span class="va">animal</span>, <span class="va">ainv</span><span class="op">)</span> <span class="op">+</span> <span class="va">byear</span> <span class="op">+</span> <span class="va">mother</span>,</span>
 <span>  residual <span class="op">=</span> <span class="op">~</span> <span class="fu">dsum</span><span class="op">(</span><span class="op">~</span> <span class="va">units</span> <span class="op">|</span> <span class="va">sex</span><span class="op">)</span>,</span>
@@ -659,16 +668,16 @@ h2.bwt 0.1487898 0.03861552</code></pre>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 14:32:38
+<pre><code>ASReml Version 4.2 26/03/2024 23:46:32
           LogLik        Sigma2     DF     wall
- 1     -1142.164           1.0    852   14:32:38
- 2     -1126.308           1.0    852   14:32:38
- 3     -1111.536           1.0    852   14:32:38
- 4     -1105.383           1.0    852   14:32:38
- 5     -1104.375           1.0    852   14:32:38
- 6     -1104.364           1.0    852   14:32:38</code></pre>
+ 1     -1142.164           1.0    852   23:46:32
+ 2     -1126.308           1.0    852   23:46:32
+ 3     -1111.536           1.0    852   23:46:32
+ 4     -1105.383           1.0    852   23:46:32
+ 5     -1104.375           1.0    852   23:46:32
+ 6     -1104.364           1.0    852   23:46:32</code></pre>
 </div>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_SEX</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model_SEX</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                              component std.error  z.ratio bound %ch
 byear                         0.9001595 0.2690012 3.346303     P 0.0
@@ -681,12 +690,12 @@ sex_2!R                       1.7112948 0.8246188 2.075256     P 0.3</code></pre
 </div>
 <p>By partitioning the additive genetic variance and the residual variance, the model estimates the <span class="math inline">\(V_A\)</span> and <span class="math inline">\(V_R\)</span> for each group (sex). Doing so, we can calculate the <span class="math inline">\(h^2\)</span> for each group of sex. Here, it’s important to know in which order the variances are estimated to extract the correct variance in the heritability equation.</p>
 <div class="cell">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.F</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model_SEX</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V3</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">+</span> <span class="va">V3</span> <span class="op">+</span> <span class="va">V5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.F</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model_SEX</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V3</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">+</span> <span class="va">V3</span> <span class="op">+</span> <span class="va">V5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Estimate        SE
 h2.bwt 0.2457811 0.1070794</code></pre>
 </div>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model_SEX</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V4</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">+</span> <span class="va">V4</span> <span class="op">+</span> <span class="va">V6</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">h2.M</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/vpredict.html">vpredict</a></span><span class="op">(</span><span class="va">model_SEX</span>, <span class="va">h2.bwt</span> <span class="op">~</span> <span class="va">V4</span> <span class="op">/</span> <span class="op">(</span><span class="va">V1</span> <span class="op">+</span> <span class="va">V2</span> <span class="op">+</span> <span class="va">V4</span> <span class="op">+</span> <span class="va">V6</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Estimate        SE
 h2.bwt 0.3345244 0.1619218</code></pre>
@@ -694,22 +703,22 @@ h2.bwt 0.3345244 0.1619218</code></pre>
 </div>
 <p>To test if the variances are different between sexes, we can compare the model partitioned <code>model_SEX</code> and the previous model without the partitioning <code>model4</code> in a likelihood ratio test (LRT) with 2 degrees of freedom since models have two components of variance of difference.</p>
 <div class="cell">
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_SEX</span><span class="op">$</span><span class="va">loglik</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model_SEX</span><span class="op">$</span><span class="va">loglik</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1104.364</code></pre>
 </div>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model4</span><span class="op">$</span><span class="va">loglik</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model4</span><span class="op">$</span><span class="va">loglik</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1094.815</code></pre>
 </div>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="va">model_SEX</span><span class="op">$</span><span class="va">loglik</span> <span class="op">-</span> <span class="va">model4</span><span class="op">$</span><span class="va">loglik</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="va">model_SEX</span><span class="op">$</span><span class="va">loglik</span> <span class="op">-</span> <span class="va">model4</span><span class="op">$</span><span class="va">loglik</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
 </div>
 <p>Here, we can see the point estimates of <span class="math inline">\(h^2\)</span> seems to differ between sexes (0.25 and 0.33), but their SE overlaps. LRT give more information and showed that partitioning the variance and the residual between sexes did not improved the fit of the model and so their variance are not significantly different.</p>
 <div class="cell">
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h2.sex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">h2.F</span>, <span class="va">h2.M</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">h2.sex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">h2.F</span>, <span class="va">h2.M</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.95</span>, <span class="fl">1.05</span><span class="op">)</span> <span class="op">~</span> <span class="va">h2.sex</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.8</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1.5</span><span class="op">)</span>, , xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">""</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"blue"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">16</span>, <span class="fl">17</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">2</span>, yaxt <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/arrows.html">arrows</a></span><span class="op">(</span>y0 <span class="op">=</span> <span class="fl">0.95</span>, x0 <span class="op">=</span> <span class="va">h2.sex</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">h2.sex</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span>, y1 <span class="op">=</span> <span class="fl">0.95</span>, x1 <span class="op">=</span> <span class="va">h2.sex</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">h2.sex</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span>, code <span class="op">=</span> <span class="fl">3</span>, angle <span class="op">=</span> <span class="fl">90</span>, length <span class="op">=</span> <span class="fl">0</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -729,7 +738,7 @@ h2.bwt 0.3345244 0.1619218</code></pre>
 <p>To examine the boundary effect, we can explore an alternative model where the model allowed a unstructured parameter for the variance of interest or the entire variance matrix. For this example: we allowed the model to estimate any values (so allowing possible negative values of estimates) for the random and residual matrix.</p>
 <p>First, we create a temporary model <code>model.temp</code> with the exact structure to modify.</p>
 <div class="cell">
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
 <span>  fixed <span class="op">=</span> <span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span> <span class="fu">vm</span><span class="op">(</span><span class="va">animal</span>, <span class="va">ainv</span><span class="op">)</span> <span class="op">+</span> <span class="va">byear</span> <span class="op">+</span> <span class="va">mother</span>,</span>
 <span>  residual <span class="op">=</span> <span class="op">~</span> <span class="fu">idv</span><span class="op">(</span><span class="va">units</span><span class="op">)</span>,</span>
@@ -745,7 +754,7 @@ h2.bwt 0.3345244 0.1619218</code></pre>
 <p>The argument <code>start.values=T</code> allowed the <code>model.temp</code> to change its random parameters. We can create the two different matrices and specify which parameters will be modified. For this example we modified the G and the R matrix to fit all variance to be <code>U</code> unstructured. it is important to note for the R matrix the line <code>units!R</code> has to be fix to 1, so it will never change.</p>
 <p>The object G.temp and R.temp can be implemented in the following model as new parameters using the argument <code>R.param</code> and <code>G.param</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
 <span>  fixed <span class="op">=</span> <span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">sex</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span> <span class="fu">vm</span><span class="op">(</span><span class="va">animal</span>, <span class="va">ainv</span><span class="op">)</span> <span class="op">+</span> <span class="va">byear</span> <span class="op">+</span> <span class="va">mother</span>,</span>
 <span>  residual <span class="op">=</span> <span class="op">~</span> <span class="fu">idv</span><span class="op">(</span><span class="va">units</span><span class="op">)</span>,</span>
@@ -754,18 +763,18 @@ h2.bwt 0.3345244 0.1619218</code></pre>
 <span>  R.param <span class="op">=</span> <span class="va">R.temp</span>, G.param <span class="op">=</span> <span class="va">G.temp</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 14:32:39
+<pre><code>ASReml Version 4.2 26/03/2024 23:46:33
           LogLik        Sigma2     DF     wall
- 1     -2033.178           1.0    852   14:32:39
- 2     -1723.734           1.0    852   14:32:39
- 3     -1396.354           1.0    852   14:32:39
- 4     -1193.012           1.0    852   14:32:39
- 5     -1107.946           1.0    852   14:32:39
- 6     -1095.327           1.0    852   14:32:39
- 7     -1094.816           1.0    852   14:32:39
- 8     -1094.815           1.0    852   14:32:39</code></pre>
+ 1     -2033.178           1.0    852   23:46:33
+ 2     -1723.734           1.0    852   23:46:33
+ 3     -1396.354           1.0    852   23:46:33
+ 4     -1193.012           1.0    852   23:46:33
+ 5     -1107.946           1.0    852   23:46:33
+ 6     -1095.327           1.0    852   23:46:33
+ 7     -1094.816           1.0    852   23:46:33
+ 8     -1094.815           1.0    852   23:46:33</code></pre>
 </div>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model5</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model5</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 component std.error  z.ratio bound %ch
 byear            0.8820313 0.2632455 3.350604     U   0
@@ -781,7 +790,7 @@ units!R          1.0000000        NA       NA     F   0</code></pre>
 <p>Some research questions require to estimate the covariance between two random effects within a univariate model.To do so, we can use the argument <code>str</code>. As an example, we fit a model which estimate the covariance between the additive genetic variance and the mother variance. Both variances require to operate on the same level, thus <code>animal</code> and <code>mother</code> require to be associated to the pedigree information.</p>
 <p>The argument <code>str</code>has two components: first the equation term with the two random effects <code>~vm(animal,Ainv)+vm(mother, ainv)</code> and second the structural term <code>~us(2):id(number)</code>. Here within the structural term, we fit a 2x2 unstructured matrix <code>us(2)</code> which estimated the variance and the covariance between the random effects in the equation term. To successfully work, the structural term also requires the number of level identified within <code>id()</code>. Here a small tip, if you don’t know the number of level identified within id(), run the model with a random number. The model will not converge and a error message will appear like this one: <code>Size of direct product (4) does not conform with total size of included terms (2618)</code>. The error message can help you determine the required level within the <code>str</code> function, as here 2618 divide by 2. In addition, it is necessary the random effects</p>
 <div class="cell">
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.temp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model.temp2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
 <span>  fixed <span class="op">=</span> <span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">~</span> <span class="fu">vm</span><span class="op">(</span><span class="va">animal</span>, <span class="va">ainv</span><span class="op">)</span> <span class="op">+</span> <span class="fu">vm</span><span class="op">(</span><span class="va">mother</span>, <span class="va">ainv</span><span class="op">)</span>, <span class="op">~</span> <span class="fu">us</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">:</span><span class="fu">id</span><span class="op">(</span><span class="fl">1309</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="va">byear</span>,</span>
 <span>  residual <span class="op">=</span> <span class="op">~</span> <span class="fu">idv</span><span class="op">(</span><span class="va">units</span><span class="op">)</span>,</span>
@@ -1035,6 +1044,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/juliengamartin\.github\.io\/wam_tuto\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1069,7 +1096,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

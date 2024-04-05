@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.553">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
@@ -386,22 +386,11 @@ window.Quarto = {
   
 
 
-</header><div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: Matrix</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: coda</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: ape</code></pre>
-</div>
-</div>
-<section id="estimating-repeatability" class="level3" data-number="14.0.1"><h3 data-number="14.0.1" class="anchored" data-anchor-id="estimating-repeatability">
+</header><section id="estimating-repeatability" class="level3" data-number="14.0.1"><h3 data-number="14.0.1" class="anchored" data-anchor-id="estimating-repeatability">
 <span class="header-section-number">14.0.1</span> Estimating repeatability</h3>
 <p>With repeated measures on individuals it is often of interest to see how repeatable a trait is. We can estimate the repeatability of a trait as the proportion of phenotypic variance <span class="math inline">\(V_P\)</span> explained by individual variance <span class="math inline">\(V_{ind}\)</span>; <span class="math inline">\(R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)\)</span>. As you already know, bayesian modelisation requires prior. Here, we create a unformative prior with one estimate for the G matrix and one estimate for the Residual matrix, in addition <!-- C1 I dont know wht you calculate p.var if you dont use it in the prior --></p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
 <span><span class="va">prior3.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span><span class="op">)</span>, R <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  V <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  nu <span class="op">=</span> <span class="fl">0.002</span></span>
@@ -413,17 +402,18 @@ window.Quarto = {
 <span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  animal    units 
-11.40985 21.35961 </code></pre>
+11.27557 21.16771 </code></pre>
 </div>
 </div>
 <p>Note the use of the term <code>animal</code> as random allowed to partition the phenotypic variance <span class="math inline">\(V_P\)</span> into among individual variance <span class="math inline">\(V_{ind}\)</span> associated with <code>animal</code> and residual variance <span class="math inline">\(V_R\)</span> associated with <code>units</code>.</p>
-<p>Here then the repeatability of the <code>laydate</code> can be determined as: 22.36 (<em>i.e.</em>, as 11.41/(11.41 + 21.36)). Just a friendly remember, we work with Monte Carlo chain with model iteration, so the point estimate can be different (but very similar) each time you run the model.</p>
+<p>Here then the repeatability of the <code>laydate</code> can be determined as: 22.17 (<em>i.e.</em>, as 11.276/(11.276 + 21.168)). Just a friendly remember, we work with Monte Carlo chain with model iteration, so the point estimate can be different (but very similar) each time you run the model.</p>
 <p>Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding <code>age</code> into the model as a fixed effect.</p>
 <div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3.2</span> <span class="op">&lt;-</span> <span class="fu">MCMCglmm</span><span class="op">(</span><span class="va">laydate</span> <span class="op">~</span> <span class="va">age</span>,</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3.2</span> <span class="op">&lt;-</span> <span class="fu">MCMCglmm</span><span class="op">(</span><span class="va">laydate</span> <span class="op">~</span> <span class="va">age</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span><span class="va">animal</span>, data <span class="op">=</span> <span class="va">gryphonRM</span>,</span>
 <span>  prior <span class="op">=</span> <span class="va">prior3.1</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">Sol</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -437,59 +427,47 @@ window.Quarto = {
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="04_03-rep_mcmcglmm_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  animal    units 
-11.79746 16.60009 </code></pre>
+12.06557 16.47879 </code></pre>
 </div>
 </div>
-<p>The model assumption seems correct, so we can look at the different estimates. Note that the random effect structure has remained unchanged because we did not modified the prior <code>prior3.1</code>. The repeatability of <code>laydate</code>, after accounting for age effects, is now estimated as 22.36 (<em>i.e.</em>, as 11.41/(11.41 + 21.36)). Just as we saw when estimating <span class="math inline">\(h_2\)</span> in tutorial 1, the inclusion of fixed effects will alter the estimated effect size <!-- C3 effect size or just the variance estimate --> if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.</p>
+<p>The model assumption seems correct, so we can look at the different estimates. Note that the random effect structure has remained unchanged because we did not modified the prior <code>prior3.1</code>. The repeatability of <code>laydate</code>, after accounting for age effects, is now estimated as 22.17 (<em>i.e.</em>, as 11.276/(11.276 + 21.168)). Just as we saw when estimating <span class="math inline">\(h_2\)</span> in tutorial 1, the inclusion of fixed effects will alter the estimated effect size <!-- C3 effect size or just the variance estimate --> if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.</p>
 <div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">Sol</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="04_03-rep_mcmcglmm_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="04_03-rep_mcmcglmm_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">Sol</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">Sol</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)        age3        age4        age5        age6 
-  20.276388    2.348123    4.150375    6.104282    2.950628 </code></pre>
+  20.228762    2.582580    4.228445    6.107462    3.037460 </code></pre>
 </div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">HPDinterval</span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">Sol</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">HPDinterval</span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">Sol</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                lower     upper
-(Intercept) 19.752979 20.851099
-age3         1.922730  3.194310
-age4         3.612470  4.904197
-age5         5.459089  6.755977
-age6         2.473927  3.723890
+(Intercept) 19.756458 20.833641
+age3         1.896463  3.228363
+age4         3.573414  4.852338
+age5         5.443962  6.736376
+age6         2.545933  3.793747
 attr(,"Probability")
 [1] 0.95</code></pre>
 </div>
 </div>
 <p>Here age is modeled as a 5-level factor (specified using the function <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code> at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term. In addition, using <code>age</code> as continuous variable can help in saving some degree of freedom in the analysis.</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gryphonRM</span><span class="op">$</span><span class="va">age_c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">gryphonRM</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gryphonRM</span><span class="op">$</span><span class="va">age_c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">gryphonRM</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">model3.2_2</span> <span class="op">&lt;-</span> <span class="fu">MCMCglmm</span><span class="op">(</span><span class="va">laydate</span> <span class="op">~</span> <span class="va">age_c</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">age_c</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span><span class="va">animal</span>, data <span class="op">=</span> <span class="va">gryphonRM</span>,</span>
 <span>  prior <span class="op">=</span> <span class="va">prior3.1</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model3.2_2</span><span class="op">$</span><span class="va">Sol</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -497,29 +475,29 @@ attr(,"Probability")
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model3.2_2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model3.2_2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="04_03-rep_mcmcglmm_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.2_2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.2_2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  animal    units 
-11.97903 16.88767 </code></pre>
+11.78516 16.41881 </code></pre>
 </div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.2_2</span><span class="op">$</span><span class="va">Sol</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.2_2</span><span class="op">$</span><span class="va">Sol</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)       age_c  I(age_c^2) 
- 15.2638909   5.6766738  -0.7858449 </code></pre>
+ 15.0732890   5.5363778  -0.7823499 </code></pre>
 </div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">HPDinterval</span><span class="op">(</span><span class="va">model3.2_2</span><span class="op">$</span><span class="va">Sol</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">HPDinterval</span><span class="op">(</span><span class="va">model3.2_2</span><span class="op">$</span><span class="va">Sol</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 lower      upper
-(Intercept) 14.1932998 16.2497962
-age_c        4.7200356  6.2780791
-I(age_c^2)  -0.8986007 -0.6471141
+(Intercept) 13.9815893 16.0702462
+age_c        4.8411740  6.3412406
+I(age_c^2)  -0.9016996 -0.6572575
 attr(,"Probability")
 [1] 0.95</code></pre>
 </div>
@@ -529,7 +507,7 @@ attr(,"Probability")
 <p>Generally we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals. Non-additive contributions to fixed among-individual differences are normally referred to as <em>permanent environment effects</em>. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in <span class="math inline">\(V_A\)</span>.</p>
 <p>To illustrate it, we first fit the animal model:</p>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Ainv</span> <span class="op">&lt;-</span> <span class="fu">inverseA</span><span class="op">(</span><span class="va">gryphonped</span><span class="op">)</span><span class="op">$</span><span class="va">Ainv</span></span>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Ainv</span> <span class="op">&lt;-</span> <span class="fu">inverseA</span><span class="op">(</span><span class="va">gryphonped</span><span class="op">)</span><span class="op">$</span><span class="va">Ainv</span></span>
 <span><span class="va">model3.3</span> <span class="op">&lt;-</span> <span class="fu">MCMCglmm</span><span class="op">(</span><span class="va">laydate</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">age</span>,</span>
 <span>  random <span class="op">=</span> <span class="op">~</span><span class="va">animal</span>, ginv <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>animal <span class="op">=</span> <span class="va">Ainv</span><span class="op">)</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">gryphonRM</span>, prior <span class="op">=</span> <span class="va">prior3.1</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -537,20 +515,20 @@ attr(,"Probability")
 </div>
 <p>Variance components are almost unchanged if we compare the previous model:</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.3</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.3</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  animal    units 
-13.46756 16.55740 </code></pre>
+13.88073 16.61835 </code></pre>
 </div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  animal    units 
-11.79746 16.60009 </code></pre>
+12.06557 16.47879 </code></pre>
 </div>
 </div>
 <p>This suggests that most of the among-individual variance is – rightly or wrongly – being partitioned as <span class="math inline">\(V_A\)</span> here. In fact here the partition is wrong since the simulation included both additive genetic effects and additional fixed heterogeneity that was not associated with the pedigree structure (i.e.&nbsp;permanent environment effects). In order to o obtain an unbiased estimate of <span class="math inline">\(V_A\)</span>, we need to fit the individual identity twice in the model: once linked to the pedigree (genetic effect) and once not linked to the pedigree (permanent environment effect).To do so, we need to duplicate the variable containing the individual identity <code>animal</code> and give it a new name. In addition, the prior need to be modified to integrate a seconf random effect.An more appropriate estimate of <span class="math inline">\(V_A\)</span> is given by the model:</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gryphonRM</span><span class="op">$</span><span class="va">animal_pe</span> <span class="op">&lt;-</span> <span class="va">gryphonRM</span><span class="op">$</span><span class="va">animal</span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gryphonRM</span><span class="op">$</span><span class="va">animal_pe</span> <span class="op">&lt;-</span> <span class="va">gryphonRM</span><span class="op">$</span><span class="va">animal</span></span>
 <span><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
 <span><span class="va">prior3.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span>, G2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  V <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -563,29 +541,29 @@ attr(,"Probability")
 <span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   animal animal_pe     units 
- 5.708725  6.492178 16.568926 </code></pre>
+ 3.500474  7.577899 16.539407 </code></pre>
 </div>
 </div>
 <p>The estimate of<span class="math inline">\(V_A\)</span> is now much lower (reduced from 13.6735 to 5.1238) due to a proper separation in the additive and permanent environment effects. We can estimate <span class="math inline">\(h^2\)</span> and the repeatability from this model:</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3.4.VP</span> <span class="op">&lt;-</span> <span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal_pe"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"units"</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3.4.VP</span> <span class="op">&lt;-</span> <span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal_pe"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"units"</span><span class="op">]</span></span>
 <span><span class="va">model3.4.PE_VA</span> <span class="op">&lt;-</span> <span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal_pe"</span><span class="op">]</span></span>
 <span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.4.PE_VA</span> <span class="op">/</span> <span class="va">model3.4.VP</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     var1 
-0.4396455 </code></pre>
+0.4250901 </code></pre>
 </div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">/</span> <span class="va">model3.4.VP</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"animal"</span><span class="op">]</span> <span class="op">/</span> <span class="va">model3.4.VP</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     var1 
-0.1985305 </code></pre>
+0.1229688 </code></pre>
 </div>
 </div>
 </section><section id="adding-additional-effects-and-testing-significance" class="level3" data-number="14.0.3"><h3 data-number="14.0.3" class="anchored" data-anchor-id="adding-additional-effects-and-testing-significance">
 <span class="header-section-number">14.0.3</span> Adding additional effects and testing significance</h3>
 <p>Models of repeated measures can be extended to include other fixed or random effects. For example we can try including year of measurement (<code>year</code>) and birth year (<code>byear</code>) as other random effects.</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># p.var &lt;- var(gryphonRM$laydate, na.rm = TRUE)</span></span>
 <span><span class="va">prior3.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span>, G2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  V <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  nu <span class="op">=</span> <span class="fl">0.002</span></span>
@@ -602,20 +580,21 @@ attr(,"Probability")
 <span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.5</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     animal   animal_pe        year       byear       units 
-3.082058850 8.814855641 6.946010534 0.001246328 7.886700824 </code></pre>
+4.214827166 9.094013914 6.863855767 0.002860896 7.844281659 </code></pre>
 </div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">HPDinterval</span><span class="op">(</span><span class="va">model3.5</span><span class="op">$</span><span class="va">VCV</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">HPDinterval</span><span class="op">(</span><span class="va">model3.5</span><span class="op">$</span><span class="va">VCV</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                 lower     upper
-animal    1.0968279317  8.095715
-animal_pe 5.8107791955 12.674652
-year      4.3980609751 12.356271
-byear     0.0003357872  0.274908
-units     7.1785048379  8.417543
+<pre><code>                 lower      upper
+animal    1.8364038852  7.9560325
+animal_pe 5.4411251224 11.3866006
+year      4.7436521093 12.8796974
+byear     0.0002281004  0.2656322
+units     7.2322172604  8.6215165
 attr(,"Probability")
 [1] 0.95</code></pre>
 </div>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model3.5</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model3.5</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="04_03-rep_mcmcglmm_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
@@ -632,7 +611,7 @@ attr(,"Probability")
 <p>This model will return additional variance components corresponding to year of measurement effects and birth year of the female effects.</p>
 <p><span class="math inline">\(V_{byear}\)</span> is very low and its posterior distribution (via the function <code>HPDinterval</code> or <code>plot</code>) is very close to zero indicating its not significance. You have to remember bayesian model never estimate variable to 0 or passing zero, so you will never see a credible interval <code>CI</code> crossing zero for a variance. If you compared the DIC of model3.5 to a reduced model without <code>byear</code>, it should be very similar.</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prior3.5_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prior3.5_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>G1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>V <span class="op">=</span> <span class="fl">1</span>, nu <span class="op">=</span> <span class="fl">0.002</span><span class="op">)</span>, G2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>    V <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    nu <span class="op">=</span> <span class="fl">0.002</span></span>
@@ -648,15 +627,15 @@ attr(,"Probability")
 <span><span class="fu">posterior.mode</span><span class="op">(</span><span class="va">model3.5_2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   animal animal_pe      year     units 
- 4.198675  8.180703  7.723623  7.741817 </code></pre>
+ 4.416027  8.590906  7.528937  7.819615 </code></pre>
 </div>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3.5</span><span class="op">$</span><span class="va">DIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3.5</span><span class="op">$</span><span class="va">DIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8290.181</code></pre>
+<pre><code>[1] 8290.961</code></pre>
 </div>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3.5_2</span><span class="op">$</span><span class="va">DIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model3.5_2</span><span class="op">$</span><span class="va">DIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8290.038</code></pre>
+<pre><code>[1] 8290.354</code></pre>
 </div>
 </div>
 <p><code>year</code> effects could alternatively be included as fixed effects (try it!, you should be able to handle the new prior specification at this point). This will reduce <span class="math inline">\(V_R\)</span> and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.</p>
@@ -891,6 +870,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/juliengamartin\.github\.io\/wam_tuto\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -925,7 +922,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

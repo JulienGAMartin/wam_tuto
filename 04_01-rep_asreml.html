@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.553">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
@@ -393,7 +393,7 @@ window.Quarto = {
 <pre><code>Loading required package: Matrix</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Online License checked out Mon Mar 25 17:42:05 2024</code></pre>
+<pre><code>Online License checked out Wed Mar 27 00:03:57 2024</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading ASReml-R version 4.2</code></pre>
@@ -411,18 +411,18 @@ window.Quarto = {
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 17:42:05
+<pre><code>ASReml Version 4.2 27/03/2024 00:03:57
           LogLik        Sigma2     DF     wall
- 1     -10182.83           1.0   1606   17:42:05
- 2     -8266.097           1.0   1606   17:42:05
- 3     -6145.012           1.0   1606   17:42:05
- 4     -4651.572           1.0   1606   17:42:05
- 5     -3819.309           1.0   1606   17:42:05
- 6     -3554.215           1.0   1606   17:42:05
- 7     -3501.557           1.0   1606   17:42:05
- 8     -3497.576           1.0   1606   17:42:05
- 9     -3497.536           1.0   1606   17:42:05
-10     -3497.536           1.0   1606   17:42:05</code></pre>
+ 1     -10182.83           1.0   1606   00:03:57
+ 2     -8266.097           1.0   1606   00:03:57
+ 3     -6145.012           1.0   1606   00:03:57
+ 4     -4651.572           1.0   1606   00:03:57
+ 5     -3819.309           1.0   1606   00:03:57
+ 6     -3554.215           1.0   1606   00:03:57
+ 7     -3501.557           1.0   1606   00:03:57
+ 8     -3497.576           1.0   1606   00:03:57
+ 9     -3497.536           1.0   1606   00:03:57
+10     -3497.536           1.0   1606   00:03:57</code></pre>
 </div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">modelv</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -454,17 +454,17 @@ units!R       1.00000        NA        NA     F   0</code></pre>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 17:42:06
+<pre><code>ASReml Version 4.2 27/03/2024 00:03:59
           LogLik        Sigma2     DF     wall
- 1     -8402.968           1.0   1602   17:42:07
- 2     -6912.361           1.0   1602   17:42:07
- 3     -5274.379           1.0   1602   17:42:07
- 4     -4143.634           1.0   1602   17:42:07
- 5     -3541.895           1.0   1602   17:42:07
- 6     -3372.909           1.0   1602   17:42:07
- 7     -3347.670           1.0   1602   17:42:07
- 8     -3346.655           1.0   1602   17:42:07
- 9     -3346.652           1.0   1602   17:42:07</code></pre>
+ 1     -8402.968           1.0   1602   00:03:59
+ 2     -6912.361           1.0   1602   00:03:59
+ 3     -5274.379           1.0   1602   00:03:59
+ 4     -4143.634           1.0   1602   00:03:59
+ 5     -3541.895           1.0   1602   00:03:59
+ 6     -3372.909           1.0   1602   00:03:59
+ 7     -3347.670           1.0   1602   00:03:59
+ 8     -3346.655           1.0   1602   00:03:59
+ 9     -3346.652           1.0   1602   00:03:59</code></pre>
 </div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelw</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -488,10 +488,10 @@ age_6        3.132675 0.3371074  9.292811</code></pre>
 </div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/asreml/man/wald.asreml.html">wald.asreml</a></span><span class="op">(</span><span class="va">modelw</span>, ssType <span class="op">=</span> <span class="st">"conditional"</span>, denDF <span class="op">=</span> <span class="st">"numeric"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 17:42:07
+<pre><code>ASReml Version 4.2 27/03/2024 00:03:59
           LogLik        Sigma2     DF     wall
- 1     -3346.652           1.0   1602   17:42:07
- 2     -3346.652           1.0   1602   17:42:07</code></pre>
+ 1     -3346.652           1.0   1602   00:03:59
+ 2     -3346.652           1.0   1602   00:03:59</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Wald
@@ -531,17 +531,17 @@ units!units 1138.1601 16.37989 0.00000           1</code></pre>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 17:42:07
+<pre><code>ASReml Version 4.2 27/03/2024 00:03:59
           LogLik        Sigma2     DF     wall
- 1     -8751.390           1.0   1602   17:42:07
- 2     -7169.205           1.0   1602   17:42:07
- 3     -5427.604           1.0   1602   17:42:07
- 4     -4219.598           1.0   1602   17:42:07
- 5     -3569.815           1.0   1602   17:42:07
- 6     -3382.341           1.0   1602   17:42:07
- 7     -3352.867           1.0   1602   17:42:07
- 8     -3351.565           1.0   1602   17:42:07
- 9     -3351.560           1.0   1602   17:42:07</code></pre>
+ 1     -8751.390           1.0   1602   00:03:59
+ 2     -7169.205           1.0   1602   00:03:59
+ 3     -5427.604           1.0   1602   00:03:59
+ 4     -4219.598           1.0   1602   00:03:59
+ 5     -3569.815           1.0   1602   00:03:59
+ 6     -3382.341           1.0   1602   00:03:59
+ 7     -3352.867           1.0   1602   00:03:59
+ 8     -3351.565           1.0   1602   00:03:59
+ 9     -3351.560           1.0   1602   00:03:59</code></pre>
 </div>
 </div>
 <p>Variance components are almost unchanged if we compare the previous model:</p>
@@ -571,17 +571,17 @@ units!R       1.00000        NA       NA     F   0</code></pre>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 17:42:07
+<pre><code>ASReml Version 4.2 27/03/2024 00:03:59
           LogLik        Sigma2     DF     wall
- 1     -7731.394           1.0   1602   17:42:07
- 2     -6426.548           1.0   1602   17:42:07
- 3     -4997.252           1.0   1602   17:42:07
- 4     -4018.486           1.0   1602   17:42:07
- 5     -3504.988           1.0   1602   17:42:07
- 6     -3363.160           1.0   1602   17:42:07
- 7     -3341.611           1.0   1602   17:42:07
- 8     -3340.682           1.0   1602   17:42:07
- 9     -3340.679           1.0   1602   17:42:07</code></pre>
+ 1     -7731.394           1.0   1602   00:03:59
+ 2     -6426.548           1.0   1602   00:03:59
+ 3     -4997.252           1.0   1602   00:03:59
+ 4     -4018.486           1.0   1602   00:03:59
+ 5     -3504.988           1.0   1602   00:03:59
+ 6     -3363.160           1.0   1602   00:03:59
+ 7     -3341.611           1.0   1602   00:03:59
+ 8     -3340.682           1.0   1602   00:03:59
+ 9     -3340.679           1.0   1602   00:03:59</code></pre>
 </div>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modely</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -618,17 +618,17 @@ repeatability 0.4284108 0.02741602</code></pre>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 17:42:07
+<pre><code>ASReml Version 4.2 27/03/2024 00:04:00
           LogLik        Sigma2     DF     wall
- 1     -4650.748           1.0   1602   17:42:07
- 2     -4088.264           1.0   1602   17:42:07
- 3     -3494.147           1.0   1602   17:42:07
- 4     -3127.161           1.0   1602   17:42:07  (  1 restrained)
- 5     -2976.449           1.0   1602   17:42:07  (  1 restrained)
- 6     -2955.785           1.0   1602   17:42:07  (  1 restrained)
- 7     -2955.097           1.0   1602   17:42:07  (  1 restrained)
- 8     -2955.095           1.0   1602   17:42:07  (  1 restrained)
- 9     -2955.095           1.0   1602   17:42:07</code></pre>
+ 1     -4650.748           1.0   1602   00:04:00
+ 2     -4088.264           1.0   1602   00:04:00
+ 3     -3494.147           1.0   1602   00:04:00
+ 4     -3127.161           1.0   1602   00:04:00  (  1 restrained)
+ 5     -2976.449           1.0   1602   00:04:00  (  1 restrained)
+ 6     -2955.785           1.0   1602   00:04:00  (  1 restrained)
+ 7     -2955.097           1.0   1602   00:04:00  (  1 restrained)
+ 8     -2955.095           1.0   1602   00:04:00  (  1 restrained)
+ 9     -2955.095           1.0   1602   00:04:00</code></pre>
 </div>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelz</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -652,16 +652,16 @@ units!R          1.000000e+00        NA        NA     F   0</code></pre>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 17:42:07
+<pre><code>ASReml Version 4.2 27/03/2024 00:04:00
           LogLik        Sigma2     DF     wall
- 1     -4665.606           1.0   1602   17:42:07
- 2     -4097.928           1.0   1602   17:42:07
- 3     -3498.611           1.0   1602   17:42:07
- 4     -3128.789           1.0   1602   17:42:07
- 5     -2976.883           1.0   1602   17:42:08
- 6     -2955.806           1.0   1602   17:42:08
- 7     -2955.096           1.0   1602   17:42:08
- 8     -2955.095           1.0   1602   17:42:08</code></pre>
+ 1     -4665.606           1.0   1602   00:04:00
+ 2     -4097.928           1.0   1602   00:04:00
+ 3     -3498.611           1.0   1602   00:04:00
+ 4     -3128.789           1.0   1602   00:04:00
+ 5     -2976.883           1.0   1602   00:04:00
+ 6     -2955.806           1.0   1602   00:04:00
+ 7     -2955.096           1.0   1602   00:04:00
+ 8     -2955.095           1.0   1602   00:04:00</code></pre>
 </div>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelz_2</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -696,16 +696,16 @@ units!R           1.000000        NA        NA     F   0</code></pre>
 <span>  na.action <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/na.method.html">na.method</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"omit"</span>, y <span class="op">=</span> <span class="st">"omit"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 17:42:08
+<pre><code>ASReml Version 4.2 27/03/2024 00:04:00
           LogLik        Sigma2     DF     wall
- 1     -4623.985           1.0   1569   17:42:08
- 2     -4063.535           1.0   1569   17:42:08
- 3     -3471.618           1.0   1569   17:42:08
- 4     -3105.972           1.0   1569   17:42:08
- 5     -2955.436           1.0   1569   17:42:08
- 6     -2934.435           1.0   1569   17:42:08
- 7     -2933.721           1.0   1569   17:42:08
- 8     -2933.720           1.0   1569   17:42:08</code></pre>
+ 1     -4623.985           1.0   1569   00:04:00
+ 2     -4063.535           1.0   1569   00:04:00
+ 3     -3471.618           1.0   1569   00:04:00
+ 4     -3105.972           1.0   1569   00:04:00
+ 5     -2955.436           1.0   1569   00:04:00
+ 6     -2934.435           1.0   1569   00:04:00
+ 7     -2933.721           1.0   1569   00:04:00
+ 8     -2933.720           1.0   1569   00:04:00</code></pre>
 </div>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelz_3</span><span class="op">)</span><span class="op">$</span><span class="va">varcomp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -730,10 +730,10 @@ age_6        3.132675 0.3371074  9.292811</code></pre>
 </div>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/asreml/man/wald.asreml.html">wald.asreml</a></span><span class="op">(</span><span class="va">modelz_3</span>, ssType <span class="op">=</span> <span class="st">"conditional"</span>, denDF <span class="op">=</span> <span class="st">"numeric"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ASReml Version 4.2 25/03/2024 17:42:08
+<pre><code>ASReml Version 4.2 27/03/2024 00:04:00
           LogLik        Sigma2     DF     wall
- 1     -2933.720           1.0   1569   17:42:08
- 2     -2933.720           1.0   1569   17:42:08</code></pre>
+ 1     -2933.720           1.0   1569   00:04:00
+ 2     -2933.720           1.0   1569   00:04:00</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$Wald
@@ -990,6 +990,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/juliengamartin\.github\.io\/wam_tuto\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1024,7 +1042,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

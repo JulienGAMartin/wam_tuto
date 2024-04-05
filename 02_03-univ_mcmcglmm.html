@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.553">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
@@ -492,12 +492,12 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/autocorr.diag.html">autocorr.diag</a></span><span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                animal        units
-Lag 0     1.0000000000  1.000000000
-Lag 50    0.1723371074  0.136480466
-Lag 250  -0.0372623733 -0.040354498
-Lag 500   0.0008769229  0.022152642
-Lag 2500  0.0095595528 -0.004526327</code></pre>
+<pre><code>               animal        units
+Lag 0     1.000000000  1.000000000
+Lag 50    0.177297387  0.161914791
+Lag 250   0.036347677  0.018053510
+Lag 500   0.006185963 -0.018374809
+Lag 2500 -0.033635273  0.003313076</code></pre>
 </div>
 </div>
 <p>We will consider these levels of autocorrelation acceptable, at least for the purposes of this tutorial. Ideally, all samples of the posterior distribution should be independent, and the autocorrelation for all lag values greater than zero should be near zero. However, in practice this will not strictly be achievable for all analytic scenarios. Certainly the levels of autocorrelation observed here should not be tolerated in any formal analysis. Note that the validity of posterior distributions of any analysis should always be checked; however, for brevity we will not continue to be so consistently diligent throughout the rest of these tutorials. We can now proceed with confidence to recover some more information from these samples. We can obtain estimates of the additive genetic and residual variance by calculating the modes of the posterior distributions:</p>
@@ -505,7 +505,7 @@ Lag 2500  0.0095595528 -0.004526327</code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  animal    units 
-3.465095 3.626676 </code></pre>
+3.502718 3.802243 </code></pre>
 </div>
 </div>
 <p>We can obtain the Bayesian equivalent of confidence intervals by calculating the the values of the estimates that bound 95% (or any other proportion) of the posterior distributions:</p>
@@ -513,8 +513,8 @@ Lag 2500  0.0095595528 -0.004526327</code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          lower    upper
-animal 2.252398 4.732031
-units  2.785786 4.803362
+animal 2.332372 4.600807
+units  2.862082 4.845917
 attr(,"Probability")
 [1] 0.95</code></pre>
 </div>
@@ -537,12 +537,12 @@ attr(,"Probability")
 <span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.1</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  animal    units 
-3.465095 3.626676 </code></pre>
+3.502718 3.802243 </code></pre>
 </div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.1.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  animal    units 
-3.509940 3.855632 </code></pre>
+3.418848 3.536889 </code></pre>
 </div>
 </div>
 <p>and we can therefore conclude that the difference in the priors has little effect on the outcome of the analysis. This is typical for an analysis where lots of data are available relative to the complexity of the model, but is often not the case. In all cases, it is important to check the effect of priors on conclusions drawn from a model. In addition, you can also specify the prior with previous knowledge or expectation for the variance.</p>
@@ -556,12 +556,12 @@ attr(,"Probability")
 <span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     var1 
-0.4984591 </code></pre>
+0.4707961 </code></pre>
 </div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">posterior.heritability1.1</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         lower     upper
-var1 0.3163028 0.6134676
+var1 0.3264241 0.6013315
 attr(,"Probability")
 [1] 0.95</code></pre>
 </div>
@@ -592,23 +592,23 @@ attr(,"Probability")
  Thinning interval  = 50
  Sample size  = 1000 
 
- DIC: 3714.956 
+ DIC: 3715.037 
 
  G-structure:  ~animal
 
        post.mean l-95% CI u-95% CI eff.samp
-animal     3.087    1.993    4.039    802.6
+animal     3.111     2.14    4.063    625.8
 
  R-structure:  ~units
 
       post.mean l-95% CI u-95% CI eff.samp
-units     2.943    2.136    3.725    809.6
+units     2.929    2.145    3.721    600.9
 
  Location effects: bwt ~ sex 
 
             post.mean l-95% CI u-95% CI eff.samp  pMCMC    
-(Intercept)     6.052    5.728    6.384     1000 &lt;0.001 ***
-sex2            2.208    1.886    2.532     1000 &lt;0.001 ***
+(Intercept)     6.060    5.708    6.432    827.7 &lt;0.001 ***
+sex2            2.209    1.869    2.510   1000.0 &lt;0.001 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -618,12 +618,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.2</span><span class="op">$</span><span class="va">Sol</span><span class="op">[</span>, <span class="st">"sex2"</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    var1 
-2.225847 </code></pre>
+2.255376 </code></pre>
 </div>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">model1.2</span><span class="op">$</span><span class="va">Sol</span><span class="op">[</span>, <span class="st">"sex2"</span><span class="op">]</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        lower    upper
-var1 1.886235 2.531982
+<pre><code>       lower    upper
+var1 1.86922 2.509853
 attr(,"Probability")
 [1] 0.95</code></pre>
 </div>
@@ -633,7 +633,7 @@ attr(,"Probability")
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.2</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  animal    units 
-3.221192 3.033608 </code></pre>
+3.014656 2.937686 </code></pre>
 </div>
 </div>
 <p>In fact since sex effects were previously contributing to the residual variance of the model our estimate of <span class="math inline">\(V_R\)</span> (denoted ’units’ in the output) is now slightly lower than before. This has an important consequence for estimating heritability since if we calculate <span class="math inline">\(V_P\)</span> as <span class="math inline">\(V_A +V_R\)</span> then as we include fixed effects we will soak up more residual variance driving <span class="math inline">\(V_P\)</span> . Assuming that <span class="math inline">\(V_A\)</span> is more or less unaffected by the fixed effects fitted then as <span class="math inline">\(V_P\)</span> goes down we expect our estimate of <span class="math inline">\(h^2\)</span> will go up.</p>
@@ -643,12 +643,12 @@ attr(,"Probability")
 <span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     var1 
-0.5040383 </code></pre>
+0.5357333 </code></pre>
 </div>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">posterior.heritability1.2</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         lower     upper
-var1 0.3774852 0.6609091
+var1 0.3826369 0.6489712
 attr(,"Probability")
 [1] 0.95</code></pre>
 </div>
@@ -673,10 +673,10 @@ attr(,"Probability")
 <span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.3</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   animal     byear     units 
-2.6773832 0.8529618 2.2066583 </code></pre>
+2.6568795 0.7838767 2.2584410 </code></pre>
 </div>
 </div>
-<p>Here the variance in birth weight explained by birth year is 0.85. Note that although <span class="math inline">\(V_A\)</span> has changed somewhat, most of what is now partitioned as a <code>birth year</code> effect was previously partitioned as <span class="math inline">\(V_R\)</span> . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in <span class="math inline">\(h^2\)</span> (since now <span class="math inline">\(h^2 = V_A /(V_A + V_{BY} + V_R )\)</span>). However, we get a somewhat different result if we also add a random effect of <code>mother</code> to test for maternal effects:</p>
+<p>Here the variance in birth weight explained by birth year is 0.78. Note that although <span class="math inline">\(V_A\)</span> has changed somewhat, most of what is now partitioned as a <code>birth year</code> effect was previously partitioned as <span class="math inline">\(V_R\)</span> . Thus what we have really done here is to partition environmental effects into those arising from year to year differences versus everything else, and we do not really expect much change in <span class="math inline">\(h^2\)</span> (since now <span class="math inline">\(h^2 = V_A /(V_A + V_{BY} + V_R )\)</span>). However, we get a somewhat different result if we also add a random effect of <code>mother</code> to test for maternal effects:</p>
 <div class="cell">
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prior1.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  G <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
@@ -697,7 +697,7 @@ attr(,"Probability")
 <span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.4</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   animal     byear    mother     units 
-2.3174927 0.8779722 1.0668757 1.6818388 </code></pre>
+2.2916063 0.8920118 1.0675774 1.5931220 </code></pre>
 </div>
 </div>
 <p>Here partitioning of significant maternal variance has resulted in a further decrease in <span class="math inline">\(V_R\)</span> but also a decrease in <span class="math inline">\(V_A\)</span>. The latter is because maternal effects of the sort we simulated (fixed differences between mothers) will have the consequence of increasing similarity among maternal siblings. Consequently they can look very much like an additive genetic effects and if present, but unmodelled, represent a type of ‘common environment effect’ that can - and will- cause upward bias in <span class="math inline">\(V_A\)</span> and so <span class="math inline">\(h^2\)</span>. Let’s compare the estimates of heritability from each of models 1.2, 1.3 and 1.4:</p>
@@ -709,17 +709,17 @@ attr(,"Probability")
 <span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     var1 
-0.5040383 </code></pre>
+0.5357333 </code></pre>
 </div>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    var1 
-0.476195 </code></pre>
+<pre><code>     var1 
+0.4444471 </code></pre>
 </div>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     var1 
-0.4095803 </code></pre>
+0.3737181 </code></pre>
 </div>
 </div>
 </section><section id="testing-significance-of-variance-components" class="level3" data-number="4.0.7"><h3 data-number="4.0.7" class="anchored" data-anchor-id="testing-significance-of-variance-components">
@@ -728,11 +728,11 @@ attr(,"Probability")
 <div class="cell">
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1.3</span><span class="op">$</span><span class="va">DIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3547.695</code></pre>
+<pre><code>[1] 3546.712</code></pre>
 </div>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">model1.4</span><span class="op">$</span><span class="va">DIC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3322.135</code></pre>
+<pre><code>[1] 3304.746</code></pre>
 </div>
 </div>
 <p><code>model 1.4</code> has a much lower DIC value. Since the maternal effect term is the only difference between the models, we can consider the inclusion of this term statistically justifiable. We should note however that DIC has a large sampling variance and should probably only be calculated based on much longer MCMC runs.</p>
@@ -756,7 +756,7 @@ attr(,"Probability")
 <span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>sex1.animal sex2.animal       byear      mother  sex1.units  sex2.units 
-  0.9321506   2.5795457   0.8189535   1.3158246   2.3144897   1.3666491 </code></pre>
+  1.4285859   1.8340899   0.8460494   1.4449721   2.4399201   1.2969009 </code></pre>
 </div>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">posterior.heritability1.4.FEM</span> <span class="op">&lt;-</span> <span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"sex1.animal"</span><span class="op">]</span> <span class="op">/</span></span>
 <span>  <span class="op">(</span><span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"sex1.animal"</span><span class="op">]</span> <span class="op">+</span> <span class="va">model1.4.SEX</span><span class="op">$</span><span class="va">VCV</span><span class="op">[</span>, <span class="st">"byear"</span><span class="op">]</span> <span class="op">+</span></span>
@@ -768,24 +768,24 @@ attr(,"Probability")
 <span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.FEM</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     var1 
-0.2268393 </code></pre>
+0.2064279 </code></pre>
 </div>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.FEM</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          lower     upper
-var1 0.06124262 0.4416593
+var1 0.03291693 0.4299038
 attr(,"Probability")
 [1] 0.95</code></pre>
 </div>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/posterior.mode.html">posterior.mode</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.MAL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     var1 
-0.3847509 </code></pre>
+0.4248762 </code></pre>
 </div>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/HPDinterval.html">HPDinterval</a></span><span class="op">(</span><span class="va">posterior.heritability1.4.MAL</span>, <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         lower     upper
-var1 0.0578405 0.6043648
+<pre><code>          lower     upper
+var1 0.03956181 0.5804404
 attr(,"Probability")
 [1] 0.95</code></pre>
 </div>
@@ -1097,6 +1097,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/juliengamartin\.github\.io\/wam_tuto\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1131,7 +1149,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

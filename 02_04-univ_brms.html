@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.553">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
@@ -418,7 +418,7 @@ Attaching package: 'brms'</code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Amat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu">nadiv</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nadiv/man/makeA.html">makeA</a></span><span class="op">(</span><span class="va">gryphonped</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We are now ready to specify our first model: The structure of a <code>bmrs</code> model is similar to <code>lme4</code>, thus the random effect is added to the model with the term <code>(1 | gr(animal, cov = Amat)</code> which associate the id animal to the matrix of relativeness. In addition to the synthase of <code>lme4</code>, we includes other features or parameters within the models such as <code>chain</code> which represent the number of Markov chains (defaults to 4), <code>core</code> which represents the number of cores to use when executing the chains in parallel and <code>iter</code> which represents the number of total iterations per chain. For more parameters such as <code>thin</code> or <code>warmup/burnin</code>, you can read the Cran R page of the package (https://cran.r-project.org/web/packages/brms/brms.pdf)</p>
-<p><code>bmrs</code> is a Bayesian Multilevel Models using Stan, doing so we can apply a prior to the model to better shape the distribution of the different variances estimated by the model. Given that <code>bmrs</code> fit the model using a Bayesian approach via the software <code>stan</code>, we need to specify priors for the model. Default priors in <code>brms</code> work relatively well, however we strongly suggest to carefully select an adequate prior for your analysis. In this tutorial we will use the default priors. To get the prior used by default, we can use the <code><a href="https://paul-buerkner.github.io/brms/reference/get_prior.html">get_prior()</a></code> function.</p>
+<p><code>bmrs</code> is a Bayesian Multilevel Models using Stan, doing so we can apply a prior to the model to better shape the distribution of the different variances estimated by the model. Given that <code>bmrs</code> fit the model using a Bayesian approach via the software <code>stan</code>, we need to specify priors for the model. Default priors in <code>brms</code> work relatively well, however we strongly suggest to carefully select an adequate prior for your analysis. In this tutorial we will use the default priors. To get the prior used by default, we can use the <code><a href="https://paul-buerkner.github.io/brms/reference/default_prior.html">get_prior()</a></code> function.</p>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">brms_m1.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html">brm</a></span><span class="op">(</span></span>
 <span>  <span class="va">bwt</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/gr.html">gr</a></span><span class="op">(</span><span class="va">animal</span>, cov <span class="op">=</span> <span class="va">Amat</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -1272,6 +1272,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/juliengamartin\.github\.io\/wam_tuto\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1306,7 +1324,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
