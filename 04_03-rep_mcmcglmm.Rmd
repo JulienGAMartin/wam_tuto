@@ -47,10 +47,12 @@ model3.2 <- MCMCglmm(laydate ~ age,
   random = ~animal, data = gryphonRM,
   prior = prior3.1, verbose = FALSE
 )
+par(mar = c(1, 1, 1, 1))
 plot(model3.2$Sol)
 plot(model3.2$VCV)
 posterior.mode(model3.2$VCV)
 ```
+
 The model assumption seems correct, so we can look at the different estimates.
 Note that the random effect structure has remained unchanged because we did not modified the prior `prior3.1`. 
 The repeatability of `laydate`, after accounting for age effects, is now estimated as
@@ -62,8 +64,6 @@ if we determine total phenotypic variance as the sum of the variance components.
 
 
 ```{r}
-plot(model3.2$Sol)
-
 posterior.mode(model3.2$Sol)
 HPDinterval(model3.2$Sol, 0.95)
 ```
@@ -79,6 +79,7 @@ model3.2_2 <- MCMCglmm(laydate ~ age_c + I(age_c^2),
   random = ~animal, data = gryphonRM,
   prior = prior3.1, verbose = FALSE
 )
+par(mar = c(1, 1, 1, 1))
 plot(model3.2_2$Sol)
 plot(model3.2_2$VCV)
 posterior.mode(model3.2_2$VCV)
@@ -157,7 +158,7 @@ model3.5 <- MCMCglmm(laydate ~ 1 + age,
 )
 posterior.mode(model3.5$VCV)
 HPDinterval(model3.5$VCV, 0.95)
-
+par(mar = c(1, 1, 1, 1))
 plot(model3.5$VCV)
 ```
 

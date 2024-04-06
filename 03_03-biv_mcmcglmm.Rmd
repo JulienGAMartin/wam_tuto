@@ -153,12 +153,13 @@ HPDinterval(maternal.correlation2.2, 0.95)
 Neither or these posterior distributions overlaps zero, so we can consider them both statistically supported.
 
 
+<!-- models are utterly shitty with corg and I would not dare present them honestly
 
 ### Direct estimate of the correlation instead of the covariance.
 For this example, we just estimate the correlation at the genetic level, the covariance for the other random effect (`mother` and `byear`) and the residual level was not estimate to help the model to converge and compute faster. The prior will be the same but we change the `pr` argument to be `TRUE` to keep the posterior distribution of random effects.
 To simplify the following code and facilitate the BLUP extraction, we rename the variable T1 and T2 and estimate correlation only for the additive genetic and residual matrices.
 
-```{r, eval = params$fit_all}
+```{r, eval = params$fit_all, eval = FALSE, echo= FALSE}
 gryphon2$T1 <- gryphon2$bwt
 gryphon2$T2 <- gryphon2$tarsus
 #
@@ -176,7 +177,7 @@ save(model2.3, file = "data/MCMCglmm_model2_3_LongRun.rda")
 
 Again we have provided the data from one such run. It can be accessed using the code:
 
-```{r}
+```{r, eval = FALSE, echo= FALSE}
 load(file = "data/MCMCglmm_model2_3_LongRun.rda")
 summary(model2.3)
 autocorr(model2.3$VCV)[, , "traitT2:traitT1.animal"][3, 4]
@@ -184,7 +185,7 @@ autocorr(model2.3$VCV)[, , "traitT2:traitT1.animal"][3, 4]
 
 Here we can plot the genetic correlation by extraction the breeding values or BLUP. Just to remember it is an example, the correlation is close to 1 due to a weak prior and model parameters. 
 
-```{r}
+```{r, eval = FALSE, echo= FALSE}
 DvsS <- data.frame(
   Trait = colnames(model2.3$Sol),
   BLUP = posterior.mode(model2.3$Sol),
@@ -212,7 +213,7 @@ qqline(BLUPS$BLUP.tarsus)
 ```
 
 Here the code to plot the genetic correlation.
-```{r}
+```{r, eval = FALSE, echo= FALSE}
 plot(BLUP.tarsus ~ BLUP.btw, BLUPS, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white", ylim = c(-4, 4), xlim = c(-4, 4))
 arrows(x0 = BLUPS$BLUP.btw, y0 = BLUPS$CI.L.tarsus, x1 = BLUPS$BLUP.btw, y1 = BLUPS$CI.U.tarsus, col = "black", code = 3, angle = 90, length = 0)
 arrows(x0 = BLUPS$CI.L.btw, y0 = BLUPS$BLUP.tarsus, x1 = BLUPS$CI.U.btw, y1 = BLUPS$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
@@ -222,6 +223,7 @@ mtext("btw (BV±SE)", side = 1, line = 2.4)
 mtext("tarsus (BV±SE)", side = 2, line = 2, las = 3)
 ```
 
+-->
 
 
 ### Partitioning (co)variances
@@ -313,9 +315,12 @@ axis(2, at = 2, labels = c("residual"), las = 3, cex.axis = 1.6)
 These posterior distributions overlap between each other, which suggested the correlation were not significantly different between sexes. 
 
 
+<!--
+  Issue with corgh structure at the multiple level, no idea why since the structure us works perfectly 
+  I would skip that again
 
 By using `corgh`instead of `us`, we can extract the BLUPs and plot the sex-specific correlation.
-```{r, eval = params$fit_all}
+```{r, eval = params$fit_all, echo = FALSE}
 gryphon2$T1 <- gryphon2$bwt
 gryphon2$T2 <- gryphon2$tarsus
 #
@@ -331,18 +336,16 @@ model2.5 <- MCMCglmm(cbind(T1, T2) ~ trait - 1 + trait:sex,
 save(model2.5, file = "data/MCMCglmm_model2_5_LongRun.rda")
 ```
 
-<!--Issue with corgh structure at the residual level, no idea why since the structure us works perfectly  -->
-
 Again we have provided the data from one such run. It can be accessed using the code:
 
-```{r}
+```{r, eval = FALSE, echo= FALSE}
 load(file = "data/MCMCglmm_model2_5_LongRun.rda")
 summary(model2.5)
 autocorr(model2.5$VCV)
 ```
 
 Here the simple plot to plot the genetic correlation
-```{r}
+```{r, eval = FALSE, echo= FALSE}
 DvsS <- data.frame(
   Trait = colnames(model2.5$Sol),
   BLUP = posterior.mode(model2.5$Sol),
@@ -363,26 +366,22 @@ summary(BLUPS)
 #
 FEM <- subset(BLUPS, SEX == "1")
 MAL <- subset(BLUPS, SEX == "1")
-par(mfrow = c(2, 1))
+par(mfrow = c(2, 1), mar = c(4,4,1,1))
 
-plot(BLUP.tarsus ~ BLUP.btw, FEM, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white", ylim = c(-4, 4), xlim = c(-4, 4))
+plot(BLUP.tarsus ~ BLUP.btw, FEM, xlab = "btw (BV±CI)", ylab = "tarsus (BV±CI)", las = 1.2, bty = "o", col = "white", ylim = c(-4, 4), xlim = c(-4, 4))
 arrows(x0 = BLUPS$BLUP.btw, y0 = FEM$CI.L.tarsus, x1 = FEM$BLUP.btw, y1 = FEM$CI.U.tarsus, col = "black", code = 3, angle = 90, length = 0)
 arrows(x0 = BLUPS$CI.L.btw, y0 = FEM$BLUP.tarsus, x1 = FEM$CI.U.btw, y1 = FEM$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
 points(BLUP.tarsus ~ BLUP.btw, FEM, pch = 16, col = "red", cex = 1.5)
 points(BLUP.tarsus ~ BLUP.btw, FEM, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
-mtext("btw (BV±CI)", side = 1, line = 2.4)
-mtext("tarsus (BV±CI)", side = 2, line = 2, las = 3)
-#
-plot(BLUP.tarsus ~ BLUP.btw, MAL, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white", ylim = c(-4, 4), xlim = c(-4, 4))
+
+plot(BLUP.tarsus ~ BLUP.btw, MAL, xlab = "btw (BV±CI)", ylab = "tarsus (BV±CI)", las = 1.2, bty = "o", col = "white", ylim = c(-4, 4), xlim = c(-4, 4))
 arrows(x0 = BLUPS$BLUP.btw, y0 = MAL$CI.L.tarsus, x1 = MAL$BLUP.btw, y1 = MAL$CI.U.tarsus, col = "black", code = 3, angle = 90, length = 0)
 arrows(x0 = BLUPS$CI.L.btw, y0 = MAL$BLUP.tarsus, x1 = MAL$CI.U.btw, y1 = MAL$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
 points(BLUP.tarsus ~ BLUP.btw, MAL, pch = 17, col = "blue", cex = 1.5)
 points(BLUP.tarsus ~ BLUP.btw, MAL, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
-mtext("btw (BV±CI)", side = 1, line = 2.4)
-mtext("tarsus (BV±CI)", side = 2, line = 2, las = 3)
-#
-```
 
+```
+-->
 
 ### Between groups (co)variances and the B-matrix
 
