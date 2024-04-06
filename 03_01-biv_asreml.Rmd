@@ -110,6 +110,7 @@ vpredict(modelb, r_res ~ V12 / sqrt(V11 * V13))
 
 
 Now we can look at the fixed effects parameters and assess their significance with a conditional Wald F-test:
+
 ::: {.content-visible when-format="html"}
 ```{r, eval = TRUE}
 summary(modelb, coef = TRUE)$coef.fi
