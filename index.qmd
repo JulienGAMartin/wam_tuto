@@ -51,11 +51,11 @@ crop_fn <- function(author, overwrite = FALSE){
 
 ```
 
-::: {layout="[29, -1, 70]" }
+::: {layout="[25, -5, 70]" }
 ![](images/author/julien_circ.jpg){fig-align="center" width=100%}
 
 :::: {#sec-julien}
-**Julien Martin** is a Professor at the University of Ottawa working on Evolutionary Ecology and has discovered R with version 1.8.1 and teaches R since v2.4.0. He developed the first version of the book and now keeps adding more information and and maintains the site
+**Julien Martin** is a Professor at the University of Ottawa working on Evolutionary Ecology and has discovered R with version 1.8.1 and teaches R since v2.4.0. He developed the first version of the book in February 2021 and now continues to develop the book and maintains the site for all languages (currently only english but french and spanish comin soon).
 
 ::::: {.content-visible when-format="pdf"}
 - {{< fa bookmark >}}: uOttawa <https://www.uottawa.ca/faculty-science/professors/julien-martin/>, lab page <https://juliengamartin.github.io>
@@ -73,17 +73,18 @@ crop_fn <- function(author, overwrite = FALSE){
 :::
 
 
-::: {layout="[29, -1, 70]" }
+::: {layout="[25, -5, 70]" }
 ![](images/author/mathieu_circ.jpg){fig-align="center" width=100%}
 
 :::: {#sec-mathieu}
-**Mathieu Videlier** added (and continues to add) more details in the document
+**Mathieu Videlier** is currently a postdoctoral fellow collaborating with [Pr. Jacqueline Sztepanacz](https://sztepanacz.eeb.utoronto.ca) at University of Toronto.
+In joined the project in May 2021 . He added and continues to add more details in the document. He is also spearing the translation fo French and Spanish.
 
-<!--
-- {{< fa bookmark >}}: [uOttawa page](https://www.uottawa.ca/faculty-science/professors/julien-martin/), [lab page](https://juliengamartin.github.io)
-- {{< fa brands twitter >}}: [jgamartin](https://twitter.com/jgamartin)
-- {{< fa brands github >}}: [juliengamartin](https://github.com/juliengamartin)
--->
+
+- {{< fa bookmark >}}: [personal page](https://videliermath.weebly.com/)
+- {{< fa brands twitter >}}: [BioBipbip](https://twitter.com/BioBipbip)
+- {{< fa brands github >}}: [MathieuVID ](https://github.com/MathieuVID )
+
 
 ::::
 

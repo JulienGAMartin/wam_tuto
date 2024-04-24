@@ -23,7 +23,7 @@ book:
   cover-image: images/cover/cover_en.png
   author: 
     - Julien Martin
-    - Matthieu Videlier
+    - Mathieu Videlier
   date: today
   date-format: iso 
   reader-mode: true
@@ -59,24 +59,24 @@ book:
     - part: 02_00-univ.Rmd
       chapters:
         - 02_01-univ_asreml.Rmd  
-        - 02_02-univ_gremlin.Rmd 
+#        - 02_02-univ_gremlin.Rmd 
         - 02_03-univ_mcmcglmm.Rmd
         - 02_04-univ_brms.Rmd    
-        - 02_05-univ_stan.Rmd    
+#        - 02_05-univ_stan.Rmd    
     - part: 03_00-biv.Rmd          
       chapters:
         - 03_01-biv_asreml.Rmd   
-        - 03_02-biv_gremlin.Rmd  
+#        - 03_02-biv_gremlin.Rmd  
         - 03_03-biv_mcmcglmm.Rmd 
         - 03_04-biv_brms.Rmd     
-        - 03_05-biv_stan.Rmd     
+#        - 03_05-biv_stan.Rmd     
     - part : 04_00-rep.Rmd
       chapters:          
         - 04_01-rep_asreml.Rmd   
-        - 04_02-rep_gremlin.Rmd  
+#        - 04_02-rep_gremlin.Rmd  
         - 04_03-rep_mcmcglmm.Rmd 
         - 04_04-rep_brms.Rmd     
-        - 04_05-rep_stan.Rmd     
+#        - 04_05-rep_stan.Rmd     
     - 05_code_cheatsheet.Rmd
     - 98_references.qmd
 #  appendices:
