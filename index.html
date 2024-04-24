@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.5.30">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
-<meta name="dcterms.date" content="2024-04-05">
+<meta name="dcterms.date" content="2024-04-23">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
 <title>How to fit an animal model</title>
 <style>
@@ -60,7 +60,9 @@ div.csl-indent {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -126,9 +128,25 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 </li>
 </ul>
 </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools tools-wide">
+            <div class="quarto-navbar-tools tools-wide">
     <a href="https://github.com/juliengamartin/wam_tuto/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="./How-to-fit-an-animal-model.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+<li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="./How-to-fit-an-animal-model.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="./How-to-fit-an-animal-model.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+</div>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -307,8 +325,11 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 <li>
 <a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
   <ul class="collapse">
-<li><a href="#contributors" id="toc-contributors" class="nav-link" data-scroll-target="#contributors">Contributors</a></li>
-  <li><a href="#citation" id="toc-citation" class="nav-link" data-scroll-target="#citation">Citation</a></li>
+<li><a href="#citing-the-book" id="toc-citing-the-book" class="nav-link" data-scroll-target="#citing-the-book">Citing the book</a></li>
+  <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
+  <li><a href="#sec-who" id="toc-sec-who" class="nav-link" data-scroll-target="#sec-who">Who are we&nbsp;?</a></li>
+  <li><a href="#image-credit" id="toc-image-credit" class="nav-link" data-scroll-target="#image-credit">Image credit</a></li>
+  <li><a href="#hex-sticker" id="toc-hex-sticker" class="nav-link" data-scroll-target="#hex-sticker">Hex Sticker</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -339,7 +360,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-04-05</p>
+      <p class="date">2024-04-23</p>
     </div>
   </div>
   
@@ -356,8 +377,9 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
   
 
 
-</header><section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1>
-<p>This book is a collection of tutorial from the excellent paper by <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>. Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.</p>
+</header>
+<section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1><p><img src="images/cover/cover_en.png" title="How to fit an animal model" class="quarto-cover-image img-fluid"></p>
+<p>This book is a collection of tutorial from the excellent paper by <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>. Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares and much more information. Eric Postma kindly provided an updated version of the original asreml-r tutorial from asreml-r v3 to asreml-r v4.</p>
 <p><strong>However, this is still a work in progress.</strong></p>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
@@ -369,24 +391,78 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="citing-the-book" class="level2"><h2 class="anchored" data-anchor-id="citing-the-book">Citing the book</h2>
+<p>Julien Martin &amp; Mathieu Videlier (2024). How to fit an Animal model? A guide for evolutionary ecologist using multiple R packages. Version: 1.0.0 (2024-04-23). <a href="https://doi.org/10.5281/zenodo.10891227" class="uri">https://doi.org/10.5281/zenodo.10891227</a></p>
+</section><section id="license" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="license">License</h2>
+<p>We provide this book under the license <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">License Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/license_cc.png" class="img-fluid figure-img"></p>
+<figcaption>License Creative Commons</figcaption></figure>
 </div>
-<div class="callout-body-container">
-<p>The pdf is not available for the moment. We need to clean some plot code before making it available again</p>
+<p>If you teach quantitative genetic, feel free to use some or all of the content in this book to help support your own students. The only thing we ask is that you acknowledge the original source and authors. If you find this book useful or have any comments or suggestions we would love to hear from you (<a href="#sec-who">contact info</a>).</p>
+<div style="page-break-after: always;"></div>
+</section><section id="sec-who" class="level2"><h2 class="anchored" data-anchor-id="sec-who">Who are we&nbsp;?</h2>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout="[29, -1, 70]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 29.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/author/julien_circ.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
 </div>
 </div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 1.0%;justify-content: flex-start;">
+<p>&nbsp;</p>
 </div>
-<section id="contributors" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="contributors">Contributors</h2>
-<p>List of people who contributed to update and extend tutorials:</p>
+<div id="sec-julien" class="quarto-layout-cell" style="flex-basis: 70.0%;justify-content: flex-start;">
+<p><strong>Julien Martin</strong> is a Professor at the University of Ottawa working on Evolutionary Ecology and has discovered R with version 1.8.1 and teaches R since v2.4.0. He developed the first version of the book and now keeps adding more information and and maintains the site</p>
 <ul>
-<li>Eric Postma updated the previous tutorial from asreml-r 3 to asreml-r 4</li>
-<li>Julien Martin<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> developed and maintains the site</li>
-<li>Matthieu Videlier<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> added (and continues to add) more details in the document</li>
-</ul></section><section id="citation" class="level2"><h2 class="anchored" data-anchor-id="citation">Citation</h2>
-<p>Julien Martin &amp; Mathieu Videlier (2024). How to fit an Animal model? A guide for evolutionary ecologist using multiple R packages. Version: 1.0.0 (2024-04-05). <a href="https://doi.org/10.5281/zenodo.10891227" class="uri">https://doi.org/10.5281/zenodo.10891227</a></p>
+<li>
+<i class="fa-solid fa-bookmark" aria-label="bookmark"></i>: <a href="https://www.uottawa.ca/faculty-science/professors/julien-martin/">uOttawa page</a>, <a href="https://juliengamartin.github.io">lab page</a>
+</li>
+<li>
+<i class="fa-brands fa-twitter" aria-label="twitter"></i>: <a href="https://twitter.com/jgamartin">jgamartin</a>
+</li>
+<li>
+<i class="fa-brands fa-github" aria-label="github"></i>: <a href="https://github.com/juliengamartin">juliengamartin</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout="[29, -1, 70]">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 29.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/author/mathieu_circ.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 1.0%;justify-content: flex-start;">
+<p>&nbsp;</p>
+</div>
+<div id="sec-mathieu" class="quarto-layout-cell" style="flex-basis: 70.0%;justify-content: flex-start;">
+<p><strong>Mathieu Videlier</strong> added (and continues to add) more details in the document</p>
+<!--
+- : [uOttawa page](https://www.uottawa.ca/faculty-science/professors/julien-martin/), [lab page](https://juliengamartin.github.io)
+- : [jgamartin](https://twitter.com/jgamartin)
+- : [juliengamartin](https://github.com/juliengamartin)
+-->
+</div>
+</div>
+</div>
+</section><section id="image-credit" class="level2"><h2 class="anchored" data-anchor-id="image-credit">Image credit</h2>
+<p>The cover image was generated by Julien Martin using the Nightcafe AI image generator using the call “Family tree of legendary beast”</p>
+</section><section id="hex-sticker" class="level2"><h2 class="anchored" data-anchor-id="hex-sticker">Hex Sticker</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/cover/book_wam_hex.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
+</figure>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
@@ -394,11 +470,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 Wilson, A. J., D. Réale, M. N. Clements, M. M. Morrissey, E. Postma, C. A. Walling, L. E. B. Kruuk, and D. H. Nussey. 2010. <a href="https://doi.org/10.1111/j.1365-2656.2009.01639.x">An ecologist’s guide to the animal model</a>. Journal of Animal Ecology 79:13–26.
 </div>
 </div>
-</section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
-<ol>
-<li id="fn1"><p>Univeristy of Ottawa, julien.martin@uottawa.ca<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>UQAM, videlier.mathieu@courrier.uqam.ca<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -577,18 +649,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -620,7 +681,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/juliengamartin\.github\.io\/wam_tuto\/");
@@ -628,7 +711,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

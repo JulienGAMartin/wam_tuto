@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://juliengamartin.github.io/wam_tuto/index.html</loc>
-    <lastmod>2024-04-05T19:08:13.462Z</lastmod>
-  </url>
-  <url>
     <loc>https://juliengamartin.github.io/wam_tuto/01_intro.html</loc>
     <lastmod>2024-04-05T18:46:19.977Z</lastmod>
   </url>
@@ -85,15 +81,19 @@
     <lastmod>2024-04-05T18:46:19.981Z</lastmod>
   </url>
   <url>
+    <loc>https://juliengamartin.github.io/wam_tuto/index.html</loc>
+    <lastmod>2024-04-24T02:46:19.144Z</lastmod>
+  </url>
+  <url>
     <loc>https://juliengamartin.github.io/wam_tuto/98_references.html</loc>
     <lastmod>2024-04-05T18:46:19.981Z</lastmod>
   </url>
   <url>
     <loc>https://juliengamartin.github.io/wam_tuto/How-to-fit-an-animal-model.pdf</loc>
-    <lastmod>2024-04-05T22:46:45.336Z</lastmod>
+    <lastmod>2024-04-24T02:52:16.851Z</lastmod>
   </url>
   <url>
     <loc>https://juliengamartin.github.io/wam_tuto/How-to-fit-an-animal-model.epub</loc>
-    <lastmod>2024-04-05T22:46:50.540Z</lastmod>
+    <lastmod>2024-04-24T02:52:22.783Z</lastmod>
   </url>
 </urlset>

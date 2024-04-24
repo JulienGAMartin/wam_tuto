@@ -1,45 +1,5 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "How to fit an animal model",
-    "section": "",
-    "text": "Preface\nThis book is a collection of tutorial from the excellent paper by (Wilson et al. 2010). Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.\nHowever, this is still a work in progress.",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "index.html#contributors",
-    "href": "index.html#contributors",
-    "title": "How to fit an animal model",
-    "section": "Contributors",
-    "text": "Contributors\nList of people who contributed to update and extend tutorials:\n\nEric Postma updated the previous tutorial from asreml-r 3 to asreml-r 4\nJulien Martin1 developed and maintains the site\nMatthieu Videlier2 added (and continues to add) more details in the document",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "index.html#citation",
-    "href": "index.html#citation",
-    "title": "How to fit an animal model",
-    "section": "Citation",
-    "text": "Citation\nJulien Martin & Mathieu Videlier (2024). How to fit an Animal model? A guide for evolutionary ecologist using multiple R packages. Version: 1.0.0 (2024-04-05). https://doi.org/10.5281/zenodo.10891227\n\n\n\n\nWilson, A. J., D. Réale, M. N. Clements, M. M. Morrissey, E. Postma, C. A. Walling, L. E. B. Kruuk, and D. H. Nussey. 2010. An ecologist’s guide to the animal model. Journal of Animal Ecology 79:13–26.",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "index.html#footnotes",
-    "href": "index.html#footnotes",
-    "title": "How to fit an animal model",
-    "section": "",
-    "text": "Univeristy of Ottawa, julien.martin@uottawa.ca↩︎\nUQAM, videlier.mathieu@courrier.uqam.ca↩︎",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
     "objectID": "01_intro.html",
     "href": "01_intro.html",
     "title": "1  Introduction",
@@ -322,6 +282,66 @@
     "text": "17.2 bivariate model\n\n17.2.1 Asreml-R\n\n17.2.2 gremlin\n\n17.2.3 MCMCglmm\n\n17.2.4 brms\n\n\n\n\nWilson, A. J., D. Réale, M. N. Clements, M. M. Morrissey, E. Postma, C. A. Walling, L. E. B. Kruuk, and D. H. Nussey. 2010. An ecologist’s guide to the animal model. Journal of Animal Ecology 79:13–26.",
     "crumbs": [
       "<span class='chapter-number'>17</span>  <span class='chapter-title'>Quick comparison of codes</span>"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "How to fit an animal model",
+    "section": "",
+    "text": "Preface\nThis book is a collection of tutorial from the excellent paper by (Wilson et al. 2010). Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares and much more information. Eric Postma kindly provided an updated version of the original asreml-r tutorial from asreml-r v3 to asreml-r v4.\nHowever, this is still a work in progress.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#citing-the-book",
+    "href": "index.html#citing-the-book",
+    "title": "How to fit an animal model",
+    "section": "Citing the book",
+    "text": "Citing the book\nJulien Martin & Mathieu Videlier (2024). How to fit an Animal model? A guide for evolutionary ecologist using multiple R packages. Version: 1.0.0 (2024-04-23). https://doi.org/10.5281/zenodo.10891227",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#license",
+    "href": "index.html#license",
+    "title": "How to fit an animal model",
+    "section": "License",
+    "text": "License\nWe provide this book under the license License Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International.\n\n\nLicense Creative Commons\n\nIf you teach quantitative genetic, feel free to use some or all of the content in this book to help support your own students. The only thing we ask is that you acknowledge the original source and authors. If you find this book useful or have any comments or suggestions we would love to hear from you (contact info).",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#sec-who",
+    "href": "index.html#sec-who",
+    "title": "How to fit an animal model",
+    "section": "Who are we ?",
+    "text": "Who are we ?\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\nJulien Martin is a Professor at the University of Ottawa working on Evolutionary Ecology and has discovered R with version 1.8.1 and teaches R since v2.4.0. He developed the first version of the book and now keeps adding more information and and maintains the site\n\n\n: uOttawa page, lab page\n\n\n: jgamartin\n\n\n: juliengamartin\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\nMathieu Videlier added (and continues to add) more details in the document",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#image-credit",
+    "href": "index.html#image-credit",
+    "title": "How to fit an animal model",
+    "section": "Image credit",
+    "text": "Image credit\nThe cover image was generated by Julien Martin using the Nightcafe AI image generator using the call “Family tree of legendary beast”",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#hex-sticker",
+    "href": "index.html#hex-sticker",
+    "title": "How to fit an animal model",
+    "section": "Hex Sticker",
+    "text": "Hex Sticker\n\n\n\n\n\n\n\n\nWilson, A. J., D. Réale, M. N. Clements, M. M. Morrissey, E. Postma, C. A. Walling, L. E. B. Kruuk, and D. H. Nussey. 2010. An ecologist’s guide to the animal model. Journal of Animal Ecology 79:13–26.",
+    "crumbs": [
+      "Preface"
     ]
   },
   {
