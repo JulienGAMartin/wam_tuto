@@ -13,19 +13,11 @@
     <lastmod>2024-04-05T18:46:19.977Z</lastmod>
   </url>
   <url>
-    <loc>https://juliengamartin.github.io/wam_tuto/02_02-univ_gremlin.html</loc>
-    <lastmod>2024-04-05T18:46:19.977Z</lastmod>
-  </url>
-  <url>
     <loc>https://juliengamartin.github.io/wam_tuto/02_03-univ_mcmcglmm.html</loc>
     <lastmod>2024-04-05T18:46:19.977Z</lastmod>
   </url>
   <url>
     <loc>https://juliengamartin.github.io/wam_tuto/02_04-univ_brms.html</loc>
-    <lastmod>2024-04-05T18:46:19.977Z</lastmod>
-  </url>
-  <url>
-    <loc>https://juliengamartin.github.io/wam_tuto/02_05-univ_stan.html</loc>
     <lastmod>2024-04-05T18:46:19.977Z</lastmod>
   </url>
   <url>
@@ -37,20 +29,12 @@
     <lastmod>2024-04-05T22:42:10.534Z</lastmod>
   </url>
   <url>
-    <loc>https://juliengamartin.github.io/wam_tuto/03_02-biv_gremlin.html</loc>
-    <lastmod>2024-04-05T18:46:19.977Z</lastmod>
-  </url>
-  <url>
     <loc>https://juliengamartin.github.io/wam_tuto/03_03-biv_mcmcglmm.html</loc>
     <lastmod>2024-04-05T21:07:32.548Z</lastmod>
   </url>
   <url>
     <loc>https://juliengamartin.github.io/wam_tuto/03_04-biv_brms.html</loc>
     <lastmod>2024-04-05T18:46:19.977Z</lastmod>
-  </url>
-  <url>
-    <loc>https://juliengamartin.github.io/wam_tuto/03_05-biv_stan.html</loc>
-    <lastmod>2024-04-05T18:46:19.981Z</lastmod>
   </url>
   <url>
     <loc>https://juliengamartin.github.io/wam_tuto/04_00-rep.html</loc>
@@ -61,10 +45,6 @@
     <lastmod>2024-04-05T22:42:04.166Z</lastmod>
   </url>
   <url>
-    <loc>https://juliengamartin.github.io/wam_tuto/04_02-rep_gremlin.html</loc>
-    <lastmod>2024-04-05T18:46:19.981Z</lastmod>
-  </url>
-  <url>
     <loc>https://juliengamartin.github.io/wam_tuto/04_03-rep_mcmcglmm.html</loc>
     <lastmod>2024-04-05T21:21:34.983Z</lastmod>
   </url>
@@ -73,16 +53,12 @@
     <lastmod>2024-04-05T18:46:19.981Z</lastmod>
   </url>
   <url>
-    <loc>https://juliengamartin.github.io/wam_tuto/04_05-rep_stan.html</loc>
-    <lastmod>2024-04-05T18:46:19.981Z</lastmod>
-  </url>
-  <url>
     <loc>https://juliengamartin.github.io/wam_tuto/05_code_cheatsheet.html</loc>
     <lastmod>2024-04-05T18:46:19.981Z</lastmod>
   </url>
   <url>
     <loc>https://juliengamartin.github.io/wam_tuto/index.html</loc>
-    <lastmod>2024-04-24T02:46:19.144Z</lastmod>
+    <lastmod>2024-04-24T15:39:17.140Z</lastmod>
   </url>
   <url>
     <loc>https://juliengamartin.github.io/wam_tuto/98_references.html</loc>
@@ -90,10 +66,10 @@
   </url>
   <url>
     <loc>https://juliengamartin.github.io/wam_tuto/How-to-fit-an-animal-model.pdf</loc>
-    <lastmod>2024-04-24T02:52:16.851Z</lastmod>
+    <lastmod>2024-04-24T15:47:56.776Z</lastmod>
   </url>
   <url>
     <loc>https://juliengamartin.github.io/wam_tuto/How-to-fit-an-animal-model.epub</loc>
-    <lastmod>2024-04-24T02:52:22.783Z</lastmod>
+    <lastmod>2024-04-24T15:48:03.016Z</lastmod>
   </url>
 </urlset>

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
-<title>How to fit an animal model – 9&nbsp; MCMCglmm</title>
+<title>How to fit an animal model – 6&nbsp; MCMCglmm</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -83,7 +83,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./03_04-biv_brms.html" rel="next">
-<link href="./03_02-biv_gremlin.html" rel="prev">
+<link href="./03_01-biv_asreml.html" rel="prev">
+<link href="./images/cover/book_fav.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -191,7 +192,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li><li class="breadcrumb-item"><a href="./03_03-biv_mcmcglmm.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li><li class="breadcrumb-item"><a href="./03_03-biv_mcmcglmm.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MCMCglmm</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -228,26 +229,14 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_02-univ_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./02_03-univ_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_04-univ_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02_05-univ_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -264,31 +253,19 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_01-biv_asreml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_02-biv_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_03-biv_mcmcglmm.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_04-biv_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_05-biv_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -305,31 +282,19 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_01-rep_asreml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_02-rep_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_03-rep_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_04-rep_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_05-rep_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -337,7 +302,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_code_cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -354,16 +319,16 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#fitting-the-model" id="toc-fitting-the-model" class="nav-link active" data-scroll-target="#fitting-the-model"><span class="header-section-number">9.0.1</span> Fitting the model</a></li>
-  <li><a href="#adding-fixed-and-random-effects" id="toc-adding-fixed-and-random-effects" class="nav-link" data-scroll-target="#adding-fixed-and-random-effects"><span class="header-section-number">9.0.2</span> Adding fixed and random effects</a></li>
-  <li><a href="#partitioning-covariances" id="toc-partitioning-covariances" class="nav-link" data-scroll-target="#partitioning-covariances"><span class="header-section-number">9.0.3</span> Partitioning (co)variances</a></li>
-  <li><a href="#between-groups-covariances-and-the-b-matrix" id="toc-between-groups-covariances-and-the-b-matrix" class="nav-link" data-scroll-target="#between-groups-covariances-and-the-b-matrix"><span class="header-section-number">9.0.4</span> Between groups (co)variances and the B-matrix</a></li>
+<li><a href="#fitting-the-model" id="toc-fitting-the-model" class="nav-link active" data-scroll-target="#fitting-the-model"><span class="header-section-number">6.0.1</span> Fitting the model</a></li>
+  <li><a href="#adding-fixed-and-random-effects" id="toc-adding-fixed-and-random-effects" class="nav-link" data-scroll-target="#adding-fixed-and-random-effects"><span class="header-section-number">6.0.2</span> Adding fixed and random effects</a></li>
+  <li><a href="#partitioning-covariances" id="toc-partitioning-covariances" class="nav-link" data-scroll-target="#partitioning-covariances"><span class="header-section-number">6.0.3</span> Partitioning (co)variances</a></li>
+  <li><a href="#between-groups-covariances-and-the-b-matrix" id="toc-between-groups-covariances-and-the-b-matrix" class="nav-link" data-scroll-target="#between-groups-covariances-and-the-b-matrix"><span class="header-section-number">6.0.4</span> Between groups (co)variances and the B-matrix</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/03_03-biv_mcmcglmm.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li><li class="breadcrumb-item"><a href="./03_03-biv_mcmcglmm.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li><li class="breadcrumb-item"><a href="./03_03-biv_mcmcglmm.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MCMCglmm</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span>
+<span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MCMCglmm</span>
 </h1>
 </div>
 
@@ -414,8 +379,8 @@ Attaching package: 'ape'</code></pre>
 </div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Ainv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCglmm/man/inverseA.html">inverseA</a></span><span class="op">(</span><span class="va">gryphonped</span><span class="op">)</span><span class="op">$</span><span class="va">Ainv</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="fitting-the-model" class="level3" data-number="9.0.1"><h3 data-number="9.0.1" class="anchored" data-anchor-id="fitting-the-model">
-<span class="header-section-number">9.0.1</span> Fitting the model</h3>
+<section id="fitting-the-model" class="level3" data-number="6.0.1"><h3 data-number="6.0.1" class="anchored" data-anchor-id="fitting-the-model">
+<span class="header-section-number">6.0.1</span> Fitting the model</h3>
 <p>Fitting a multivariate model in MCMCglmm involves several new consideration above those for fitting univariate models. First, we have to fit multivariate priors; second, we have to specify the ways in which effects on different traits may covary, including the nature of residual (co)variation; and third, we will have to be a little more specific when specifying to MCMCglmm what type of distributions from which we assume our data are drawn. Our most basic model can be specified as:</p>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prior2.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
@@ -532,8 +497,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 0.4041642 </code></pre>
 </div>
 </div>
-</section><section id="adding-fixed-and-random-effects" class="level3" data-number="9.0.2"><h3 data-number="9.0.2" class="anchored" data-anchor-id="adding-fixed-and-random-effects">
-<span class="header-section-number">9.0.2</span> Adding fixed and random effects</h3>
+</section><section id="adding-fixed-and-random-effects" class="level3" data-number="6.0.2"><h3 data-number="6.0.2" class="anchored" data-anchor-id="adding-fixed-and-random-effects">
+<span class="header-section-number">6.0.2</span> Adding fixed and random effects</h3>
 <p>Fixed and random effects can be added just as for the univariate case. Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of byear and mother, we could specify a bivariate formulation of this using the following code (including a line to save the output):</p>
 <div class="cell">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">prior2.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
@@ -742,8 +707,8 @@ Here the code to plot the genetic correlation.
 
 
 -->
-</section><section id="partitioning-covariances" class="level3" data-number="9.0.3"><h3 data-number="9.0.3" class="anchored" data-anchor-id="partitioning-covariances">
-<span class="header-section-number">9.0.3</span> Partitioning (co)variances</h3>
+</section><section id="partitioning-covariances" class="level3" data-number="6.0.3"><h3 data-number="6.0.3" class="anchored" data-anchor-id="partitioning-covariances">
+<span class="header-section-number">6.0.3</span> Partitioning (co)variances</h3>
 <p>As in the tutorial 1, it is possible to partition the variance-covariance matrix between groups (here sex) Note: the model is simplified without sex-specific covariance for the <code>byear</code> and <code>mother</code> random effect.</p>
 <div class="cell">
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gryphon2</span> <span class="op">&lt;-</span> <span class="va">gryphon2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">gryphon2</span><span class="op">$</span><span class="va">sex</span><span class="op">)</span>, <span class="op">]</span></span>
@@ -3168,8 +3133,8 @@ Here the simple plot to plot the genetic correlation
 
 
 -->
-</section><section id="between-groups-covariances-and-the-b-matrix" class="level3" data-number="9.0.4"><h3 data-number="9.0.4" class="anchored" data-anchor-id="between-groups-covariances-and-the-b-matrix">
-<span class="header-section-number">9.0.4</span> Between groups (co)variances and the B-matrix</h3>
+</section><section id="between-groups-covariances-and-the-b-matrix" class="level3" data-number="6.0.4"><h3 data-number="6.0.4" class="anchored" data-anchor-id="between-groups-covariances-and-the-b-matrix">
+<span class="header-section-number">6.0.4</span> Between groups (co)variances and the B-matrix</h3>
 <p>Animal models are amazing model. With different group within a population, it is also possible to estimate how much the different groups shared the same genetic via the cross-group genetic covariance. This covariance is essential to understand ontogenic or sexual conflict, which can constraint or enhanced response to evolution. As an example, we estimate the cross-sex genetic correlation <code>r_{fm}</code></p>
 <p>First, we need to dissociate the trait values for females and males into distinct variables. Then, we use a bivariate model (for one trait: <code>tarsus</code>) and a multivariate model (for various traits: <code>tarsus</code> and <code>bwt</code>). With a multivariate model, the cross-sex-cross trait covariance matrix is also named <code>B matrix</code>.</p>
 <p>The coding is a bit complain but pretty straightforward. It is important to modify the covariance matrix at the residual level to avoid the calculation of a cross-sex residual covariance (no individual switched sex during the experiment).</p>
@@ -9162,13 +9127,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./03_02-biv_gremlin.html" class="pagination-link" aria-label="gremlin">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></span>
+      <a href="./03_01-biv_asreml.html" class="pagination-link" aria-label="Asreml-R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Asreml-R</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./03_04-biv_brms.html" class="pagination-link" aria-label="brms">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">brms</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

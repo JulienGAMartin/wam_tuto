@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
-<title>How to fit an animal model – 7&nbsp; Asreml-R</title>
+<title>How to fit an animal model – 5&nbsp; Asreml-R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -82,8 +82,9 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./03_02-biv_gremlin.html" rel="next">
+<link href="./03_03-biv_mcmcglmm.html" rel="next">
 <link href="./03_00-biv.html" rel="prev">
+<link href="./images/cover/book_fav.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -216,7 +217,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li><li class="breadcrumb-item"><a href="./03_01-biv_asreml.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li><li class="breadcrumb-item"><a href="./03_01-biv_asreml.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Asreml-R</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -253,26 +254,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_02-univ_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./02_03-univ_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_04-univ_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02_05-univ_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -289,31 +278,19 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_01-biv_asreml.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_02-biv_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_03-biv_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_04-biv_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_05-biv_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -330,31 +307,19 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_01-rep_asreml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_02-rep_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_03-rep_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_04-rep_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_05-rep_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -362,7 +327,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_code_cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -379,18 +344,18 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#running-the-model" id="toc-running-the-model" class="nav-link active" data-scroll-target="#running-the-model"><span class="header-section-number">7.0.1</span> Running the model</a></li>
-  <li><a href="#adding-fixed-and-random-effects" id="toc-adding-fixed-and-random-effects" class="nav-link" data-scroll-target="#adding-fixed-and-random-effects"><span class="header-section-number">7.0.2</span> Adding fixed and random effects</a></li>
-  <li><a href="#significance-testing" id="toc-significance-testing" class="nav-link" data-scroll-target="#significance-testing"><span class="header-section-number">7.0.3</span> Significance testing</a></li>
-  <li><a href="#estimate-directly-the-genetic-correlation-within-the-model" id="toc-estimate-directly-the-genetic-correlation-within-the-model" class="nav-link" data-scroll-target="#estimate-directly-the-genetic-correlation-within-the-model"><span class="header-section-number">7.0.4</span> Estimate directly the genetic correlation within the model</a></li>
-  <li><a href="#visualisation-of-the-correlation-aka-blup-extraction" id="toc-visualisation-of-the-correlation-aka-blup-extraction" class="nav-link" data-scroll-target="#visualisation-of-the-correlation-aka-blup-extraction"><span class="header-section-number">7.0.5</span> Visualisation of the correlation (aka BLUP extraction)</a></li>
-  <li><a href="#partitionning-covariance-between-groups" id="toc-partitionning-covariance-between-groups" class="nav-link" data-scroll-target="#partitionning-covariance-between-groups"><span class="header-section-number">7.0.6</span> Partitionning (co)variance between groups</a></li>
-  <li><a href="#between-groups-covariances-and-the-b-matrix" id="toc-between-groups-covariances-and-the-b-matrix" class="nav-link" data-scroll-target="#between-groups-covariances-and-the-b-matrix"><span class="header-section-number">7.0.7</span> Between groups (co)variances and the B-matrix</a></li>
+<li><a href="#running-the-model" id="toc-running-the-model" class="nav-link active" data-scroll-target="#running-the-model"><span class="header-section-number">5.0.1</span> Running the model</a></li>
+  <li><a href="#adding-fixed-and-random-effects" id="toc-adding-fixed-and-random-effects" class="nav-link" data-scroll-target="#adding-fixed-and-random-effects"><span class="header-section-number">5.0.2</span> Adding fixed and random effects</a></li>
+  <li><a href="#significance-testing" id="toc-significance-testing" class="nav-link" data-scroll-target="#significance-testing"><span class="header-section-number">5.0.3</span> Significance testing</a></li>
+  <li><a href="#estimate-directly-the-genetic-correlation-within-the-model" id="toc-estimate-directly-the-genetic-correlation-within-the-model" class="nav-link" data-scroll-target="#estimate-directly-the-genetic-correlation-within-the-model"><span class="header-section-number">5.0.4</span> Estimate directly the genetic correlation within the model</a></li>
+  <li><a href="#visualisation-of-the-correlation-aka-blup-extraction" id="toc-visualisation-of-the-correlation-aka-blup-extraction" class="nav-link" data-scroll-target="#visualisation-of-the-correlation-aka-blup-extraction"><span class="header-section-number">5.0.5</span> Visualisation of the correlation (aka BLUP extraction)</a></li>
+  <li><a href="#partitionning-covariance-between-groups" id="toc-partitionning-covariance-between-groups" class="nav-link" data-scroll-target="#partitionning-covariance-between-groups"><span class="header-section-number">5.0.6</span> Partitionning (co)variance between groups</a></li>
+  <li><a href="#between-groups-covariances-and-the-b-matrix" id="toc-between-groups-covariances-and-the-b-matrix" class="nav-link" data-scroll-target="#between-groups-covariances-and-the-b-matrix"><span class="header-section-number">5.0.7</span> Between groups (co)variances and the B-matrix</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/03_01-biv_asreml.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li><li class="breadcrumb-item"><a href="./03_01-biv_asreml.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></a></li></ol></nav><div class="quarto-title">
-<h1 class="title"><span id="asreml-biv" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_00-biv.html">Multivariate animal model</a></li><li class="breadcrumb-item"><a href="./03_01-biv_asreml.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Asreml-R</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="asreml-biv" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></h1>
 </div>
 
 
@@ -404,8 +369,8 @@ window.Quarto = {
   
 
 
-</header><section id="running-the-model" class="level3" data-number="7.0.1"><h3 data-number="7.0.1" class="anchored" data-anchor-id="running-the-model">
-<span class="header-section-number">7.0.1</span> Running the model</h3>
+</header><section id="running-the-model" class="level3" data-number="5.0.1"><h3 data-number="5.0.1" class="anchored" data-anchor-id="running-the-model">
+<span class="header-section-number">5.0.1</span> Running the model</h3>
 <p>First we need to load the <code>asreml</code> library:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">asreml</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -515,8 +480,8 @@ h2.bwt 0.466646 0.07671533</code></pre>
 h2.tarsus 0.4116331 0.09305863</code></pre>
 </div>
 </div>
-</section><section id="adding-fixed-and-random-effects" class="level3" data-number="7.0.2"><h3 data-number="7.0.2" class="anchored" data-anchor-id="adding-fixed-and-random-effects">
-<span class="header-section-number">7.0.2</span> Adding fixed and random effects</h3>
+</section><section id="adding-fixed-and-random-effects" class="level3" data-number="5.0.2"><h3 data-number="5.0.2" class="anchored" data-anchor-id="adding-fixed-and-random-effects">
+<span class="header-section-number">5.0.2</span> Adding fixed and random effects</h3>
 <p>Fixed and random effects can be added just as for the univariate case. Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as birth year and mother as random effects, we could specify a bivariate formulation with the same complexity:</p>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
@@ -691,8 +656,8 @@ trait                    2  50.7 1233.0 1233.0         0
 at(trait, 'tarsus'):sex  1 522.9  122.4  122.4      B  0</code></pre>
 </div>
 </div>
-</section><section id="significance-testing" class="level3" data-number="7.0.3"><h3 data-number="7.0.3" class="anchored" data-anchor-id="significance-testing">
-<span class="header-section-number">7.0.3</span> Significance testing</h3>
+</section><section id="significance-testing" class="level3" data-number="5.0.3"><h3 data-number="5.0.3" class="anchored" data-anchor-id="significance-testing">
+<span class="header-section-number">5.0.3</span> Significance testing</h3>
 <p>Under the model above <span class="math inline">\(r_M\)</span> is estimated as -0.66 and the <code>z.ratio</code> associated with the corresponding covariance (<span class="math inline">\(COV_M\)</span>) is &gt;2 (in absolute terms). We might therefore infer that there is evidence for a strong negative correlation between the traits with respect to the mother and that while maternal identity explains variance in both traits those mothers that tend to produce heavier offspring actually tend to produce offspring with shorter tarsus lengths.</p>
 <p>To formally test if <span class="math inline">\(COV_M\)</span> is significantly different from zero, we can compare the log-likelihood for this model:</p>
 <div class="cell">
@@ -783,8 +748,8 @@ at(trait, 'tarsus'):sex  1 522.9  122.4  122.4      B  0</code></pre>
 <pre><code>[1] 0.6890975</code></pre>
 </div>
 </div>
-</section><section id="estimate-directly-the-genetic-correlation-within-the-model" class="level3" data-number="7.0.4"><h3 data-number="7.0.4" class="anchored" data-anchor-id="estimate-directly-the-genetic-correlation-within-the-model">
-<span class="header-section-number">7.0.4</span> Estimate directly the genetic correlation within the model</h3>
+</section><section id="estimate-directly-the-genetic-correlation-within-the-model" class="level3" data-number="5.0.4"><h3 data-number="5.0.4" class="anchored" data-anchor-id="estimate-directly-the-genetic-correlation-within-the-model">
+<span class="header-section-number">5.0.4</span> Estimate directly the genetic correlation within the model</h3>
 <p>Within Asreml-r, different matrix structure can be specify such as <code>us</code>,<code>corg</code>, <code>diag</code>, etc (cf see the Asreml-r guide). Instead of the fitting an unstructured matrix with the argument <code>us</code> or a reduced model with no covariance with the argument <code>diag</code>, we can also directly estimate the genetic correlation between the <code>bwt</code> and <code>tarsus</code> with <code>corgh</code>.</p>
 <p>Here we decide to estimate directly the additive genetic correlation.</p>
 <div class="cell">
@@ -902,8 +867,8 @@ units:trait!trait_tarsus:tarsus                     5.453372     P   0</code></p
 </div>
 </div>
 <p>Here, the correlation is significantly different than 1 (~0.99999).</p>
-</section><section id="visualisation-of-the-correlation-aka-blup-extraction" class="level3" data-number="7.0.5"><h3 data-number="7.0.5" class="anchored" data-anchor-id="visualisation-of-the-correlation-aka-blup-extraction">
-<span class="header-section-number">7.0.5</span> Visualisation of the correlation (aka BLUP extraction)</h3>
+</section><section id="visualisation-of-the-correlation-aka-blup-extraction" class="level3" data-number="5.0.5"><h3 data-number="5.0.5" class="anchored" data-anchor-id="visualisation-of-the-correlation-aka-blup-extraction">
+<span class="header-section-number">5.0.5</span> Visualisation of the correlation (aka BLUP extraction)</h3>
 <p>When estimating correlation between traits, having a visualization of it can help the interpretation. In addition, visualizing the correlation can spot outliers in the dataset. Thanks to mixed model, each breeding values is stored within the model and can be extract as BLUP (Best Linear Unbiased Predictor).BLUP should be normaly distributed, if not you need to check the assumption of your animal model.</p>
 <p>To simplify the following code, we rename the variable T1 and T2.</p>
 <div class="cell">
@@ -1056,8 +1021,8 @@ varying, : multiple rows match for TRAIT=T2: first taken</code></pre>
 </div>
 </div>
 </div>
-</section><section id="partitionning-covariance-between-groups" class="level3" data-number="7.0.6"><h3 data-number="7.0.6" class="anchored" data-anchor-id="partitionning-covariance-between-groups">
-<span class="header-section-number">7.0.6</span> Partitionning (co)variance between groups</h3>
+</section><section id="partitionning-covariance-between-groups" class="level3" data-number="5.0.6"><h3 data-number="5.0.6" class="anchored" data-anchor-id="partitionning-covariance-between-groups">
+<span class="header-section-number">5.0.6</span> Partitionning (co)variance between groups</h3>
 <p>Similar to the univariate model, it is possible to partition the variance and also the covariance between different groups within the dataset. Here, we can estimate sex-specific genetic correlation. Note, to partition a correlation, it is require to have important sample size within each group. For this example, we simplify the model !</p>
 <div class="cell">
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gryphon</span> <span class="op">&lt;-</span> <span class="va">gryphon</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">gryphon</span><span class="op">$</span><span class="va">sex</span><span class="op">)</span>, <span class="op">]</span></span>
@@ -1504,8 +1469,8 @@ sex_2!trait_tarsus:tarsus                                1.9850837     P   0</co
 </div>
 </div>
 </div>
-</section><section id="between-groups-covariances-and-the-b-matrix" class="level3" data-number="7.0.7"><h3 data-number="7.0.7" class="anchored" data-anchor-id="between-groups-covariances-and-the-b-matrix">
-<span class="header-section-number">7.0.7</span> Between groups (co)variances and the B-matrix</h3>
+</section><section id="between-groups-covariances-and-the-b-matrix" class="level3" data-number="5.0.7"><h3 data-number="5.0.7" class="anchored" data-anchor-id="between-groups-covariances-and-the-b-matrix">
+<span class="header-section-number">5.0.7</span> Between groups (co)variances and the B-matrix</h3>
 <p>Animal models are amazing model. With different group within a population, it is also possible to estimate how much the different groups shared the same genetic via the cross-group genetic covariance. This covariance is essential to understand ontogenic or sexual conflict, which can constraint or enhanced response to evolution. As an example, we estimate the cross-sex genetic correlation <code>r_{fm}</code></p>
 <p>First, we need to dissociate the trait values for females and males into distinct variables. Then, we use a bivariate model (for one trait: <code>tarsus</code>) and a multivariate model (for various traits: <code>tarsus</code> and <code>bwt</code>). With a multivariate model, the cross-sex-cross trait covariance matrixis also named <code>B matrix</code>.</p>
 <p>The coding is a bit complex but pretty straightforward. It is important to modify the covariance matrix at the residual level to avoid the calculation of a cross-sex residual covariance (no individual switched sex during the experiment).</p>
@@ -2345,8 +2310,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./03_02-biv_gremlin.html" class="pagination-link" aria-label="gremlin">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03_03-biv_mcmcglmm.html" class="pagination-link" aria-label="MCMCglmm">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
-<title>How to fit an animal model – 17&nbsp; Quick comparison of codes</title>
+<title>How to fit an animal model – 11&nbsp; Quick comparison of codes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,7 +49,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./98_references.html" rel="next">
-<link href="./04_05-rep_stan.html" rel="prev">
+<link href="./04_04-rep_brms.html" rel="prev">
+<link href="./images/cover/book_fav.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -157,7 +158,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05_code_cheatsheet.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05_code_cheatsheet.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -194,26 +195,14 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_02-univ_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./02_03-univ_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_04-univ_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02_05-univ_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -230,31 +219,19 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_01-biv_asreml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_02-biv_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_03-biv_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_04-biv_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_05-biv_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -271,31 +248,19 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_01-rep_asreml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_02-rep_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_03-rep_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_04-rep_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_05-rep_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -303,7 +268,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_code_cheatsheet.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -321,21 +286,21 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
    
   <ul>
 <li>
-<a href="#univariate-model-with-repeated-measures" id="toc-univariate-model-with-repeated-measures" class="nav-link active" data-scroll-target="#univariate-model-with-repeated-measures"><span class="header-section-number">17.1</span> Univariate model with repeated measures</a>
+<a href="#univariate-model-with-repeated-measures" id="toc-univariate-model-with-repeated-measures" class="nav-link active" data-scroll-target="#univariate-model-with-repeated-measures"><span class="header-section-number">11.1</span> Univariate model with repeated measures</a>
   <ul class="collapse">
-<li><a href="#asreml-r" id="toc-asreml-r" class="nav-link" data-scroll-target="#asreml-r"><span class="header-section-number">17.1.1</span> Asreml-R</a></li>
-  <li><a href="#gremlin" id="toc-gremlin" class="nav-link" data-scroll-target="#gremlin"><span class="header-section-number">17.1.2</span> gremlin</a></li>
-  <li><a href="#mcmcglmm" id="toc-mcmcglmm" class="nav-link" data-scroll-target="#mcmcglmm"><span class="header-section-number">17.1.3</span> MCMCglmm</a></li>
-  <li><a href="#brms" id="toc-brms" class="nav-link" data-scroll-target="#brms"><span class="header-section-number">17.1.4</span> brms</a></li>
+<li><a href="#asreml-r" id="toc-asreml-r" class="nav-link" data-scroll-target="#asreml-r"><span class="header-section-number">11.1.1</span> Asreml-R</a></li>
+  <li><a href="#gremlin" id="toc-gremlin" class="nav-link" data-scroll-target="#gremlin"><span class="header-section-number">11.1.2</span> gremlin</a></li>
+  <li><a href="#mcmcglmm" id="toc-mcmcglmm" class="nav-link" data-scroll-target="#mcmcglmm"><span class="header-section-number">11.1.3</span> MCMCglmm</a></li>
+  <li><a href="#brms" id="toc-brms" class="nav-link" data-scroll-target="#brms"><span class="header-section-number">11.1.4</span> brms</a></li>
   </ul>
 </li>
   <li>
-<a href="#bivariate-model" id="toc-bivariate-model" class="nav-link" data-scroll-target="#bivariate-model"><span class="header-section-number">17.2</span> bivariate model</a>
+<a href="#bivariate-model" id="toc-bivariate-model" class="nav-link" data-scroll-target="#bivariate-model"><span class="header-section-number">11.2</span> bivariate model</a>
   <ul class="collapse">
-<li><a href="#asreml-r-1" id="toc-asreml-r-1" class="nav-link" data-scroll-target="#asreml-r-1"><span class="header-section-number">17.2.1</span> Asreml-R</a></li>
-  <li><a href="#gremlin-1" id="toc-gremlin-1" class="nav-link" data-scroll-target="#gremlin-1"><span class="header-section-number">17.2.2</span> gremlin</a></li>
-  <li><a href="#mcmcglmm-1" id="toc-mcmcglmm-1" class="nav-link" data-scroll-target="#mcmcglmm-1"><span class="header-section-number">17.2.3</span> MCMCglmm</a></li>
-  <li><a href="#brms-1" id="toc-brms-1" class="nav-link" data-scroll-target="#brms-1"><span class="header-section-number">17.2.4</span> brms</a></li>
+<li><a href="#asreml-r-1" id="toc-asreml-r-1" class="nav-link" data-scroll-target="#asreml-r-1"><span class="header-section-number">11.2.1</span> Asreml-R</a></li>
+  <li><a href="#gremlin-1" id="toc-gremlin-1" class="nav-link" data-scroll-target="#gremlin-1"><span class="header-section-number">11.2.2</span> gremlin</a></li>
+  <li><a href="#mcmcglmm-1" id="toc-mcmcglmm-1" class="nav-link" data-scroll-target="#mcmcglmm-1"><span class="header-section-number">11.2.3</span> MCMCglmm</a></li>
+  <li><a href="#brms-1" id="toc-brms-1" class="nav-link" data-scroll-target="#brms-1"><span class="header-section-number">11.2.4</span> brms</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/05_code_cheatsheet.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -343,7 +308,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span>
+<span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span>
 </h1>
 </div>
 
@@ -358,31 +323,31 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
   
 
 
-</header><section id="univariate-model-with-repeated-measures" class="level2" data-number="17.1"><h2 data-number="17.1" class="anchored" data-anchor-id="univariate-model-with-repeated-measures">
-<span class="header-section-number">17.1</span> Univariate model with repeated measures</h2>
-<section id="asreml-r" class="level3" data-number="17.1.1"><h3 data-number="17.1.1" class="anchored" data-anchor-id="asreml-r">
-<span class="header-section-number">17.1.1</span> Asreml-R</h3>
-</section><section id="gremlin" class="level3" data-number="17.1.2"><h3 data-number="17.1.2" class="anchored" data-anchor-id="gremlin">
-<span class="header-section-number">17.1.2</span> gremlin</h3>
-</section><section id="mcmcglmm" class="level3" data-number="17.1.3"><h3 data-number="17.1.3" class="anchored" data-anchor-id="mcmcglmm">
-<span class="header-section-number">17.1.3</span> MCMCglmm</h3>
-</section><section id="brms" class="level3" data-number="17.1.4"><h3 data-number="17.1.4" class="anchored" data-anchor-id="brms">
-<span class="header-section-number">17.1.4</span> brms</h3>
+</header><section id="univariate-model-with-repeated-measures" class="level2" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="univariate-model-with-repeated-measures">
+<span class="header-section-number">11.1</span> Univariate model with repeated measures</h2>
+<section id="asreml-r" class="level3" data-number="11.1.1"><h3 data-number="11.1.1" class="anchored" data-anchor-id="asreml-r">
+<span class="header-section-number">11.1.1</span> Asreml-R</h3>
+</section><section id="gremlin" class="level3" data-number="11.1.2"><h3 data-number="11.1.2" class="anchored" data-anchor-id="gremlin">
+<span class="header-section-number">11.1.2</span> gremlin</h3>
+</section><section id="mcmcglmm" class="level3" data-number="11.1.3"><h3 data-number="11.1.3" class="anchored" data-anchor-id="mcmcglmm">
+<span class="header-section-number">11.1.3</span> MCMCglmm</h3>
+</section><section id="brms" class="level3" data-number="11.1.4"><h3 data-number="11.1.4" class="anchored" data-anchor-id="brms">
+<span class="header-section-number">11.1.4</span> brms</h3>
 <!--
 ################################################################################
 ################################################################################
 ################################################################################
 -->
-</section></section><section id="bivariate-model" class="level2" data-number="17.2"><h2 data-number="17.2" class="anchored" data-anchor-id="bivariate-model">
-<span class="header-section-number">17.2</span> bivariate model</h2>
-<section id="asreml-r-1" class="level3" data-number="17.2.1"><h3 data-number="17.2.1" class="anchored" data-anchor-id="asreml-r-1">
-<span class="header-section-number">17.2.1</span> Asreml-R</h3>
-</section><section id="gremlin-1" class="level3" data-number="17.2.2"><h3 data-number="17.2.2" class="anchored" data-anchor-id="gremlin-1">
-<span class="header-section-number">17.2.2</span> gremlin</h3>
-</section><section id="mcmcglmm-1" class="level3" data-number="17.2.3"><h3 data-number="17.2.3" class="anchored" data-anchor-id="mcmcglmm-1">
-<span class="header-section-number">17.2.3</span> MCMCglmm</h3>
-</section><section id="brms-1" class="level3" data-number="17.2.4"><h3 data-number="17.2.4" class="anchored" data-anchor-id="brms-1">
-<span class="header-section-number">17.2.4</span> brms</h3>
+</section></section><section id="bivariate-model" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="bivariate-model">
+<span class="header-section-number">11.2</span> bivariate model</h2>
+<section id="asreml-r-1" class="level3" data-number="11.2.1"><h3 data-number="11.2.1" class="anchored" data-anchor-id="asreml-r-1">
+<span class="header-section-number">11.2.1</span> Asreml-R</h3>
+</section><section id="gremlin-1" class="level3" data-number="11.2.2"><h3 data-number="11.2.2" class="anchored" data-anchor-id="gremlin-1">
+<span class="header-section-number">11.2.2</span> gremlin</h3>
+</section><section id="mcmcglmm-1" class="level3" data-number="11.2.3"><h3 data-number="11.2.3" class="anchored" data-anchor-id="mcmcglmm-1">
+<span class="header-section-number">11.2.3</span> MCMCglmm</h3>
+</section><section id="brms-1" class="level3" data-number="11.2.4"><h3 data-number="11.2.4" class="anchored" data-anchor-id="brms-1">
+<span class="header-section-number">11.2.4</span> brms</h3>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
@@ -954,8 +919,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./04_05-rep_stan.html" class="pagination-link" aria-label="stan">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">stan</span></span>
+      <a href="./04_04-rep_brms.html" class="pagination-link" aria-label="brms">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

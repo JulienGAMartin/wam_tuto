@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.5.30">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
-<meta name="dcterms.date" content="2024-04-23">
+<meta name="dcterms.date" content="2024-04-24">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
 <title>How to fit an animal model</title>
 <style>
@@ -50,6 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./01_intro.html" rel="next">
+<link href="./images/cover/book_fav.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -196,26 +197,14 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_02-univ_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./02_03-univ_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_04-univ_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02_05-univ_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -232,31 +221,19 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_01-biv_asreml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_02-biv_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_03-biv_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_04-biv_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_05-biv_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -273,31 +250,19 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_01-rep_asreml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_02-rep_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_03-rep_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_04-rep_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_05-rep_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -305,7 +270,7 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_code_cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -327,8 +292,8 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
   <ul class="collapse">
 <li><a href="#citing-the-book" id="toc-citing-the-book" class="nav-link" data-scroll-target="#citing-the-book">Citing the book</a></li>
   <li><a href="#license" id="toc-license" class="nav-link" data-scroll-target="#license">License</a></li>
-  <li><a href="#sec-who" id="toc-sec-who" class="nav-link" data-scroll-target="#sec-who">Who are we&nbsp;?</a></li>
   <li><a href="#image-credit" id="toc-image-credit" class="nav-link" data-scroll-target="#image-credit">Image credit</a></li>
+  <li><a href="#sec-who" id="toc-sec-who" class="nav-link" data-scroll-target="#sec-who">Who are we&nbsp;?</a></li>
   <li><a href="#hex-sticker" id="toc-hex-sticker" class="nav-link" data-scroll-target="#hex-sticker">Hex Sticker</a></li>
   </ul>
 </li>
@@ -353,14 +318,14 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
     <div class="quarto-title-meta-heading">Authors</div>
     <div class="quarto-title-meta-contents">
              <p>Julien Martin </p>
-             <p>Matthieu Videlier </p>
+             <p>Mathieu Videlier </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-04-23</p>
+      <p class="date">2024-04-24</p>
     </div>
   </div>
   
@@ -379,45 +344,39 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 
 </header>
 <section id="preface" class="level1 unnumbered"><h1 class="unnumbered">Preface</h1><p><img src="images/cover/cover_en.png" title="How to fit an animal model" class="quarto-cover-image img-fluid"></p>
-<p>This book is a collection of tutorial from the excellent paper by <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>. Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares and much more information. Eric Postma kindly provided an updated version of the original asreml-r tutorial from asreml-r v3 to asreml-r v4.</p>
-<p><strong>However, this is still a work in progress.</strong></p>
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Do not take anything in this manual as gospel.</p>
-</div>
-</div>
-</div>
-<section id="citing-the-book" class="level2"><h2 class="anchored" data-anchor-id="citing-the-book">Citing the book</h2>
-<p>Julien Martin &amp; Mathieu Videlier (2024). How to fit an Animal model? A guide for evolutionary ecologist using multiple R packages. Version: 1.0.0 (2024-04-23). <a href="https://doi.org/10.5281/zenodo.10891227" class="uri">https://doi.org/10.5281/zenodo.10891227</a></p>
+<p>This book is a collection of tutorial from the excellent paper by <span class="citation" data-cites="wilson2010">(<a href="98_references.html#ref-wilson2010" role="doc-biblioref">Wilson et al. 2010</a>)</span>. The tutorials have been updated to work with the latest version of the softwares, extended with extra information and other softwares have been added. Eric Postma kindly provided an updated version of the original asreml-r tutorial from asreml-r v3 to asreml-r v4.</p>
+<p><strong>This is a living document and information is updated/added regularly</strong></p>
+<section id="citing-the-book" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="citing-the-book">Citing the book</h2>
+<p>Julien Martin &amp; Mathieu Videlier (2024). How to fit an Animal model? A guide for evolutionary ecologist using multiple R packages. Version: 1.0.0 (2024-04-24). <a href="https://doi.org/10.5281/zenodo.10891227" class="uri">https://doi.org/10.5281/zenodo.10891227</a></p>
 </section><section id="license" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="license">License</h2>
-<p>We provide this book under the license <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">License Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/license_cc.png" class="img-fluid figure-img"></p>
-<figcaption>License Creative Commons</figcaption></figure>
-</div>
-<p>If you teach quantitative genetic, feel free to use some or all of the content in this book to help support your own students. The only thing we ask is that you acknowledge the original source and authors. If you find this book useful or have any comments or suggestions we would love to hear from you (<a href="#sec-who">contact info</a>).</p>
+<p>We provide this book under the license <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a>. <img src="images/license_cc.png" class="img-fluid quarto-figure quarto-figure-center"></p>
+<p>Feel free to use some or all of the content in this book. The only thing we ask is that you acknowledge the original source and authors as per the license and use the same license if you share that work publicly. If you find this book useful or have any comments or suggestions we would love to hear from you (<a href="#sec-who">contact info</a>).</p>
+</section><section id="image-credit" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="image-credit">Image credit</h2>
+<p>The cover image was generated by Julien Martin using the Nightcafe AI image generator using the call “Family tree of legendary beast”.</p>
 <div style="page-break-after: always;"></div>
-</section><section id="sec-who" class="level2"><h2 class="anchored" data-anchor-id="sec-who">Who are we&nbsp;?</h2>
+</section><section id="sec-who" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="sec-who">Who are we&nbsp;?</h2>
 <div>
 
 </div>
-<div class="quarto-layout-panel" data-layout="[29, -1, 70]">
+<div class="quarto-layout-panel" data-layout="[25, -5, 70]">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 29.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="images/author/julien_circ.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 1.0%;justify-content: flex-start;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: flex-start;">
 <p>&nbsp;</p>
 </div>
 <div id="sec-julien" class="quarto-layout-cell" style="flex-basis: 70.0%;justify-content: flex-start;">
-<p><strong>Julien Martin</strong> is a Professor at the University of Ottawa working on Evolutionary Ecology and has discovered R with version 1.8.1 and teaches R since v2.4.0. He developed the first version of the book and now keeps adding more information and and maintains the site</p>
+<p><strong>Julien Martin</strong> is a Professor at the University of Ottawa working on Evolutionary Ecology and has discovered R with version 1.8.1 and teaches R since v2.4.0. He developed the first version of the book in February 2021 and now continues to develop the book and maintains the site for all languages (currently only english but french and spanish comin soon).</p>
+<!--::::: {.content-visible when-format="pdf"}
+- : uOttawa <https://www.uottawa.ca/faculty-science/professors/julien-martin/>, lab page <https://juliengamartin.github.io>
+- : <https://twitter.com/jgamartin>
+- : <https://github.com/juliengamartin>
+:::::-->
+<!-- ::::: {.content-visible when-format="html"} -->
 <ul>
 <li>
 <i class="fa-solid fa-bookmark" aria-label="bookmark"></i>: <a href="https://www.uottawa.ca/faculty-science/professors/julien-martin/">uOttawa page</a>, <a href="https://juliengamartin.github.io">lab page</a>
@@ -426,39 +385,37 @@ gtag('config', 'G-LLHQEESR2L', { 'anonymize_ip': true});
 <i class="fa-brands fa-twitter" aria-label="twitter"></i>: <a href="https://twitter.com/jgamartin">jgamartin</a>
 </li>
 <li>
-<i class="fa-brands fa-github" aria-label="github"></i>: <a href="https://github.com/juliengamartin">juliengamartin</a>
+<i class="fa-brands fa-github" aria-label="github"></i>: <a href="https://github.com/juliengamartin">juliengamartin</a> <!-- ::::: -->
 </li>
 </ul>
 </div>
 </div>
-</div>
-<div>
-
-</div>
-<div class="quarto-layout-panel" data-layout="[29, -1, 70]">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 29.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 25.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="images/author/mathieu_circ.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 1.0%;justify-content: flex-start;">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 5.0%;justify-content: flex-start;">
 <p>&nbsp;</p>
 </div>
 <div id="sec-mathieu" class="quarto-layout-cell" style="flex-basis: 70.0%;justify-content: flex-start;">
-<p><strong>Mathieu Videlier</strong> added (and continues to add) more details in the document</p>
-<!--
-- : [uOttawa page](https://www.uottawa.ca/faculty-science/professors/julien-martin/), [lab page](https://juliengamartin.github.io)
-- : [jgamartin](https://twitter.com/jgamartin)
-- : [juliengamartin](https://github.com/juliengamartin)
--->
+<p><strong>Mathieu Videlier</strong> is currently a postdoctoral fellow collaborating with <a href="https://sztepanacz.eeb.utoronto.ca">Pr. Jacqueline Sztepanacz</a> at University of Toronto. In joined the project in May 2021 . He added and continues to add more details in the document. He is also spearing the translation fo French and Spanish.</p>
+<ul>
+<li>
+<i class="fa-solid fa-bookmark" aria-label="bookmark"></i>: <a href="https://videliermath.weebly.com/">personal page</a>
+</li>
+<li>
+<i class="fa-brands fa-twitter" aria-label="twitter"></i>: <a href="https://twitter.com/BioBipbip">BioBipbip</a>
+</li>
+<li>
+<i class="fa-brands fa-github" aria-label="github"></i>: <a href="https://github.com/MathieuVID">MathieuVID</a> </li>
+</ul>
 </div>
 </div>
 </div>
-</section><section id="image-credit" class="level2"><h2 class="anchored" data-anchor-id="image-credit">Image credit</h2>
-<p>The cover image was generated by Julien Martin using the Nightcafe AI image generator using the call “Family tree of legendary beast”</p>
-</section><section id="hex-sticker" class="level2"><h2 class="anchored" data-anchor-id="hex-sticker">Hex Sticker</h2>
+</section><section id="hex-sticker" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="hex-sticker">Hex Sticker</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="images/cover/book_wam_hex.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%"></p>
 </figure>

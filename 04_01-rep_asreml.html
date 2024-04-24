@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
-<title>How to fit an animal model – 12&nbsp; Asreml-R</title>
+<title>How to fit an animal model – 8&nbsp; Asreml-R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -82,8 +82,9 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./04_02-rep_gremlin.html" rel="next">
+<link href="./04_03-rep_mcmcglmm.html" rel="next">
 <link href="./04_00-rep.html" rel="prev">
+<link href="./images/cover/book_fav.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -216,7 +217,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_00-rep.html">A repeated measures animal model</a></li><li class="breadcrumb-item"><a href="./04_01-rep_asreml.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Asreml-R</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_00-rep.html">A repeated measures animal model</a></li><li class="breadcrumb-item"><a href="./04_01-rep_asreml.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Asreml-R</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -253,26 +254,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_02-univ_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./02_03-univ_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_04-univ_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02_05-univ_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -289,31 +278,19 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_01-biv_asreml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_02-biv_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_03-biv_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_04-biv_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_05-biv_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -330,31 +307,19 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_01-rep_asreml.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_02-rep_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_03-rep_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_04-rep_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_05-rep_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -362,7 +327,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_code_cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -379,15 +344,15 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#estimating-repeatability" id="toc-estimating-repeatability" class="nav-link active" data-scroll-target="#estimating-repeatability"><span class="header-section-number">12.0.1</span> Estimating repeatability</a></li>
-  <li><a href="#partitioning-additive-and-permanent-environment-effects" id="toc-partitioning-additive-and-permanent-environment-effects" class="nav-link" data-scroll-target="#partitioning-additive-and-permanent-environment-effects"><span class="header-section-number">12.0.2</span> Partitioning additive and permanent environment effects</a></li>
-  <li><a href="#adding-additional-effects-and-testing-significance" id="toc-adding-additional-effects-and-testing-significance" class="nav-link" data-scroll-target="#adding-additional-effects-and-testing-significance"><span class="header-section-number">12.0.3</span> Adding additional effects and testing significance</a></li>
+<li><a href="#estimating-repeatability" id="toc-estimating-repeatability" class="nav-link active" data-scroll-target="#estimating-repeatability"><span class="header-section-number">8.0.1</span> Estimating repeatability</a></li>
+  <li><a href="#partitioning-additive-and-permanent-environment-effects" id="toc-partitioning-additive-and-permanent-environment-effects" class="nav-link" data-scroll-target="#partitioning-additive-and-permanent-environment-effects"><span class="header-section-number">8.0.2</span> Partitioning additive and permanent environment effects</a></li>
+  <li><a href="#adding-additional-effects-and-testing-significance" id="toc-adding-additional-effects-and-testing-significance" class="nav-link" data-scroll-target="#adding-additional-effects-and-testing-significance"><span class="header-section-number">8.0.3</span> Adding additional effects and testing significance</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/04_01-rep_asreml.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_00-rep.html">A repeated measures animal model</a></li><li class="breadcrumb-item"><a href="./04_01-rep_asreml.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Asreml-R</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_00-rep.html">A repeated measures animal model</a></li><li class="breadcrumb-item"><a href="./04_01-rep_asreml.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Asreml-R</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Asreml-R</span>
+<span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Asreml-R</span>
 </h1>
 </div>
 
@@ -415,8 +380,8 @@ window.Quarto = {
 <pre><code>Loading ASReml-R version 4.2</code></pre>
 </div>
 </div>
-<section id="estimating-repeatability" class="level3" data-number="12.0.1"><h3 data-number="12.0.1" class="anchored" data-anchor-id="estimating-repeatability">
-<span class="header-section-number">12.0.1</span> Estimating repeatability</h3>
+<section id="estimating-repeatability" class="level3" data-number="8.0.1"><h3 data-number="8.0.1" class="anchored" data-anchor-id="estimating-repeatability">
+<span class="header-section-number">8.0.1</span> Estimating repeatability</h3>
 <p>With repeated measures on individuals it is often of interest to see how repeatable a trait is. We can estimate the repeatability of a trait as the proportion of phenotypic variance <span class="math inline">\(V_P\)</span> explained by individual variance <span class="math inline">\(V_{ind}\)</span>; <span class="math inline">\(R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)\)</span>.</p>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
@@ -527,8 +492,8 @@ units!units 1138.1601 16.37989 0.00000           1</code></pre>
 </div>
 <p>Here age is modeled as a 5-level factor (specified using the function <code><a href="https://rdrr.io/r/base/factor.html">as.factor()</a></code> at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term. In addition, using <code>age</code> as continuous variable can help in saving some degree of freedom in the analysis.</p>
 <!-- C1 I dont know why the quadratic fixed effect dont work, need to remember how to do this -->
-</section><section id="partitioning-additive-and-permanent-environment-effects" class="level3" data-number="12.0.2"><h3 data-number="12.0.2" class="anchored" data-anchor-id="partitioning-additive-and-permanent-environment-effects">
-<span class="header-section-number">12.0.2</span> Partitioning additive and permanent environment effects</h3>
+</section><section id="partitioning-additive-and-permanent-environment-effects" class="level3" data-number="8.0.2"><h3 data-number="8.0.2" class="anchored" data-anchor-id="partitioning-additive-and-permanent-environment-effects">
+<span class="header-section-number">8.0.2</span> Partitioning additive and permanent environment effects</h3>
 <p>Generally we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals. Non-additive contributions to fixed among-individual differences are normally referred to as <em>permanent environment effects</em>. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in <span class="math inline">\(V_A\)</span>.</p>
 <p>To illustrate it, we first fit the animal model:</p>
 <div class="cell">
@@ -621,8 +586,8 @@ h2 0.1701523 0.06073974</code></pre>
 repeatability 0.4284108 0.02741602</code></pre>
 </div>
 </div>
-</section><section id="adding-additional-effects-and-testing-significance" class="level3" data-number="12.0.3"><h3 data-number="12.0.3" class="anchored" data-anchor-id="adding-additional-effects-and-testing-significance">
-<span class="header-section-number">12.0.3</span> Adding additional effects and testing significance</h3>
+</section><section id="adding-additional-effects-and-testing-significance" class="level3" data-number="8.0.3"><h3 data-number="8.0.3" class="anchored" data-anchor-id="adding-additional-effects-and-testing-significance">
+<span class="header-section-number">8.0.3</span> Adding additional effects and testing significance</h3>
 <p>Models of repeated measures can be extended to include other fixed or random effects. For example try including year of measurement (<code>year</code>) and birth year (<code>byear</code>) as random effects.</p>
 <div class="cell">
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/asreml/man/asreml.html">asreml</a></span><span class="op">(</span></span>
@@ -1352,8 +1317,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04_02-rep_gremlin.html" class="pagination-link" aria-label="gremlin">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">gremlin</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./04_03-rep_mcmcglmm.html" class="pagination-link" aria-label="MCMCglmm">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

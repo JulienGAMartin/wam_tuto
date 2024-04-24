@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Julien Martin">
 <meta name="description" content="Tutorial on how to fit an animal model using multiple R packages. Updated and extended tutorials from An ecologist guide to animal model (Wilson et al. 2010).">
-<title>How to fit an animal model – 5&nbsp; brms</title>
+<title>How to fit an animal model – 4&nbsp; brms</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -82,8 +82,9 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02_05-univ_stan.html" rel="next">
+<link href="./03_00-biv.html" rel="next">
 <link href="./02_03-univ_mcmcglmm.html" rel="prev">
+<link href="./images/cover/book_fav.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -216,7 +217,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_00-univ.html">Univariate animal model</a></li><li class="breadcrumb-item"><a href="./02_04-univ_brms.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_00-univ.html">Univariate animal model</a></li><li class="breadcrumb-item"><a href="./02_04-univ_brms.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">brms</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -253,26 +254,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_02-univ_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./02_03-univ_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_04-univ_brms.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./02_05-univ_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -289,31 +278,19 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_01-biv_asreml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_02-biv_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_03-biv_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_04-biv_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./03_05-biv_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -330,31 +307,19 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_01-rep_asreml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_02-rep_gremlin.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">gremlin</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Asreml-R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_03-rep_mcmcglmm.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_04-rep_brms.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">brms</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_05-rep_stan.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">stan</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">brms</span></span></a>
   </div>
 </li>
       </ul>
@@ -362,7 +327,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_code_cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Quick comparison of codes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -379,19 +344,19 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#running-the-model" id="toc-running-the-model" class="nav-link active" data-scroll-target="#running-the-model"><span class="header-section-number">5.0.1</span> Running the model</a></li>
-  <li><a href="#adding-fixed-effects" id="toc-adding-fixed-effects" class="nav-link" data-scroll-target="#adding-fixed-effects"><span class="header-section-number">5.0.2</span> Adding fixed effects</a></li>
-  <li><a href="#adding-random-effects" id="toc-adding-random-effects" class="nav-link" data-scroll-target="#adding-random-effects"><span class="header-section-number">5.0.3</span> Adding random effects</a></li>
-  <li><a href="#testing-significance-of-variance-components" id="toc-testing-significance-of-variance-components" class="nav-link" data-scroll-target="#testing-significance-of-variance-components"><span class="header-section-number">5.0.4</span> Testing significance of variance components</a></li>
-  <li><a href="#further-partitioning-of-the-variance" id="toc-further-partitioning-of-the-variance" class="nav-link" data-scroll-target="#further-partitioning-of-the-variance"><span class="header-section-number">5.0.5</span> Further partitioning of the variance</a></li>
-  <li><a href="#modification-of-model-parameter" id="toc-modification-of-model-parameter" class="nav-link" data-scroll-target="#modification-of-model-parameter"><span class="header-section-number">5.0.6</span> Modification of model parameter</a></li>
-  <li><a href="#covariance-between-two-random-effects" id="toc-covariance-between-two-random-effects" class="nav-link" data-scroll-target="#covariance-between-two-random-effects"><span class="header-section-number">5.0.7</span> Covariance between two random effects</a></li>
+<li><a href="#running-the-model" id="toc-running-the-model" class="nav-link active" data-scroll-target="#running-the-model"><span class="header-section-number">4.0.1</span> Running the model</a></li>
+  <li><a href="#adding-fixed-effects" id="toc-adding-fixed-effects" class="nav-link" data-scroll-target="#adding-fixed-effects"><span class="header-section-number">4.0.2</span> Adding fixed effects</a></li>
+  <li><a href="#adding-random-effects" id="toc-adding-random-effects" class="nav-link" data-scroll-target="#adding-random-effects"><span class="header-section-number">4.0.3</span> Adding random effects</a></li>
+  <li><a href="#testing-significance-of-variance-components" id="toc-testing-significance-of-variance-components" class="nav-link" data-scroll-target="#testing-significance-of-variance-components"><span class="header-section-number">4.0.4</span> Testing significance of variance components</a></li>
+  <li><a href="#further-partitioning-of-the-variance" id="toc-further-partitioning-of-the-variance" class="nav-link" data-scroll-target="#further-partitioning-of-the-variance"><span class="header-section-number">4.0.5</span> Further partitioning of the variance</a></li>
+  <li><a href="#modification-of-model-parameter" id="toc-modification-of-model-parameter" class="nav-link" data-scroll-target="#modification-of-model-parameter"><span class="header-section-number">4.0.6</span> Modification of model parameter</a></li>
+  <li><a href="#covariance-between-two-random-effects" id="toc-covariance-between-two-random-effects" class="nav-link" data-scroll-target="#covariance-between-two-random-effects"><span class="header-section-number">4.0.7</span> Covariance between two random effects</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/juliengamartin/wam_tuto/edit/main/02_04-univ_brms.Rmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/juliengamartin/wam_tuto/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_00-univ.html">Univariate animal model</a></li><li class="breadcrumb-item"><a href="./02_04-univ_brms.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span></a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02_00-univ.html">Univariate animal model</a></li><li class="breadcrumb-item"><a href="./02_04-univ_brms.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">brms</span></a></li></ol></nav><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">brms</span>
+<span class="chapter-number">4</span>&nbsp; <span class="chapter-title">brms</span>
 </h1>
 </div>
 
@@ -406,8 +371,8 @@ window.Quarto = {
   
 
 
-</header><section id="running-the-model" class="level3" data-number="5.0.1"><h3 data-number="5.0.1" class="anchored" data-anchor-id="running-the-model">
-<span class="header-section-number">5.0.1</span> Running the model</h3>
+</header><section id="running-the-model" class="level3" data-number="4.0.1"><h3 data-number="4.0.1" class="anchored" data-anchor-id="running-the-model">
+<span class="header-section-number">4.0.1</span> Running the model</h3>
 <p>First we need to load the <code>brms</code> library:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/paul-buerkner/brms">brms</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -558,8 +523,8 @@ Sample size per chain = 50
 </div>
 </div>
 </div>
-</section><section id="adding-fixed-effects" class="level3" data-number="5.0.2"><h3 data-number="5.0.2" class="anchored" data-anchor-id="adding-fixed-effects">
-<span class="header-section-number">5.0.2</span> Adding fixed effects</h3>
+</section><section id="adding-fixed-effects" class="level3" data-number="4.0.2"><h3 data-number="4.0.2" class="anchored" data-anchor-id="adding-fixed-effects">
+<span class="header-section-number">4.0.2</span> Adding fixed effects</h3>
 <p>To add effects to a univariate model, we simply modify the priors and the fixed effect portion of the model specification:</p>
 <div class="cell">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">brms_m1.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html">brm</a></span><span class="op">(</span></span>
@@ -684,8 +649,8 @@ Sample size per chain = 50
 </div>
 </div>
 <p>Here <span class="math inline">\(h^2\)</span> has increased slightly from 0.5010 to 0.4192 (again, your values may differ slightly due to Monte Carlo error). Which is the better estimate? It depends on what your question is. The first is an estimate of the proportion of variance in birth weight explained by additive effects, the latter is an estimate of the proportion of variance in birth weight after conditioning on sex that is explained by additive effects. An important piece of advice, each researcher should be consistent in how they name their estimates and always correctly describe which estimates they are using conditional or not (to avoid any confusion).</p>
-</section><section id="adding-random-effects" class="level3" data-number="5.0.3"><h3 data-number="5.0.3" class="anchored" data-anchor-id="adding-random-effects">
-<span class="header-section-number">5.0.3</span> Adding random effects</h3>
+</section><section id="adding-random-effects" class="level3" data-number="4.0.3"><h3 data-number="4.0.3" class="anchored" data-anchor-id="adding-random-effects">
+<span class="header-section-number">4.0.3</span> Adding random effects</h3>
 <p>This is done by simply modifying the model statement in the same way, but requires addition of a prior for the new random effect. For instance, we can fit an effect of birth year:</p>
 <div class="cell">
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">brms_m1.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html">brm</a></span><span class="op">(</span></span>
@@ -829,8 +794,8 @@ Sample size per chain = 1000
 </div>
 </div>
 </div>
-</section><section id="testing-significance-of-variance-components" class="level3" data-number="5.0.4"><h3 data-number="5.0.4" class="anchored" data-anchor-id="testing-significance-of-variance-components">
-<span class="header-section-number">5.0.4</span> Testing significance of variance components</h3>
+</section><section id="testing-significance-of-variance-components" class="level3" data-number="4.0.4"><h3 data-number="4.0.4" class="anchored" data-anchor-id="testing-significance-of-variance-components">
+<span class="header-section-number">4.0.4</span> Testing significance of variance components</h3>
 <p>While testing the significance of fixed effects by evaluating whether or not their posterior distributions overlap zero was simple and valid, this approach does not work for variance components. Variance components are bounded to be positive (given a proper prior), and thus even when a random effect is not meaningful, its posterior distribution will never overlap zero.</p>
 <p>Model comparisons can be performed using the function <code>loo_compare</code> using <code>waic</code> or weighted AIC.</p>
 <div class="cell">
@@ -853,8 +818,8 @@ brms_m1.3    0.0       0.0
 brms_m1.1 -208.3      15.7 </code></pre>
 </div>
 </div>
-</section><section id="further-partitioning-of-the-variance" class="level3" data-number="5.0.5"><h3 data-number="5.0.5" class="anchored" data-anchor-id="further-partitioning-of-the-variance">
-<span class="header-section-number">5.0.5</span> Further partitioning of the variance</h3>
+</section><section id="further-partitioning-of-the-variance" class="level3" data-number="4.0.5"><h3 data-number="4.0.5" class="anchored" data-anchor-id="further-partitioning-of-the-variance">
+<span class="header-section-number">4.0.5</span> Further partitioning of the variance</h3>
 <p>Depending of the research question and the presence of different group within the dataset, <code>brms</code> allowed to partition the variance at different groups. Two distinct approch can be done to partition the different random effect: using an extra argument <code>by=sex</code> or by adding <code>(0+sex|)</code> before the <code>|</code>. Notes, here we used <code>||</code> which not estimate a possible covariance between groups (female and male) for the random effect.</p>
 <div class="cell">
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">brms_m1.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://paul-buerkner.github.io/brms/reference/brm.html">brm</a></span><span class="op">(</span></span>
@@ -1052,11 +1017,11 @@ Sample size per chain = 500
 </div>
 </div>
 </div>
-</section><section id="modification-of-model-parameter" class="level3" data-number="5.0.6"><h3 data-number="5.0.6" class="anchored" data-anchor-id="modification-of-model-parameter">
-<span class="header-section-number">5.0.6</span> Modification of model parameter</h3>
+</section><section id="modification-of-model-parameter" class="level3" data-number="4.0.6"><h3 data-number="4.0.6" class="anchored" data-anchor-id="modification-of-model-parameter">
+<span class="header-section-number">4.0.6</span> Modification of model parameter</h3>
 <p>Unfortunately (to our knowledge), it is not possible to alter the variance matrices and refit them within the model.</p>
-</section><section id="covariance-between-two-random-effects" class="level3" data-number="5.0.7"><h3 data-number="5.0.7" class="anchored" data-anchor-id="covariance-between-two-random-effects">
-<span class="header-section-number">5.0.7</span> Covariance between two random effects</h3>
+</section><section id="covariance-between-two-random-effects" class="level3" data-number="4.0.7"><h3 data-number="4.0.7" class="anchored" data-anchor-id="covariance-between-two-random-effects">
+<span class="header-section-number">4.0.7</span> Covariance between two random effects</h3>
 <p>Some research questions require to estimate the covariance between two random effects within a univariate model. Unfortunately (to our knowledge), it is not possible to create a covariance between distinct random effects (https://github.com/paul-buerkner/brms/issues/502). However,a multi-membership model can be fit using the linking.function <code>mm</code>, thus forcing the variance of two variables to be equal and the covariance to 1.</p>
 
 
@@ -1630,12 +1595,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./02_03-univ_mcmcglmm.html" class="pagination-link" aria-label="MCMCglmm">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">MCMCglmm</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02_05-univ_stan.html" class="pagination-link" aria-label="stan">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">stan</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03_00-biv.html" class="pagination-link" aria-label="Multivariate animal model">
+        <span class="nav-page-text">Multivariate animal model</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
