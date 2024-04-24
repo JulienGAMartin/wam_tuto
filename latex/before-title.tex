@@ -1,0 +1,53 @@
+%% Tables
+\usepackage{booktabs,tabu}
+\usepackage{xcolor,colortbl}
+
+%header and footer
+\usepackage[automark,headsepline,footsepline]{scrlayer-scrpage}
+\clearpairofpagestyles
+\cfoot[\pagemark]{\pagemark}
+\lehead{\headmark}
+\rohead{\headmark}
+\pagestyle{scrheadings}
+
+%% Chapter heading 
+%large number
+\addtokomafont{chapterprefix}{\raggedleft}
+\renewcommand*{\chapterformat}{%
+\mbox{\chapappifchapterprefix{\nobreakspace}%
+\scalebox{3}{\color{gray}\thechapter}\enskip}}
+
+% for emoji
+\usepackage{fontspec}
+
+\directlua{luaotfload.add_fallback
+   ("emojifallback",
+    {
+      "NotoColorEmoji:mode=harf;"
+    }
+   )}
+\setmainfont{texgyretermes-regular}[
+  Extension      = .otf ,
+  BoldFont       = texgyretermes-bold,
+  ItalicFont     = texgyretermes-italic,
+  BoldItalicFont = texgyretermes-bolditalic,
+  RawFeature={fallback=emojifallback}
+]
+
+% for title page image
+\usepackage{eso-pic}
+  \usepackage{graphicx}
+%% for toc 
+$if(toc)$
+$if(toc-title)$
+\renewcommand*\contentsname{$toc-title$}
+$endif$
+$if(colorlinks)$
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
+$endif$
+\setcounter{tocdepth}{$toc-depth$}
+$endif$
+
+\newcommand*{\myAuthor}{$for(authors)$$it.name.literal$$sep$ \& $endfor$}
+
+

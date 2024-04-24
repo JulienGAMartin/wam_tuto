@@ -1,7 +1,7 @@
 # Preface {-}
 
 This book is a collection of tutorial from the excellent paper by [@wilson2010].
-Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares.
+Instead of just copy pasting the tutorial in a bookdown format, the tutorials have been updated to work with the newest version of the softwares and extended to present other softwares and much more information. Eric Postma kindly provided an updated version of the original asreml-r tutorial from asreml-r v3 to asreml-r v4.
 
 **However, this is still a work in progress.**
 
@@ -9,49 +9,96 @@ Instead of just copy pasting the tutorial in a bookdown format, the tutorials ha
 Do not take anything in this manual as gospel.
 :::
 
-::: {.callout-note}
-The pdf is not available for the moment. We need to clean some plot code before making it available again
-:::
-
-## Contributors {-}
-
-List of people who contributed to update and extend tutorials:
-
-- Eric Postma updated the previous tutorial from asreml-r 3 to asreml-r 4
-- Julien Martin^[Univeristy of Ottawa, julien.martin@uottawa.ca] developed and maintains the site
-- Matthieu Videlier^[UQAM, videlier.mathieu@courrier.uqam.ca] added (and continues to add) more details in the document
-
-```{r, eval = FALSE, include=FALSE}
-# automatically create a bib database for R packages
-knitr::write_bib(c(
-  .packages(), "bookdown", "knitr", "rmarkdown", "MCMCglmm", "asreml",
-  "gremlin", "brms", "rstan"
-), "packages.bib")
-
-# check
-files_rda <- list.files("data/", pattern = ".rda")
-
-# add something here to be true if output is html and false if output is pdf
-htmlT_pdfF <- ifelse(knitr::is_html_output() == TRUE, TRUE, FALSE)
-# reverse as previous
-htmlF_pdfT <- ifelse(knitr::is_html_output() == TRUE, FALSE, TRUE)
-
-library(lme4)
-library(rptR)
-library(visreg)
-library(asreml)
-library(MCMCglmm)
-library(brms)
-library(mvtnorm)
-library(ggplot2)
-library(gridExtra)
-library(nadiv)
-```
-
-
-## Citation
-
+## Citing the book
 
 Julien Martin & Mathieu Videlier ({{< meta year >}}). How to fit an Animal model? A guide for evolutionary ecologist using multiple R packages. Version: {{< meta version >}} ({{< meta date >}}). <https://doi.org/10.5281/zenodo.10891227>
 
+## License {.unnumbered}
 
+We provide this book under the license [License Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](http://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+![License Creative Commons](images/license_cc.png)
+
+If you teach quantitative genetic, feel free to use some or all of the content in this book to help support your own students.
+The only thing we ask is that you acknowledge the original source and authors.
+If you find this book useful or have any comments or suggestions we would love to hear from you  ([contact info](#sec-who)).
+
+
+{{< pagebreak >}}
+
+## Who are we ? {#sec-who}
+
+```{r}
+#| label: crop-julien
+#| echo: false
+#| eval: false
+
+crop_fn <- function(author, overwrite = FALSE){
+  if (!file.exists(paste0("images/author/", author, "_circ.jpg"))|overwrite == TRUE) {
+    if(file.exists(paste0("images/author/", author, ".jpg"))){
+      cropcircles::crop_circle(
+        paste0("images/author/", author, ".jpg"),
+        to = paste0("images/author/", author, "_circ.jpg")
+      )
+    } else {
+      file.copy("images/author/default_circ.jpg", paste0("images/author/", author, "_circ.jpg"))
+    }
+      cat("generated cropped circle image for", author, "as file:", paste0("/images/author/", author, "_circ.jpg"))
+  } else {
+ cat("nothing happened", paste0("/images/author/", author, "_circ.jpg"), "already exist")
+  }
+}
+
+```
+
+::: {layout="[29, -1, 70]" }
+![](images/author/julien_circ.jpg){fig-align="center" width=100%}
+
+:::: {#sec-julien}
+**Julien Martin** is a Professor at the University of Ottawa working on Evolutionary Ecology and has discovered R with version 1.8.1 and teaches R since v2.4.0. He developed the first version of the book and now keeps adding more information and and maintains the site
+
+::::: {.content-visible when-format="pdf"}
+- {{< fa bookmark >}}: uOttawa <https://www.uottawa.ca/faculty-science/professors/julien-martin/>, lab page <https://juliengamartin.github.io>
+- {{< fa brands twitter >}}: <https://twitter.com/jgamartin>
+- {{< fa brands github >}}: <https://github.com/juliengamartin>
+:::::
+
+::::: {.content-visible when-format="html"}
+- {{< fa bookmark >}}: [uOttawa page](https://www.uottawa.ca/faculty-science/professors/julien-martin/), [lab page](https://juliengamartin.github.io)
+- {{< fa brands twitter >}}: [jgamartin](https://twitter.com/jgamartin)
+- {{< fa brands github >}}: [juliengamartin](https://github.com/juliengamartin)
+:::::
+
+::::
+:::
+
+
+::: {layout="[29, -1, 70]" }
+![](images/author/mathieu_circ.jpg){fig-align="center" width=100%}
+
+:::: {#sec-mathieu}
+**Mathieu Videlier** added (and continues to add) more details in the document
+
+<!--
+- {{< fa bookmark >}}: [uOttawa page](https://www.uottawa.ca/faculty-science/professors/julien-martin/), [lab page](https://juliengamartin.github.io)
+- {{< fa brands twitter >}}: [jgamartin](https://twitter.com/jgamartin)
+- {{< fa brands github >}}: [juliengamartin](https://github.com/juliengamartin)
+-->
+
+::::
+
+:::
+
+
+## Image credit
+
+The cover image was generated by Julien Martin using the Nightcafe AI image generator using the call "Family tree of legendary beast"
+
+## Hex Sticker
+
+![](images/cover/book_wam_hex.png){fig-align="center" width=50%}
+
+
+::: {.content-visible when-format="pdf"}
+\clearpage\pagenumbering{arabic}\setcounter{page}{1}
+:::

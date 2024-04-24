@@ -19,3 +19,4 @@ fort.19
 /.quarto/
 #!docs/*_files/
 /docs/
+/.luarc.json

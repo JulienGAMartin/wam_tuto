@@ -1,0 +1,46 @@
+%$if(title)$
+%\maketitle
+%$endif$
+
+\begin{titlepage}
+        \AddToShipoutPictureBG*{%
+          \AtPageLowerLeft{%
+            \includegraphics[width=\paperwidth,height=\paperheight]{images/cover/wam_cover.jpg}%
+          }%
+        }
+
+        \centering{
+            {\fontsize{40}{48}\selectfont 
+            $title$}
+        }\\
+        \vspace{7mm}
+        \centering{\Large{$subtitle$}}\\
+        \vspace{7mm}
+        \centering{
+          \huge{
+           \myAuthor}
+            }
+\end{titlepage}
+       
+%=========================================
+ \newpage{}
+% \thispagestyle {empty}
+    
+%     \vspace*{2cm}
+    
+%     \begin{center}
+%         \Large{\parbox{12cm}{
+%             \begin{raggedright}
+%             {\Large 
+%                 \textit{$cit-title$}
+%             }
+        
+%             \vspace{.5cm}\hfill{---$cit-author$}
+%             \end{raggedright}
+%         }
+%     }
+%     \end{center}
+    
+%     \newpage
+
+\pagenumbering{roman}
