@@ -35,6 +35,7 @@ book:
       This book was built with <a href="https://quarto.org/">Quarto</a>.
 #  cover-image: images/blue_dragon.jpg
 #  favicon: cover.jpg
+  favicon: images/cover/book_fav.png
   site-url: https://juliengamartin.github.io/wam_tuto/
   repo-url: https://github.com/juliengamartin/wam_tuto/
   repo-actions: [edit, issue]
