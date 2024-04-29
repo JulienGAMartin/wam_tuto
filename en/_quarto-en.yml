@@ -1,0 +1,63 @@
+project:
+  output-dir: ../docs/en
+
+version: 1.0.0
+year: 2024
+
+book:
+  title: "How to fit an animal model"
+  subtitle: "An ecologist guide"
+  description: |
+    Tutorial on how to fit an animal model using multiple R packages.
+    Updated and extended tutorials from An ecologist guide to animal model [@wilson2010].
+  cover-image: images/cover/cover_en.png
+  author: 
+    - Julien Martin
+    - Mathieu Videlier
+  page-footer:
+    left: |
+      By J Martin & M Videlier
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+
+  navbar:
+    background: light
+    collapse-below: lg
+    title: "Wam tutorial"
+    left:
+      - text: Extra resources
+        menu:
+          - text: WamWiki
+            href: https://wildanimalmodels.org/
+          - text: Tutorials by P de Vilemereuil
+            href: https://devillemereuil.legtux.org/downloads/
+
+  chapters:
+    - index.qmd
+    - 01_intro.qmd
+    - part: 02_00-univ.qmd
+      chapters:
+        - 02_01-univ_asreml.qmd  
+#        - 02_02-univ_gremlin.qmd 
+        - 02_03-univ_mcmcglmm.qmd
+        - 02_04-univ_brms.qmd    
+#        - 02_05-univ_stan.qmd    
+    - part: 03_00-biv.qmd          
+      chapters:
+        - 03_01-biv_asreml.qmd   
+#        - 03_02-biv_gremlin.qmd  
+        - 03_03-biv_mcmcglmm.qmd 
+        - 03_04-biv_brms.qmd     
+#        - 03_05-biv_stan.qmd     
+    - part : 04_00-rep.qmd
+      chapters:          
+        - 04_01-rep_asreml.qmd   
+#        - 04_02-rep_gremlin.qmd  
+        - 04_03-rep_mcmcglmm.qmd 
+        - 04_04-rep_brms.qmd     
+#        - 04_05-rep_stan.qmd     
+    - 05_code_cheatsheet.qmd
+    - 98_references.qmd
+#  appendices:
+#    - 99_app_rep-lmer.qmd
+

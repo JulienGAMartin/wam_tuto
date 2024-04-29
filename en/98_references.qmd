@@ -13,7 +13,7 @@ library(tidyverse)
 library(grateful)
 pkgs <- cite_packages(
   output = "table",
-  out.dir = "biblio/"
+  out.dir = "../biblio/"
 )
 
 knitr::kable(
