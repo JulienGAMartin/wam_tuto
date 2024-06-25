@@ -1,5 +1,7 @@
 ## brms
-```{r, echo=FALSE}
+
+```{r}
+#| include: false
 gryphonRM <- read.csv("data/gryphonRM.csv")
 gryphonRM$animal <- as.factor(gryphonRM$animal)
 gryphonRM$byear <- as.factor(gryphonRM$byear)
@@ -10,28 +12,184 @@ gryphonped <- read.csv("data/gryphonped.csv")
 gryphonped$id <- as.factor(gryphonped$id)
 gryphonped$father <- as.factor(gryphonped$father)
 gryphonped$mother <- as.factor(gryphonped$mother)
+
+library(brms)
+library(tidyverse)
 ```
 
-```{r, cache=TRUE, eval = FALSE}
-library(brms)
+### Estimating repeatability
+With repeated measures on individuals, it is often of interest to see how repeatable a trait is. We can estimate the repeatability of a trait as the proportion of phenotypic variance $V_P$ explained by individual variance $V_{ind}$; $R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)$.
+As you already know, bayesian models require prior. However, brms compute a classic uninformative prior.
+```{r}
+#| cache: true
+brms_m3.1 <- brm(
+  laydate ~ 1 + (1 | animal),
+  data = gryphonRM,
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
 
+summary(brms_m3.1)
+plot(brms_m3.1)
+```
+
+<!--###FIX### repeatability code not working below-->
+Note the use of the term `animal` as random allowed to partition the phenotypic variance $V_P$ into among individual variance $V_{ind}$ associated with `animal` and residual variance $V_R$ associated with `units`.
+Here then the repeatability of the `laydate` can be determined as:
+`r round( (VarCorr(brms_m3.1, summary = FALSE)$animal$sd)^2/ ( (VarCorr(brms_m3.1, summary = FALSE)$animal$sd)^2 +(VarCorr(brms_m3.1, summary = FALSE)$residual$sd)^2 ))` (_i.e._, as `r round((VarCorr(brms_m3.1, summary = FALSE)$animal$sd)^2)` / (`r round( (VarCorr(brms_m3.1, summary = FALSE)$animal$sd)^2)` + `r round( (VarCorr(brms_m3.1, summary = FALSE)$residual$sd)^2)`)). Just a friendly remember, we work with Monte Carlo chain with model iteration, so the point estimate can be different (but very similar) each time you run the model.
+
+Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding `age` into the model as a fixed effect.
+
+```{r}
+#| cache: true
+brms_m3.2 <- brm(
+  laydate ~ 1 + age+ (1 | animal),
+  data = gryphonRM,
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+
+summary(brms_m3.2)
+plot(brms_m3.2)
+```
+
+<!--###FIX### repeatability code not working below-->
+The model assumption seems correct, so we can look at the different estimates. The repeatability of `laydate`, after accounting for age effects, is now estimated as
+`r round( (VarCorr(brms_m3.2, summary = FALSE)$animal$sd)^2/ ( (VarCorr(brms_m3.2, summary = FALSE)$animal$sd)^2 +(VarCorr(brms_m3.2, summary = FALSE)$residual$sd)^2 ))` (_i.e._, as `r round((VarCorr(brms_m3.2, summary = FALSE)$animal$sd)^2)` / (`r round( (VarCorr(brms_m3.2, summary = FALSE)$animal$sd)^2)` + `r round( (VarCorr(brms_m3.2, summary = FALSE)$residual$sd)^2)`)). Just as we saw when estimating $h_2$ in tutorial 1, the inclusion of fixed effects will alter the estimated variance. If we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
+
+
+```{r}
+fixef(brms_m3.2)
+```
+
+Here age is modeled as a 5-level factor (specified using the function `as.factor()` at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term. In addition, using `age` as continuous variable can help in saving some degree of freedom in the analysis.
+
+```{r}
+gryphonRM$age_c <- as.numeric(gryphonRM$age)
+
+brms_m3.2_2 <- brm(
+  laydate ~ 1 + age_c+ I(age_c^2)+(1 | animal),
+  data = gryphonRM,
+  family = gaussian(),
+  chains = 2, cores = 2, iter = 1000
+)
+
+summary(brms_m3.2_2)
+fixef(brms_m3.2_2)
+plot(brms_m3.2_2)
+
+```
+
+### Partitioning additive and permanent environment effects
+
+Generally, we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals. Non-additive contributions to fixed among-individual differences are normally referred to as _permanent environment effects_. If a trait has repeated measures, then it is necessary to model permanent environment effects in an animal model to prevent upward bias in $V_A$.
+To illustrate it, we first fit the animal model:
+
+```{r}
 Amat <- as.matrix(nadiv::makeA(gryphonped))
-gryphonRM$animal_pe <- gryphonRM$animal
 
-
-
-model_simple1.1 <- brm(
-  laydate ~ 1 + (1 | gr(animal, cov = Amat)) + (1 | animal_pe),
+brms_m3.3 <- brm(
+  laydate ~ 1 + age + (1 | animal),
   data = gryphonRM,
   family = gaussian(),
   data2 = list(Amat = Amat),
   chains = 2, cores = 2, iter = 1000
 )
 
-summary(model_simple1.1)
-plot(model_simple1.1)
+summary(brms_m3.3)
+plot(brms_m3.3)
 ```
 
-<!-- I get some errors messages need to be check I thin -->
+Variance components are almost unchanged if we compare the previous model:
+```{r}
+VarCorr(brms_m3.2)  
+VarCorr(brms_m3.3)  
+```
 
-<!-- need to create the stucture of the document too -->
+This suggests that most of the among-individual variance is – rightly or wrongly – being partitioned as $V_A$ here. In fact, here the partition is wrong since the simulation included both additive genetic effects and additional fixed heterogeneity that was not associated with the pedigree structure (i.e. permanent environment effects).
+In order to o obtain an unbiased estimate of $V_A$, we need to fit the individual identity twice in the model: once linked to the pedigree (genetic effect) and once not linked to the pedigree (permanent environment effect).To do so, we need to duplicate the variable containing the individual identity `animal` and give it a new name. In addition, the prior need to be modified to integrate a second random effect. A more appropriate estimate of $V_A$ is given by the model:
+```{r}
+gryphonRM$animal_pe <- gryphonRM$animal
+brms_m3.4 <- brm(
+  laydate ~ 1 + age + (1 | gr(animal, cov = Amat)) + (1 | animal_pe),
+  data = gryphonRM,
+  family = gaussian(),
+  data2 = list(Amat = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+
+summary(brms_m3.4)
+plot(brms_m3.4)
+
+```
+
+The estimate of$V_A$ is now much lower due to a proper separation in the additive and permanent environment effects. 
+We can estimate $h^2$ and the repeatability from this model:
+```{r}
+#| cache: true
+v_animal <- (VarCorr(brms_m3.4, summary = FALSE)$animal$sd)^2
+v_animal_pe <- (VarCorr(brms_m3.4, summary = FALSE)$ animal_pe$sd)^2
+v_r <- (VarCorr(brms_m3.4, summary = FALSE)$residual$sd)^2
+h.bwt.3 <- as.mcmc(v_animal / (v_animal + v_animal_pe + v_r))
+summary(h.bwt.3)
+```
+
+### Adding additional effects and testing significance
+Models of repeated measures can be extended to include other fixed or random effects.
+For example, we can try including year of measurement (`year`) and birth year (`byear`) as other random effects.
+```{r}
+#| cache: true
+brms_m3.5 <- brm(
+  laydate ~ 1 + age +
+    (1 | gr(animal, cov = Amat)) + (1 | animal_pe)+ (1 | year)+(1 | byear),
+  data = gryphonRM,
+  family = gaussian(),
+  data2 = list(Amat = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+
+summary(brms_m3.5)
+plot(brms_m3.5)
+```
+
+This model will return additional variance components corresponding to year of measurement effects and birth year of the female effects.
+The posterior distribution of the $V_{byear}$  (via the function `plot`or `summary`) is very close to zero indicating its not significance. You have to remember bayesian model never estimate variable to 0 or passing zero, so you will never see a credible  interval `CI` crossing zero for a variance.
+If you compared the model3.5 and a reduced model without `byear`, it should be very similar.  We can estimate the wAIC and  a LOO comparison.
+```{r}
+
+brms_m3.5 <- add_criterion(brms_m3.5, "loo")
+brms_m3.5_2 <- brm(
+  laydate ~ 1 + age +
+    (1 | gr(animal, cov = Amat)) + (1 | animal_pe)+ (1 | year),
+  data = gryphonRM,
+  family = gaussian(),
+  data2 = list(Amat = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+summary(brms_m3.5_2)
+
+waic(brms_m3.5)
+waic(brms_m3.5_2)
+
+
+brms_m3.5_2 <- add_criterion(brms_m3.5_2, "loo")
+
+loo_compare(brms_m3.5, brms_m3.5_2, criterion = "loo")
+
+```
+
+`year` effects could alternatively be included as fixed effects (try it! you should be able to handle the new prior specification at this point). This will reduce $V_R$ and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.
+```{r}
+brms_m3.6 <- brm(
+  laydate ~ 1 + age + year+ (1 | gr(animal, cov = Amat)) + (1 | animal_pe),
+  data = gryphonRM,
+  family = gaussian(),
+  data2 = list(Amat = Amat),
+  chains = 2, cores = 2, iter = 1000
+)
+
+summary(brms_m3.6)
+plot(brms_m3.6)
+```
+
+

@@ -1,6 +1,7 @@
 ## MCMCglmm
 
-```{r, include=FALSE}
+```{r}
+#| include: false
 gryphonRM <- read.csv("data/gryphonRM.csv")
 gryphonRM$animal <- as.factor(gryphonRM$animal)
 gryphonRM$byear <- as.factor(gryphonRM$byear)
@@ -15,18 +16,15 @@ library(MCMCglmm)
 ```
 
 ### Estimating repeatability
-
-With repeated measures on individuals it is often of interest to see how repeatable a trait is. 
-We can estimate the repeatability of a trait as the proportion of phenotypic variance $V_P$ explained by individual variance $V_{ind}$; $R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)$.
-As you already know, bayesian modelisation requires prior. Here, we create a unformative prior with one estimate for the G matrix and one estimate for the Residual matrix, in addition 
-<!-- C1 I dont know wht you calculate p.var if you dont use it in the prior -->
-
-```{r, cache = TRUE}
+With repeated measures on individuals, it is often of interest to see how repeatable a trait is. We can estimate the repeatability of a trait as the proportion of phenotypic variance $V_P$ explained by individual variance $V_{ind}$; $R = V_{ind}/V_P = V_{ind}/(V_{ind}+V_R)$.
+As you already know, bayesian models require prior. Here, we create an uninformative prior with one estimate for the ID matrix and one estimate for the residual matrix, in addition. 
+```{r}
+#| cache: true
 # p.var <- var(gryphonRM$laydate, na.rm = TRUE)
-prior3.1 <- list(G = list(G1 = list(V = 1, nu = 0.002)), R = list(
-  V = 1,
-  nu = 0.002
-))
+prior3.1 <- list(
+  G = list(G1 = list(V = 1, nu = 0.002)),
+  R = list(V = 1, nu = 0.002)
+)
 model3.1 <- MCMCglmm(laydate ~ 1,
   random = ~animal, data = gryphonRM,
   prior = prior3.1, verbose = FALSE
@@ -35,43 +33,31 @@ posterior.mode(model3.1$VCV)
 ```
 
 Note the use of the term `animal` as random allowed to partition the phenotypic variance $V_P$ into among individual variance $V_{ind}$ associated with `animal` and residual variance $V_R$ associated with `units`.
-
 Here then the repeatability of the `laydate` can be determined as:
 `r round(posterior.mode(model3.1$VCV)[1]/posterior.mode(model3.1$VCV)[1]+posterior.mode(model3.1$VCV)[2],2)`
 (_i.e._, as `r round(posterior.mode(model3.1$VCV)[1],3)`/(`r round(posterior.mode(model3.1$VCV)[1],3)` + `r round(posterior.mode(model3.1$VCV)[2], 3)`)). Just a friendly remember, we work with Monte Carlo chain with model iteration, so the point estimate can be different (but very similar) each time you run the model.
 
 Mean lay date might change with age, so we could ask what the repeatability of lay date is after conditioning on age. This would be done by adding `age` into the model as a fixed effect.
-
-```{r, cache = TRUE}
-model3.2 <- MCMCglmm(laydate ~ age,
+```{r}
+#| cache: true
+model3.2 <- MCMCglmm(laydate ~ 1 + age,
   random = ~animal, data = gryphonRM,
   prior = prior3.1, verbose = FALSE
 )
-par(mar = c(1, 1, 1, 1))
-plot(model3.2$Sol)
-plot(model3.2$VCV)
 posterior.mode(model3.2$VCV)
 ```
 
-The model assumption seems correct, so we can look at the different estimates.
-Note that the random effect structure has remained unchanged because we did not modified the prior `prior3.1`. 
-The repeatability of `laydate`, after accounting for age effects, is now estimated as
-`r round(posterior.mode(model3.1$VCV)[1]/posterior.mode(model3.1$VCV)[1]+posterior.mode(model3.1$VCV)[2],2)`
-(_i.e._, as `r round(posterior.mode(model3.1$VCV)[1],3)`/(`r round(posterior.mode(model3.1$VCV)[1],3)` + `r round(posterior.mode(model3.1$VCV)[2], 3)`)).
-Just as we saw when estimating $h_2$ in tutorial 1, the inclusion of fixed effects will alter the estimated effect size
-<!-- C3 effect size or just the variance estimate -->
-if we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
-
-
+The model assumption seems correct, so we can look at the different estimates. Note that the random effect structure has remained unchanged because we did not modify the prior `prior3.1`. The repeatability of `laydate`, after accounting for age effects, is now estimated as 
+`r round(posterior.mode(model3.2$VCV)[1]/posterior.mode(model3.2$VCV)[1]+posterior.mode(model3.2$VCV)[2],2)`
+(_i.e._, as `r round(posterior.mode(model3.2$VCV)[1],3)`/(`r round(posterior.mode(model3.2$VCV)[1],3)` + `r round(posterior.mode(model3.1$VCV)[2], 3)`)).
+Just as we saw when estimating $h_2$ in tutorial 1, the inclusion of fixed effects will alter the estimated variance. If we determine total phenotypic variance as the sum of the variance components. Thus, proper interpretation is vital.
 ```{r}
 posterior.mode(model3.2$Sol)
 HPDinterval(model3.2$Sol, 0.95)
 ```
 
-
-Here age is modeled as a 5-level factor (specified using the function `as.factor()` at the beginning of the analysis). We could equally have fitted it as a continuous variable, in which case, given potential for a late life decline, we would probably also include a quadratic term.
+Here age is modeled as a 5-level factor (specified using the function `as.factor()` at the beginning of the analysis). We could equally have fitted it as a continuous variable, given a potential for a late life decline. In addition, we would probably also include a quadratic term.
 In addition, using `age` as continuous variable can help in saving some degree of freedom in the analysis.
-
 ```{r}
 gryphonRM$age_c <- as.numeric(gryphonRM$age)
 
@@ -81,21 +67,20 @@ model3.2_2 <- MCMCglmm(laydate ~ age_c + I(age_c^2),
 )
 par(mar = c(1, 1, 1, 1))
 plot(model3.2_2$Sol)
-plot(model3.2_2$VCV)
 posterior.mode(model3.2_2$VCV)
-
 posterior.mode(model3.2_2$Sol)
 HPDinterval(model3.2_2$Sol, 0.95)
 ```
-
+Or
+```{r}
+summary(model3.2_2$Sol)
+```
 
 ### Partitioning additive and permanent environment effects
-
-Generally we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals. 
-Non-additive contributions to fixed among-individual differences are normally referred to as _permanent environment effects_. If a trait has repeated measures then it is necessary to model permanent environment effects in an animal model to prevent upward bias in $V_A$.
-
+Generally, we expect that the repeatability will set the upper limit for heritability since among individual variation can be decomposed in the additive genetic variation and non additive genetic variation. In other word, the additive genetic variation is a subcomponent of the difference between individuals. Non-additive contributions to fixed among-individual differences are normally referred to as _permanent environment effects_. If a trait has repeated measures, then it is necessary to model permanent environment effects in an animal model to prevent upward bias in $V_A$. 
 To illustrate it, we first fit the animal model:
-```{r, cache = TRUE}
+```{r}
+#| cache: true
 Ainv <- inverseA(gryphonped)$Ainv
 model3.3 <- MCMCglmm(laydate ~ 1 + age,
   random = ~animal, ginv = list(animal = Ainv),
@@ -109,9 +94,8 @@ posterior.mode(model3.3$VCV)
 posterior.mode(model3.2$VCV)
 ```
 
-This suggests that most of the among-individual variance is – rightly or wrongly – being partitioned as $V_A$ here. In fact here the partition is wrong since the simulation included both additive genetic effects and additional fixed heterogeneity that was not associated with the pedigree structure (i.e. permanent environment effects).
-In order to o obtain an unbiased estimate of $V_A$, we need to fit the individual identity twice in the model: once linked to the pedigree (genetic effect) and once not linked to the pedigree (permanent environment effect).To do so, we need to duplicate the variable containing the individual identity `animal` and give it a new name. In addition, the prior need to be modified to integrate a seconf random effect.An more appropriate estimate of $V_A$ is given by the model:
-
+This suggests that most of the among-individual variance is – rightly or wrongly – being partitioned as $V_A$ here. In fact, here the partition is wrong since the simulation included both additive genetic effects and additional fixed heterogeneity that was not associated with the pedigree structure (i.e. permanent environment effects).
+In order to o obtain an unbiased estimate of $V_A$, we need to fit the individual identity twice in the model: once linked to the pedigree (genetic effect) and once not linked to the pedigree (permanent environment effect).To do so, we need to duplicate the variable containing the individual identity `animal` and give it a new name. In addition, the prior need to be modified to integrate a second random effect. A more appropriate estimate of $V_A$ is given by the model:
 ```{r}
 gryphonRM$animal_pe <- gryphonRM$animal
 # p.var <- var(gryphonRM$laydate, na.rm = TRUE)
@@ -121,28 +105,27 @@ prior3.4 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(
 )), R = list(V = 1, nu = 0.002))
 model3.4 <- MCMCglmm(laydate ~ 1 + age,
   random = ~ animal + animal_pe,
-  ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.4, verbose = FALSE
+  ginv = list(animal = Ainv),
+  data = gryphonRM,
+  prior = prior3.4,
+  verbose = FALSE
 )
 posterior.mode(model3.4$VCV)
 ```
 
-The estimate of$V_A$ is now much lower (reduced from 13.6735 to 5.1238) due to a proper separation in the additive and permanent environment effects. 
+The estimate of $V_A$ is now much lower due to a proper separation in the additive and permanent environment effects. 
 We can estimate $h^2$ and the repeatability from this model:
-
-```{r, cache = TRUE}
-model3.4.VP <- model3.4$VCV[, "animal"] + model3.4$VCV[, "animal_pe"] + model3.4$VCV[, "units"]
-model3.4.PE_VA <- model3.4$VCV[, "animal"] + model3.4$VCV[, "animal_pe"]
-posterior.mode(model3.4.PE_VA / model3.4.VP)
+```{r}
+model3.4.VP <- model3.4$VCV[, "animal"] +
+  model3.4$VCV[, "animal_pe"] + model3.4$VCV[, "units"]
 posterior.mode(model3.4$VCV[, "animal"] / model3.4.VP)
 ```
 
 ### Adding additional effects and testing significance
-
 Models of repeated measures can be extended to include other fixed or random effects.
-For example we can try including year of measurement (`year`) and birth year (`byear`) as other random effects.
-
-```{r, cache = TRUE}
-# p.var <- var(gryphonRM$laydate, na.rm = TRUE)
+For example, we can try including year of measurement (`year`) and birth year (`byear`) as other random effects.
+```{r}
+#| cache: true
 prior3.5 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(
   V = 1,
   nu = 0.002
@@ -152,8 +135,8 @@ prior3.5 <- list(G = list(G1 = list(V = 1, nu = 0.002), G2 = list(
 )), R = list(V = 1, nu = 0.002))
 
 model3.5 <- MCMCglmm(laydate ~ 1 + age,
-  random = ~ animal + animal_pe +
-    year + byear, ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.5,
+  random = ~ animal + animal_pe + year + byear,
+  ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.5,
   verbose = FALSE
 )
 posterior.mode(model3.5$VCV)
@@ -162,32 +145,48 @@ par(mar = c(1, 1, 1, 1))
 plot(model3.5$VCV)
 ```
 
-
 This model will return additional variance components corresponding to year of measurement effects and birth year of the female effects.
-
 $V_{byear}$ is very low and its posterior distribution (via the function `HPDinterval` or `plot`) is very close to zero indicating its not significance. You have to remember bayesian model never estimate variable to 0 or passing zero, so you will never see a credible  interval `CI` crossing zero for a variance.
-If you compared the DIC of model3.5 to a reduced model without `byear`, it should be very similar. 
 
-```{r, cache = TRUE}
+```{r}
+#| cache: true
 prior3.5_2 <- list(
-  G = list(G1 = list(V = 1, nu = 0.002), G2 = list(
-    V = 1,
-    nu = 0.002
-  ), G3 = list(V = 1, nu = 0.002)),
+  G = list(
+    G1 = list(V = 1, nu = 0.002),
+    G2 = list(V = 1, nu = 0.002),
+    G3 = list(V = 1, nu = 0.002)
+  ),
   R = list(V = 1, nu = 0.002)
 )
 
 model3.5_2 <- MCMCglmm(laydate ~ 1 + age,
-  random = ~ animal + animal_pe +
-    year, ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.5_2,
+  random = ~ animal + animal_pe + year,
+  ginv = list(animal = Ainv), data = gryphonRM, prior = prior3.5_2,
   verbose = FALSE
 )
 posterior.mode(model3.5_2$VCV)
+```
 
+If you compared the DIC of model3.5 to a reduced model without `byear`, it should be very similar. 
+```{r}
+#| cache: true
 model3.5$DIC
 model3.5_2$DIC
 ```
 
-`year` effects could alternatively be included as fixed effects (try it!, you should be able to handle the new prior specification at this point). This will reduce $V_R$ and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.
+`year` effects could alternatively be included as fixed effects (try it! you should be able to handle the new prior specification at this point). This will reduce $V_R$ and increase the estimates of heritability and repeatability, which must now be interpreted as proportions of phenotypic variance after conditioning on both age and year of measurement effects.
+```{r}
+prior3.6 <- list(
+  G = list(G1 = list(V = 1, nu = 0.002), G2 = list(V = 1, nu = 0.002)),
+  R = list(V = 1, nu = 0.002)
+)
 
-<!-- CX  What to do more , may be extract BLUP also !-->
+model3.6 <- MCMCglmm(laydate ~ 1 + age + year,
+  random = ~ animal + animal_pe,
+  ginv = list(animal = Ainv),
+  data = gryphonRM, prior = prior3.6,
+  verbose = FALSE
+)
+posterior.mode(model3.6$VCV)
+summary(model3.6$Sol)
+```

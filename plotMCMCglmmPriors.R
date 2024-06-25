@@ -1,122 +1,93 @@
 library(mvtnorm)
 library(MCMCglmm)
+library(tidyverse)
 library(ggplot2)
 library(gridExtra)
 
-##Writing the prior model for monovariate
-K <- 100000	#Number of iterations
-nu <- 1000	#nu parameter
-alpha.mu <- 0	#alpha.mu parameter
-alpha.V <- 1	#alpha.V parameter
+## see functions below
 
-#Prior for extended parameter Va
-pr_var_eta <- rIW(n = K,V = diag(1),nu = nu)[,1]
-pr_alpha <- rnorm(K, alpha.mu, sqrt(alpha.V))
-pr_var_a <- (pr_alpha*2) * pr_var_eta
+prior_G <- list(V = diag(1), nu = 1000, alpha.mu = 0, alpha.V = diag(1))
 
-#Prior for residual variance
-pr_var_r <- rIW(n = K, V = diag(1), nu = 0.01)[,1]
+# getting simulated priors
+pr <- data.frame(
+  ag = sim_prior1(prior_G),
+  yr = sim_prior1(prior_G),
+  pe = sim_prior1(prior_G),
+  col = sim_prior1(prior_G),
+  res = 1
+) %>%
+  mutate(
+    herit = ag / (rowSums(.))
+  )
+ggplot(dat, aes(x = pr_herit)) +
+  geom_density(bounds = c(0, Inf))
 
-#Resulting prior for heritability
-pr_herit <- pr_var_a / (pr_var_a + 1)
-
-#Plotting the density of the prior
-qplot(x=pr_herit,geom="density")
-
-##Writing the prior model for multi-response
-K <- 100000		#Number of iterations
-nu <- 2.002         	#nu parameter
-dim <- 2		#dimensions of the multivariate model
-V <- diag(dim)*5.002
-alpha.mu <- c(0,0)	#alpha.mu parameter
-alpha.V <- diag(dim)*c(1000)	#alpha.V parameter
-
+## Writing the prior model for multi-response
 dim <- 4
-R <- list(V = diag(dim), nu = dim + 0.002)#, fix = 2)
-G <- list(V = diag(dim) * 0.02, nu = dim + 1)#, alpha.mu = rep(0,dim), alpha.V = diag(dim)*1000)#*c(1000,10))
+R <- list(V = diag(dim), nu = dim + 0.002, fix = 2)
+G <- list(V = diag(dim) * 0.02, nu = dim + 1) # , alpha.mu = rep(0,dim), alpha.V = diag(dim)*1000)#*c(1000,10))
 
-  R = list(V = diag(c(1, 1, 1, 0.0001), 4, 4), nu = 3.002, fix = 2)
-  G = list(V = diag(4), nu = 4.002, fixed = 4)
+# R <- list(V = diag(c(1, 1, 1, 0.0001), 4, 4), nu = 3.002, fix = 2)
+# G <- list(V = diag(4), nu = 4.002, fixed = 4)
 
-spr <- sim.priors(R = R, G = G)
-a<-cov2cor.spr(spr$G)
-qplot(a[,15], geom="density")
-plot.priors(spr$G,"cor", dim = dim)
-plot.priors(spr,"cov")
+spr_G <- sim_prior(G)
+spr_R <- sim_prior(R)
+
+spr_P <- spr_G + spr_R
+
+## looking at prior for covaraince and correlation
+ggplot(spr_P, aes(x = G4.3)) +
+  geom_density(bounds = c(-Inf, Inf))
+a <- cov2cor.spr(spr_P)
+ggplot(a,aes(x=V15))  + geom_density(bounds = c(-1, 1))
 
 
 
-sim.priors <- function(K = 100000, R, G){
-#Prior for extended parameter Va
-    dimG <- ncol(G$V)
-    dimR <- ncol(R$V)
-    if(!is.null(G$alpha.mu)){
-        pr_var_eta <- rIW(n = K, V = G$V, nu = G$nu)
-        pr_alpha <- rmvnorm(K, G$alpha.mu, G$alpha.V)
-        pr_tot <- cbind(pr_alpha, pr_var_eta)
 
-#Prior for G matrix
-        pr_var_G <- lapply(1:K, function(i){
-            vec <- pr_tot[i,]
-            alpha <- diag(vec[1:dimG])
-            ETA <- matrix(vec[-c(1:dimG)], ncol = dimG)
-            t(alpha) %*% ETA %*% alpha
-        })
-    }
-    else {
-        if(!is.null(G$fix)) {
-          pr_var_eta <- rIW(n=K, V = G$V, nu = G$nu, fix = G$fix)
-        } else {
-          pr_var_eta <- rIW(n = K, V = G$V, nu = G$nu)
-        }
-        pr_var_G <- lapply(1:K, function(i){
-            matrix(pr_var_eta[i,], ncol = dimG)
-        })
-    }
 
-## Prior for R matrix
-    if(is.null(R$fix)) {
-        tmp <- rIW(n = K, V = R$V, nu = R$nu)
-    } else {
-        tmp <- rIW(n = K, V = R$V, nu = R$nu, fix = R$fix)
-    }
-    pr_var_R <- lapply(1:K, function(i){
-        matrix(tmp[i,], ncol = dimR)
-    })
-
-## Combining the priors in a dataframe
-    pr_V_G <- as.data.frame(matrix(unlist(pr_var_G), ncol = dimG^2, byrow = TRUE))
-    colnames(pr_V_G) <- paste0("G",rep(1:dimG, each = dimG), ".", rep(1:dimG, dimG))
-    pr_V_R <- as.data.frame(matrix(unlist(pr_var_R), ncol = dimR^2, byrow = TRUE))
-    colnames(pr_V_R) <- paste0("R",rep(1:dimR, each = dimR), ".", rep(1:dimR, dimR))
-    pr <- list(G = pr_V_G, R = pr_V_R)
-    pr
+## simulating the prior functions
+# Prior for univariate only
+sim_prior1 <- function(prior, n = 100000) {
+  pr_var_eta <- rIW(n = n, V = prior$V, nu = prior$nu)
+  if (!is.null(prior$alpha.mu)) {
+    pr_alpha <- rnorm(n, prior$alpha.mu, sqrt(prior$alpha.V))
+    pr_var <- (pr_alpha^2) * pr_var_eta
+  } else {
+    pr_var <- pr_var_eta
+  }
+  pr_var
 }
+# Prior for multivariate cases
+sim_prior <- function(G, K = 100000) {
+  dimG <- ncol(G$V)
+  if (!is.null(G$fix)) {
+    pr_var_eta <- rIW(n = K, V = G$V, nu = G$nu, fix = G$fix)
+  } else {
+    pr_var_eta <- rIW(n = K, V = G$V, nu = G$nu)
+  }
+  if (is.null(G$alpha.mu)) {
+    pr_var_G <- lapply(1:K, function(i) {
+      matrix(pr_var_eta[i, ], ncol = dimG)
+    })
+  } else {
+    pr_alpha <- rmvnorm(K, G$alpha.mu, G$alpha.V)
+    pr_tot <- cbind(pr_alpha, pr_var_eta)
 
-
+    pr_var_G <- lapply(1:K, function(i) {
+      vec <- pr_tot[i, ]
+      alpha <- diag(dimG) * vec[1:dimG]
+      ETA <- matrix(vec[-c(1:dimG)], ncol = dimG)
+      t(alpha) %*% ETA %*% alpha
+    })
+  }
+  ## Combining the priors in a dataframe
+  pr_V_G <- as.data.frame(matrix(unlist(pr_var_G), ncol = dimG^2, byrow = TRUE))
+  colnames(pr_V_G) <- paste0("G", rep(1:dimG, each = dimG), ".", rep(1:dimG, dimG))
+  pr_V_G
+}
 
 cov2cor.spr <- function(spr) {
-  as.matrix(t(apply(spr, 1, function(x) {
+  as.data.frame(t(apply(spr, 1, function(x) {
     c(cov2cor(matrix(unlist(x), nrow = sqrt(length(x)), ncol = sqrt(length(x)), byrow = TRUE)))
-  }
-  )))
+  })))
 }
-
-
-
-K <- 100000 # Number of iterations
-nu <- 0.01 # nu parameter
-alpha.mu <- 0 # alpha.mu parameter
-alpha.V <- 1
-# Prior for extended parameter Va
-pr_var_a <- rIW(n = K, V = diag(1), nu = 1)[, 1]
-
-
-# Prior for residual variance
-pr_var_r <- rIW(n = K, V = diag(1), nu = 1)[, 1]
-
-# Resulting prior for heritability
-pr_herit <- pr_var_a / (pr_var_a + pr_var_r)
-
-# Plotting the density of the prior
-qplot(x = pr_herit, geom = "density") #+ xlim(0,1)

@@ -1,6 +1,7 @@
 ## MCMCglmm
-
-```{r, echo = FALSE, message=FALSE}
+```{r}
+#| echo: false
+#| message: false
 source("_params.r")
 gryphon <- read.csv("data/gryphon.csv")
 gryphon$animal <- as.factor(gryphon$animal)
@@ -16,26 +17,22 @@ gryphonped$mother <- as.factor(gryphonped$mother)
 library(tidyverse)
 ```
 
-`MCMCglmm` has the advantage to keep automatically keep the lines with missing data and will try to fit the model use latent variables for missing data.
-We will remove the missing values from the data before fitting the model.
-
-
+`MCMCglmm` has the advantage to automatically keep the lines with missing data and will try to fit the model use latent variables for missing data. However, to facilitate the model convergence and calculation duration, we will remove the missing values from the data before fitting the model.
 ```{r}
 gryphon2 <- subset(gryphon, !is.na(bwt) & !is.na(tarsus))
 ```
-
-
-First load MCMCglmm:
+First load MCMCglmm and produce the inverse matrix of pedigree:
 ```{r}
 library(MCMCglmm)
 Ainv <- inverseA(gryphonped)$Ainv
 ```
 
 ### Fitting the model
-
-Fitting a multivariate model in MCMCglmm involves several new consideration above those for fitting univariate models. First, we have to fit multivariate priors; second, we have to specify the ways in which effects on different traits may covary, including the nature of residual (co)variation; and third, we will have to be a little more specific when specifying to MCMCglmm what type of distributions from which we assume our data are drawn. Our most basic model can be specified as:
-
-```{r, cache = TRUE, fig.cap="The posterior distribution of the additive genetic effect for tarsus length in a MCMCglmm run with default values"}
+Fitting a multivariate model in MCMCglmm involves several new considerations above those for fitting univariate models. First, we have to fit multivariate priors; second, we have to specify the ways in which effects on different traits may covary, including the nature of residual (co)variation; and third, we will have to be a little more specific when specifying to MCMCglmm what type of distributions from which we assume our data are drawn. Our most basic model can be specified as:
+```{r}
+#| cache: true
+#| fig-cap: The posterior distribution of the additive genetic effect for tarsus length
+#|   in a MCMCglmm run with default values
 prior2.1 <- list(
   G = list(G1 = list(V = diag(2), nu = 1.002)),
   R = list(V = diag(2), nu = 1.002)
@@ -53,13 +50,13 @@ plot(model2.1$VCV[, "traittarsus:traittarsus.animal"])
 autocorr.diag(model2.1$VCV)[, "traittarsus:traittarsus.animal"][2]
 ```
 
-We have constructed the prior similarly to the those in the univariate models in tutorial 1, only we are specifying a 2x2 covariance matrix rather than a single variance. In order to provide proper priors, we have set the degree of belief parameter to greater than 1 (1.002). Those priors are not necessarily weak or uninformative in all circumstances. We will consider them adequate nonetheless for this tutorial. Please the vignette of the MCMCglmm packages [@MCMCglmm] for more information on priors. In tutorial 1, we used full autocorrelation tables to evaluate the validity of the posterior distribution. Note that we have not done this here. 
+We have constructed the prior similarly to those in the univariate models in tutorial 1, only we are specifying a 2x2 covariance matrix rather than a single variance. In order to provide proper priors, we have set the degree of belief parameter to greater than 1 (1.002). Those priors are not necessarily weak or uninformative in all circumstances. We will consider them adequate nonetheless for this tutorial. Please the vignette of the MCMCglmm packages [@MCMCglmm] for more information on priors. In tutorial 1, we used full autocorrelation tables to evaluate the validity of the posterior distribution. Note that we have not done this here. 
 
-For a bivariate model this table can become very complex. Nonetheless, it is worth evaluating, rather it is simply to large to include here. It can be viewed in the console as before. Here we have displayed only the autocorrelation for estimates of additive genetic effects for tarsus length with a lag of one samples (10 iterations given this MCMCglmm run with default values). This lag of `r autocorr.diag(model2.1$VCV)[,"traittarsus:traittarsus.animal"][2]` is clearly unacceptable. The posterior distribution of the additive genetic effect on tarsus length is shown in Figure 4, note the autocorrelation evident in the left-hand plot. 
+For a bivariate model, the output  table can become very complex. Nonetheless, it is worth evaluating, rather it is simply too large to include here. It can be viewed in the console as before. Here we have displayed only the autocorrelation for estimates of additive genetic effects for tarsus length with a lag of one sample (10 iterations given this MCMCglmm run with default values). This lag of `r autocorr.diag(model2.1$VCV)[,"traittarsus:traittarsus.animal"][2]` is clearly unacceptable. The posterior distribution of the additive genetic effect on tarsus length is shown, note the autocorrelation evident in the left-hand plot. 
 
 We will opt to run the analysis for longer. This longer run could be run using the following code (including a line to save the output):
-
-```{r, eval = params$fit_all}
+```{r}
+#| eval: !expr params$fit_all
 model2.1 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1,
   random = ~ us(trait):animal,
   rcov = ~ us(trait):units,
@@ -72,16 +69,14 @@ model2.1 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1,
 save(model2.1, file = "data/MCMCglmm_model2_1_LongRun.rda")
 ```
 
-However, this run might take as long as an hour. For the purpose of this tutorial we have provided an output for such a run. It can be obtained and manipulated as follows, assuming that the file `MCMCglmm_model2_1_LongRun.rda` is available at the specified location:
-
+However, this run might take as long as an hour. For the purpose of this tutorial, we have provided an output for such a run. It can be obtained and manipulated as follows, assuming that the file `MCMCglmm_model2_1_LongRun.rda` is available at the specified location:
 ```{r}
 load(file = "data/MCMCglmm_model2_1_LongRun.rda")
 autocorr.diag(model2.1$VCV)[, "traittarsus:traittarsus.animal"][2]
 ```
 
-This level of autocorrelation is more acceptable, at least for the purpose of demonstration in this tutorial.
+This level of autocorrelation is more acceptable, at least for the purpose of demonstration in this tutorial. 
 We can recover variance components, heritabilities, and genetic correlations from the posterior distribution of this model:
-
 ```{r}
 posterior.mode(model2.1$VCV)
 heritability.bwt2.1 <- model2.1$VCV[, "traitbwt:traitbwt.animal"] / (model2.1$VCV[, "traitbwt:traitbwt.animal"] + model2.1$VCV[, "traitbwt:traitbwt.animal"])
@@ -95,9 +90,9 @@ posterior.mode(genetic.correlation2.1)
 
 ### Adding fixed and random effects
 Fixed and random effects can be added just as for the univariate case.
-Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of byear and mother, we could specify a bivariate formulation of this using the following code (including a line to save the output):
-
-```{r, eval = params$fit_all}
+Given that our full model of bwt from tutorial 1 had sex as a fixed effect as well as random effects of `byear` and `mother`, we could specify a bivariate formulation using the following code (including a line to save the output):
+```{r}
+#| eval: !expr params$fit_all
 prior2.2 <- list(
   G = list(
     G1 = list(V = diag(2), nu = 1.002),
@@ -117,24 +112,24 @@ model2.2 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1 + trait:sex,
 save(model2.2, file = "data/MCMCglmm_model2_2_LongRun.rda")
 ```
 
-Again we have provided the data from one such run. It can be accessed using the code:
-
+Again, we have provided the data from one such run. It can be accessed using the code:
 ```{r}
 load(file = "data/MCMCglmm_model2_2_LongRun.rda")
 summary(model2.2)
 autocorr(model2.2$VCV)[, , "traittarsus:traittarsus.animal"][3, 4]
 ```
 
-We can evaluate the fixed effect, their Ci evaluate their significance. 
-```{r, fig.cap = "Posterior trace and distribution for the fixed effects in model 2.2", fig.width = 4, fig.height = 6}
+We can evaluate the fixed effect; their Ci evaluate their significance. 
+```{r}
+#| fig-cap: Posterior trace and distribution for the fixed effects in model 2.2
+#| fig-width: 4
+#| fig-height: 6
 posterior.mode(model2.2$Sol)
 HPDinterval(model2.2$Sol, 0.95)
 plot(model2.2$Sol)
 ```
 
-
 As before we can obtain the raw variance component estimates and genetic correlations for the random effects:
-
 ```{r}
 posterior.mode(model2.2$VCV)
 genetic.correlation2.2 <- model2.2$VCV[, "traitbwt:traittarsus.animal"] / sqrt(model2.2$VCV[, "traitbwt:traitbwt.animal"] * model2.2$VCV[, "traittarsus:traittarsus.animal"])
@@ -144,7 +139,6 @@ posterior.mode(maternal.correlation2.2)
 ```
 
 Evaluation of the statistical support for these genetic and maternal correlations is straightforward. Because we imposed no constraint on their estimation, we can evaluate the extent to which the posterior distributions overlap zero:
-
 ```{r}
 HPDinterval(genetic.correlation2.2, 0.95)
 HPDinterval(maternal.correlation2.2, 0.95)
@@ -152,85 +146,13 @@ HPDinterval(maternal.correlation2.2, 0.95)
 
 Neither or these posterior distributions overlaps zero, so we can consider them both statistically supported.
 
-
-<!-- models are utterly shitty with corg and I would not dare present them honestly
-
-### Direct estimate of the correlation instead of the covariance.
-For this example, we just estimate the correlation at the genetic level, the covariance for the other random effect (`mother` and `byear`) and the residual level was not estimate to help the model to converge and compute faster. The prior will be the same but we change the `pr` argument to be `TRUE` to keep the posterior distribution of random effects.
-To simplify the following code and facilitate the BLUP extraction, we rename the variable T1 and T2 and estimate correlation only for the additive genetic and residual matrices.
-
-```{r, eval = params$fit_all, eval = FALSE, echo= FALSE}
-gryphon2$T1 <- gryphon2$bwt
-gryphon2$T2 <- gryphon2$tarsus
-#
-model2.3 <- MCMCglmm(cbind(T1, T2) ~ trait - 1 + trait:sex,
-  random = ~ corg(trait):animal + corg(trait):byear + corg(trait):mother,
-  rcov = ~ corg(trait):units,
-  family = c("gaussian", "gaussian"),
-  ginv = list(animal = Ainv), data = gryphon2,
-  nitt = 130000, thin = 100, burnin = 30000,
-  prior = prior2.2, verbose = FALSE, pr = TRUE,
-)
-
-save(model2.3, file = "data/MCMCglmm_model2_3_LongRun.rda")
-```
-
-Again we have provided the data from one such run. It can be accessed using the code:
-
-```{r, eval = FALSE, echo= FALSE}
-load(file = "data/MCMCglmm_model2_3_LongRun.rda")
-summary(model2.3)
-autocorr(model2.3$VCV)[, , "traitT2:traitT1.animal"][3, 4]
-```
-
-Here we can plot the genetic correlation by extraction the breeding values or BLUP. Just to remember it is an example, the correlation is close to 1 due to a weak prior and model parameters. 
-
-```{r, eval = FALSE, echo= FALSE}
-DvsS <- data.frame(
-  Trait = colnames(model2.3$Sol),
-  BLUP = posterior.mode(model2.3$Sol),
-  CI = HPDinterval((model2.3$Sol))
-)
-DvsS <- DvsS[5:2622, ] # keep only rows associated with animal
-
-DvsS$ID <- substr(DvsS$Trait, 16, 19)
-DvsS$TRAIT <- substr(DvsS$Trait, 6, 7)
-summary(factor(DvsS$TRAIT))
-DvsS$Trait <- NULL
-BLUPS <- reshape(DvsS, v.names = c("BLUP", "CI.lower", "CI.upper"), idvar = "ID", timevar = "TRAIT", direction = "wide")
-nrow(BLUPS)
-rownames(BLUPS) <- c()
-colnames(BLUPS) <- c("ID", "BLUP.btw", "CI.L.btw", "CI.U.btw", "BLUP.tarsus", "CI.L.tarsus", "CI.U.tarsus")
-summary(BLUPS)
-#
-par(mfrow = c(2, 2))
-hist(BLUPS$BLUP.btw)
-qqnorm(BLUPS$BLUP.btw)
-qqline(BLUPS$BLUP.btw)
-hist(BLUPS$BLUP.tarsus)
-qqnorm(BLUPS$BLUP.tarsus)
-qqline(BLUPS$BLUP.tarsus)
-```
-
-Here the code to plot the genetic correlation.
-```{r, eval = FALSE, echo= FALSE}
-plot(BLUP.tarsus ~ BLUP.btw, BLUPS, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white", ylim = c(-4, 4), xlim = c(-4, 4))
-arrows(x0 = BLUPS$BLUP.btw, y0 = BLUPS$CI.L.tarsus, x1 = BLUPS$BLUP.btw, y1 = BLUPS$CI.U.tarsus, col = "black", code = 3, angle = 90, length = 0)
-arrows(x0 = BLUPS$CI.L.btw, y0 = BLUPS$BLUP.tarsus, x1 = BLUPS$CI.U.btw, y1 = BLUPS$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
-points(BLUP.tarsus ~ BLUP.btw, BLUPS, pch = 16, col = "red", cex = 1.5)
-points(BLUP.tarsus ~ BLUP.btw, BLUPS, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
-mtext("btw (BV±SE)", side = 1, line = 2.4)
-mtext("tarsus (BV±SE)", side = 2, line = 2, las = 3)
-```
-
--->
+Note : By changing the `pr` argument to be `TRUE` within a model allows it to keep the posterior distribution of random effects. This is important to save the BLUP and plot covariances or correlations. Similar to asreml, MCMCglmm can directly estimate the correlation instead of the covariance, by changing the animal matrix structure  from ‘us’ to ‘corg’ or ‘corgh’. However, sometimes the structure fails to estimate it correctly, which is fine. In bayesian framework, any posterior distribution can be modified thus extracting the covariance BLUP allows us to plot the correlation as well.
 
 
-### Partitioning (co)variances
-As in the tutorial 1, it is possible to partition the variance-covariance matrix between groups (here sex)
-Note: the model is simplified without sex-specific covariance for the `byear` and `mother` random effect. 
-
-```{r, eval = params$fit_all}
+### Partitioning (co)variances 
+As in the tutorial 1, it is possible to partition the variance-covariance matrix between groups (here sex).
+```{r}
+#| eval: !expr params$fit_all
 gryphon2 <- gryphon2[order(gryphon2$sex), ]
 
 
@@ -239,7 +161,9 @@ prior2.3 <- list(
     G1 = list(V = diag(2), nu = 1.002),
     G2 = list(V = diag(2), nu = 1.002),
     G3 = list(V = diag(2), nu = 1.002),
-    G4 = list(V = diag(2), nu = 1.002)
+    G4 = list(V = diag(2), nu = 1.002),
+    G5 = list(V = diag(2), nu = 1.002),
+    G6 = list(V = diag(2), nu = 1.002)
   ),
   R = list(
     V1 = list(V = diag(2), nu = 1.002),
@@ -248,7 +172,8 @@ prior2.3 <- list(
 )
 
 model2.4 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1 + trait:sex,
-  random = ~ us(at.level(sex, "1"):trait):animal + us(at.level(sex, "2"):trait):animal + idh(trait):byear + idh(trait):mother,
+  random = ~ us(at.level(sex, "1"):trait):animal + us(at.level(sex, "2"):trait):animal +us(at.level(sex, "1"):trait):byear +us(at.level(sex, "2"):trait):byear 
+  + us(at.level(sex, "1"):trait):mother +us(at.level(sex, "2"):trait):mother,
   rcov = ~ us(at.level(sex, "1"):trait):units + us(at.level(sex, "2"):trait):units,
   family = c("gaussian", "gaussian"),
   ginv = list(animal = Ainv), data = gryphon2,
@@ -256,18 +181,17 @@ model2.4 <- MCMCglmm(cbind(bwt, tarsus) ~ trait - 1 + trait:sex,
   prior = prior2.3, verbose = FALSE, pr = TRUE,
 )
 save(model2.4, file = "data/MCMCglmm_model2_4_LongRun.rda")
+
 ```
 
-Again we have provided the data from one such run. It can be accessed using the code:
-
+Again, we have provided the data from one such run. It can be accessed using the code: ISSUE AUTOCORE too big
 ```{r}
 load(file = "data/MCMCglmm_model2_4_LongRun.rda")
 summary(model2.4)
-autocorr(model2.4$VCV)
+#autocorr(model2.4$VCV)
 ```
+
 As before we can obtain the raw variance component estimates and genetic correlations for the random effects:
-
-
 ```{r}
 posterior.mode(model2.4$VCV)
 #
@@ -283,7 +207,6 @@ posterior.mode(residual.correlation2.4.M)
 ```
 
 Evaluation of the statistical support for these sex-specific correlations is straightforward. Because we imposed no constraint on their estimation, we can evaluate the extent to which the posterior distributions overlap zero or overlap each other:
-
 ```{r}
 HPDinterval(genetic.correlation2.4.F, 0.95)
 HPDinterval(genetic.correlation2.4.M, 0.95)
@@ -291,8 +214,7 @@ HPDinterval(residual.correlation2.4.F, 0.95)
 HPDinterval(residual.correlation2.4.M, 0.95)
 ```
 
-Here a plot to visualize the overlaps of covariances.
-
+Here a plot to visualize the overlaps of correlations.
 ```{r}
 cor.est <- rbind(
   cbind(posterior.mode(genetic.correlation2.4.F, ), HPDinterval(genetic.correlation2.4.F, , 0.95)),
@@ -300,7 +222,6 @@ cor.est <- rbind(
   cbind(posterior.mode(residual.correlation2.4.F, ), HPDinterval(residual.correlation2.4.F, , 0.95)),
   cbind(posterior.mode(residual.correlation2.4.M), HPDinterval(residual.correlation2.4.M, 0.95))
 )
-
 
 plot(c(0.95, 1.05, 1.95, 2.05) ~ cor.est[, 1], xlim = c(-1, 1), ylim = c(0.5, 2.5), xlab = "", ylab = "", col = c("red", "blue"), pch = c(16, 17), cex = 2, yaxt = "n")
 arrows(y0 = 0.95, x0 = cor.est[1, 2], y1 = 0.95, x1 = cor.est[1, 3], code = 3, angle = 90, length = 0, col = c("red"), lwd = 2)
@@ -311,89 +232,16 @@ mtext("Correlation (±CI)", side = 1, las = 1, adj = 0.4, line = 3, cex = 1.6)
 axis(2, at = 1, labels = c("genetic"), las = 3, cex.axis = 1.6)
 axis(2, at = 2, labels = c("residual"), las = 3, cex.axis = 1.6)
 ```
-
 These posterior distributions overlap between each other, which suggested the correlation were not significantly different between sexes. 
 
-
-<!--
-  Issue with corgh structure at the multiple level, no idea why since the structure us works perfectly 
-  I would skip that again
-
-By using `corgh`instead of `us`, we can extract the BLUPs and plot the sex-specific correlation.
-```{r, eval = params$fit_all, echo = FALSE}
-gryphon2$T1 <- gryphon2$bwt
-gryphon2$T2 <- gryphon2$tarsus
-#
-model2.5 <- MCMCglmm(cbind(T1, T2) ~ trait - 1 + trait:sex,
-  random = ~ corgh(at.level(sex, "1"):trait):animal + corgh(at.level(sex, "2"):trait):animal + idh(trait):byear + idh(trait):mother,
-  rcov = ~ us(at.level(sex, "1"):trait):units + us(at.level(sex, "2"):trait):units,
-  family = c("gaussian", "gaussian"),
-  ginv = list(animal = Ainv), data = gryphon2,
-  nitt = 130000, thin = 100, burnin = 30000,
-  prior = prior2.3, verbose = FALSE, pr = TRUE,
-)
-
-save(model2.5, file = "data/MCMCglmm_model2_5_LongRun.rda")
-```
-
-Again we have provided the data from one such run. It can be accessed using the code:
-
-```{r, eval = FALSE, echo= FALSE}
-load(file = "data/MCMCglmm_model2_5_LongRun.rda")
-summary(model2.5)
-autocorr(model2.5$VCV)
-```
-
-Here the simple plot to plot the genetic correlation
-```{r, eval = FALSE, echo= FALSE}
-DvsS <- data.frame(
-  Trait = colnames(model2.5$Sol),
-  BLUP = posterior.mode(model2.5$Sol),
-  CI = HPDinterval((model2.5$Sol))
-)   %>%
-  filter(grepl("animal", Trait))
-DvsS$ID <- substr(DvsS$Trait, 35, 38)
-DvsS$TRAIT <- substr(DvsS$Trait, 25, 26)
-DvsS$SEX <- substr(DvsS$Trait, 16, 16)
-summary(factor(DvsS$TRAIT))
-DvsS$Trait <- NULL
-BLUPS <- reshape(DvsS, v.names = c("BLUP", "CI.lower", "CI.upper"), idvar = c("ID", "SEX"), timevar = "TRAIT", direction = "wide")
-nrow(BLUPS)
-rownames(BLUPS) <- c()
-colnames(BLUPS) <- c("ID", "SEX", "BLUP.btw", "CI.L.btw", "CI.U.btw", "BLUP.tarsus", "CI.L.tarsus", "CI.U.tarsus")
-summary(BLUPS)
-#
-#
-FEM <- subset(BLUPS, SEX == "1")
-MAL <- subset(BLUPS, SEX == "1")
-par(mfrow = c(2, 1), mar = c(4,4,1,1))
-
-plot(BLUP.tarsus ~ BLUP.btw, FEM, xlab = "btw (BV±CI)", ylab = "tarsus (BV±CI)", las = 1.2, bty = "o", col = "white", ylim = c(-4, 4), xlim = c(-4, 4))
-arrows(x0 = BLUPS$BLUP.btw, y0 = FEM$CI.L.tarsus, x1 = FEM$BLUP.btw, y1 = FEM$CI.U.tarsus, col = "black", code = 3, angle = 90, length = 0)
-arrows(x0 = BLUPS$CI.L.btw, y0 = FEM$BLUP.tarsus, x1 = FEM$CI.U.btw, y1 = FEM$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
-points(BLUP.tarsus ~ BLUP.btw, FEM, pch = 16, col = "red", cex = 1.5)
-points(BLUP.tarsus ~ BLUP.btw, FEM, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
-
-plot(BLUP.tarsus ~ BLUP.btw, MAL, xlab = "btw (BV±CI)", ylab = "tarsus (BV±CI)", las = 1.2, bty = "o", col = "white", ylim = c(-4, 4), xlim = c(-4, 4))
-arrows(x0 = BLUPS$BLUP.btw, y0 = MAL$CI.L.tarsus, x1 = MAL$BLUP.btw, y1 = MAL$CI.U.tarsus, col = "black", code = 3, angle = 90, length = 0)
-arrows(x0 = BLUPS$CI.L.btw, y0 = MAL$BLUP.tarsus, x1 = MAL$CI.U.btw, y1 = MAL$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
-points(BLUP.tarsus ~ BLUP.btw, MAL, pch = 17, col = "blue", cex = 1.5)
-points(BLUP.tarsus ~ BLUP.btw, MAL, pch = 1, col = rgb(0, 0, 0, 0.3), cex = c(1.5))
-
-```
--->
-
 ### Between groups (co)variances and the B-matrix
-
-Animal models are amazing model. With different group within a population, it is also possible to estimate how much the different groups shared the same genetic via the cross-group genetic covariance.
-This covariance is essential to understand ontogenic or sexual conflict, which can constraint or enhanced response to evolution. 
+Animal models are amazing model. With different group within a population, it is also possible to estimate how much the different groups shared the same genetic via the cross-group genetic covariance. This covariance is essential to understand ontogenic or sexual conflict, which can constraint or enhanced response to evolution. 
 As an example, we estimate the cross-sex genetic correlation `r_{fm}`
-
 First, we need to dissociate the trait values for females and males into distinct variables. Then, we use a bivariate model (for one trait: `tarsus`) and a multivariate model (for various traits: `tarsus` and `bwt`). With a multivariate model, the cross-sex-cross trait covariance matrix is also named `B matrix`.
-
+Note that a bivariate model between the sexes is very similar to the “Further partitioning variance” section in the univariate part of the guide.
 The coding is a bit complain but pretty straightforward. It is important to modify the covariance matrix at the residual level to avoid the calculation of a cross-sex residual covariance (no individual switched sex during the experiment).
-
-```{r, eval = params$fit_all}
+```{r}
+#| eval: !expr params$fit_all
 gryphon2$bwt.1 <- NA
 gryphon2$tarsus.1 <- NA
 animal <- gryphon2[gryphon2$sex == "1", ]$animal
@@ -434,30 +282,21 @@ model.BivSex <- MCMCglmm(cbind(tarsus.1, tarsus.2) ~ trait - 1,
 save(model.BivSex, file = "data/MCMCglmm_model_BivSex_LongRun.rda")
 ```
 
-
-Again we have provided the data from one such run. It can be accessed using the code:
-
+Again, we have provided the data from one such run. It can be accessed using the code: ISSUE AUTOCORE too big
 ```{r}
 load(file = "data/MCMCglmm_model_BivSex_LongRun.rda")
 summary(model.BivSex)
-autocorr(model.BivSex$VCV)
+#autocorr(model.BivSex$VCV)
 ```
 
-The cross-sex genetic correlation can estimate form the output of the model. 
-For tarsus length at fledging, sexes shared a lot of genetic variance which is commun for a trait with low sexual dimorphism. If the selection is antagonistic between males and females, sexes can not evolve freely form the other sexes and a sexual conflict appears.
-
-
+The cross-sex genetic correlation can estimate form the output of the model. For tarsus length at fledging, sexes shared a lot of genetic variances which is common for a trait with low sexual dimorphism. If the selection is antagonistic between males and females, sexes can not evolve freely form the other sexes and a sexual conflict appears.
 ```{r}
-
 rfm <- model.BivSex$VCV[, "traittarsus.1:traittarsus.2.animal"] / sqrt(model.BivSex$VCV[, "traittarsus.1:traittarsus.1.animal"] * model.BivSex$VCV[, "traittarsus.2:traittarsus.2.animal"])
 posterior.mode(rfm)
 HPDinterval(rfm, 0.95)
 ```
 
-We can estimate directly the correlation and plot the cross-sex genetic correlation
-
-
-
+We can directly estimate the correlation and plot the cross-sex genetic correlation.
 ```{r}
 DvsS <- data.frame(
   Trait = colnames(model.BivSex$Sol),
@@ -475,9 +314,8 @@ nrow(BLUPS)
 rownames(BLUPS) <- c()
 colnames(BLUPS) <- c("ID", "BLUP.btw", "CI.L.btw", "CI.U.btw", "BLUP.tarsus", "CI.L.tarsus", "CI.U.tarsus")
 summary(BLUPS)
-
-
-
+#
+par(mfrow = c(1, 1))
 plot(BLUP.tarsus ~ BLUP.btw, BLUPS, xlab = "", ylab = "", las = 1.2, bty = "o", col = "white")
 arrows(x0 = BLUPS$BLUP.btw, y0 = BLUPS$CI.L.tarsus, x1 = BLUPS$BLUP.btw, y1 = BLUPS$CI.U.tarsus, col = "black", code = 3, angle = 90, length = 0)
 arrows(x0 = BLUPS$CI.L.btw, y0 = BLUPS$BLUP.tarsus, x1 = BLUPS$CI.U.btw, y1 = BLUPS$BLUP.tarsus, col = "black", code = 3, angle = 90, length = 0)
@@ -488,10 +326,9 @@ mtext("Female tarsus (BV±CI)", side = 2, line = 2, las = 3)
 #
 ```
 
-
 The B matrix used the same code but in a multivariate animal model framework. Here some example code, however due to the nature of the dataset, the cross-sex genetic covariance for birth weight is hard to estimate making difficulty to fit this multivariate animal model.
-
-```{r, eval = params$fit_all}
+```{r}
+#| eval: !expr params$fit_all
 prior2.5 <- list(
   G = list(
     G1 = list(V = diag(4), nu = 1.002),
@@ -511,14 +348,14 @@ model.MultivSex <- MCMCglmm(cbind(tarsus.1, bwt.1, tarsus.2, bwt.2) ~ trait - 1,
   nitt = 130000, thin = 100, burnin = 30000,
   prior = prior2.5, verbose = FALSE, pr = TRUE
 )
+#
 save(model.MultivSex, file = "data/MCMCglmm_model_MultivSex_LongRun.rda")
 ```
 
-
-Again we have provided the data from one such run. It can be accessed using the code:
-
+Again, we have provided the data from one such run. It can be accessed using the code: ISSUE AUTOCORRELATION
 ```{r}
 load(file = "data/MCMCglmm_model_MultivSex_LongRun.rda")
 summary(model.MultivSex)
-autocorr(model.MultivSex$VCV)
+#autocorr(model.MultivSex$VCV)
 ```
+

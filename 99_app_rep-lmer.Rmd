@@ -1,6 +1,7 @@
 ## Repeatability with lmer
 
-```{r, echo=FALSE}
+```{r}
+#| echo: false
 gryphonRM <- read.csv("data/gryphonRM.csv")
 gryphonRM$animal <- as.factor(gryphonRM$animal)
 gryphonRM$byear <- as.factor(gryphonRM$byear)

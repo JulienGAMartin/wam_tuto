@@ -109,39 +109,40 @@ format:
 #    include-before-body: latex/before_body.tex
 #    include-after-body: latex/after_body.tex
 #    toc-depth: 2
-  pdf: 
-    from: markdown+emoji
-#    number-depth: 2
-#    toc-depth: 2
-    df-print: paged
-    number-sections: true
-    documentclass: scrreprt
-    pdf-engine: lualatex
-#    keep-tex: true
-    classoption:
-      - "chapterprefix=true"
-      - "headings=big"
-      - "twoside=semi"
-    papersize: letter
-    fontsize: 11pt
-    geometry:
-    - top=2cm
-    - bottom=2cm
-    - left=2cm
-    - right=2cm
-    - footskip=1cm
-    block-headings: false
-    colorlinks: true
-    linestretch: 1.5
-    template-partials:
-      - latex/before-title.tex
-      - latex/before-body.tex
-#        - title.tex
-#      - toc.tex
-
-  epub:
-    dev: svglite
-    stylesheet: css/epub.css
-    toc: true
-
-
+#  pdf: 
+#    from: markdown+emoji
+##    number-depth: 2
+##    toc-depth: 2
+#    df-print: paged
+#    number-sections: true
+#    documentclass: scrreprt
+#    pdf-engine: lualatex
+##    keep-tex: true
+#    classoption:
+#      - "chapterprefix=true"
+#      - "headings=big"
+#      - "twoside=semi"
+#    papersize: letter
+#    fontsize: 11pt
+#    geometry:
+#    - top=2cm
+#    - bottom=2cm
+#    - left=2cm
+#    - right=2cm
+#    - footskip=1cm
+#    block-headings: false
+#    colorlinks: true
+#    linestretch: 1.5
+#    template-partials:
+#      - latex/before-title.tex
+#      - latex/before-body.tex
+##        - title.tex
+##      - toc.tex
+#
+#  epub:
+#    dev: svglite
+#    stylesheet: css/epub.css
+#    toc: true
+#
+#
+#
