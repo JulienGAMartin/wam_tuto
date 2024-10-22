@@ -1,0 +1,70 @@
+project:
+  type: book
+
+execute: 
+  cache: true
+  freeze: auto
+
+book:
+  google-analytics: G-LLHQEESR2L
+  doi: 10.5281/zenodo.10891227
+  date: today
+  date-format: iso 
+  reader-mode: true
+  search: true
+  favicon: images/cover/book_fav.png
+  site-url: https://juliengamartin.github.io/wam_tuto/
+  repo-url: https://github.com/juliengamartin/wam_tuto/
+  repo-actions: [edit, issue]
+  downloads: [pdf, epub]
+
+bibliography: [../biblio/book.bib, ../biblio/grateful-refs.bib]
+biblio-style: apalike
+csl: ../biblio/ecology.csl
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: [cosmo, ../css/theme-dark.scss]
+    css: ../css/style.css
+    code-link: true
+    callout-appearance: simple
+    params:
+      echo_sol: true
+      fit_all: false
+
+  pdf: 
+    from: markdown+emoji
+#    number-depth: 2
+#    toc-depth: 2
+    df-print: paged
+    number-sections: true
+    documentclass: scrreprt
+    pdf-engine: lualatex
+#    keep-tex: true
+    classoption:
+      - "chapterprefix=true"
+      - "headings=big"
+      - "twoside=semi"
+    papersize: letter
+    fontsize: 11pt
+    geometry:
+    - top=2cm
+    - bottom=2cm
+    - left=2cm
+    - right=2cm
+    - footskip=1cm
+    block-headings: false
+    colorlinks: true
+    linestretch: 1.5
+    template-partials:
+      - ../latex/before-title.tex
+      - ../latex/before-body.tex
+#        - title.tex
+#      - toc.tex
+
+  epub:
+    dev: svglite
+    stylesheet: ../css/epub.css
+    toc: true
